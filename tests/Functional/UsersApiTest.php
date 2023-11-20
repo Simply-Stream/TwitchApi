@@ -385,7 +385,7 @@ JSON
         }
     }
 
-    public function getUsersThrowsExceptionWhenMoreThan100UsersAreRequestedDataProvider() {
+    public static function getUsersThrowsExceptionWhenMoreThan100UsersAreRequestedDataProvider() {
         // Just generate some strings, the content doesn't matter, we only need more than 100 keys
         return [
             'Test with 101 IDs' => [
