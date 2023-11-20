@@ -1,0 +1,144 @@
+# Twitch API (by Simply-Stream.com)
+
+(This section will show some metrics, when they are set up) 
+
+-------------------------------
+
+Welcome to the PHP Twitch Helix API Library, a powerful and developer-friendly implementation of the new Twitch API "
+Helix," complete with robust EventSub functionality. This library seamlessly integrates the latest features from Twitch,
+providing a straightforward and efficient way to interact with the Twitch platform in your PHP projects.
+
+## Key Features
+
+**Helix API Support**: Harness the full potential of the Twitch Helix API with ease. Retrieve user information, access
+streams, and more, all through a clean and intuitive PHP interface.
+
+**EventSub Functionality**: Embrace the future of Twitch event handling with our comprehensive EventSub implementation.
+Keep your application in sync with real-time events, ensuring timely and accurate updates.
+
+**Webhook Integration**: Our library fully supports webhook communication for EventSub, enabling seamless communication
+between Twitch and your application. Stay informed about user activities and channel events effortlessly.
+
+**Data Transfer Objects (DTOs)**: Differentiating itself from traditional approaches, our library employs Data Transfer
+Objects (DTOs) to map incoming JSON responses to PHP objects. This abstraction simplifies the handling of Twitch data,
+enhancing code readability and maintainability.
+
+To see a full list of implemented APIs, have a look at the [Implemented APIs](#implemented-apis) section.
+
+## Installation
+
+```bash
+composer req simplystream/twitch-api
+```
+
+## Implemented APIs
+
+| API                      | Implemented | Tested |
+|--------------------------|-------------|--------|
+| AdsApi                   | ✅           | ❌      |
+| AnalyticsApi             | ✅           | ❌      |
+| BitsApi                  | ✅           | ❌      |
+| ChannelPointsAPi         | ✅           | ❌      |
+| ChannelsApi              | ✅           | ❌      |
+| CharityApi               | ✅           | ❌      |
+| ChatApi                  | ✅           | ❌      |
+| ClipsApi                 | ✅           | ❌      |
+| ContentClassificationApi | ✅           | ❌      |
+| EntitlementsApi          | ✅           | ❌      |
+| EventSubAapi             | ✅           | ❌      |
+| ExtensionsApi            | ✅           | ❌      |
+| GamesApi                 | ✅           | ❌      |
+| GoalsApi                 | ✅           | ❌      |
+| GuestStarApi (Beta)      | ✅           | ❌      |
+| HypeTrainApi             | ✅           | ❌      |
+| ModerationApi            | ✅           | ❌      |
+| PollsApi                 | ✅           | ❌      |
+| PredictionsApi           | ✅           | ❌      |
+| RaidsApi                 | ✅           | ❌      |
+| ScheduleApi              | ✅           | ❌      |
+| SearchApi                | ✅           | ❌      |
+| StreamsApi               | ✅           | ❌      |
+| SubscriptionsApi         | ✅           | ❌      |
+| TeamsApi                 | ✅           | ❌      |
+| UsersApi                 | ✅           | ✅      |
+| VideosApi                | ✅           | ❌      |
+| WhispersApi              | ✅           | ❌      |
+
+**Tested in this case means, that functional or unit tests exist.**
+
+There's also a container api service that can hold all the APIs implemented.
+See [TwitchApi](src/Helix/Api/TwitchApi.php).
+
+### EventSub
+
+Besides the APIs, there's also a service available for the EventSub handling. This service will handle the registration
+to an event and also the webhook callbacks by validating the challenge send by Twitch.
+
+**Please note, that this package only supports the webhook implementation!**
+This is due to the fact, that PHP might not be the ideal programming language to use for long running processes like a
+websocket.
+
+#### Websocket
+
+To use the websocket implementation, you should check out the following projects:
+
+- [TwitchLib (C#)](https://github.com/TwitchLib/TwitchLib)
+- [Twurple (TypeScript)](https://github.com/twurple/twurple)
+  and [docs](https://twurple.js.org/docs/getting-data/eventsub/listener-setup.html)
+- More will follow
+
+## Usage
+
+To get everything up and running, you need to set some things up.
+
+```php
+// You can use every PSR-18 compatible client here, that implements the ClientInterface from psr/http-client
+$client = new Client();
+// Same for the request factory, it just needs to implement the RequestFactoryInterface.
+// Optionally the StreamFactoryInterface and UriFactoryInterface, too.
+$requestFactory = new RequestFactory();
+
+
+$apiClient = new ApiClient(
+    $client,
+    $requestFactory,
+    $this->createTwitchProvider(),
+    new \CuyZ\Valinor\MapperBuilder(),
+    $requestFactory,
+    ['clientId' => 'YOUR_CLIENT_ID', 'webhook' => ['secret' => 'YOUR_SECRET']]
+);
+
+$usersApi = new UsersApi($apiClient)
+$response = $usersApi->getUsers(logins: ['some_login_name'], accessToken: $accessToken);
+
+foreach($response->getData() as $user) {
+    echo $user->getDisplayName();
+}
+```
+
+## Supported Frameworks
+
+Currently, there is only an integration for [Symfony](https://symfony.com).
+
+- [simplystream/twitch-api-bundle](https://github.com/Simply-Stream/TwitchApiBundle) (Still WIP, most of the code there
+  has been moved to this repository)
+
+## TODO List
+
+Even though most of this library is ready to use, there's still a lot to do. Here is a brief overview of what will come
+next:
+
+- More tests!
+- Middleware features, to easily extend requests (e.g.: RateLimitMiddleware)
+- A guideline for contributions
+
+## Contribution
+
+We welcome contributions! Feel free to open issues, submit pull requests, or join our community discussions.
+
+## Support
+
+You really like this project and want to support us in a different way than contribution?
+Feel free to support me on Ko-fi ♥️
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/R6R0HV2IO)
