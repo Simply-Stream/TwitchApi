@@ -10,23 +10,34 @@ permissions:
   contents: read
 
 jobs:
-  symfony-tests:
+  build-twitch-api-and-run-tests:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.2'
-
       - uses: actions/checkout@v3
-
-      - name: Install Dependencies
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
       - name: Build the Docker image
         run: docker build . --file tests/Dockerfile --tag twitch-cli:latest
 
       - name: Run Twitch Mock API
-        run: docker run -p 8000:8080 -d twitch-cli:latest
+        run: docker run --name twitch-mock-api -p 8000:8080 -d twitch-cli:latest
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
+      - name: Wait for container to generate mock data
+        run: sleep 10
+
+      - name: Install Dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
       - name: Execute tests (Unit and Functional tests) via PHPUnit
         run: vendor/bin/phpunit tests
+
+  cleanup:
+    needs: build-twitch-api-and-run-tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Stop and remove Docker container
+        run: docker stop twitch-mock-api && docker rm twitch-mock-api
