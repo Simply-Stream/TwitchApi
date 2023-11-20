@@ -36,5 +36,8 @@ jobs:
       - name: Execute tests (Unit and Functional tests) via PHPUnit
         run: vendor/bin/phpunit tests
 
+      - name: PHPStan code analysis
+        run: vendor/bin/phpstan analyse
+
       - name: Stop and remove Docker container
         run: docker stop twitch-mock-api && docker rm twitch-mock-api
