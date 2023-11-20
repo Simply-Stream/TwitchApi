@@ -4,5 +4,5 @@ namespace SimplyStream\TwitchApiBundle\Helix\Models;
 
 interface TwitchPaginatedResponseInterface
 {
-    public function getPagination(): Pagination;
+    public function getPagination(): ?Pagination;
 }

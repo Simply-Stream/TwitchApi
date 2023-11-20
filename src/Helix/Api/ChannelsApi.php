@@ -10,8 +10,6 @@ use SimplyStream\TwitchApiBundle\Helix\Models\Channels\FollowedChannel;
 use SimplyStream\TwitchApiBundle\Helix\Models\Channels\ModifyChannelInformationRequest;
 use SimplyStream\TwitchApiBundle\Helix\Models\TwitchDataResponse;
 use SimplyStream\TwitchApiBundle\Helix\Models\TwitchPaginatedDataResponse;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchResponseInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 class ChannelsApi extends AbstractApi
 {
@@ -102,7 +100,7 @@ class ChannelsApi extends AbstractApi
             query: [
                 'broadcaster_id' => $broadcasterId,
             ],
-            method: Request::METHOD_PATCH,
+            method: 'PATCH',
             body: $body,
             accessToken: $accessToken,
         );

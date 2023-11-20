@@ -8,8 +8,6 @@ use SimplyStream\TwitchApiBundle\Helix\Models\GuestStar\GuestStarInvite;
 use SimplyStream\TwitchApiBundle\Helix\Models\GuestStar\GuestStarSession;
 use SimplyStream\TwitchApiBundle\Helix\Models\GuestStar\UpdateChannelGuestStarSettingRequest;
 use SimplyStream\TwitchApiBundle\Helix\Models\TwitchDataResponse;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchResponseInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 class GuestStarApi extends AbstractApi
 {
@@ -71,7 +69,7 @@ class GuestStarApi extends AbstractApi
                 'broadcaster_id' => $broadcasterId,
                 ...$body->toArray()
             ],
-            method: Request::METHOD_PUT,
+            method: 'PUT',
             accessToken: $accessToken
         );
     }
@@ -132,7 +130,7 @@ class GuestStarApi extends AbstractApi
                 'broadcaster_id' => $broadcasterId,
             ],
             type: sprintf('%s<%s[]>', TwitchDataResponse::class, GuestStarSession::class),
-            method: Request::METHOD_POST,
+            method: 'POST',
             accessToken: $accessToken
         );
     }
@@ -165,7 +163,7 @@ class GuestStarApi extends AbstractApi
                 'session_id' => $sessionId,
             ],
             type: sprintf('%s<%s[]>', TwitchDataResponse::class, GuestStarSession::class),
-            method: Request::METHOD_DELETE,
+            method: 'DELETE',
             accessToken: $accessToken
         );
     }
@@ -237,7 +235,7 @@ class GuestStarApi extends AbstractApi
                 'session_id' => $sessionId,
                 'guest_id' => $guestId
             ],
-            method: Request::METHOD_POST,
+            method: 'POST',
             accessToken: $accessToken
         );
     }
@@ -276,7 +274,7 @@ class GuestStarApi extends AbstractApi
                 'session_id' => $sessionId,
                 'guest_id' => $guestId
             ],
-            method: Request::METHOD_DELETE,
+            method: 'DELETE',
             accessToken: $accessToken
         );
     }
@@ -322,7 +320,7 @@ class GuestStarApi extends AbstractApi
                 'guest_id' => $guestId,
                 'slot_id' => $slotId
             ],
-            method: Request::METHOD_POST,
+            method: 'POST',
             accessToken: $accessToken
         );
     }
@@ -365,7 +363,7 @@ class GuestStarApi extends AbstractApi
                 'destination_slot_id' => $destinationSlotId
             ],
             type: 'array',
-            method: Request::METHOD_PATCH,
+            method: 'PATCH',
             accessToken: $accessToken
         );
     }
@@ -411,7 +409,7 @@ class GuestStarApi extends AbstractApi
                 'should_reinvite_guest' => $shouldReinviteGuest
             ],
             type: 'array',
-            method: Request::METHOD_DELETE,
+            method: 'DELETE',
             accessToken: $accessToken
         );
     }
@@ -466,7 +464,7 @@ class GuestStarApi extends AbstractApi
                 'is_live' => $isLive,
                 'volume' => $volume
             ],
-            method: Request::METHOD_PATCH,
+            method: 'PATCH',
             accessToken: $accessToken
         );
     }

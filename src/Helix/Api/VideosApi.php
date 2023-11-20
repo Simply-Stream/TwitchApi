@@ -6,7 +6,6 @@ use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApiBundle\Helix\Models\TwitchDataResponse;
 use SimplyStream\TwitchApiBundle\Helix\Models\TwitchPaginatedDataResponse;
 use SimplyStream\TwitchApiBundle\Helix\Models\Videos\Video;
-use Symfony\Component\HttpFoundation\Request;
 
 class VideosApi extends AbstractApi
 {
@@ -144,7 +143,7 @@ class VideosApi extends AbstractApi
                 'id' => $id,
             ],
             type: sprintf('%s<%s[]>', TwitchDataResponse::class, Video::class),
-            method: Request::METHOD_DELETE,
+            method: 'DELETE',
             accessToken: $accessToken
         );
     }

@@ -2,6 +2,7 @@
 
 namespace SimplyStream\TwitchApiBundle\Helix\Api;
 
+use CuyZ\Valinor\Mapper\MappingError;
 use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApiBundle\Helix\Models\TwitchDataResponse;
@@ -11,7 +12,6 @@ use SimplyStream\TwitchApiBundle\Helix\Models\Users\User;
 use SimplyStream\TwitchApiBundle\Helix\Models\Users\UserActiveExtension;
 use SimplyStream\TwitchApiBundle\Helix\Models\Users\UserBlock;
 use SimplyStream\TwitchApiBundle\Helix\Models\Users\UserExtension;
-use Symfony\Component\HttpFoundation\Request;
 use Webmozart\Assert\Assert;
 
 class UsersApi extends AbstractApi
@@ -93,7 +93,7 @@ class UsersApi extends AbstractApi
                 'description' => $description,
             ],
             type: sprintf('%s<%s[]>', TwitchDataResponse::class, User::class),
-            method: Request::METHOD_PUT,
+            method: 'PUT',
             accessToken: $accessToken
         );
     }
@@ -113,6 +113,7 @@ class UsersApi extends AbstractApi
      *
      * @return TwitchDataResponse<UserBlock[]>
      * @throws JsonException
+     * @throws MappingError
      */
     public function getUserBlockList(
         string $broadcasterId,
@@ -169,7 +170,7 @@ class UsersApi extends AbstractApi
                 'source_context' => $sourceContext,
                 'reason' => $reason,
             ],
-            method: Request::METHOD_PUT,
+            method: 'PUT',
             accessToken: $accessToken
         );
     }
@@ -197,7 +198,7 @@ class UsersApi extends AbstractApi
             query: [
                 'target_user_id' => $targetUserId,
             ],
-            method: Request::METHOD_DELETE,
+            method: 'DELETE',
             accessToken: $accessToken
         );
     }
@@ -281,7 +282,7 @@ class UsersApi extends AbstractApi
         return $this->sendRequest(
             path: self::BASE_PATH . '/extensions',
             type: sprintf('%s<%s>', TwitchDataResponse::class, UserActiveExtension::class),
-            method: Request::METHOD_PUT,
+            method: 'PUT',
             body: $body,
             accessToken: $accessToken
         );

@@ -7,8 +7,6 @@ use SimplyStream\TwitchApiBundle\Helix\Models\ChannelPoints\CustomReward;
 use SimplyStream\TwitchApiBundle\Helix\Models\ChannelPoints\CustomRewardRedemption;
 use SimplyStream\TwitchApiBundle\Helix\Models\ChannelPoints\RedemptionStatusRequest;
 use SimplyStream\TwitchApiBundle\Helix\Models\TwitchDataResponse;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchResponseInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 class ChannelPointsApi extends AbstractApi
 {
@@ -72,7 +70,7 @@ class ChannelPointsApi extends AbstractApi
                 'broadcaster_id' => $broadcasterId,
                 'id' => $id,
             ],
-            method: Request::METHOD_DELETE,
+            method: 'DELETE',
             accessToken: $accessToken
         );
     }
@@ -209,7 +207,7 @@ class ChannelPointsApi extends AbstractApi
                 'id' => $id,
             ],
             type: sprintf('%s<%s[]>', TwitchDataResponse::class, CustomReward::class),
-            method: Request::METHOD_PATCH,
+            method: 'PATCH',
             body: $body,
             accessToken: $accessToken
         );

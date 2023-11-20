@@ -15,7 +15,6 @@ use SimplyStream\TwitchApiBundle\Helix\Models\Extensions\SetExtensionRequiredCon
 use SimplyStream\TwitchApiBundle\Helix\Models\Extensions\UpdateExtensionBitsProductRequest;
 use SimplyStream\TwitchApiBundle\Helix\Models\TwitchDataResponse;
 use SimplyStream\TwitchApiBundle\Helix\Models\TwitchPaginatedDataResponse;
-use Symfony\Component\HttpFoundation\Request;
 
 class ExtensionsApi extends AbstractApi
 {
@@ -89,11 +88,11 @@ class ExtensionsApi extends AbstractApi
     ): void {
         $this->sendRequest(
             path: self::BASE_PATH . '/configurations',
-            method: Request::METHOD_PUT,
-            body: $body,
+            method: 'PUT',
             headers: [
                 'Authorization' => 'Bearer ' . $jwt,
-            ]
+            ],
+            body: $body
         );
     }
 
@@ -125,11 +124,11 @@ class ExtensionsApi extends AbstractApi
             query: [
                 'broadcaster_id' => $broadcasterId,
             ],
-            method: Request::METHOD_PUT,
-            body: $body,
+            method: 'PUT',
             headers: [
                 'Authorization' => 'Bearer ' . $jwt,
-            ]
+            ],
+            body: $body
         );
     }
 
@@ -186,11 +185,11 @@ class ExtensionsApi extends AbstractApi
     ): void {
         $this->sendRequest(
             path: self::BASE_PATH . '/pubsub',
-            method: Request::METHOD_POST,
-            body: $body,
+            method: 'POST',
             headers: [
                 'Authorization' => 'Bearer ' . $jwt,
-            ]
+            ],
+            body: $body
         );
     }
 
@@ -322,10 +321,10 @@ class ExtensionsApi extends AbstractApi
             query: [
                 'broadcaster_id' => $broadcasterId,
             ],
-            body: $body,
             headers: [
                 'Authorization' => 'Bearer ' . $jwt,
-            ]
+            ],
+            body: $body
         );
     }
 
@@ -439,7 +438,7 @@ class ExtensionsApi extends AbstractApi
         return $this->sendRequest(
             path: 'bits/' . self::BASE_PATH,
             type: sprintf('%s<%s[]>', TwitchDataResponse::class, ExtensionBitsProduct::class),
-            method: Request::METHOD_PUT,
+            method: 'PUT',
             body: $body,
             accessToken: $accessToken
         );

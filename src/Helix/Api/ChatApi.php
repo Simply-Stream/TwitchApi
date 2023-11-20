@@ -16,7 +16,6 @@ use SimplyStream\TwitchApiBundle\Helix\Models\TwitchDataResponse;
 use SimplyStream\TwitchApiBundle\Helix\Models\TwitchPaginatedDataResponse;
 use SimplyStream\TwitchApiBundle\Helix\Models\TwitchResponseInterface;
 use SimplyStream\TwitchApiBundle\Helix\Models\TwitchTemplatedDataResponse;
-use Symfony\Component\HttpFoundation\Request;
 
 class ChatApi extends AbstractApi
 {
@@ -266,7 +265,7 @@ class ChatApi extends AbstractApi
                 'moderator_id' => $moderatorId,
             ],
             type: sprintf('%s<%s[]>', TwitchDataResponse::class, ChatSettings::class),
-            method: Request::METHOD_PATCH,
+            method: 'PATCH',
             body: $body,
             accessToken: $accessToken
         );
@@ -301,7 +300,7 @@ class ChatApi extends AbstractApi
                 'broadcaster_id' => $broadcasterId,
                 'moderator_id' => $moderatorId,
             ],
-            method: Request::METHOD_POST,
+            method: 'POST',
             body: $body,
             accessToken: $accessToken
         );
@@ -347,7 +346,7 @@ class ChatApi extends AbstractApi
                 'to_broadcaster_id' => $toBroadcasterId,
                 'moderator_id' => $moderatorId,
             ],
-            method: Request::METHOD_POST,
+            method: 'POST',
             accessToken: $accessToken
         );
     }
@@ -426,7 +425,7 @@ class ChatApi extends AbstractApi
                 'user_id' => $userId,
                 'color' => $color,
             ],
-            method: Request::METHOD_PUT,
+            method: 'PUT',
             accessToken: $accessToken
         );
     }

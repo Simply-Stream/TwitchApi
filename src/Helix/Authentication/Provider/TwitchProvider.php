@@ -5,7 +5,6 @@
  *
  * Copyright (c) 2021 AaricDev (simply-stream.com)
  */
-
 namespace SimplyStream\TwitchApiBundle\Helix\Authentication\Provider;
 
 use Firebase\JWT\JWK;
@@ -15,7 +14,6 @@ use League\OAuth2\Client\Provider\GenericProvider;
 use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApiBundle\Helix\Authentication\Token\OidcAccessToken;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @package SimplyStream\TwitchApiBundle\Helix\Authentication\Provider
@@ -113,7 +111,7 @@ class TwitchProvider extends GenericProvider
     protected function getPublicKeyset(): array
     {
         $factory = $this->getRequestFactory();
-        $request = $factory->getRequest(Request::METHOD_GET, $this->getPublicKeysUrl());
+        $request = $factory->getRequest('GET', $this->getPublicKeysUrl());
         $jwk = $this->getResponse($request);
 
         return JWK::parseKeySet((string)$jwk->getBody());

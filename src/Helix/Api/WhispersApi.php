@@ -4,7 +4,6 @@ namespace SimplyStream\TwitchApiBundle\Helix\Api;
 
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApiBundle\Helix\Models\Whispers\SendWhisperRequest;
-use Symfony\Component\HttpFoundation\Request;
 
 class WhispersApi extends AbstractApi
 {
@@ -46,7 +45,7 @@ class WhispersApi extends AbstractApi
                 'from_user_id' => $fromUserId,
                 'to_user_id' => $toUserId,
             ],
-            method: Request::METHOD_POST,
+            method: 'POST',
             body: $body,
             accessToken: $accessToken
         );

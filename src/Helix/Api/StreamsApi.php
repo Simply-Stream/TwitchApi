@@ -10,7 +10,6 @@ use SimplyStream\TwitchApiBundle\Helix\Models\Streams\StreamKey;
 use SimplyStream\TwitchApiBundle\Helix\Models\Streams\StreamMarker;
 use SimplyStream\TwitchApiBundle\Helix\Models\TwitchDataResponse;
 use SimplyStream\TwitchApiBundle\Helix\Models\TwitchPaginatedDataResponse;
-use Symfony\Component\HttpFoundation\Request;
 
 class StreamsApi extends AbstractApi
 {
@@ -175,7 +174,7 @@ class StreamsApi extends AbstractApi
         return $this->sendRequest(
             path: self::BASE_PATH . '/markers',
             type: sprintf('%s<%s[]>', TwitchDataResponse::class, StreamMarker::class),
-            method: Request::METHOD_POST,
+            method: 'POST',
             body: $body,
             accessToken: $accessToken
         );

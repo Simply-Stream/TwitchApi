@@ -8,7 +8,6 @@ use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\CreateEventSubSubscriptio
 use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\EventSubResponse;
 use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\PaginatedEventSubResponse;
 use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Subscription;
-use Symfony\Component\HttpFoundation\Request;
 
 class EventSubApi extends AbstractApi
 {
@@ -41,7 +40,7 @@ class EventSubApi extends AbstractApi
         return $this->sendRequest(
             path: self::BASE_PATH . '/subscriptions',
             type: sprintf('%s<%s[]>', EventSubResponse::class, Subscription::class),
-            method: Request::METHOD_POST,
+            method: 'POST',
             // I don't really like this way, but better than nothing at the moment
             body: new CreateEventSubSubscriptionRequest(
                 $subscription->getType(),
@@ -78,7 +77,7 @@ class EventSubApi extends AbstractApi
             query: [
                 'id' => $id,
             ],
-            method: Request::METHOD_DELETE,
+            method: 'DELETE',
             accessToken: $accessToken
         );
     }

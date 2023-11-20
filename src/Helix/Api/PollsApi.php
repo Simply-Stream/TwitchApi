@@ -8,8 +8,6 @@ use SimplyStream\TwitchApiBundle\Helix\Models\Polls\EndPollRequest;
 use SimplyStream\TwitchApiBundle\Helix\Models\Polls\Poll;
 use SimplyStream\TwitchApiBundle\Helix\Models\TwitchDataResponse;
 use SimplyStream\TwitchApiBundle\Helix\Models\TwitchPaginatedDataResponse;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchResponseInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 class PollsApi extends AbstractApi
 {
@@ -81,7 +79,7 @@ class PollsApi extends AbstractApi
         return $this->sendRequest(
             path: self::BASE_PATH,
             type: sprintf('%s<%s[]>', TwitchDataResponse::class, Poll::class),
-            method: Request::METHOD_POST,
+            method: 'POST',
             body: $body,
             accessToken: $accessToken
         );
@@ -106,7 +104,7 @@ class PollsApi extends AbstractApi
         return $this->sendRequest(
             path: self::BASE_PATH,
             type: sprintf('%s<%s[]>', TwitchDataResponse::class, Poll::class),
-            method: Request::METHOD_PATCH,
+            method: 'PATCH',
             body: $body,
             accessToken: $accessToken
         );

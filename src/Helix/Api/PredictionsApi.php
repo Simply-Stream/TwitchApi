@@ -8,8 +8,6 @@ use SimplyStream\TwitchApiBundle\Helix\Models\Predictions\EndPredictionRequest;
 use SimplyStream\TwitchApiBundle\Helix\Models\Predictions\Prediction;
 use SimplyStream\TwitchApiBundle\Helix\Models\TwitchDataResponse;
 use SimplyStream\TwitchApiBundle\Helix\Models\TwitchPaginatedDataResponse;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchResponseInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 class PredictionsApi extends AbstractApi
 {
@@ -77,7 +75,7 @@ class PredictionsApi extends AbstractApi
         return $this->sendRequest(
             path: self::BASE_PATH,
             type: sprintf('%s<%s[]>', TwitchDataResponse::class, Prediction::class),
-            method: Request::METHOD_POST,
+            method: 'POST',
             body: $body,
             accessToken: $accessToken
         );
@@ -102,7 +100,7 @@ class PredictionsApi extends AbstractApi
         return $this->sendRequest(
             path: self::BASE_PATH,
             type: sprintf('%s<%s[]>', TwitchDataResponse::class, Prediction::class),
-            method: Request::METHOD_PATCH,
+            method: 'PATCH',
             body: $body,
             accessToken: $accessToken
         );

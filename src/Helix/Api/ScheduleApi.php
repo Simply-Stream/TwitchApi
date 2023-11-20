@@ -10,7 +10,6 @@ use SimplyStream\TwitchApiBundle\Helix\Models\Schedule\UpdateChannelStreamSchedu
 use SimplyStream\TwitchApiBundle\Helix\Models\TwitchDataResponse;
 use SimplyStream\TwitchApiBundle\Helix\Models\TwitchPaginatedDataResponse;
 use SimplyStream\TwitchApiBundle\Helix\Models\TwitchResponseInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 class ScheduleApi extends AbstractApi
 {
@@ -130,7 +129,7 @@ class ScheduleApi extends AbstractApi
                 'vacation_end_time' => $vacationEndTime?->format(DATE_RFC3339),
                 'timezone' => $timezone,
             ],
-            method: Request::METHOD_PATCH,
+            method: 'PATCH',
             accessToken: $accessToken
         );
     }
@@ -161,7 +160,7 @@ class ScheduleApi extends AbstractApi
                 'broadcaster_id' => $broadcasterId,
             ],
             type: sprintf('%s<%s[]>', TwitchDataResponse::class, ChannelStreamSchedule::class),
-            method: Request::METHOD_POST,
+            method: 'POST',
             body: $body,
             accessToken: $accessToken
         );
@@ -198,7 +197,7 @@ class ScheduleApi extends AbstractApi
                 'id' => $id,
             ],
             type: sprintf('%s<%s[]>', TwitchDataResponse::class, ChannelStreamSchedule::class),
-            method: Request::METHOD_PATCH,
+            method: 'PATCH',
             body: $body,
             accessToken: $accessToken
         );
@@ -231,7 +230,7 @@ class ScheduleApi extends AbstractApi
                 'broadcaster_id' => $broadcasterId,
                 'id' => $id,
             ],
-            method: Request::METHOD_DELETE,
+            method: 'DELETE',
             accessToken: $accessToken
         );
     }

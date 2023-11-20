@@ -11,9 +11,9 @@ use InvalidArgumentException;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Token\AccessTokenInterface;
-use Nyholm\Psr7\Uri;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
+use Psr\Http\Message\UriFactoryInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerTrait;
 use Psr\Log\LogLevel;
@@ -28,6 +28,7 @@ use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Transport;
 use SimplyStream\TwitchApiBundle\Helix\Models\TwitchResponseInterface;
 use Stringable;
 use function json_decode;
+use function json_encode;
 
 class ApiClient implements ApiClientInterface
 {
@@ -40,6 +41,7 @@ class ApiClient implements ApiClientInterface
      * @param RequestFactoryInterface $requestFactory
      * @param TwitchProvider          $twitch
      * @param MapperBuilder           $mapperBuilder
+     * @param UriFactoryInterface     $uriFactory
      * @param array|null              $options
      * @param TokenStorageInterface   $tokenStorage
      */
@@ -48,6 +50,7 @@ class ApiClient implements ApiClientInterface
         protected RequestFactoryInterface $requestFactory,
         protected TwitchProvider $twitch,
         protected MapperBuilder $mapperBuilder,
+        protected UriFactoryInterface $uriFactory,
         protected ?array $options = null,
         protected TokenStorageInterface $tokenStorage = new InMemoryStorage()
     ) {
@@ -78,12 +81,12 @@ class ApiClient implements ApiClientInterface
             $accessToken = $this->getAccessToken('client_credentials');
         }
 
-        $uri = new Uri($this->getBaseUrl() . $path);
-        $uri->withQuery($this->buildQueryString(array_filter($query)));
+        $uri = $this->uriFactory->createUri($this->getBaseUrl() . $path)
+            ->withQuery($this->buildQueryString(array_filter($query)));
         $request = $this->requestFactory->createRequest($method, $uri);
 
         if ($body) {
-            $request->withBody($this->requestFactory->createStream(\json_encode($body, JSON_THROW_ON_ERROR)));
+            $request->withBody($this->requestFactory->createStream(json_encode($body, JSON_THROW_ON_ERROR)));
         }
 
         $request = $request
@@ -101,6 +104,7 @@ class ApiClient implements ApiClientInterface
         $responseContent = $response->getBody()->getContents();
 
         if ($response->getStatusCode() >= 400) {
+            // @TODO: Change into ErrorResponse
             $error = json_decode($responseContent, false, 512, JSON_THROW_ON_ERROR);
             $this->error($error->message, ['response' => $responseContent]);
             throw new InvalidArgumentException(sprintf('Error from API: "(%s): %s"', $error->error, $error->message));

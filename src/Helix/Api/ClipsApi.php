@@ -6,8 +6,6 @@ use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApiBundle\Helix\Models\Clip\Clip;
 use SimplyStream\TwitchApiBundle\Helix\Models\Clip\ClipProcess;
 use SimplyStream\TwitchApiBundle\Helix\Models\TwitchDataResponse;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchResponseInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 class ClipsApi extends AbstractApi
 {
@@ -56,7 +54,7 @@ class ClipsApi extends AbstractApi
                 'has_delay' => $hasDelay,
             ],
             type: sprintf('%s<%s[]>', TwitchDataResponse::class, ClipProcess::class),
-            method: Request::METHOD_POST,
+            method: 'POST',
             accessToken: $accessToken
         );
     }

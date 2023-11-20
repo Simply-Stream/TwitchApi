@@ -8,7 +8,6 @@ use SimplyStream\TwitchApiBundle\Helix\Models\Ads\Commercial;
 use SimplyStream\TwitchApiBundle\Helix\Models\Ads\SnoozeNextAd;
 use SimplyStream\TwitchApiBundle\Helix\Models\Ads\StartCommercialRequest;
 use SimplyStream\TwitchApiBundle\Helix\Models\TwitchDataResponse;
-use Symfony\Component\HttpFoundation\Request;
 
 class AdsApi extends AbstractApi
 {
@@ -38,7 +37,7 @@ class AdsApi extends AbstractApi
         return $this->sendRequest(
             path: self::BASE_PATH . '/commercial',
             type: sprintf('%s<%s[]>', TwitchDataResponse::class, Commercial::class),
-            method: Request::METHOD_POST,
+            method: 'POST',
             body: $body,
             accessToken: $accessToken
         );

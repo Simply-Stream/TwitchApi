@@ -19,8 +19,6 @@ use SimplyStream\TwitchApiBundle\Helix\Models\Moderation\UserBan;
 use SimplyStream\TwitchApiBundle\Helix\Models\Moderation\VIP;
 use SimplyStream\TwitchApiBundle\Helix\Models\TwitchDataResponse;
 use SimplyStream\TwitchApiBundle\Helix\Models\TwitchPaginatedDataResponse;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchResponseInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 class ModerationApi extends AbstractApi
 {
@@ -68,7 +66,7 @@ class ModerationApi extends AbstractApi
                 'broadcaster_id' => $broadcasterId,
             ],
             type: sprintf('%s<%s[]>', TwitchDataResponse::class, AutoModStatus::class),
-            method: Request::METHOD_POST,
+            method: 'POST',
             body: $body,
             accessToken: $accessToken
         );
@@ -95,7 +93,7 @@ class ModerationApi extends AbstractApi
     ): void {
         $this->sendRequest(
             path: self::BASE_PATH . '/automod/message',
-            method: Request::METHOD_POST,
+            method: 'POST',
             body: $body,
             accessToken: $accessToken
         );
@@ -160,7 +158,7 @@ class ModerationApi extends AbstractApi
                 'moderator_id' => $moderatorId,
             ],
             type: sprintf('%s<%s[]>', TwitchDataResponse::class, AutoModSettings::class),
-            method: Request::METHOD_PUT,
+            method: 'PUT',
             body: $body,
             accessToken: $accessToken
         );
@@ -248,7 +246,7 @@ class ModerationApi extends AbstractApi
                 'moderator_id' => $moderatorId,
             ],
             type: sprintf('%s<%s[]>', TwitchDataResponse::class, UserBan::class),
-            method: Request::METHOD_POST,
+            method: 'POST',
             body: $body,
             accessToken: $accessToken
         );
@@ -284,7 +282,7 @@ class ModerationApi extends AbstractApi
                 'moderator_id' => $moderatorId,
                 'user_id' => $userId,
             ],
-            method: Request::METHOD_DELETE,
+            method: 'DELETE',
             accessToken: $accessToken
         );
     }
@@ -357,7 +355,7 @@ class ModerationApi extends AbstractApi
                 'moderator_id' => $moderatorId,
             ],
             type: sprintf('%s<%s[]>', TwitchPaginatedDataResponse::class, BlockedTerm::class),
-            method: Request::METHOD_POST,
+            method: 'POST',
             body: $body,
             accessToken: $accessToken
         );
@@ -391,7 +389,7 @@ class ModerationApi extends AbstractApi
                 'moderator_id' => $moderatorId,
                 'id' => $id,
             ],
-            method: Request::METHOD_DELETE,
+            method: 'DELETE',
             accessToken: $accessToken
         );
     }
@@ -423,7 +421,7 @@ class ModerationApi extends AbstractApi
                 'moderator_id' => $moderatorId,
                 'message_id' => $messageId,
             ],
-            method: Request::METHOD_DELETE,
+            method: 'DELETE',
             accessToken: $accessToken
         );
     }
@@ -501,7 +499,7 @@ class ModerationApi extends AbstractApi
                 'broadcaster_id' => $broadcasterId,
                 'user_id' => $userId,
             ],
-            method: Request::METHOD_POST,
+            method: 'POST',
             accessToken: $accessToken
         );
     }
@@ -533,7 +531,7 @@ class ModerationApi extends AbstractApi
                 'broadcaster_id' => $broadcasterId,
                 'user_id' => $userId,
             ],
-            method: Request::METHOD_DELETE,
+            method: 'DELETE',
             accessToken: $accessToken
         );
     }
@@ -607,7 +605,7 @@ class ModerationApi extends AbstractApi
                 'broadcaster_id' => $broadcasterId,
                 'user_id' => $userId,
             ],
-            method: Request::METHOD_POST,
+            method: 'POST',
             accessToken: $accessToken
         );
     }
@@ -642,7 +640,7 @@ class ModerationApi extends AbstractApi
                 'broadcaster_id' => $broadcasterId,
                 'user_id' => $userId,
             ],
-            method: Request::METHOD_DELETE,
+            method: 'DELETE',
             accessToken: $accessToken
         );
     }
@@ -659,7 +657,7 @@ class ModerationApi extends AbstractApi
      *
      * @param string                        $broadcasterId The ID of the broadcaster whose Shield Mode you want to activate or deactivate.
      * @param string                        $moderatorId   The ID of the broadcaster or a user that is one of the broadcaster’s moderators.
-     *                                                  This ID must match the user ID in the access token.
+     *                                                     This ID must match the user ID in the access token.
      * @param UpdateShieldModeStatusRequest $body
      * @param AccessTokenInterface          $accessToken
      *
@@ -679,7 +677,7 @@ class ModerationApi extends AbstractApi
                 'moderator_id' => $moderatorId,
             ],
             type: sprintf('%s<%s[]>', TwitchDataResponse::class, ShieldModeStatus::class),
-            method: Request::METHOD_PUT,
+            method: 'PUT',
             body: $body,
             accessToken: $accessToken
         );
