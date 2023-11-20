@@ -26,6 +26,7 @@ jobs:
         with:
           php-version: '8.2'
 
+      # This is just a dirty workaround. I'd like to have a script here, that tries every second to reach the mock api
       - name: Wait for container to generate mock data
         run: sleep 10
 
