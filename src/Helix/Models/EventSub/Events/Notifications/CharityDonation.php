@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Events\Notifications;
 
 use SimplyStream\TwitchApiBundle\Helix\Models\Charity\CharityAmount;
@@ -19,11 +21,13 @@ final readonly class CharityDonation
     ) {
     }
 
-    public function getCharityName(): string {
+    public function getCharityName(): string
+    {
         return $this->charityName;
     }
 
-    public function getAmount(): CharityAmount {
+    public function getAmount(): CharityAmount
+    {
         return $this->amount;
     }
 }

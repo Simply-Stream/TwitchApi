@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Condition;
 
@@ -15,15 +17,18 @@ final readonly class DropEntitlementGrantCondition implements ConditionInterface
     ) {
     }
 
-    public function getOrganizationId(): string {
+    public function getOrganizationId(): string
+    {
         return $this->organizationId;
     }
 
-    public function getCategoryId(): string {
+    public function getCategoryId(): string
+    {
         return $this->categoryId;
     }
 
-    public function getCampaignId(): string {
+    public function getCampaignId(): string
+    {
         return $this->campaignId;
     }
 }

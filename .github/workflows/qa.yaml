@@ -39,6 +39,9 @@ jobs:
       - name: PHPStan code analysis
         run: vendor/bin/phpstan analyse
 
+      - name: Check for PHP codestyle compliance
+        run: vendor/bin/php-cs-fixer check --allow-risky=yes
+
       - name: Stop and remove Docker container
         if: always()
         run: docker stop twitch-mock-api && docker rm twitch-mock-api

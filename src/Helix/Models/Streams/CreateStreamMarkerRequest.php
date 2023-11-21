@@ -1,16 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\Streams;
 
+use SimplyStream\TwitchApiBundle\Helix\Models\AbstractModel;
 use Webmozart\Assert\Assert;
 
-final readonly class CreateStreamMarkerRequest
+final readonly class CreateStreamMarkerRequest extends AbstractModel
 {
     /**
-     * @param string $userId      The ID of the broadcaster that’s streaming content. This ID must match the user ID in the access token or
-     *                            the user in the access token must be one of the broadcaster’s editors.
-     * @param string $description A short description of the marker to help the user remember why they marked the location. The maximum
-     *                            length of the description is 140 characters.
+     * @param string $userId      The ID of the broadcaster that’s streaming content. This ID must match the user ID in
+     *                            the access token or the user in the access token must be one of the broadcaster’s
+     *                            editors.
+     * @param string $description A short description of the marker to help the user remember why they marked the
+     *                            location. The maximum length of the description is 140 characters.
      */
     public function __construct(
         private string $userId,
@@ -25,11 +29,13 @@ final readonly class CreateStreamMarkerRequest
         }
     }
 
-    public function getUserId(): string {
+    public function getUserId(): string
+    {
         return $this->userId;
     }
 
-    public function getDescription(): string {
+    public function getDescription(): string
+    {
         return $this->description;
     }
 }

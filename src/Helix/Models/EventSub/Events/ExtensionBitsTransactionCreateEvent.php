@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Events;
 
 final readonly class ExtensionBitsTransactionCreateEvent extends Event
@@ -28,39 +30,48 @@ final readonly class ExtensionBitsTransactionCreateEvent extends Event
     ) {
     }
 
-    public function getExtensionClientId(): string {
+    public function getExtensionClientId(): string
+    {
         return $this->extensionClientId;
     }
 
-    public function getId(): string {
+    public function getId(): string
+    {
         return $this->id;
     }
 
-    public function getBroadcasterUserId(): string {
+    public function getBroadcasterUserId(): string
+    {
         return $this->broadcasterUserId;
     }
 
-    public function getBroadcasterUserLogin(): string {
+    public function getBroadcasterUserLogin(): string
+    {
         return $this->broadcasterUserLogin;
     }
 
-    public function getBroadcasterUserName(): string {
+    public function getBroadcasterUserName(): string
+    {
         return $this->broadcasterUserName;
     }
 
-    public function getUserId(): string {
+    public function getUserId(): string
+    {
         return $this->userId;
     }
 
-    public function getUserLogin(): string {
+    public function getUserLogin(): string
+    {
         return $this->userLogin;
     }
 
-    public function getUserName(): string {
+    public function getUserName(): string
+    {
         return $this->userName;
     }
 
-    public function getProduct(): Product {
+    public function getProduct(): Product
+    {
         return $this->product;
     }
 }

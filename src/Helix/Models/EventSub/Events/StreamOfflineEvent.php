@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Events;
 
 final readonly class StreamOfflineEvent extends Event
@@ -13,19 +15,21 @@ final readonly class StreamOfflineEvent extends Event
         private string $broadcasterUserId,
         private string $broadcasterUserLogin,
         private string $broadcasterUserName,
-
     ) {
     }
 
-    public function getBroadcasterUserId(): string {
+    public function getBroadcasterUserId(): string
+    {
         return $this->broadcasterUserId;
     }
 
-    public function getBroadcasterUserLogin(): string {
+    public function getBroadcasterUserLogin(): string
+    {
         return $this->broadcasterUserLogin;
     }
 
-    public function getBroadcasterUserName(): string {
+    public function getBroadcasterUserName(): string
+    {
         return $this->broadcasterUserName;
     }
 }

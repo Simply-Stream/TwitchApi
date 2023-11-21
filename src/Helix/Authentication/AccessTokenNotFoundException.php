@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * MIT License
@@ -8,12 +10,13 @@
 
 namespace SimplyStream\TwitchApiBundle\Helix\Authentication;
 
+use RuntimeException;
 use Throwable;
 
 /**
  * @package SimplyStream\TwitchApiBundle\Helix\Authentication
  */
-class AccessTokenNotFoundException extends \RuntimeException
+class AccessTokenNotFoundException extends RuntimeException
 {
     /**
      * @inheritdoc

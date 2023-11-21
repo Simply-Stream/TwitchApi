@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\Schedule;
 
 final readonly class ChannelStreamSchedule
@@ -22,27 +24,33 @@ final readonly class ChannelStreamSchedule
     ) {
     }
 
-    public function getSegments(): array {
+    public function getSegments(): array
+    {
         return $this->segments;
     }
 
-    public function getBroadcasterId(): string {
+    public function getBroadcasterId(): string
+    {
         return $this->broadcasterId;
     }
 
-    public function getBroadcasterName(): string {
+    public function getBroadcasterName(): string
+    {
         return $this->broadcasterName;
     }
 
-    public function getBroadcasterLogin(): string {
+    public function getBroadcasterLogin(): string
+    {
         return $this->broadcasterLogin;
     }
 
-    public function getVacation(): array {
+    public function getVacation(): array
+    {
         return $this->vacation;
     }
 
-    public function getPagination(): ?array {
+    public function getPagination(): ?array
+    {
         return $this->pagination;
     }
 }

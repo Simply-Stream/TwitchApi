@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\Streams;
 
 final readonly class StreamKey
@@ -12,7 +14,8 @@ final readonly class StreamKey
     ) {
     }
 
-    public function getStreamKey(): string {
+    public function getStreamKey(): string
+    {
         return $this->streamKey;
     }
 }

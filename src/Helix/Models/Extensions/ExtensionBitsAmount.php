@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\Extensions;
 
 use Webmozart\Assert\Assert;
@@ -23,11 +25,13 @@ final readonly class ExtensionBitsAmount
         }
     }
 
-    public function getAmount(): int {
+    public function getAmount(): int
+    {
         return $this->amount;
     }
 
-    public function getType(): string {
+    public function getType(): string
+    {
         return $this->type;
     }
 }

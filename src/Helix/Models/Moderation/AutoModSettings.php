@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\Moderation;
 
 final readonly class AutoModSettings
@@ -7,8 +9,8 @@ final readonly class AutoModSettings
     /**
      * @param string $broadcasterId           The broadcaster’s ID.
      * @param string $moderatorId             The moderator’s ID.
-     * @param int    $overallLevel            The default AutoMod level for the broadcaster. This field is null if the broadcaster has set
-     *                                        one or more of the individual settings.
+     * @param int    $overallLevel            The default AutoMod level for the broadcaster. This field is null if the
+     *                                        broadcaster has set one or more of the individual settings.
      * @param int    $disability              The Automod level for discrimination against disability.
      * @param int    $aggression              The Automod level for hostility involving aggression.
      * @param int    $sexualitySexOrGender    The AutoMod level for discrimination based on sexuality, sex, or gender.
@@ -33,47 +35,58 @@ final readonly class AutoModSettings
     ) {
     }
 
-    public function getBroadcasterId(): string {
+    public function getBroadcasterId(): string
+    {
         return $this->broadcasterId;
     }
 
-    public function getModeratorId(): string {
+    public function getModeratorId(): string
+    {
         return $this->moderatorId;
     }
 
-    public function getOverallLevel(): int {
+    public function getOverallLevel(): int
+    {
         return $this->overallLevel;
     }
 
-    public function getDisability(): int {
+    public function getDisability(): int
+    {
         return $this->disability;
     }
 
-    public function getAggression(): int {
+    public function getAggression(): int
+    {
         return $this->aggression;
     }
 
-    public function getSexualitySexOrGender(): int {
+    public function getSexualitySexOrGender(): int
+    {
         return $this->sexualitySexOrGender;
     }
 
-    public function getMisogyny(): int {
+    public function getMisogyny(): int
+    {
         return $this->misogyny;
     }
 
-    public function getBullying(): int {
+    public function getBullying(): int
+    {
         return $this->bullying;
     }
 
-    public function getSwearing(): int {
+    public function getSwearing(): int
+    {
         return $this->swearing;
     }
 
-    public function getRaceEthnicityOrReligion(): int {
+    public function getRaceEthnicityOrReligion(): int
+    {
         return $this->raceEthnicityOrReligion;
     }
 
-    public function getSexBasedTerms(): int {
+    public function getSexBasedTerms(): int
+    {
         return $this->sexBasedTerms;
     }
 }

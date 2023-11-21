@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\Extensions;
 
+use SimplyStream\TwitchApiBundle\Helix\Models\AbstractModel;
 use Webmozart\Assert\Assert;
 
-final readonly class SendExtensionChatMessageRequest
+final readonly class SendExtensionChatMessageRequest extends AbstractModel
 {
     /**
      * @param string $text             The message. The message may contain a maximum of 280 characters.
@@ -19,15 +22,18 @@ final readonly class SendExtensionChatMessageRequest
         Assert::maxLength($this->text, 280, 'The message may contain a maximum of 280 characters');
     }
 
-    public function getText(): string {
+    public function getText(): string
+    {
         return $this->text;
     }
 
-    public function getExtensionId(): string {
+    public function getExtensionId(): string
+    {
         return $this->extensionId;
     }
 
-    public function getExtensionVersion(): string {
+    public function getExtensionVersion(): string
+    {
         return $this->extensionVersion;
     }
 }

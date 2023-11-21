@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Events\Notifications;
 
 use SimplyStream\TwitchApiBundle\Helix\Models\SerializesModels;
@@ -19,7 +21,8 @@ final readonly class PrimePaidUpgrade
     ) {
     }
 
-    public function getSubTier(): string {
+    public function getSubTier(): string
+    {
         return $this->subTier;
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Events;
 
 final readonly class UserAuthorizationGrantEvent extends Event
@@ -18,19 +20,23 @@ final readonly class UserAuthorizationGrantEvent extends Event
     ) {
     }
 
-    public function getClientId(): string {
+    public function getClientId(): string
+    {
         return $this->clientId;
     }
 
-    public function getUserId(): string {
+    public function getUserId(): string
+    {
         return $this->userId;
     }
 
-    public function getUserLogin(): string {
+    public function getUserLogin(): string
+    {
         return $this->userLogin;
     }
 
-    public function getUserName(): string {
+    public function getUserName(): string
+    {
         return $this->userName;
     }
 }

@@ -1,10 +1,13 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * MIT License
  *
  * Copyright (c) 2021 AaricDev (simply-stream.com)
  */
+
 namespace SimplyStream\TwitchApiBundle\Helix\Authentication\Provider;
 
 use Firebase\JWT\JWK;
@@ -15,8 +18,10 @@ use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApiBundle\Helix\Authentication\Token\OidcAccessToken;
 
+use function array_merge;
+
 /**
- * @package SimplyStream\TwitchApiBundle\Helix\Authentication\Provider
+ * @package    SimplyStream\TwitchApiBundle\Helix\Authentication\Provider
  * @deprecated Will be removed in a later update, use https://github.com/vertisan/oauth2-twitch-helix instead
  */
 class TwitchProvider extends GenericProvider
@@ -97,7 +102,7 @@ class TwitchProvider extends GenericProvider
         $resourceOwnerDetails = parent::fetchResourceOwnerDetails($token);
         $keyset = $this->getPublicKeyset();
 
-        return \array_merge(
+        return array_merge(
             $resourceOwnerDetails,
             (array)JWT::decode($token->getValues()['id_token'], $keyset, ['RS256'])
         );

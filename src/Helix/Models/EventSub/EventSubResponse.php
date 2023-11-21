@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub;
 
 use SimplyStream\TwitchApiBundle\Helix\Models\TwitchDataResponse;
@@ -25,15 +27,18 @@ final readonly class EventSubResponse extends TwitchDataResponse
         parent::__construct($data);
     }
 
-    public function getTotal(): int {
+    public function getTotal(): int
+    {
         return $this->total;
     }
 
-    public function getTotalCost(): int {
+    public function getTotalCost(): int
+    {
         return $this->totalCost;
     }
 
-    public function getMaxTotalCost(): int {
+    public function getMaxTotalCost(): int
+    {
         return $this->maxTotalCost;
     }
 }

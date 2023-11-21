@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Events\Notifications;
 
 use SimplyStream\TwitchApiBundle\Helix\Models\SerializesModels;
@@ -18,11 +20,13 @@ final readonly class Message
     ) {
     }
 
-    public function getText(): string {
+    public function getText(): string
+    {
         return $this->text;
     }
 
-    public function getFragments(): array {
+    public function getFragments(): array
+    {
         return $this->fragments;
     }
 }

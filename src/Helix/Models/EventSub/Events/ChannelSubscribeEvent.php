@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Events;
 
 final readonly class ChannelSubscribeEvent extends Event
@@ -26,35 +28,43 @@ final readonly class ChannelSubscribeEvent extends Event
     ) {
     }
 
-    public function getUserId(): string {
+    public function getUserId(): string
+    {
         return $this->userId;
     }
 
-    public function getUserLogin(): string {
+    public function getUserLogin(): string
+    {
         return $this->userLogin;
     }
 
-    public function getUserName(): string {
+    public function getUserName(): string
+    {
         return $this->userName;
     }
 
-    public function getBroadcasterUserId(): string {
+    public function getBroadcasterUserId(): string
+    {
         return $this->broadcasterUserId;
     }
 
-    public function getBroadcasterUserLogin(): string {
+    public function getBroadcasterUserLogin(): string
+    {
         return $this->broadcasterUserLogin;
     }
 
-    public function getBroadcasterUserName(): string {
+    public function getBroadcasterUserName(): string
+    {
         return $this->broadcasterUserName;
     }
 
-    public function getTier(): string {
+    public function getTier(): string
+    {
         return $this->tier;
     }
 
-    public function isGift(): bool {
+    public function isGift(): bool
+    {
         return $this->isGift;
     }
 }

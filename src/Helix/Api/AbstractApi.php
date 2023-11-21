@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Api;
 
 use CuyZ\Valinor\Mapper\MappingError;
+use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApiBundle\Helix\Models\AbstractModel;
 use SimplyStream\TwitchApiBundle\Helix\Models\TwitchResponseInterface;
@@ -12,7 +15,8 @@ use SimplyStream\TwitchApiBundle\Helix\Models\TwitchResponseInterface;
  */
 abstract class AbstractApi
 {
-    public function __construct(protected ApiClient $apiClient) {
+    public function __construct(protected ApiClient $apiClient)
+    {
     }
 
     /**
@@ -26,7 +30,7 @@ abstract class AbstractApi
      *
      * @return T|null
      * @throws MappingError
-     * @throws \JsonException
+     * @throws JsonException
      */
     protected function sendRequest(
         string $path,

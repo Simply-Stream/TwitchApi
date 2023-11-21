@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Condition;
 
@@ -14,11 +16,13 @@ final readonly class ChannelRaidCondition implements ConditionInterface
     ) {
     }
 
-    public function getFromBroadcasterUserId(): string {
+    public function getFromBroadcasterUserId(): string
+    {
         return $this->fromBroadcasterUserId;
     }
 
-    public function getToBroadcasterUserId(): string {
+    public function getToBroadcasterUserId(): string
+    {
         return $this->toBroadcasterUserId;
     }
 }

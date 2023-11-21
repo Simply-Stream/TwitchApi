@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Events;
 
 final readonly class ChannelChatMessageDeleteEvent extends Event
@@ -24,31 +26,38 @@ final readonly class ChannelChatMessageDeleteEvent extends Event
     ) {
     }
 
-    public function getBroadcasterUserId(): string {
+    public function getBroadcasterUserId(): string
+    {
         return $this->broadcasterUserId;
     }
 
-    public function getBroadcasterUserLogin(): string {
+    public function getBroadcasterUserLogin(): string
+    {
         return $this->broadcasterUserLogin;
     }
 
-    public function getBroadcasterUserName(): string {
+    public function getBroadcasterUserName(): string
+    {
         return $this->broadcasterUserName;
     }
 
-    public function getTargetUserId(): string {
+    public function getTargetUserId(): string
+    {
         return $this->targetUserId;
     }
 
-    public function getTargetUserLogin(): string {
+    public function getTargetUserLogin(): string
+    {
         return $this->targetUserLogin;
     }
 
-    public function getTargetUserName(): string {
+    public function getTargetUserName(): string
+    {
         return $this->targetUserName;
     }
 
-    public function getMessageId(): string {
+    public function getMessageId(): string
+    {
         return $this->messageId;
     }
 }

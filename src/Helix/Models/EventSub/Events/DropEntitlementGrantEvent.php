@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Events;
 
 final readonly class DropEntitlementGrantEvent extends Event
 {
     /**
-     * @param string                   $id   Individual event ID, as assigned by EventSub. Use this for de-duplicating messages.
+     * @param string                   $id   Individual event ID, as assigned by EventSub. Use this for de-duplicating
+     *                                       messages.
      * @param DropEntitlementGrantData $data Entitlement object.
      */
     public function __construct(
@@ -14,11 +17,13 @@ final readonly class DropEntitlementGrantEvent extends Event
     ) {
     }
 
-    public function getId(): string {
+    public function getId(): string
+    {
         return $this->id;
     }
 
-    public function getData(): DropEntitlementGrantData {
+    public function getData(): DropEntitlementGrantData
+    {
         return $this->data;
     }
 }

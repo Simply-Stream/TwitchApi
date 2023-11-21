@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Condition;
 
@@ -14,11 +16,13 @@ final readonly class ChannelPointsCustomRewardRedemptionAddCondition implements 
     ) {
     }
 
-    public function getBroadcasterUserId(): string {
+    public function getBroadcasterUserId(): string
+    {
         return $this->broadcasterUserId;
     }
 
-    public function getRewardId(): ?string {
+    public function getRewardId(): ?string
+    {
         return $this->rewardId;
     }
 }

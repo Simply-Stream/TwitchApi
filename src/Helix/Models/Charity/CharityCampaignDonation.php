@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\Charity;
 
 final readonly class CharityCampaignDonation
@@ -22,27 +24,33 @@ final readonly class CharityCampaignDonation
     ) {
     }
 
-    public function getId(): string {
+    public function getId(): string
+    {
         return $this->id;
     }
 
-    public function getCampaignId(): string {
+    public function getCampaignId(): string
+    {
         return $this->campaignId;
     }
 
-    public function getUserId(): string {
+    public function getUserId(): string
+    {
         return $this->userId;
     }
 
-    public function getUserLogin(): string {
+    public function getUserLogin(): string
+    {
         return $this->userLogin;
     }
 
-    public function getUserName(): string {
+    public function getUserName(): string
+    {
         return $this->userName;
     }
 
-    public function getAmount(): CharityAmount {
+    public function getAmount(): CharityAmount
+    {
         return $this->amount;
     }
 }

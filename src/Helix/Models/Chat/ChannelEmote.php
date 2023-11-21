@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\Chat;
 
 final readonly class ChannelEmote extends Emote
@@ -7,8 +9,9 @@ final readonly class ChannelEmote extends Emote
     /**
      * {@inheritDoc}
      *
-     * @param string $tier         The subscriber tier at which the emote is unlocked. This field contains the tier information only if
-     *                             emote_type is set to subscriptions, otherwise, it’s an empty string.
+     * @param string $tier         The subscriber tier at which the emote is unlocked. This field contains the tier
+     *                             information only if emote_type is set to subscriptions, otherwise, it’s an empty
+     *                             string.
      * @param string $emoteType    The type of emote. The possible values are:
      *                             - bitstier — A custom Bits tier emote.
      *                             - follower — A custom follower emote.
@@ -29,15 +32,18 @@ final readonly class ChannelEmote extends Emote
         parent::__construct($id, $name, $images, $format, $scale, $themeMode);
     }
 
-    public function getTier(): string {
+    public function getTier(): string
+    {
         return $this->tier;
     }
 
-    public function getEmoteType(): string {
+    public function getEmoteType(): string
+    {
         return $this->emoteType;
     }
 
-    public function getEmoteSetId(): string {
+    public function getEmoteSetId(): string
+    {
         return $this->emoteSetId;
     }
 }

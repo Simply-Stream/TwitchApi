@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Condition;
 
@@ -13,7 +15,8 @@ final readonly class UserAuthorizationRevokeCondition implements ConditionInterf
     ) {
     }
 
-    public function getClientId(): string {
+    public function getClientId(): string
+    {
         return $this->clientId;
     }
 }

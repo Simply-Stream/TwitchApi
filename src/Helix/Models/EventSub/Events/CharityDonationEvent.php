@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Events;
 
 use SimplyStream\TwitchApiBundle\Helix\Models\Charity\CharityAmount;
@@ -17,7 +19,8 @@ final readonly class CharityDonationEvent extends Event
      * @param string        $userName           The user’s display name.
      * @param string        $charityName        The charity’s name.
      * @param string        $charityDescription A description of the charity.
-     * @param string        $charityLogo        A URL to an image of the charity’s logo. The image’s type is PNG and its size is 100px X
+     * @param string        $charityLogo        A URL to an image of the charity’s logo. The image’s type is PNG and
+     *                                          its size is 100px X
      *                                          100px.
      * @param string        $charityWebsite     A URL to the charity’s website.
      * @param CharityAmount $amount             An object that contains the amount of money that the user donated.
@@ -39,55 +42,68 @@ final readonly class CharityDonationEvent extends Event
     ) {
     }
 
-    public function getId(): string {
+    public function getId(): string
+    {
         return $this->id;
     }
 
-    public function getCampaignId(): string {
+    public function getCampaignId(): string
+    {
         return $this->campaignId;
     }
 
-    public function getBroadcasterId(): string {
+    public function getBroadcasterId(): string
+    {
         return $this->broadcasterId;
     }
 
-    public function getBroadcasterLogin(): string {
+    public function getBroadcasterLogin(): string
+    {
         return $this->broadcasterLogin;
     }
 
-    public function getBroadcasterName(): string {
+    public function getBroadcasterName(): string
+    {
         return $this->broadcasterName;
     }
 
-    public function getUserId(): string {
+    public function getUserId(): string
+    {
         return $this->userId;
     }
 
-    public function getUserLogin(): string {
+    public function getUserLogin(): string
+    {
         return $this->userLogin;
     }
 
-    public function getUserName(): string {
+    public function getUserName(): string
+    {
         return $this->userName;
     }
 
-    public function getCharityName(): string {
+    public function getCharityName(): string
+    {
         return $this->charityName;
     }
 
-    public function getCharityDescription(): string {
+    public function getCharityDescription(): string
+    {
         return $this->charityDescription;
     }
 
-    public function getCharityLogo(): string {
+    public function getCharityLogo(): string
+    {
         return $this->charityLogo;
     }
 
-    public function getCharityWebsite(): string {
+    public function getCharityWebsite(): string
+    {
         return $this->charityWebsite;
     }
 
-    public function getAmount(): CharityAmount {
+    public function getAmount(): CharityAmount
+    {
         return $this->amount;
     }
 }

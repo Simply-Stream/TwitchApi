@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Events\Notifications;
 
 use SimplyStream\TwitchApiBundle\Helix\Models\SerializesModels;
@@ -37,43 +39,53 @@ final readonly class Resubscription
     ) {
     }
 
-    public function getCumulativeMonths(): int {
+    public function getCumulativeMonths(): int
+    {
         return $this->cumulativeMonths;
     }
 
-    public function getDurationMonths(): int {
+    public function getDurationMonths(): int
+    {
         return $this->durationMonths;
     }
 
-    public function getSubTier(): string {
+    public function getSubTier(): string
+    {
         return $this->subTier;
     }
 
-    public function isPrime(): bool {
+    public function isPrime(): bool
+    {
         return $this->isPrime;
     }
 
-    public function isGift(): bool {
+    public function isGift(): bool
+    {
         return $this->isGift;
     }
 
-    public function getStreakMonths(): ?int {
+    public function getStreakMonths(): ?int
+    {
         return $this->streakMonths;
     }
 
-    public function getGifterIsAnonymous(): ?bool {
+    public function getGifterIsAnonymous(): ?bool
+    {
         return $this->gifterIsAnonymous;
     }
 
-    public function getGifterUserId(): ?string {
+    public function getGifterUserId(): ?string
+    {
         return $this->gifterUserId;
     }
 
-    public function getGifterUserName(): ?string {
+    public function getGifterUserName(): ?string
+    {
         return $this->gifterUserName;
     }
 
-    public function getGifterUserLogin(): ?string {
+    public function getGifterUserLogin(): ?string
+    {
         return $this->gifterUserLogin;
     }
 }

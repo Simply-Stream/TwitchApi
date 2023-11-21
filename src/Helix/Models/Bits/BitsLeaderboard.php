@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\Bits;
 
 final readonly class BitsLeaderboard
@@ -20,23 +22,28 @@ final readonly class BitsLeaderboard
     ) {
     }
 
-    public function getUserId(): string {
+    public function getUserId(): string
+    {
         return $this->userId;
     }
 
-    public function getUserLogin(): string {
+    public function getUserLogin(): string
+    {
         return $this->userLogin;
     }
 
-    public function getUserName(): string {
+    public function getUserName(): string
+    {
         return $this->userName;
     }
 
-    public function getRank(): int {
+    public function getRank(): int
+    {
         return $this->rank;
     }
 
-    public function getScore(): int {
+    public function getScore(): int
+    {
         return $this->score;
     }
 }

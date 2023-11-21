@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Events;
 
 final readonly class ChannelUnbanEvent extends Event
@@ -28,39 +30,48 @@ final readonly class ChannelUnbanEvent extends Event
     ) {
     }
 
-    public function getUserId(): string {
+    public function getUserId(): string
+    {
         return $this->userId;
     }
 
-    public function getUserLogin(): string {
+    public function getUserLogin(): string
+    {
         return $this->userLogin;
     }
 
-    public function getUserName(): string {
+    public function getUserName(): string
+    {
         return $this->userName;
     }
 
-    public function getBroadcasterUserId(): string {
+    public function getBroadcasterUserId(): string
+    {
         return $this->broadcasterUserId;
     }
 
-    public function getBroadcasterUserLogin(): string {
+    public function getBroadcasterUserLogin(): string
+    {
         return $this->broadcasterUserLogin;
     }
 
-    public function getBroadcasterUserName(): string {
+    public function getBroadcasterUserName(): string
+    {
         return $this->broadcasterUserName;
     }
 
-    public function getModeratorUserId(): string {
+    public function getModeratorUserId(): string
+    {
         return $this->moderatorUserId;
     }
 
-    public function getModeratorUserLogin(): string {
+    public function getModeratorUserLogin(): string
+    {
         return $this->moderatorUserLogin;
     }
 
-    public function getModeratorUserName(): string {
+    public function getModeratorUserName(): string
+    {
         return $this->moderatorUserName;
     }
 }

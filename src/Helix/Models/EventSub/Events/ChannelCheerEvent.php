@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Events;
 
 final readonly class ChannelCheerEvent extends Event
@@ -11,12 +13,12 @@ final readonly class ChannelCheerEvent extends Event
      * @param string      $broadcasterUserName  The requested broadcaster display name.
      * @param string      $message              The message sent with the cheer.
      * @param int         $bits                 The number of bits cheered.
-     * @param string|null $userId               The user ID for the user who cheered on the specified channel. This is null if is_anonymous
-     *                                          is true.
-     * @param string|null $userLogin            The user login for the user who cheered on the specified channel. This is null if
-     *                                          is_anonymous is true.
-     * @param string|null $userName             The user display name for the user who cheered on the specified channel. This is null if
-     *                                          is_anonymous is true.
+     * @param string|null $userId               The user ID for the user who cheered on the specified channel. This is
+     *                                          null if is_anonymous is true.
+     * @param string|null $userLogin            The user login for the user who cheered on the specified channel. This
+     *                                          is null if is_anonymous is true.
+     * @param string|null $userName             The user display name for the user who cheered on the specified
+     *                                          channel. This is null if is_anonymous is true.
      */
     public function __construct(
         private bool $isAnonymous,
@@ -31,39 +33,48 @@ final readonly class ChannelCheerEvent extends Event
     ) {
     }
 
-    public function isAnonymous(): bool {
+    public function isAnonymous(): bool
+    {
         return $this->isAnonymous;
     }
 
-    public function getUserId(): string {
+    public function getUserId(): string
+    {
         return $this->userId;
     }
 
-    public function getUserLogin(): string {
+    public function getUserLogin(): string
+    {
         return $this->userLogin;
     }
 
-    public function getUserName(): string {
+    public function getUserName(): string
+    {
         return $this->userName;
     }
 
-    public function getBroadcasterUserId(): string {
+    public function getBroadcasterUserId(): string
+    {
         return $this->broadcasterUserId;
     }
 
-    public function getBroadcasterUserLogin(): string {
+    public function getBroadcasterUserLogin(): string
+    {
         return $this->broadcasterUserLogin;
     }
 
-    public function getBroadcasterUserName(): string {
+    public function getBroadcasterUserName(): string
+    {
         return $this->broadcasterUserName;
     }
 
-    public function getMessage(): string {
+    public function getMessage(): string
+    {
         return $this->message;
     }
 
-    public function getBits(): int {
+    public function getBits(): int
+    {
         return $this->bits;
     }
 }

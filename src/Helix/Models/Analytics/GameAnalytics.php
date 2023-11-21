@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\Analytics;
 
 final readonly class GameAnalytics
@@ -18,19 +20,23 @@ final readonly class GameAnalytics
     ) {
     }
 
-    public function getGameId(): string {
+    public function getGameId(): string
+    {
         return $this->gameId;
     }
 
-    public function getURL(): string {
+    public function getURL(): string
+    {
         return $this->URL;
     }
 
-    public function getType(): string {
+    public function getType(): string
+    {
         return $this->type;
     }
 
-    public function getDateRange(): DateRange {
+    public function getDateRange(): DateRange
+    {
         return $this->dateRange;
     }
 }

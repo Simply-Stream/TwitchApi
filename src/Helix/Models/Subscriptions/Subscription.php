@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\Subscriptions;
 
 final readonly class Subscription
@@ -8,12 +10,12 @@ final readonly class Subscription
      * @param string      $broadcasterId    An ID that identifies the broadcaster.
      * @param string      $broadcasterLogin The broadcaster’s login name.
      * @param string      $broadcasterName  The broadcaster’s display name.
-     * @param string      $gifterId         The ID of the user that gifted the subscription to the user. Is an empty string if is_gift is
-     *                                      false.
+     * @param string      $gifterId         The ID of the user that gifted the subscription to the user. Is an empty
+     *                                      string if is_gift is false.
      * @param string      $gifterLogin      The gifter’s login name. Is an empty string if is_gift is false.
      * @param string      $gifterName       The gifter’s display name. Is an empty string if is_gift is false.
-     * @param bool        $isGift           A Boolean value that determines whether the subscription is a gift subscription. Is true if the
-     *                                      subscription was gifted.
+     * @param bool        $isGift           A Boolean value that determines whether the subscription is a gift
+     *                                      subscription. Is true if the subscription was gifted.
      * @param string      $tier             The type of subscription. Possible values are:
      *                                      - 1000 — Tier 1
      *                                      - 2000 — Tier 2
@@ -39,51 +41,63 @@ final readonly class Subscription
     ) {
     }
 
-    public function getBroadcasterId(): string {
+    public function getBroadcasterId(): string
+    {
         return $this->broadcasterId;
     }
 
-    public function getBroadcasterLogin(): string {
+    public function getBroadcasterLogin(): string
+    {
         return $this->broadcasterLogin;
     }
 
-    public function getBroadcasterName(): string {
+    public function getBroadcasterName(): string
+    {
         return $this->broadcasterName;
     }
 
-    public function getGifterId(): string {
+    public function getGifterId(): string
+    {
         return $this->gifterId;
     }
 
-    public function getGifterLogin(): string {
+    public function getGifterLogin(): string
+    {
         return $this->gifterLogin;
     }
 
-    public function getGifterName(): string {
+    public function getGifterName(): string
+    {
         return $this->gifterName;
     }
 
-    public function isGift(): bool {
+    public function isGift(): bool
+    {
         return $this->isGift;
     }
 
-    public function getTier(): string {
+    public function getTier(): string
+    {
         return $this->tier;
     }
 
-    public function getPlanName(): ?string {
+    public function getPlanName(): ?string
+    {
         return $this->planName;
     }
 
-    public function getUserId(): ?string {
+    public function getUserId(): ?string
+    {
         return $this->userId;
     }
 
-    public function getUserName(): ?string {
+    public function getUserName(): ?string
+    {
         return $this->userName;
     }
 
-    public function getUserLogin(): ?string {
+    public function getUserLogin(): ?string
+    {
         return $this->userLogin;
     }
 }

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Condition;
 
@@ -14,11 +16,13 @@ final readonly class ShoutoutReceivedCondition implements ConditionInterface
     ) {
     }
 
-    public function getBroadcasterUserId(): string {
+    public function getBroadcasterUserId(): string
+    {
         return $this->broadcasterUserId;
     }
 
-    public function getModeratorUserId(): string {
+    public function getModeratorUserId(): string
+    {
         return $this->moderatorUserId;
     }
 }

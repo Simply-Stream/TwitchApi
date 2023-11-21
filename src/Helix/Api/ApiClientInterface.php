@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Api;
 
 use League\OAuth2\Client\Token\AccessTokenInterface;

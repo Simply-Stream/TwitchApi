@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Api;
 
 use DateTime;
+use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApiBundle\Helix\Models\Schedule\ChannelStreamSchedule;
 use SimplyStream\TwitchApiBundle\Helix\Models\Schedule\CreateChannelStreamScheduleSegmentRequest;
@@ -16,33 +19,37 @@ class ScheduleApi extends AbstractApi
     protected const BASE_PATH = 'schedule';
 
     /**
-     * Gets the broadcaster’s streaming schedule. You can get the entire schedule or specific segments of the schedule. Learn More
+     * Gets the broadcaster’s streaming schedule. You can get the entire schedule or specific segments of the schedule.
+     * Learn More
      *
      * Authorization:
      * Requires an app access token or user access token.
      *
-     * @param string                    $broadcasterId The ID of the broadcaster that owns the streaming schedule you want to get.
-     * @param string|null               $id            The ID of the scheduled segment to return. To specify more than one segment, include
-     *                                                 the ID of each segment you want to get. For example, id=1234&id=5678. You may
-     *                                                 specify a maximum of 100 IDs.
-     * @param \DateTime|null            $starTime      The UTC date and time that identifies when in the broadcaster’s schedule to start
-     *                                                 returning segments. If not specified, the request returns segments starting after
-     *                                                 the current UTC date and time. Specify the date and time in RFC3339 format (for
-     *                                                 example, 2022-09-01T00:00:00Z).
+     * @param string                    $broadcasterId The ID of the broadcaster that owns the streaming schedule you
+     *                                                 want to get.
+     * @param string|null               $id            The ID of the scheduled segment to return. To specify more than
+     *                                                 one segment, include the ID of each segment you want to get. For
+     *                                                 example, id=1234&id=5678. You may specify a maximum of 100 IDs.
+     * @param DateTime|null             $starTime      The UTC date and time that identifies when in the broadcaster’s
+     *                                                 schedule to start returning segments. If not specified, the
+     *                                                 request returns segments starting after the current UTC date and
+     *                                                 time. Specify the date and time in RFC3339 format (for example,
+     *                                                 2022-09-01T00:00:00Z).
      * @param string|null               $utcOffset     Not supported.
-     * @param int                       $first         The maximum number of items to return per page in the response. The minimum page
-     *                                                 size is 1 item per page and the maximum is 25 items per page. The default is 20.
-     * @param string|null               $after         The cursor used to get the next page of results. The Pagination object in the
-     *                                                 response contains the cursor’s value.
+     * @param int                       $first         The maximum number of items to return per page in the response.
+     *                                                 The minimum page size is 1 item per page and the maximum is 25
+     *                                                 items per page. The default is 20.
+     * @param string|null               $after         The cursor used to get the next page of results. The Pagination
+     *                                                 object in the response contains the cursor’s value.
      * @param AccessTokenInterface|null $accessToken
      *
      * @return TwitchPaginatedDataResponse<ChannelStreamSchedule[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function getChannelStreamSchedule(
         string $broadcasterId,
         string $id = null,
-        \DateTime $starTime = null,
+        DateTime $starTime = null,
         string $utcOffset = null,
         int $first = 20,
         string $after = null,
@@ -73,7 +80,7 @@ class ScheduleApi extends AbstractApi
      *
      * @TODO: This might not work. The response from this request is an unstructured text/html mimetype
      * @return TwitchResponseInterface
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function getChanelICalendar(
         string $broadcasterId
@@ -93,24 +100,25 @@ class ScheduleApi extends AbstractApi
      * Authorization:
      * Requires a user access token that includes the channel:manage:schedule scope.
      *
-     * @param string               $broadcasterId     The ID of the broadcaster whose schedule settings you want to update. The ID must
-     *                                                match the user ID in the user access token.
+     * @param string               $broadcasterId     The ID of the broadcaster whose schedule settings you want to
+     *                                                update. The ID must match the user ID in the user access token.
      * @param AccessTokenInterface $accessToken
-     * @param bool                 $isVacationEnabled A Boolean value that indicates whether the broadcaster has scheduled a vacation. Set
-     *                                                to true to enable Vacation Mode and add vacation dates, or false to cancel a
-     *                                                previously scheduled vacation.
-     * @param DateTime|null        $vacationStartTime The UTC date and time of when the broadcaster’s vacation starts. Specify the date and
-     *                                                time in RFC3339 format (for example, 2021-05-16T00:00:00Z). Required if
-     *                                                is_vacation_enabled is true.
-     * @param DateTime|null        $vacationEndTime   The UTC date and time of when the broadcaster’s vacation ends. Specify the date and
-     *                                                time in RFC3339 format (for example, 2021-05-30T23:59:59Z). Required if
-     *                                                is_vacation_enabled is true.
-     * @param string|null          $timezone          The time zone that the broadcaster broadcasts from. Specify the time zone using IANA
-     *                                                time zone database format (for example, America/New_York). Required if
-     *                                                is_vacation_enabled is true.
+     * @param bool                 $isVacationEnabled A Boolean value that indicates whether the broadcaster has
+     *                                                scheduled a vacation. Set to true to enable Vacation Mode and add
+     *                                                vacation dates, or false to cancel a previously scheduled
+     *                                                vacation.
+     * @param DateTime|null        $vacationStartTime The UTC date and time of when the broadcaster’s vacation starts.
+     *                                                Specify the date and time in RFC3339 format (for example,
+     *                                                2021-05-16T00:00:00Z). Required if is_vacation_enabled is true.
+     * @param DateTime|null        $vacationEndTime   The UTC date and time of when the broadcaster’s vacation ends.
+     *                                                Specify the date and time in RFC3339 format (for example,
+     *                                                2021-05-30T23:59:59Z). Required if is_vacation_enabled is true.
+     * @param string|null          $timezone          The time zone that the broadcaster broadcasts from. Specify the
+     *                                                time zone using IANA time zone database format (for example,
+     *                                                America/New_York). Required if is_vacation_enabled is true.
      *
      * @return void
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function updateChannelStreamSchedule(
         string $broadcasterId,
@@ -135,19 +143,20 @@ class ScheduleApi extends AbstractApi
     }
 
     /**
-     * Adds a single or recurring broadcast to the broadcaster’s streaming schedule. For information about scheduling broadcasts, see
-     * Stream Schedule.
+     * Adds a single or recurring broadcast to the broadcaster’s streaming schedule. For information about scheduling
+     * broadcasts, see Stream Schedule.
      *
      * Authorization:
      * Requires a user access token that includes the channel:manage:schedule scope.
      *
-     * @param string                                    $broadcasterId The ID of the broadcaster that owns the schedule to add the broadcast
-     *                                                                 segment to. This ID must match the user ID in the user access token.
+     * @param string                                    $broadcasterId The ID of the broadcaster that owns the schedule
+     *                                                                 to add the broadcast segment to. This ID must
+     *                                                                 match the user ID in the user access token.
      * @param CreateChannelStreamScheduleSegmentRequest $body
      * @param AccessTokenInterface                      $accessToken
      *
      * @return TwitchDataResponse<ChannelStreamSchedule[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function createChannelStreamScheduleSegment(
         string $broadcasterId,
@@ -169,20 +178,21 @@ class ScheduleApi extends AbstractApi
     /**
      * Updates a scheduled broadcast segment.
      *
-     * For recurring segments, updating a segment’s title, category, duration, and timezone, changes all segments in the recurring
-     * schedule, not just the specified segment.
+     * For recurring segments, updating a segment’s title, category, duration, and timezone, changes all segments in
+     * the recurring schedule, not just the specified segment.
      *
      * Authorization:
      * Requires a user access token that includes the channel:manage:schedule scope.
      *
-     * @param string                                    $broadcasterId The ID of the broadcaster who owns the broadcast segment to update.
-     *                                                                 This ID must match the user ID in the user access token.
+     * @param string                                    $broadcasterId The ID of the broadcaster who owns the broadcast
+     *                                                                 segment to update. This ID must match the user
+     *                                                                 ID in the user access token.
      * @param string                                    $id            The ID of the broadcast segment to update.
      * @param UpdateChannelStreamScheduleSegmentRequest $body
      * @param AccessTokenInterface                      $accessToken
      *
      * @return TwitchDataResponse<ChannelStreamSchedule[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function updateChannelStreamScheduleSegment(
         string $broadcasterId,
@@ -211,13 +221,13 @@ class ScheduleApi extends AbstractApi
      * Authorization:
      * Requires a user access token that includes the channel:manage:schedule scope.
      *
-     * @param string               $broadcasterId The ID of the broadcaster that owns the streaming schedule. This ID must match the user
-     *                                            ID in the user access token.
+     * @param string               $broadcasterId The ID of the broadcaster that owns the streaming schedule. This ID
+     *                                            must match the user ID in the user access token.
      * @param string               $id            The ID of the broadcast segment to remove.
      * @param AccessTokenInterface $accessToken
      *
      * @return void
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function deleteStreamScheduleSegment(
         string $broadcasterId,

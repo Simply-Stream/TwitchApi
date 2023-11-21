@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Events;
 
 use SimplyStream\TwitchApiBundle\Helix\Models\SerializesModels;
@@ -10,7 +12,8 @@ final readonly class Message
 
     /**
      * @param string  $text   The text of the resubscription chat message.
-     * @param Emote[] $emotes An array that includes the emote ID and start and end positions for where the emote appears in the text.
+     * @param Emote[] $emotes An array that includes the emote ID and start and end positions for where the emote
+     *                        appears in the text.
      */
     public function __construct(
         private string $text,
@@ -18,11 +21,13 @@ final readonly class Message
     ) {
     }
 
-    public function getText(): string {
+    public function getText(): string
+    {
         return $this->text;
     }
 
-    public function getEmotes(): array {
+    public function getEmotes(): array
+    {
         return $this->emotes;
     }
 }

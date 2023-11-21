@@ -1,8 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\Moderation;
 
-final readonly class CheckAutoModStatusRequest
+use SimplyStream\TwitchApiBundle\Helix\Models\AbstractModel;
+
+final readonly class CheckAutoModStatusRequest extends AbstractModel
 {
     /**
      * @param string $msgId   A caller-defined ID used to correlate this message with the same message in the response.
@@ -14,11 +18,13 @@ final readonly class CheckAutoModStatusRequest
     ) {
     }
 
-    public function getMsgId(): string {
+    public function getMsgId(): string
+    {
         return $this->msgId;
     }
 
-    public function getMsgText(): string {
+    public function getMsgText(): string
+    {
         return $this->msgText;
     }
 }

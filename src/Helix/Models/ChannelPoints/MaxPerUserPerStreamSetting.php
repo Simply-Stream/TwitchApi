@@ -1,12 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\ChannelPoints;
 
 final readonly class MaxPerUserPerStreamSetting
 {
     /**
-     * @param bool $isEnabled           A Boolean value that determines whether the reward applies a limit on the number of redemptions
-     *                                  allowed per user per live stream. Is true if the reward applies a limit.
+     * @param bool $isEnabled           A Boolean value that determines whether the reward applies a limit on the
+     *                                  number of redemptions allowed per user per live stream. Is true if the reward
+     *                                  applies a limit.
      * @param int  $maxPerUserPerStream The maximum number of redemptions allowed per user per live stream.
      */
     public function __construct(
@@ -15,11 +18,13 @@ final readonly class MaxPerUserPerStreamSetting
     ) {
     }
 
-    public function isEnabled(): bool {
+    public function isEnabled(): bool
+    {
         return $this->isEnabled;
     }
 
-    public function getMaxPerUserPerStream(): int {
+    public function getMaxPerUserPerStream(): int
+    {
         return $this->maxPerUserPerStream;
     }
 }

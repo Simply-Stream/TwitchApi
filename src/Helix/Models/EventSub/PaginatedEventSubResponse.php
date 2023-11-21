@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub;
 
 use SimplyStream\TwitchApiBundle\Helix\Models\Pagination;
@@ -12,7 +14,7 @@ use SimplyStream\TwitchApiBundle\Helix\Models\TwitchPaginatedDataResponse;
 final readonly class PaginatedEventSubResponse extends TwitchPaginatedDataResponse
 {
     /**
-     * @param T $data
+     * @param T          $data
      * @param Pagination $pagination
      * @param int        $total
      * @param int        $totalCost
@@ -28,15 +30,18 @@ final readonly class PaginatedEventSubResponse extends TwitchPaginatedDataRespon
         parent::__construct($data, $pagination, $total);
     }
 
-    public function getTotal(): int {
+    public function getTotal(): int
+    {
         return $this->total;
     }
 
-    public function getTotalCost(): int {
+    public function getTotalCost(): int
+    {
         return $this->totalCost;
     }
 
-    public function getMaxTotalCost(): int {
+    public function getMaxTotalCost(): int
+    {
         return $this->maxTotalCost;
     }
 }

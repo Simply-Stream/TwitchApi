@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\Chat;
 
 final readonly class EmoteSet extends Emote
@@ -28,15 +30,18 @@ final readonly class EmoteSet extends Emote
         parent::__construct($id, $name, $images, $format, $scale, $themeMode);
     }
 
-    public function getEmoteType(): string {
+    public function getEmoteType(): string
+    {
         return $this->emoteType;
     }
 
-    public function getEmoteSetId(): string {
+    public function getEmoteSetId(): string
+    {
         return $this->emoteSetId;
     }
 
-    public function getOwnerId(): string {
+    public function getOwnerId(): string
+    {
         return $this->ownerId;
     }
 }

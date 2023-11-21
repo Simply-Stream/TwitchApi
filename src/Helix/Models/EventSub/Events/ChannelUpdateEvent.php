@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Events;
 
 final readonly class ChannelUpdateEvent extends Event
@@ -12,8 +14,9 @@ final readonly class ChannelUpdateEvent extends Event
      * @param string $language                    The channel’s broadcast language.
      * @param string $categoryId                  The channel’s category ID.
      * @param string $categoryName                The category name.
-     * @param array  $contentClassificationLabels Array of content classification label IDs currently applied on the Channel. To retrieve a
-     *                                            list of all possible IDs, use the Get Content Classification Labels API endpoint.
+     * @param array  $contentClassificationLabels Array of content classification label IDs currently applied on the
+     *                                            Channel. To retrieve a list of all possible IDs, use the Get Content
+     *                                            Classification Labels API endpoint.
      */
     public function __construct(
         private string $broadcasterUserId,
@@ -27,35 +30,43 @@ final readonly class ChannelUpdateEvent extends Event
     ) {
     }
 
-    public function getBroadcasterUserId(): string {
+    public function getBroadcasterUserId(): string
+    {
         return $this->broadcasterUserId;
     }
 
-    public function getBroadcasterUserLogin(): string {
+    public function getBroadcasterUserLogin(): string
+    {
         return $this->broadcasterUserLogin;
     }
 
-    public function getBroadcasterUserName(): string {
+    public function getBroadcasterUserName(): string
+    {
         return $this->broadcasterUserName;
     }
 
-    public function getTitle(): string {
+    public function getTitle(): string
+    {
         return $this->title;
     }
 
-    public function getLanguage(): string {
+    public function getLanguage(): string
+    {
         return $this->language;
     }
 
-    public function getCategoryId(): string {
+    public function getCategoryId(): string
+    {
         return $this->categoryId;
     }
 
-    public function getCategoryName(): string {
+    public function getCategoryName(): string
+    {
         return $this->categoryName;
     }
 
-    public function getContentClassificationLabels(): array {
+    public function getContentClassificationLabels(): array
+    {
         return $this->contentClassificationLabels;
     }
 }

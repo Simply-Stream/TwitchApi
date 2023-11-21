@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\ChannelPoints;
 
 final readonly class Reward
@@ -18,19 +20,23 @@ final readonly class Reward
     ) {
     }
 
-    public function getId(): string {
+    public function getId(): string
+    {
         return $this->id;
     }
 
-    public function getTitle(): string {
+    public function getTitle(): string
+    {
         return $this->title;
     }
 
-    public function getPrompt(): string {
+    public function getPrompt(): string
+    {
         return $this->prompt;
     }
 
-    public function getCost(): int {
+    public function getCost(): int
+    {
         return $this->cost;
     }
 }

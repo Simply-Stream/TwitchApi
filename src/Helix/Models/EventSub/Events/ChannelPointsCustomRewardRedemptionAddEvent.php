@@ -1,24 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Events;
 
+use DateTimeImmutable;
 use SimplyStream\TwitchApiBundle\Helix\Models\ChannelPoints\Reward;
 
 final readonly class ChannelPointsCustomRewardRedemptionAddEvent extends Event
 {
     /**
-     * @param string             $id                   The redemption identifier.
-     * @param string             $broadcasterUserId    The requested broadcaster ID.
-     * @param string             $broadcasterUserLogin The requested broadcaster login.
-     * @param string             $broadcasterUserName  The requested broadcaster display name.
-     * @param string             $userId               User ID of the user that redeemed the reward.
-     * @param string             $userLogin            Login of the user that redeemed the reward.
-     * @param string             $userName             Display name of the user that redeemed the reward.
-     * @param string             $userInput            The user input provided. Empty string if not provided.
-     * @param string             $status               Defaults to unfulfilled. Possible values are unknown, unfulfilled, fulfilled, and
-     *                                                 canceled.
-     * @param Reward             $reward               Basic information about the reward that was redeemed, at the time it was redeemed.
-     * @param \DateTimeImmutable $redeemedAt           RFC3339 timestamp of when the reward was redeemed.
+     * @param string            $id                    The redemption identifier.
+     * @param string            $broadcasterUserId     The requested broadcaster ID.
+     * @param string            $broadcasterUserLogin  The requested broadcaster login.
+     * @param string            $broadcasterUserName   The requested broadcaster display name.
+     * @param string            $userId                User ID of the user that redeemed the reward.
+     * @param string            $userLogin             Login of the user that redeemed the reward.
+     * @param string            $userName              Display name of the user that redeemed the reward.
+     * @param string            $userInput             The user input provided. Empty string if not provided.
+     * @param string            $status                Defaults to unfulfilled. Possible values are unknown,
+     *                                                 unfulfilled, fulfilled, and canceled.
+     * @param Reward            $reward                Basic information about the reward that was redeemed, at the
+     *                                                 time it was redeemed.
+     * @param DateTimeImmutable $redeemedAt            RFC3339 timestamp of when the reward was redeemed.
      */
     public function __construct(
         private string $id,
@@ -31,51 +35,62 @@ final readonly class ChannelPointsCustomRewardRedemptionAddEvent extends Event
         private string $userInput,
         private string $status,
         private Reward $reward,
-        private \DateTimeImmutable $redeemedAt
+        private DateTimeImmutable $redeemedAt
     ) {
     }
 
-    public function getId(): string {
+    public function getId(): string
+    {
         return $this->id;
     }
 
-    public function getBroadcasterUserId(): string {
+    public function getBroadcasterUserId(): string
+    {
         return $this->broadcasterUserId;
     }
 
-    public function getBroadcasterUserLogin(): string {
+    public function getBroadcasterUserLogin(): string
+    {
         return $this->broadcasterUserLogin;
     }
 
-    public function getBroadcasterUserName(): string {
+    public function getBroadcasterUserName(): string
+    {
         return $this->broadcasterUserName;
     }
 
-    public function getUserId(): string {
+    public function getUserId(): string
+    {
         return $this->userId;
     }
 
-    public function getUserLogin(): string {
+    public function getUserLogin(): string
+    {
         return $this->userLogin;
     }
 
-    public function getUserName(): string {
+    public function getUserName(): string
+    {
         return $this->userName;
     }
 
-    public function getUserInput(): string {
+    public function getUserInput(): string
+    {
         return $this->userInput;
     }
 
-    public function getStatus(): string {
+    public function getStatus(): string
+    {
         return $this->status;
     }
 
-    public function getReward(): Reward {
+    public function getReward(): Reward
+    {
         return $this->reward;
     }
 
-    public function getRedeemedAt(): \DateTimeImmutable {
+    public function getRedeemedAt(): DateTimeImmutable
+    {
         return $this->redeemedAt;
     }
 }

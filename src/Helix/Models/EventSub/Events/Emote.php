@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Events;
 
 use SimplyStream\TwitchApiBundle\Helix\Models\SerializesModels;
@@ -20,15 +22,18 @@ final readonly class Emote
     ) {
     }
 
-    public function getBegin(): int {
+    public function getBegin(): int
+    {
         return $this->begin;
     }
 
-    public function getEnd(): int {
+    public function getEnd(): int
+    {
         return $this->end;
     }
 
-    public function getId(): string {
+    public function getId(): string
+    {
         return $this->id;
     }
 }

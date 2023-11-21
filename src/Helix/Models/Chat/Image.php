@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\Chat;
 
 final readonly class Image
@@ -16,15 +18,18 @@ final readonly class Image
     ) {
     }
 
-    public function getUrl1x(): string {
+    public function getUrl1x(): string
+    {
         return $this->url1x;
     }
 
-    public function getUrl2x(): string {
+    public function getUrl2x(): string
+    {
         return $this->url2x;
     }
 
-    public function getUrl4x(): string {
+    public function getUrl4x(): string
+    {
         return $this->url4x;
     }
 }

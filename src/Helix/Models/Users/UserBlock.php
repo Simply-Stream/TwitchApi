@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\Users;
 
 final readonly class UserBlock
@@ -16,15 +18,18 @@ final readonly class UserBlock
     ) {
     }
 
-    public function getUserId(): string {
+    public function getUserId(): string
+    {
         return $this->userId;
     }
 
-    public function getUserLogin(): string {
+    public function getUserLogin(): string
+    {
         return $this->userLogin;
     }
 
-    public function getDisplayName(): string {
+    public function getDisplayName(): string
+    {
         return $this->displayName;
     }
 }

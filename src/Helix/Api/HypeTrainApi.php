@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Api;
 
+use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApiBundle\Helix\Models\HypeTrain\HypeTrainEvent;
 use SimplyStream\TwitchApiBundle\Helix\Models\TwitchPaginatedDataResponse;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchResponseInterface;
 
 class HypeTrainApi extends AbstractApi
 {
@@ -19,16 +21,17 @@ class HypeTrainApi extends AbstractApi
      * Authentication:
      * Requires a user access token that includes the channel:read:hype_train scope.
      *
-     * @param string                    $broadcasterId The ID of the broadcaster that’s running the Hype Train. This ID must match the User
-     *                                                 ID in the user access token.
+     * @param string                    $broadcasterId The ID of the broadcaster that’s running the Hype Train. This ID
+     *                                                 must match the User ID in the user access token.
      * @param AccessTokenInterface|null $accessToken
-     * @param int                       $first         The maximum number of items to return per page in the response. The minimum page
-     *                                                 size is 1 item per page and the maximum is 100 items per page. The default is 1.
-     * @param string|null               $after         The cursor used to get the next page of results. The Pagination object in the
-     *                                                 response contains the cursor’s value.
+     * @param int                       $first         The maximum number of items to return per page in the response.
+     *                                                 The minimum page size is 1 item per page and the maximum is 100
+     *                                                 items per page. The default is 1.
+     * @param string|null               $after         The cursor used to get the next page of results. The Pagination
+     *                                                 object in the response contains the cursor’s value.
      *
      * @return TwitchPaginatedDataResponse<HypeTrainEvent[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function getHypeTrainEvents(
         string $broadcasterId,

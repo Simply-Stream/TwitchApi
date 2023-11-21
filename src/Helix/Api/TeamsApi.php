@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Api;
 
+use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApiBundle\Helix\Models\Teams\Team;
 use SimplyStream\TwitchApiBundle\Helix\Models\TwitchDataResponse;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchResponseInterface;
 
 class TeamsApi extends AbstractApi
 {
@@ -21,7 +23,7 @@ class TeamsApi extends AbstractApi
      * @param AccessTokenInterface|null $accessToken
      *
      * @return TwitchDataResponse<Team[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function getChannelTeams(
         string $broadcasterId,
@@ -43,14 +45,16 @@ class TeamsApi extends AbstractApi
      * Authentication:
      * Requires an app access token or user access token.
      *
-     * @param string                    $name        The name of the team to get. This parameter and the id parameter are mutually
-     *                                               exclusive; you must specify the team’s name or ID but not both.
-     * @param string                    $id          The ID of the team to get. This parameter and the name parameter are mutually
-     *                                               exclusive; you must specify the team’s name or ID but not both.
+     * @param string                    $name        The name of the team to get. This parameter and the id parameter
+     *                                               are mutually exclusive; you must specify the team’s name or ID but
+     *                                               not both.
+     * @param string                    $id          The ID of the team to get. This parameter and the name parameter
+     *                                               are mutually exclusive; you must specify the team’s name or ID but
+     *                                               not both.
      * @param AccessTokenInterface|null $accessToken
      *
      * @return TwitchDataResponse<Team[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function getTeams(
         string $name,
