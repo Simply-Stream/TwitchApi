@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Api;
 
+use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApiBundle\Helix\Models\Charity\CharityCampaign;
 use SimplyStream\TwitchApiBundle\Helix\Models\Charity\CharityCampaignDonation;
@@ -14,21 +17,21 @@ class CharityApi extends AbstractApi
     protected const BASE_PATH = 'charity/campaigns';
 
     /**
-     * (BETA) Gets information about the charity campaign that a broadcaster is running. For example, the campaign’s fundraising goal and
-     * the current amount of donations.
+     * (BETA) Gets information about the charity campaign that a broadcaster is running. For example, the campaign’s
+     * fundraising goal and the current amount of donations.
      *
-     * To receive events when progress is made towards the campaign’s goal or the broadcaster changes the fundraising goal, subscribe to
-     * the channel.charity_campaign.progress subscription type.
+     * To receive events when progress is made towards the campaign’s goal or the broadcaster changes the fundraising
+     * goal, subscribe to the channel.charity_campaign.progress subscription type.
      *
      * Authorization:
      * Requires a user access token that includes the channel:read:charity scope.
      *
-     * @param string               $broadcasterId The ID of the broadcaster that’s currently running a charity campaign. This ID must match
-     *                                            the user ID in the access token.
+     * @param string               $broadcasterId The ID of the broadcaster that’s currently running a charity
+     *                                            campaign. This ID must match the user ID in the access token.
      * @param AccessTokenInterface $accessToken
      *
      * @return TwitchDataResponse<CharityCampaign[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function getCharityCampaign(
         string $broadcasterId,
@@ -52,16 +55,17 @@ class CharityApi extends AbstractApi
      * Authorization:
      * Requires a user access token that includes the channel:read:charity scope.
      *
-     * @param string               $broadcasterId The ID of the broadcaster that’s currently running a charity campaign. This ID must match
-     *                                            the user ID in the access token.
+     * @param string               $broadcasterId The ID of the broadcaster that’s currently running a charity
+     *                                            campaign. This ID must match the user ID in the access token.
      * @param AccessTokenInterface $accessToken
-     * @param int                  $first         The maximum number of items to return per page in the response. The minimum page size is
+     * @param int                  $first         The maximum number of items to return per page in the response. The
+     *                                            minimum page size is
      *                                            1 item per page and the maximum is 100. The default is 20.
-     * @param string|null          $after         The cursor used to get the next page of results. The Pagination object in the response
-     *                                            contains the cursor’s value.
+     * @param string|null          $after         The cursor used to get the next page of results. The Pagination
+     *                                            object in the response contains the cursor’s value.
      *
      * @return TwitchPaginatedDataResponse<CharityCampaignDonation[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function getCharityCampaignDonations(
         string $broadcasterId,

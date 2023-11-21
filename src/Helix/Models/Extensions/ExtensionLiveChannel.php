@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\Extensions;
 
 final readonly class ExtensionLiveChannel
 {
     /**
-     * @param string $broadcasterId   The ID of the broadcaster that is streaming live and has installed or activated the extension.
+     * @param string $broadcasterId   The ID of the broadcaster that is streaming live and has installed or activated
+     *                                the extension.
      * @param string $broadcasterName The broadcaster’s display name.
      * @param string $gameName        The name of the category or game being streamed.
      * @param string $gameId          The ID of the category or game being streamed.
@@ -20,23 +23,28 @@ final readonly class ExtensionLiveChannel
     ) {
     }
 
-    public function getBroadcasterId(): string {
+    public function getBroadcasterId(): string
+    {
         return $this->broadcasterId;
     }
 
-    public function getBroadcasterName(): string {
+    public function getBroadcasterName(): string
+    {
         return $this->broadcasterName;
     }
 
-    public function getGameName(): string {
+    public function getGameName(): string
+    {
         return $this->gameName;
     }
 
-    public function getGameId(): string {
+    public function getGameId(): string
+    {
         return $this->gameId;
     }
 
-    public function getTitle(): string {
+    public function getTitle(): string
+    {
         return $this->title;
     }
 }

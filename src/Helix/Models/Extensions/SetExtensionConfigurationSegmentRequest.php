@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\Extensions;
 
+use SimplyStream\TwitchApiBundle\Helix\Models\AbstractModel;
 use Webmozart\Assert\Assert;
 
-final readonly class SetExtensionConfigurationSegmentRequest
+final readonly class SetExtensionConfigurationSegmentRequest extends AbstractModel
 {
     /**
      * @param string      $extensionId   The ID of the extension to update.
@@ -12,12 +15,12 @@ final readonly class SetExtensionConfigurationSegmentRequest
      *                                   - broadcaster
      *                                   - developer
      *                                   - global
-     * @param string|null $broadcasterId The ID of the broadcaster that installed the extension. Include this field only if the segment is
-     *                                   set to developer or broadcaster.
-     * @param string|null $content       The contents of the segment. This string may be a plain-text string or a string-encoded JSON
-     *                                   object.
-     * @param string|null $version       The version number that identifies this definition of the segment’s data. If not specified, the
-     *                                   latest definition is updated.
+     * @param string|null $broadcasterId The ID of the broadcaster that installed the extension. Include this field
+     *                                   only if the segment is set to developer or broadcaster.
+     * @param string|null $content       The contents of the segment. This string may be a plain-text string or a
+     *                                   string-encoded JSON object.
+     * @param string|null $version       The version number that identifies this definition of the segment’s data. If
+     *                                   not specified, the latest definition is updated.
      */
     public function __construct(
         private string $extensionId,
@@ -27,26 +30,35 @@ final readonly class SetExtensionConfigurationSegmentRequest
         private ?string $version = null
     ) {
         Assert::stringNotEmpty($this->extensionId, 'Extension id can\'t be empty');
-        Assert::inArray($this->segment, ['broadcaster', 'developer', 'global'], 'Segment got an invalid value. Allowed values: broadcaster, developer, global');
+        Assert::inArray(
+            $this->segment,
+            ['broadcaster', 'developer', 'global'],
+            'Segment got an invalid value. Allowed values: broadcaster, developer, global'
+        );
     }
 
-    public function getExtensionId(): string {
+    public function getExtensionId(): string
+    {
         return $this->extensionId;
     }
 
-    public function getSegment(): string {
+    public function getSegment(): string
+    {
         return $this->segment;
     }
 
-    public function getBroadcasterId(): ?string {
+    public function getBroadcasterId(): ?string
+    {
         return $this->broadcasterId;
     }
 
-    public function getContent(): ?string {
+    public function getContent(): ?string
+    {
         return $this->content;
     }
 
-    public function getVersion(): ?string {
+    public function getVersion(): ?string
+    {
         return $this->version;
     }
 }

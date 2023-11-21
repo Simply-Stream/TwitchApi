@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Events;
 
 use SimplyStream\TwitchApiBundle\Helix\Models\SerializesModels;
@@ -12,7 +14,8 @@ final readonly class Product
      * @param string $name          Product name.
      * @param int    $bits          Bits involved in the transaction.
      * @param string $sku           Unique identifier for the product acquired.
-     * @param bool   $inDevelopment Flag indicating if the product is in development. If in_development is true, bits will be 0.
+     * @param bool   $inDevelopment Flag indicating if the product is in development. If in_development is true, bits
+     *                              will be 0.
      */
     public function __construct(
         private string $name,
@@ -22,19 +25,23 @@ final readonly class Product
     ) {
     }
 
-    public function getName(): string {
+    public function getName(): string
+    {
         return $this->name;
     }
 
-    public function getBits(): int {
+    public function getBits(): int
+    {
         return $this->bits;
     }
 
-    public function getSku(): string {
+    public function getSku(): string
+    {
         return $this->sku;
     }
 
-    public function isInDevelopment(): bool {
+    public function isInDevelopment(): bool
+    {
         return $this->inDevelopment;
     }
 }

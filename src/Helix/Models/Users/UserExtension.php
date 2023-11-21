@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\Users;
 
 final readonly class UserExtension
@@ -8,8 +10,8 @@ final readonly class UserExtension
      * @param string   $id          An ID that identifies the extension.
      * @param string   $version     The extension’s version.
      * @param string   $name        The extension’s name.
-     * @param bool     $canActivate A Boolean value that determines whether the extension is configured and can be activated. Is true if the
-     *                              extension is configured and can be activated.
+     * @param bool     $canActivate A Boolean value that determines whether the extension is configured and can be
+     *                              activated. Is true if the extension is configured and can be activated.
      * @param string[] $type        The extension types that you can activate for this extension. Possible values are:
      *                              - component
      *                              - mobile
@@ -25,23 +27,28 @@ final readonly class UserExtension
     ) {
     }
 
-    public function getId(): string {
+    public function getId(): string
+    {
         return $this->id;
     }
 
-    public function getVersion(): string {
+    public function getVersion(): string
+    {
         return $this->version;
     }
 
-    public function getName(): string {
+    public function getName(): string
+    {
         return $this->name;
     }
 
-    public function canActivate(): bool {
+    public function canActivate(): bool
+    {
         return $this->canActivate;
     }
 
-    public function getType(): array {
+    public function getType(): array
+    {
         return $this->type;
     }
 }

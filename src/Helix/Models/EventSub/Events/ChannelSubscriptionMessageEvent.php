@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Events;
 
 final readonly class ChannelSubscriptionMessageEvent extends Event
@@ -12,12 +14,13 @@ final readonly class ChannelSubscriptionMessageEvent extends Event
      * @param string   $broadcasterUserLogin The broadcaster login.
      * @param string   $broadcasterUserName  The broadcaster display name.
      * @param string   $tier                 The tier of the user’s subscription.
-     * @param Message  $message              An object that contains the resubscription message and emote information needed to recreate the
-     *                                       message.
+     * @param Message  $message              An object that contains the resubscription message and emote information
+     *                                       needed to recreate the message.
      * @param int      $cumulativeMonths     The total number of months the user has been subscribed to the channel.
      * @param int      $durationMonths       The month duration of the subscription.
-     * @param int|null $streakMonths         The number of consecutive months the user’s current subscription has been active. This value is
-     *                                       null if the user has opted out of sharing this information.
+     * @param int|null $streakMonths         The number of consecutive months the user’s current subscription has been
+     *                                       active. This value is null if the user has opted out of sharing this
+     *                                       information.
      */
     public function __construct(
         private string $userId,
@@ -34,47 +37,58 @@ final readonly class ChannelSubscriptionMessageEvent extends Event
     ) {
     }
 
-    public function getUserId(): string {
+    public function getUserId(): string
+    {
         return $this->userId;
     }
 
-    public function getUserLogin(): string {
+    public function getUserLogin(): string
+    {
         return $this->userLogin;
     }
 
-    public function getUserName(): string {
+    public function getUserName(): string
+    {
         return $this->userName;
     }
 
-    public function getBroadcasterUserId(): string {
+    public function getBroadcasterUserId(): string
+    {
         return $this->broadcasterUserId;
     }
 
-    public function getBroadcasterUserLogin(): string {
+    public function getBroadcasterUserLogin(): string
+    {
         return $this->broadcasterUserLogin;
     }
 
-    public function getBroadcasterUserName(): string {
+    public function getBroadcasterUserName(): string
+    {
         return $this->broadcasterUserName;
     }
 
-    public function getTier(): string {
+    public function getTier(): string
+    {
         return $this->tier;
     }
 
-    public function getMessage(): Message {
+    public function getMessage(): Message
+    {
         return $this->message;
     }
 
-    public function getCumulativeMonths(): int {
+    public function getCumulativeMonths(): int
+    {
         return $this->cumulativeMonths;
     }
 
-    public function getDurationMonths(): int {
+    public function getDurationMonths(): int
+    {
         return $this->durationMonths;
     }
 
-    public function getStreakMonths(): ?int {
+    public function getStreakMonths(): ?int
+    {
         return $this->streakMonths;
     }
 }

@@ -1,12 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\HypeTrain;
 
 final readonly class Contribution
 {
     /**
-     * @param int    $total The total amount contributed. If type is BITS, total represents the amount of Bits used. If type is SUBS, total
-     *                      is 500, 1000, or 2500 to represent tier 1, 2, or 3 subscriptions, respectively.
+     * @param int    $total The total amount contributed. If type is BITS, total represents the amount of Bits used. If
+     *                      type is SUBS, total is 500, 1000, or 2500 to represent tier 1, 2, or 3 subscriptions,
+     *                      respectively.
      * @param string $type  The contribution method used. Possible values are:
      *                      - BITS — Cheering with Bits.
      *                      - SUBS — Subscription activity like subscribing or gifting subscriptions.
@@ -20,15 +23,18 @@ final readonly class Contribution
     ) {
     }
 
-    public function getTotal(): int {
+    public function getTotal(): int
+    {
         return $this->total;
     }
 
-    public function getType(): string {
+    public function getType(): string
+    {
         return $this->type;
     }
 
-    public function getUser(): string {
+    public function getUser(): string
+    {
         return $this->user;
     }
 }

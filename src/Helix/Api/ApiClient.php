@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Api;
 
 use CuyZ\Valinor\Mapper\MappingError;
@@ -7,6 +9,7 @@ use CuyZ\Valinor\Mapper\Object\DynamicConstructor;
 use CuyZ\Valinor\Mapper\Source\Source;
 use CuyZ\Valinor\Mapper\Tree\Message\Messages;
 use CuyZ\Valinor\MapperBuilder;
+use DateTimeImmutable;
 use InvalidArgumentException;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Token\AccessToken;
@@ -27,12 +30,14 @@ use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Subscriptions\Subscriptio
 use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Transport;
 use SimplyStream\TwitchApiBundle\Helix\Models\TwitchResponseInterface;
 use Stringable;
+
 use function json_decode;
 use function json_encode;
 
 class ApiClient implements ApiClientInterface
 {
-    use LoggerTrait, LoggerAwareTrait;
+    use LoggerTrait;
+    use LoggerAwareTrait;
 
     protected string $baseUrl = 'https://api.twitch.tv/helix/';
 
@@ -54,13 +59,16 @@ class ApiClient implements ApiClientInterface
         protected ?array $options = null,
         protected TokenStorageInterface $tokenStorage = new InMemoryStorage()
     ) {
-        if (! empty($this->options['token'])) {
+        if (!empty($this->options['token'])) {
             foreach ($this->options['token'] as $grant => $token) {
-                $this->tokenStorage->save($grant, new AccessToken([
-                    'access_token' => $token['token'],
-                    'expires_in' => $token['expires_in'],
-                    'token_type' => $token['token_type'],
-                ]));
+                $this->tokenStorage->save(
+                    $grant,
+                    new AccessToken([
+                        'access_token' => $token['token'],
+                        'expires_in' => $token['expires_in'],
+                        'token_type' => $token['token_type'],
+                    ])
+                );
             }
         }
     }
@@ -77,7 +85,7 @@ class ApiClient implements ApiClientInterface
         ?AccessTokenInterface $accessToken = null,
         array $headers = []
     ): ?TwitchResponseInterface {
-        if (! $accessToken) {
+        if (!$accessToken) {
             $accessToken = $this->getAccessToken('client_credentials');
         }
 
@@ -90,7 +98,10 @@ class ApiClient implements ApiClientInterface
         }
 
         $request = $request
-            ->withHeader('Authorization', ucfirst($accessToken->getValues()['token_type']) . ' ' . $accessToken->getToken())
+            ->withHeader(
+                'Authorization',
+                ucfirst($accessToken->getValues()['token_type']) . ' ' . $accessToken->getToken()
+            )
             ->withHeader('Content-Type', 'application/json')
             ->withHeader('Client-ID', $this->options['clientId']);
 
@@ -127,7 +138,7 @@ class ApiClient implements ApiClientInterface
                             new Transport(...$value['transport']),
                             $value['id'],
                             $value['status'],
-                            new \DateTimeImmutable($value['createdAt']),
+                            new DateTimeImmutable($value['createdAt']),
                         );
                     }
                 )
@@ -149,7 +160,8 @@ class ApiClient implements ApiClientInterface
      *
      * @return AccessTokenInterface
      */
-    protected function getAccessToken(string $grant): AccessTokenInterface {
+    protected function getAccessToken(string $grant): AccessTokenInterface
+    {
         if ($this->tokenStorage->has($grant)) {
             return $this->tokenStorage->get($grant);
         }
@@ -165,7 +177,8 @@ class ApiClient implements ApiClientInterface
         return $accessToken;
     }
 
-    public function getBaseUrl(): string {
+    public function getBaseUrl(): string
+    {
         return $this->baseUrl;
     }
 
@@ -177,7 +190,8 @@ class ApiClient implements ApiClientInterface
      *
      * @return self
      */
-    public function setBaseUrl(string $baseUrl): self {
+    public function setBaseUrl(string $baseUrl): self
+    {
         $this->baseUrl = $baseUrl;
 
         return $this;
@@ -193,7 +207,8 @@ class ApiClient implements ApiClientInterface
      *
      * @return string|null
      */
-    private function buildQueryString(array $query, string|int|null $prefix = null) {
+    private function buildQueryString(array $query, string|int|null $prefix = null)
+    {
         $queryString = '';
 
         foreach ($query as $key => $value) {
@@ -204,7 +219,7 @@ class ApiClient implements ApiClientInterface
             if (is_array($value)) {
                 $queryString .= $this->buildQueryString($value, $key);
             } else {
-                $queryString .= urlencode($key) . '=' . urlencode($value) . '&';
+                $queryString .= urlencode((string)$key) . '=' . urlencode((string)$value) . '&';
             }
         }
 
@@ -214,7 +229,8 @@ class ApiClient implements ApiClientInterface
     /**
      * {@inheritDoc}
      */
-    public function log($level, Stringable|string $message, array $context = []): void {
+    public function log($level, Stringable|string $message, array $context = []): void
+    {
         $this->logger?->log($level, $message, $context);
     }
 
@@ -223,7 +239,8 @@ class ApiClient implements ApiClientInterface
      *
      * @return $this
      */
-    public function setTokenStorage(TokenStorageInterface $tokenStorage): self {
+    public function setTokenStorage(TokenStorageInterface $tokenStorage): self
+    {
         $this->tokenStorage = $tokenStorage;
 
         return $this;

@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Subscriptions;
 
+use DateTimeImmutable;
 use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Condition\UserAuthorizationGrantCondition;
 use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Subscription;
 use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Transport;
@@ -18,10 +21,18 @@ final readonly class UserAuthorizationGrantSubscription extends Subscription
         Transport $transport,
         ?string $id = null,
         ?string $status = null,
-        ?\DateTimeImmutable $createdAt = null,
+        ?DateTimeImmutable $createdAt = null,
         ?string $type = self::TYPE,
         ?string $version = "1"
     ) {
-        parent::__construct($type, $version, new UserAuthorizationGrantCondition(...$condition), $transport, $id, $status, $createdAt);
+        parent::__construct(
+            $type,
+            $version,
+            new UserAuthorizationGrantCondition(...$condition),
+            $transport,
+            $id,
+            $status,
+            $createdAt
+        );
     }
 }

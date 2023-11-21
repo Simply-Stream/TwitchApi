@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\Chat;
 
 final readonly class ChatBadge
@@ -14,11 +16,13 @@ final readonly class ChatBadge
     ) {
     }
 
-    public function getSetId(): string {
+    public function getSetId(): string
+    {
         return $this->setId;
     }
 
-    public function getVersions(): array {
+    public function getVersions(): array
+    {
         return $this->versions;
     }
 }

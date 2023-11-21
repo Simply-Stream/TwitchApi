@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * MIT License
@@ -14,8 +16,11 @@ use CuyZ\Valinor\Mapper\Source\Exception\InvalidSource;
 use CuyZ\Valinor\Mapper\Source\Source;
 use CuyZ\Valinor\Mapper\TreeMapper;
 use CuyZ\Valinor\MapperBuilder;
+use DateTimeImmutable;
+use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use Psr\Http\Message\RequestInterface;
+use RuntimeException;
 use SimplyStream\TwitchApiBundle\Helix\Api\EventSubApi;
 use SimplyStream\TwitchApiBundle\Helix\EventSub\Exceptions\ChallengeMissingException;
 use SimplyStream\TwitchApiBundle\Helix\EventSub\Exceptions\InvalidSignatureException;
@@ -28,6 +33,10 @@ use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\PaginatedEventSubResponse
 use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Subscription;
 use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Subscriptions\Subscriptions;
 use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Transport;
+
+use function array_key_exists;
+use function current;
+use function hash_hmac;
 
 /**
  * @package SimplyStream\TwitchApiBundle\Helix\EventSub
@@ -69,7 +78,7 @@ class EventSubService
                         new Transport(...$value['transport']),
                         $value['id'],
                         $value['status'],
-                        new \DateTimeImmutable($value['createdAt']),
+                        new DateTimeImmutable($value['createdAt']),
                     );
                 }
             )
@@ -86,13 +95,14 @@ class EventSubService
      * @param AccessTokenInterface|null $accessToken
      *
      * @return EventSubResponse<T>
-     * @throws \JsonException
+     * @throws JsonException
      */
-    public function subscribe(Subscription $subscription, AccessTokenInterface $accessToken = null): EventSubResponse {
+    public function subscribe(Subscription $subscription, AccessTokenInterface $accessToken = null): EventSubResponse
+    {
         try {
             $response = $this->eventSubApi->createEventSubSubscription($subscription, $accessToken);
         } catch (MappingError $e) {
-            throw new \RuntimeException($e->getMessage());
+            throw new RuntimeException($e->getMessage());
         }
 
         return $response;
@@ -104,9 +114,10 @@ class EventSubService
      * @param string $subscriptionId
      *
      * @return void
-     * @throws \JsonException
+     * @throws JsonException
      */
-    public function unsubscribe(string $subscriptionId): void {
+    public function unsubscribe(string $subscriptionId): void
+    {
         $this->eventSubApi->deleteEventSubSubscription($subscriptionId);
     }
 
@@ -114,16 +125,17 @@ class EventSubService
      * Returns all current subscriptions from Twitch
      *
      * @return PaginatedEventSubResponse
-     * @throws \JsonException
+     * @throws JsonException
      */
-    public function getSubscriptions(): PaginatedEventSubResponse {
+    public function getSubscriptions(): PaginatedEventSubResponse
+    {
         return $this->eventSubApi->getEventSubSubscriptions();
     }
 
     /**
-     * Handles the callback send by Twitch. Will return raw json if Twitch send a verification request or maps the response to an
-     * EventInterface. Will throw an exception on unsupported events or invalid signature.
-     * Note: Do not forget to respond to Twitch with the raw challenge, that'll be provided in this methods response.
+     * Handles the callback send by Twitch. Will return raw json if Twitch send a verification request or maps the
+     * response to an EventInterface. Will throw an exception on unsupported events or invalid signature. Note: Do not
+     * forget to respond to Twitch with the raw challenge, that'll be provided in this methods response.
      *
      * @param RequestInterface $request
      * @param string|null      $secret
@@ -135,17 +147,24 @@ class EventSubService
      * @throws UnsupportedEventException
      * @throws ChallengeMissingException
      */
-    public function handleSubscriptionCallback(RequestInterface $request, ?string $secret = null): EventResponse {
+    public function handleSubscriptionCallback(RequestInterface $request, ?string $secret = null): EventResponse
+    {
         $this->verifySignature($request, $secret);
         $type = $this->extractType($request);
 
         /** @var EventResponse $eventResponse */
         $eventResponse = $this->mapper->map(
-            sprintf('%s<%s, %s>', EventResponse::class, Subscriptions::MAP[$type], EventInterface::AVAILABLE_EVENTS[$type]),
+            sprintf(
+                '%s<%s, %s>',
+                EventResponse::class,
+                Subscriptions::MAP[$type],
+                EventInterface::AVAILABLE_EVENTS[$type]
+            ),
             Source::json((string)$request->getBody())->camelCaseKeys()
         );
 
-        if ($eventResponse->getSubscription()->getStatus() === self::WEBHOOK_CALLBACK_VERIFICATION_PENDING && ! $eventResponse->getChallenge()) {
+        if ($eventResponse->getSubscription()->getStatus(
+        ) === self::WEBHOOK_CALLBACK_VERIFICATION_PENDING && !$eventResponse->getChallenge()) {
             throw new ChallengeMissingException('Challenge is missing');
         }
 
@@ -161,21 +180,28 @@ class EventSubService
      * @return true
      * @throws InvalidSignatureException
      */
-    public function verifySignature(RequestInterface $request, ?string $secret = null): true {
+    public function verifySignature(RequestInterface $request, ?string $secret = null): true
+    {
         $content = (string)$request->getBody();
         $receivedSignature = current($request->getHeader(self::WEBHOOK_CALLBACK_MESSAGE_SIGNATURE_HEADER));
 
         $messageId = current($request->getHeader(self::WEBHOOK_CALLBACK_MESSAGE_ID));
         $timestamp = current($request->getHeader(self::WEBHOOK_CALLBACK_MESSAGE_TIMESTAMP));
 
-        if (! $receivedSignature || ! $timestamp || ! $messageId) {
+        if (!$receivedSignature || !$timestamp || !$messageId) {
             throw new MissingHeaderException('Signature, Timestamp or MessageID headers empty');
         }
 
-        $signature = 'sha256=' . \hash_hmac('sha256', $messageId . $timestamp . $content, $secret ?? $this->options['webhook']['secret']);
+        $signature = 'sha256=' . hash_hmac(
+            'sha256',
+            $messageId . $timestamp . $content,
+            $secret ?? $this->options['webhook']['secret']
+        );
 
         if ($signature !== $receivedSignature) {
-            throw new InvalidSignatureException(sprintf('Signature is invalid. Got "%s" expected "%s"', $receivedSignature, $signature));
+            throw new InvalidSignatureException(
+                sprintf('Signature is invalid. Got "%s" expected "%s"', $receivedSignature, $signature)
+            );
         }
 
         return true;
@@ -189,9 +215,10 @@ class EventSubService
      * @return string
      * @throws UnsupportedEventException
      */
-    protected function extractType(RequestInterface $request): string {
-        $type = \current($request->getHeader(self::WEBHOOK_CALLBACK_EVENT_TYPE));
-        if (! $type || ! \array_key_exists($type, EventInterface::AVAILABLE_EVENTS)) {
+    protected function extractType(RequestInterface $request): string
+    {
+        $type = current($request->getHeader(self::WEBHOOK_CALLBACK_EVENT_TYPE));
+        if (!$type || !array_key_exists($type, EventInterface::AVAILABLE_EVENTS)) {
             throw new UnsupportedEventException(sprintf('The received event "%s" is not supported', $type));
         }
 

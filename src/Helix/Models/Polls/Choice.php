@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\Polls;
 
 final readonly class Choice
@@ -20,23 +22,28 @@ final readonly class Choice
     ) {
     }
 
-    public function getId(): string {
+    public function getId(): string
+    {
         return $this->id;
     }
 
-    public function getTitle(): string {
+    public function getTitle(): string
+    {
         return $this->title;
     }
 
-    public function getVotes(): int {
+    public function getVotes(): int
+    {
         return $this->votes;
     }
 
-    public function getChannelPointsVotes(): int {
+    public function getChannelPointsVotes(): int
+    {
         return $this->channelPointsVotes;
     }
 
-    public function getBitsVotes(): int {
+    public function getBitsVotes(): int
+    {
         return $this->bitsVotes;
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\Analytics;
 
 final readonly class ExtensionAnalytics
@@ -18,19 +20,23 @@ final readonly class ExtensionAnalytics
     ) {
     }
 
-    public function getExtensionId(): string {
+    public function getExtensionId(): string
+    {
         return $this->extensionId;
     }
 
-    public function getURL(): string {
+    public function getURL(): string
+    {
         return $this->URL;
     }
 
-    public function getType(): string {
+    public function getType(): string
+    {
         return $this->type;
     }
 
-    public function getDateRange(): DateRange {
+    public function getDateRange(): DateRange
+    {
         return $this->dateRange;
     }
 }

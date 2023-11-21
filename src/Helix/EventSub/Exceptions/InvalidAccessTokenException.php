@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * MIT License
@@ -9,12 +11,13 @@
 namespace SimplyStream\TwitchApiBundle\Helix\EventSub\Exceptions;
 
 use League\OAuth2\Client\Token\AccessTokenInterface;
+use RuntimeException;
 use Throwable;
 
 /**
  * @package SimplyStream\TwitchApiBundle\Helix\EventSub\Exceptions
  */
-class InvalidAccessTokenException extends \RuntimeException
+class InvalidAccessTokenException extends RuntimeException
 {
     /**
      * @inheritdoc
@@ -27,8 +30,12 @@ class InvalidAccessTokenException extends \RuntimeException
      * @param int                       $code
      * @param Throwable|null            $previous
      */
-    public function __construct(?AccessTokenInterface $accessToken, $message = "", $code = 0, Throwable $previous = null)
-    {
+    public function __construct(
+        ?AccessTokenInterface $accessToken,
+        $message = "",
+        $code = 0,
+        Throwable $previous = null
+    ) {
         if ($accessToken) {
             $this->message .= ": {$accessToken}";
         }

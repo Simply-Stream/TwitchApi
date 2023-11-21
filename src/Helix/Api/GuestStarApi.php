@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Api;
 
+use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApiBundle\Helix\Models\GuestStar\ChannelGuestStarSetting;
 use SimplyStream\TwitchApiBundle\Helix\Models\GuestStar\GuestStarInvite;
@@ -18,15 +21,18 @@ class GuestStarApi extends AbstractApi
      *
      * Authorization
      * - Query parameter moderator_id must match the user_id in the User-Access token
-     * - Requires OAuth Scope: channel:read:guest_star, channel:manage:guest_star, moderator:read:guest_star or moderator:manage:guest_star
+     * - Requires OAuth Scope: channel:read:guest_star, channel:manage:guest_star, moderator:read:guest_star or
+     * moderator:manage:guest_star
      *
-     * @param string               $broadcasterId      The ID of the broadcaster you want to get guest star settings for.
-     * @param string               $moderatorId        The ID of the broadcaster or a user that has permission to moderate the
-     *                                                 broadcaster’s chat room. This ID must match the user ID in the user access token.
+     * @param string               $broadcasterId      The ID of the broadcaster you want to get guest star settings
+     *                                                 for.
+     * @param string               $moderatorId        The ID of the broadcaster or a user that has permission to
+     *                                                 moderate the broadcaster’s chat room. This ID must match the
+     *                                                 user ID in the user access token.
      * @param AccessTokenInterface $accessToken
      *
      * @return TwitchDataResponse<ChannelGuestStarSetting[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function getChannelGuestStarSettings(
         string $broadcasterId,
@@ -51,12 +57,13 @@ class GuestStarApi extends AbstractApi
      * - Query parameter broadcaster_id must match the user_id in the User-Access token
      * - Requires OAuth Scope: channel:manage:guest_star
      *
-     * @param string                               $broadcasterId The ID of the broadcaster you want to update Guest Star settings for.
+     * @param string                               $broadcasterId The ID of the broadcaster you want to update Guest
+     *                                                            Star settings for.
      * @param AccessTokenInterface                 $accessToken
      * @param UpdateChannelGuestStarSettingRequest $body
      *
      * @return void
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function updateChannelGuestStarSettings(
         string $broadcasterId,
@@ -78,16 +85,18 @@ class GuestStarApi extends AbstractApi
      * (BETA) Gets information about an ongoing Guest Star session for a particular channel.
      *
      * Authorization
-     * - Requires OAuth Scope: channel:read:guest_star, channel:manage:guest_star, moderator:read:guest_star or moderator:manage:guest_star
+     * - Requires OAuth Scope: channel:read:guest_star, channel:manage:guest_star, moderator:read:guest_star or
+     * moderator:manage:guest_star
      * - Guests must be either invited or assigned a slot within the session
      *
      * @param string               $broadcasterId      ID for the user hosting the Guest Star session.
-     * @param string               $moderatorId        The ID of the broadcaster or a user that has permission to moderate the
-     *                                                 broadcaster’s chat room. This ID must match the user ID in the user access token.
+     * @param string               $moderatorId        The ID of the broadcaster or a user that has permission to
+     *                                                 moderate the broadcaster’s chat room. This ID must match the
+     *                                                 user ID in the user access token.
      * @param AccessTokenInterface $accessToken
      *
      * @return TwitchDataResponse<GuestStarSession[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function getGuestStarSession(
         string $broadcasterId,
@@ -106,19 +115,20 @@ class GuestStarApi extends AbstractApi
     }
 
     /**
-     * (BETA) Programmatically creates a Guest Star session on behalf of the broadcaster. Requires the broadcaster to be present in the
-     * call interface, or the call will be ended automatically.
+     * (BETA) Programmatically creates a Guest Star session on behalf of the broadcaster. Requires the broadcaster to
+     * be present in the call interface, or the call will be ended automatically.
      *
      * Authorization
      * - Query parameter broadcaster_id must match the user_id in the User-Access token
      * - Requires OAuth Scope: channel:manage:guest_star
      *
-     * @param string               $broadcasterId The ID of the broadcaster you want to create a Guest Star session for. Provided
-     *                                            broadcaster_id must match the user_id in the auth token.
+     * @param string               $broadcasterId The ID of the broadcaster you want to create a Guest Star session
+     *                                            for. Provided broadcaster_id must match the user_id in the auth
+     *                                            token.
      * @param AccessTokenInterface $accessToken
      *
      * @return TwitchDataResponse<GuestStarSession[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function createGuestStarSession(
         string $broadcasterId,
@@ -136,20 +146,21 @@ class GuestStarApi extends AbstractApi
     }
 
     /**
-     * (BETA) Programmatically ends a Guest Star session on behalf of the broadcaster. Performs the same action as if the host clicked the
+     * (BETA) Programmatically ends a Guest Star session on behalf of the broadcaster. Performs the same action as if
+     * the host clicked the
      * “End Call” button in the Guest Star UI.
      *
      * Authorization
      * - Query parameter broadcaster_id must match the user_id in the User-Access token
      * - Requires OAuth Scope: channel:manage:guest_star
      *
-     * @param string               $broadcasterId The ID of the broadcaster you want to end a Guest Star session for. Provided
-     *                                            broadcaster_id must match the user_id in the auth token.
+     * @param string               $broadcasterId The ID of the broadcaster you want to end a Guest Star session for.
+     *                                            Provided broadcaster_id must match the user_id in the auth token.
      * @param string               $sessionId     ID for the session to end on behalf of the broadcaster.
      * @param AccessTokenInterface $accessToken
      *
      * @return TwitchDataResponse<GuestStarSession[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function endGuestStarSession(
         string $broadcasterId,
@@ -169,21 +180,23 @@ class GuestStarApi extends AbstractApi
     }
 
     /**
-     * (BETA) Provides the caller with a list of pending invites to a Guest Star session, including the invitee’s ready status while
-     * joining the waiting room.
+     * (BETA) Provides the caller with a list of pending invites to a Guest Star session, including the invitee’s ready
+     * status while joining the waiting room.
      *
      * Authorization
      * - Query parameter broadcaster_id must match the user_id in the User-Access token
-     * - Requires OAuth Scope: channel:read:guest_star, channel:manage:guest_star, moderator:read:guest_star or moderator:manage:guest_star
+     * - Requires OAuth Scope: channel:read:guest_star, channel:manage:guest_star, moderator:read:guest_star or
+     * moderator:manage:guest_star
      *
      * @param string               $broadcasterId The ID of the broadcaster running the Guest Star session.
-     * @param string               $moderatorId   The ID of the broadcaster or a user that has permission to moderate the broadcaster’s
-     *                                            chat room. This ID must match the user_id in the user access token.
+     * @param string               $moderatorId   The ID of the broadcaster or a user that has permission to moderate
+     *                                            the broadcaster’s chat room. This ID must match the user_id in the
+     *                                            user access token.
      * @param string               $sessionId     The session ID to query for invite status.
      * @param AccessTokenInterface $accessToken
      *
      * @return TwitchDataResponse<GuestStarInvite[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function getGuestStarInvites(
         string $broadcasterId,
@@ -211,14 +224,16 @@ class GuestStarApi extends AbstractApi
      * - Requires OAuth Scope: channel:manage:guest_star or moderator:manage:guest_star
      *
      * @param string               $broadcasterId The ID of the broadcaster running the Guest Star session.
-     * @param string               $moderatorId   The ID of the broadcaster or a user that has permission to moderate the broadcaster’s
-     *                                            chat room. This ID must match the user_id in the user access token.
-     * @param string               $sessionId     The session ID for the invite to be sent on behalf of the broadcaster.
+     * @param string               $moderatorId   The ID of the broadcaster or a user that has permission to moderate
+     *                                            the broadcaster’s chat room. This ID must match the user_id in the
+     *                                            user access token.
+     * @param string               $sessionId     The session ID for the invite to be sent on behalf of the
+     *                                            broadcaster.
      * @param string               $guestId       Twitch User ID for the guest to invite to the Guest Star session.
      * @param AccessTokenInterface $accessToken
      *
      * @return void
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function sendGuestStarInvite(
         string $broadcasterId,
@@ -248,16 +263,19 @@ class GuestStarApi extends AbstractApi
      * - Requires OAuth Scope: channel:manage:guest_star or moderator:manage:guest_star
      *
      * @param string               $broadcasterId The ID of the broadcaster running the Guest Star session.
-     * @param string               $moderatorId   The ID of the broadcaster or a user that has permission to moderate the broadcaster’s
-     *                                            chat room. This ID must match the user_id in the user access token.
+     * @param string               $moderatorId   The ID of the broadcaster or a user that has permission to moderate
+     *                                            the broadcaster’s chat room. This ID must match the user_id in the
+     *                                            user access token.
      *
-     * @param string               $sessionId     The ID of the session for the invite to be revoked on behalf of the broadcaster.
-     * @param string               $guestId       Twitch User ID for the guest to revoke the Guest Star session invite from.
+     * @param string               $sessionId     The ID of the session for the invite to be revoked on behalf of the
+     *                                            broadcaster.
+     * @param string               $guestId       Twitch User ID for the guest to revoke the Guest Star session invite
+     *                                            from.
      *
      * @param AccessTokenInterface $accessToken
      *
      * @return void
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function deleteGuestStarInvite(
         string $broadcasterId,
@@ -280,28 +298,30 @@ class GuestStarApi extends AbstractApi
     }
 
     /**
-     * (BETA) Allows a previously invited user to be assigned a slot within the active Guest Star session, once that guest has indicated
-     * they are ready to join.
+     * (BETA) Allows a previously invited user to be assigned a slot within the active Guest Star session, once that
+     * guest has indicated they are ready to join.
      *
      * Authorization
      * - Query parameter moderator_id must match the user_id in the User-Access token
      * - Requires OAuth Scope: channel:manage:guest_star or moderator:manage:guest_star
      *
      * @param string               $broadcasterId The ID of the broadcaster running the Guest Star session.
-     * @param string               $moderatorId   The ID of the broadcaster or a user that has permission to moderate the broadcaster’s
-     *                                            chat room. This ID must match the user_id in the user access token.
+     * @param string               $moderatorId   The ID of the broadcaster or a user that has permission to moderate
+     *                                            the broadcaster’s chat room. This ID must match the user_id in the
+     *                                            user access token.
      * @param string               $sessionId     The ID of the Guest Star session in which to assign the slot.
-     * @param string               $guestId       The Twitch User ID corresponding to the guest to assign a slot in the session. This user
-     *                                            must already have an invite to this session, and have indicated that they are ready to
-     *                                            join.
-     * @param string               $slotId        The slot assignment to give to the user. Must be a numeric identifier between “1” and “N”
-     *                                            where N is the max number of slots for the session. Max number of slots allowed for the
-     *                                            session is reported by Get Channel Guest Star Settings
+     * @param string               $guestId       The Twitch User ID corresponding to the guest to assign a slot in the
+     *                                            session. This user must already have an invite to this session, and
+     *                                            have indicated that they are ready to join.
+     * @param string               $slotId        The slot assignment to give to the user. Must be a numeric identifier
+     *                                            between “1” and “N” where N is the max number of slots for the
+     *                                            session. Max number of slots allowed for the session is reported by
+     *                                            Get Channel Guest Star Settings
      *                                            (https://dev.twitch.tv/docs/api/reference/#get-channel-guest-star-settings).
      * @param AccessTokenInterface $accessToken
      *
      * @return void
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function assignGuestStarSlot(
         string $broadcasterId,
@@ -333,17 +353,20 @@ class GuestStarApi extends AbstractApi
      * - Requires OAuth Scope: channel:manage:guest_star or moderator:manage:guest_star
      *
      * @param string               $broadcasterId     The ID of the broadcaster running the Guest Star session.
-     * @param string               $moderatorId       The ID of the broadcaster or a user that has permission to moderate the broadcaster’s
-     *                                                chat room. This ID must match the user_id in the user access token.
-     * @param string               $sessionId         The ID of the Guest Star session in which to update slot settings.
+     * @param string               $moderatorId       The ID of the broadcaster or a user that has permission to
+     *                                                moderate the broadcaster’s chat room. This ID must match the
+     *                                                user_id in the user access token.
+     * @param string               $sessionId         The ID of the Guest Star session in which to update slot
+     *                                                settings.
      * @param string               $sourceSlotId      The slot assignment previously assigned to a user.
      * @param AccessTokenInterface $accessToken
      *
-     * @param string|null          $destinationSlotId The slot to move this user assignment to. If the destination slot is occupied, the
-     *                                                user assigned will be swapped into source_slot_id.
+     * @param string|null          $destinationSlotId The slot to move this user assignment to. If the destination slot
+     *                                                is occupied, the user assigned will be swapped into
+     *                                                source_slot_id.
      *
      * @return void
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function updateGuestStarSlot(
         string $broadcasterId,
@@ -369,25 +392,30 @@ class GuestStarApi extends AbstractApi
     }
 
     /**
-     * (BETA) Allows a caller to remove a slot assignment from a user participating in an active Guest Star session. This revokes their
-     * access to the session immediately and disables their access to publish or subscribe to media within the session.
+     * (BETA) Allows a caller to remove a slot assignment from a user participating in an active Guest Star session.
+     * This revokes their access to the session immediately and disables their access to publish or subscribe to media
+     * within the session.
      *
      * Authorization
      * - Query parameter moderator_id must match the user_id in the User-Access token
      * - Requires OAuth Scope: channel:manage:guest_star or moderator:manage:guest_star
      *
      * @param string               $broadcasterId       The ID of the broadcaster running the Guest Star session.
-     * @param string               $moderatorId         The ID of the broadcaster or a user that has permission to moderate the
-     *                                                  broadcaster’s chat room. This ID must match the user ID in the user access token.
-     * @param string               $sessionId           The ID of the Guest Star session in which to remove the slot assignment.
-     * @param string               $guestId             The Twitch User ID corresponding to the guest to remove from the session.
-     * @param string               $slotId              The slot ID representing the slot assignment to remove from the session.
+     * @param string               $moderatorId         The ID of the broadcaster or a user that has permission to
+     *                                                  moderate the broadcaster’s chat room. This ID must match the
+     *                                                  user ID in the user access token.
+     * @param string               $sessionId           The ID of the Guest Star session in which to remove the slot
+     *                                                  assignment.
+     * @param string               $guestId             The Twitch User ID corresponding to the guest to remove from
+     *                                                  the session.
+     * @param string               $slotId              The slot ID representing the slot assignment to remove from the
+     *                                                  session.
      * @param AccessTokenInterface $accessToken
-     * @param string|null          $shouldReinviteGuest Flag signaling that the guest should be reinvited to the session, sending them back
-     *                                                  to the invite queue.
+     * @param string|null          $shouldReinviteGuest Flag signaling that the guest should be reinvited to the
+     *                                                  session, sending them back to the invite queue.
      *
      * @return void
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function deleteGuestStarSlot(
         string $broadcasterId,
@@ -415,31 +443,38 @@ class GuestStarApi extends AbstractApi
     }
 
     /**
-     * (BETA) Allows a user to update slot settings for a particular guest within a Guest Star session, such as allowing the user to share
-     * audio or video within the call as a host. These settings will be broadcasted to all subscribers which control their view of the
-     * guest in that slot. One or more of the optional parameters to this API can be specified at any time.
+     * (BETA) Allows a user to update slot settings for a particular guest within a Guest Star session, such as
+     * allowing the user to share audio or video within the call as a host. These settings will be broadcasted to all
+     * subscribers which control their view of the guest in that slot. One or more of the optional parameters to this
+     * API can be specified at any time.
      *
      * Authorization
      * - Query parameter moderator_id must match the user_id in the User-Access token
      * - Requires OAuth Scope: channel:manage:guest_star or moderator:manage:guest_star
      *
      * @param string               $broadcasterId  The ID of the broadcaster running the Guest Star session.
-     * @param string               $moderatorId    The ID of the broadcaster or a user that has permission to moderate the broadcaster’s
-     *                                             chat room. This ID must match the user ID in the user access token.
-     * @param string               $sessionId      The ID of the Guest Star session in which to update a slot’s settings.
+     * @param string               $moderatorId    The ID of the broadcaster or a user that has permission to moderate
+     *                                             the broadcaster’s chat room. This ID must match the user ID in the
+     *                                             user access token.
+     * @param string               $sessionId      The ID of the Guest Star session in which to update a slot’s
+     *                                             settings.
      * @param string               $slotId         The slot assignment that has previously been assigned to a user.
      * @param AccessTokenInterface $accessToken
-     * @param bool|null            $isAudioEnabled Flag indicating whether the slot is allowed to share their audio with the rest of the
-     *                                             session. If false, the slot will be muted in any views containing the slot.
-     * @param bool|null            $isVideoEnabled Flag indicating whether the slot is allowed to share their video with the rest of the
-     *                                             session. If false, the slot will have no video shared in any views containing the slot.
-     * @param bool|null            $isLive         Flag indicating whether the user assigned to this slot is visible/can be heard from any
-     *                                             public subscriptions. Generally, this determines whether or not the slot is enabled in
-     *                                             any broadcasting software integrations.
-     * @param int|null             $volume         Value from 0-100 that controls the audio volume for shared views containing the slot.
+     * @param bool|null            $isAudioEnabled Flag indicating whether the slot is allowed to share their audio
+     *                                             with the rest of the session. If false, the slot will be muted in
+     *                                             any views containing the slot.
+     * @param bool|null            $isVideoEnabled Flag indicating whether the slot is allowed to share their video
+     *                                             with the rest of the session. If false, the slot will have no video
+     *                                             shared in any views containing the slot.
+     * @param bool|null            $isLive         Flag indicating whether the user assigned to this slot is
+     *                                             visible/can be heard from any public subscriptions. Generally, this
+     *                                             determines whether or not the slot is enabled in any broadcasting
+     *                                             software integrations.
+     * @param int|null             $volume         Value from 0-100 that controls the audio volume for shared views
+     *                                             containing the slot.
      *
      * @return void
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function updateGuestStarSlotSettings(
         string $broadcasterId,

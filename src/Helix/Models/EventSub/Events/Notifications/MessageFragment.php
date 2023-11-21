@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Events\Notifications;
 
 use SimplyStream\TwitchApiBundle\Helix\Models\SerializesModels;
@@ -28,23 +30,28 @@ final readonly class MessageFragment
     ) {
     }
 
-    public function getType(): string {
+    public function getType(): string
+    {
         return $this->type;
     }
 
-    public function getText(): string {
+    public function getText(): string
+    {
         return $this->text;
     }
 
-    public function getCheermote(): Cheermote {
+    public function getCheermote(): Cheermote
+    {
         return $this->cheermote;
     }
 
-    public function getEmote(): Emote {
+    public function getEmote(): Emote
+    {
         return $this->emote;
     }
 
-    public function getMention(): Mention {
+    public function getMention(): Mention
+    {
         return $this->mention;
     }
 }

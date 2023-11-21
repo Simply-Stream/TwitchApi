@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Api;
 
+use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApiBundle\Helix\Models\Moderation\AddBlockedTermRequest;
 use SimplyStream\TwitchApiBundle\Helix\Models\Moderation\AutoModSettings;
@@ -27,9 +30,9 @@ class ModerationApi extends AbstractApi
     /**
      * Checks whether AutoMod would flag the specified message for review.
      *
-     * AutoMod is a moderation tool that holds inappropriate or harassing chat messages for moderators to review. Moderators approve or
-     * deny the messages that AutoMod flags; only approved messages are released to chat. AutoMod detects misspellings and evasive language
-     * automatically. For information about AutoMod, see How to Use AutoMod.
+     * AutoMod is a moderation tool that holds inappropriate or harassing chat messages for moderators to review.
+     * Moderators approve or deny the messages that AutoMod flags; only approved messages are released to chat. AutoMod
+     * detects misspellings and evasive language automatically. For information about AutoMod, see How to Use AutoMod.
      *
      * Rate Limits: Rates are limited per channel based on the account type rather than per access token.
      *
@@ -41,19 +44,20 @@ class ModerationApi extends AbstractApi
      * -------------|------------------|---------------
      * Partner      | 30               | 300
      * ------------------------------------------------
-     * The above limits are in addition to the standard Twitch API rate limits. The rate limit headers in the response represent the Twitch
-     * rate limits and not the above limits.
+     * The above limits are in addition to the standard Twitch API rate limits. The rate limit headers in the response
+     * represent the Twitch rate limits and not the above limits.
      *
      * Authorization:
      * Requires a user access token that includes the moderation:read scope.
      *
-     * @param string                    $broadcasterId The ID of the broadcaster whose AutoMod settings and list of blocked terms are used
-     *                                                 to check the message. This ID must match the user ID in the access token.
+     * @param string                    $broadcasterId The ID of the broadcaster whose AutoMod settings and list of
+     *                                                 blocked terms are used to check the message. This ID must match
+     *                                                 the user ID in the access token.
      * @param CheckAutoModStatusRequest $body
      * @param AccessTokenInterface      $accessToken
      *
      * @return TwitchDataResponse<AutoModStatus[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function checkAutoModStatus(
         string $broadcasterId,
@@ -73,10 +77,11 @@ class ModerationApi extends AbstractApi
     }
 
     /**
-     * Allow or deny the message that AutoMod flagged for review. For information about AutoMod, see How to Use AutoMod.
+     * Allow or deny the message that AutoMod flagged for review. For information about AutoMod, see How to Use
+     * AutoMod.
      *
-     * To get messages that AutoMod is holding for review, subscribe to the automod-queue.<moderator_id>.<channel_id> topic using PubSub.
-     * PubSub sends a notification to your app when AutoMod holds a message for review.
+     * To get messages that AutoMod is holding for review, subscribe to the automod-queue.<moderator_id>.<channel_id>
+     * topic using PubSub. PubSub sends a notification to your app when AutoMod holds a message for review.
      *
      * Authorization:
      * Requires a user access token that includes the moderator:manage:automod scope.
@@ -85,7 +90,7 @@ class ModerationApi extends AbstractApi
      * @param AccessTokenInterface            $accessToken
      *
      * @return void
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function manageHeldAutoModMessages(
         ManageHeldAutoModMessageRequest $body,
@@ -100,8 +105,8 @@ class ModerationApi extends AbstractApi
     }
 
     /**
-     * Gets the broadcaster’s AutoMod settings. The settings are used to automatically block inappropriate or harassing messages from
-     * appearing in the broadcaster’s chat room.
+     * Gets the broadcaster’s AutoMod settings. The settings are used to automatically block inappropriate or harassing
+     * messages from appearing in the broadcaster’s chat room.
      *
      * Authorization:
      * Requires a user access token that includes the moderator:read:automod_settings scope.
@@ -111,7 +116,7 @@ class ModerationApi extends AbstractApi
      * @param AccessTokenInterface $accessToken
      *
      * @return TwitchDataResponse<AutoModSettings[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function getAutoModSettings(
         string $broadcasterId,
@@ -130,20 +135,22 @@ class ModerationApi extends AbstractApi
     }
 
     /**
-     * Updates the broadcaster’s AutoMod settings. The settings are used to automatically block inappropriate or harassing messages from
-     * appearing in the broadcaster’s chat room.
+     * Updates the broadcaster’s AutoMod settings. The settings are used to automatically block inappropriate or
+     * harassing messages from appearing in the broadcaster’s chat room.
      *
      * Authorization:
      * Requires a user access token that includes the moderator:manage:automod_settings scope.
      *
-     * @param string                       $broadcasterId The ID of the broadcaster whose AutoMod settings you want to update.
-     * @param string                       $moderatorId   The ID of the broadcaster or a user that has permission to moderate the
-     *                                                    broadcaster’s chat room. This ID must match the user ID in the user access token.
+     * @param string                       $broadcasterId The ID of the broadcaster whose AutoMod settings you want to
+     *                                                    update.
+     * @param string                       $moderatorId   The ID of the broadcaster or a user that has permission to
+     *                                                    moderate the broadcaster’s chat room. This ID must match the
+     *                                                    user ID in the user access token.
      * @param UpdateAutoModSettingsRequest $body
      * @param AccessTokenInterface         $accessToken
      *
      * @return TwitchDataResponse<AutoModSettings[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function updateAutoModSettings(
         string $broadcasterId,
@@ -170,24 +177,28 @@ class ModerationApi extends AbstractApi
      * Authentication:
      * Requires a user access token that includes the moderation:read scope.
      *
-     * @param string               $broadcasterId The ID of the broadcaster whose list of banned users you want to get. This ID must match
-     *                                            the user ID in the access token.
+     * @param string               $broadcasterId The ID of the broadcaster whose list of banned users you want to get.
+     *                                            This ID must match the user ID in the access token.
      * @param AccessTokenInterface $accessToken
-     * @param string|null          $userId        A list of user IDs used to filter the results. To specify more than one ID, include this
-     *                                            parameter for each user you want to get. For example, user_id=1234&user_id=5678. You may
-     *                                            specify a maximum of 100 IDs.
+     * @param string|null          $userId        A list of user IDs used to filter the results. To specify more than
+     *                                            one ID, include this parameter for each user you want to get. For
+     *                                            example, user_id=1234&user_id=5678. You may specify a maximum of 100
+     *                                            IDs.
      *
-     *                                            The returned list includes only those users that were banned or put in a timeout. The
-     *                                            list is returned in the same order that you specified the IDs.
-     * @param int                  $first         The maximum number of items to return per page in the response. The minimum page size is
-     *                                            1 item per page and the maximum is 100 items per page. The default is 20.
-     * @param string|null          $after         The cursor used to get the next page of results. The Pagination object in the response
-     *                                            contains the cursor’s value.
-     * @param string|null          $before        The cursor used to get the previous page of results. The Pagination object in the
-     *                                            response contains the cursor’s value.
+     *                                            The returned list includes only those users that were banned or put
+     *                                            in a timeout. The list is returned in the same order that you
+     *                                            specified the IDs.
+     * @param int                  $first         The maximum number of items to return per page in the response. The
+     *                                            minimum page size is
+     *                                            1 item per page and the maximum is 100 items per page. The default is
+     *                                            20.
+     * @param string|null          $after         The cursor used to get the next page of results. The Pagination
+     *                                            object in the response contains the cursor’s value.
+     * @param string|null          $before        The cursor used to get the previous page of results. The Pagination
+     *                                            object in the response contains the cursor’s value.
      *
      * @return TwitchPaginatedDataResponse<BannedUser[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function getBannedUsers(
         string $broadcasterId,
@@ -216,22 +227,24 @@ class ModerationApi extends AbstractApi
      *
      * For information about banning or putting users in a timeout, see Ban a User and Timeout a User.
      *
-     * If the user is currently in a timeout, you can call this endpoint to change the duration of the timeout or ban them altogether. If
-     * the user is currently banned, you cannot call this method to put them in a timeout instead.
+     * If the user is currently in a timeout, you can call this endpoint to change the duration of the timeout or ban
+     * them altogether. If the user is currently banned, you cannot call this method to put them in a timeout instead.
      *
      * To remove a ban or end a timeout, see Unban user.
      *
      * Authentication:
      * Requires a user access token that includes the moderator:manage:banned_users scope.
      *
-     * @param string               $broadcasterId The ID of the broadcaster whose chat room the user is being banned from.
-     * @param string               $moderatorId   The ID of the broadcaster or a user that has permission to moderate the broadcaster’s
-     *                                            chat room. This ID must match the user ID in the user access token.
+     * @param string               $broadcasterId The ID of the broadcaster whose chat room the user is being banned
+     *                                            from.
+     * @param string               $moderatorId   The ID of the broadcaster or a user that has permission to moderate
+     *                                            the broadcaster’s chat room. This ID must match the user ID in the
+     *                                            user access token.
      * @param BanUserRequest       $body
      * @param AccessTokenInterface $accessToken
      *
      * @return TwitchDataResponse<UserBan[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function banUser(
         string $broadcasterId,
@@ -260,14 +273,16 @@ class ModerationApi extends AbstractApi
      * Authentication:
      * Requires a user access token that includes the moderator:manage:banned_users scope.
      *
-     * @param string               $broadcasterId The ID of the broadcaster whose chat room the user is banned from chatting in.
-     * @param string               $moderatorId   The ID of the broadcaster or a user that has permission to moderate the broadcaster’s
-     *                                            chat room. This ID must match the user ID in the user access token.
+     * @param string               $broadcasterId The ID of the broadcaster whose chat room the user is banned from
+     *                                            chatting in.
+     * @param string               $moderatorId   The ID of the broadcaster or a user that has permission to moderate
+     *                                            the broadcaster’s chat room. This ID must match the user ID in the
+     *                                            user access token.
      * @param string               $userId        The ID of the user to remove the ban or timeout from.
      * @param AccessTokenInterface $accessToken
      *
      * @return void
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function unbanUser(
         string $broadcasterId,
@@ -288,23 +303,26 @@ class ModerationApi extends AbstractApi
     }
 
     /**
-     * Gets the broadcaster’s list of non-private, blocked words or phrases. These are the terms that the broadcaster or moderator added
-     * manually or that were denied by AutoMod.
+     * Gets the broadcaster’s list of non-private, blocked words or phrases. These are the terms that the broadcaster
+     * or moderator added manually or that were denied by AutoMod.
      *
      * Authorization:
      * Requires a user access token that includes the moderator:read:blocked_terms scope.
      *
      * @param string               $broadcasterId The ID of the broadcaster whose blocked terms you’re getting.
-     * @param string               $moderatorId   The ID of the broadcaster or a user that has permission to moderate the broadcaster’s
-     *                                            chat room. This ID must match the user ID in the user access token.
+     * @param string               $moderatorId   The ID of the broadcaster or a user that has permission to moderate
+     *                                            the broadcaster’s chat room. This ID must match the user ID in the
+     *                                            user access token.
      * @param AccessTokenInterface $accessToken
-     * @param int                  $first         The maximum number of items to return per page in the response. The minimum page size is
-     *                                            1 item per page and the maximum is 100 items per page. The default is 20.
-     * @param string|null          $after         The cursor used to get the next page of results. The Pagination object in the response
-     *                                            contains the cursor’s value.
+     * @param int                  $first         The maximum number of items to return per page in the response. The
+     *                                            minimum page size is
+     *                                            1 item per page and the maximum is 100 items per page. The default is
+     *                                            20.
+     * @param string|null          $after         The cursor used to get the next page of results. The Pagination
+     *                                            object in the response contains the cursor’s value.
      *
      * @return TwitchPaginatedDataResponse<BlockedTerm[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function getBlockedTerms(
         string $broadcasterId,
@@ -327,20 +345,21 @@ class ModerationApi extends AbstractApi
     }
 
     /**
-     * Adds a word or phrase to the broadcaster’s list of blocked terms. These are the terms that the broadcaster doesn’t want used in
-     * their chat room.
+     * Adds a word or phrase to the broadcaster’s list of blocked terms. These are the terms that the broadcaster
+     * doesn’t want used in their chat room.
      *
      * Authentication:
      * Requires a user access token that includes the moderator:manage:blocked_terms scope.
      *
      * @param string                $broadcasterId The ID of the broadcaster that owns the list of blocked terms.
-     * @param string                $moderatorId   The ID of the broadcaster or a user that has permission to moderate the broadcaster’s
-     *                                             chat room. This ID must match the user ID in the user access token.
+     * @param string                $moderatorId   The ID of the broadcaster or a user that has permission to moderate
+     *                                             the broadcaster’s chat room. This ID must match the user ID in the
+     *                                             user access token.
      * @param AddBlockedTermRequest $body
      * @param AccessTokenInterface  $accessToken
      *
      * @return TwitchPaginatedDataResponse<BlockedTerm[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function addBlockedTerm(
         string $broadcasterId,
@@ -368,13 +387,15 @@ class ModerationApi extends AbstractApi
      * Requires a user access token that includes the moderator:manage:blocked_terms scope.
      *
      * @param string               $broadcasterId The ID of the broadcaster that owns the list of blocked terms.
-     * @param string               $moderatorId   The ID of the broadcaster or a user that has permission to moderate the broadcaster’s
-     *                                            chat room. This ID must match the user ID in the user access token.
-     * @param string               $id            The ID of the blocked term to remove from the broadcaster’s list of blocked terms.
+     * @param string               $moderatorId   The ID of the broadcaster or a user that has permission to moderate
+     *                                            the broadcaster’s chat room. This ID must match the user ID in the
+     *                                            user access token.
+     * @param string               $id            The ID of the blocked term to remove from the broadcaster’s list of
+     *                                            blocked terms.
      * @param AccessTokenInterface $accessToken
      *
      * @return void
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function removeBlockedTerm(
         string $broadcasterId,
@@ -406,7 +427,7 @@ class ModerationApi extends AbstractApi
      * @param string|null          $messageId
      *
      * @return void
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function deleteChatMessages(
         string $broadcasterId,
@@ -430,27 +451,29 @@ class ModerationApi extends AbstractApi
      * Gets all users allowed to moderate the broadcaster’s chat room.
      *
      * Authorization:
-     * Requires a user access token that includes the moderation:read scope. If your app also adds and removes moderators, you can use the
-     * channel:manage:moderators scope instead.
+     * Requires a user access token that includes the moderation:read scope. If your app also adds and removes
+     * moderators, you can use the channel:manage:moderators scope instead.
      *
-     * @param string               $broadcasterId      The ID of the broadcaster whose list of moderators you want to get. This ID must
-     *                                                 match the user ID in the access token.
+     * @param string               $broadcasterId      The ID of the broadcaster whose list of moderators you want to
+     *                                                 get. This ID must match the user ID in the access token.
      * @param AccessTokenInterface $accessToken
-     * @param string|null          $userId             A list of user IDs used to filter the results. To specify more than one ID, include
-     *                                                 this parameter for each moderator you want to get. For example,
-     *                                                 user_id=1234&user_id=5678. You may specify a maximum of 100 IDs.
+     * @param string|null          $userId             A list of user IDs used to filter the results. To specify more
+     *                                                 than one ID, include this parameter for each moderator you want
+     *                                                 to get. For example, user_id=1234&user_id=5678. You may specify
+     *                                                 a maximum of 100 IDs.
      *
-     *                                                 The returned list includes only the users from the list who are moderators in the
-     *                                                 broadcaster’s channel. The list is returned in the same order as you specified the
-     *                                                 IDs.
-     * @param int                  $first              The maximum number of items to return per page in the response. The minimum page
-     *                                                 size is
-     *                                                 1 item per page and the maximum is 100 items per page. The default is 20.
-     * @param string|null          $after              The cursor used to get the next page of results. The Pagination object in the
-     *                                                 response contains the cursor’s value.
+     *                                                 The returned list includes only the users from the list who are
+     *                                                 moderators in the broadcaster’s channel. The list is returned in
+     *                                                 the same order as you specified the IDs.
+     * @param int                  $first              The maximum number of items to return per page in the response.
+     *                                                 The minimum page size is
+     *                                                 1 item per page and the maximum is 100 items per page. The
+     *                                                 default is 20.
+     * @param string|null          $after              The cursor used to get the next page of results. The Pagination
+     *                                                 object in the response contains the cursor’s value.
      *
      * @return TwitchPaginatedDataResponse<Moderator[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function getModerators(
         string $broadcasterId,
@@ -480,13 +503,14 @@ class ModerationApi extends AbstractApi
      * Authorization:
      * Requires a user access token that includes the channel:manage:moderators scope.
      *
-     * @param string               $broadcasterId The ID of the broadcaster that owns the chat room. This ID must match the user ID in the
-     *                                            access token.
-     * @param string               $userId        The ID of the user to add as a moderator in the broadcaster’s chat room.
+     * @param string               $broadcasterId The ID of the broadcaster that owns the chat room. This ID must match
+     *                                            the user ID in the access token.
+     * @param string               $userId        The ID of the user to add as a moderator in the broadcaster’s chat
+     *                                            room.
      * @param AccessTokenInterface $accessToken
      *
      * @return void
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function addChannelModerator(
         string $broadcasterId,
@@ -512,13 +536,14 @@ class ModerationApi extends AbstractApi
      * Authorization:
      * Requires a user access token that includes the channel:manage:moderators scope.
      *
-     * @param string               $broadcasterId The ID of the broadcaster that owns the chat room. This ID must match the user ID in the
-     *                                            access token.
-     * @param string               $userId        The ID of the user to remove as a moderator from the broadcaster’s chat room.
+     * @param string               $broadcasterId The ID of the broadcaster that owns the chat room. This ID must match
+     *                                            the user ID in the access token.
+     * @param string               $userId        The ID of the user to remove as a moderator from the broadcaster’s
+     *                                            chat room.
      * @param AccessTokenInterface $accessToken
      *
      * @return void
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function removeChannelModerator(
         string $broadcasterId,
@@ -540,23 +565,25 @@ class ModerationApi extends AbstractApi
      * Gets a list of the broadcaster’s VIPs.
      *
      * Authorization:
-     * Requires a user access token that includes the channel:read:vips scope. If your app also adds and removes VIP status, you can use
-     * the channel:manage:vips scope instead.
+     * Requires a user access token that includes the channel:read:vips scope. If your app also adds and removes VIP
+     * status, you can use the channel:manage:vips scope instead.
      *
-     * @param string               $broadcasterId The ID of the broadcaster whose list of VIPs you want to get. This ID must match the user
-     *                                            ID in the access token.
+     * @param string               $broadcasterId The ID of the broadcaster whose list of VIPs you want to get. This ID
+     *                                            must match the user ID in the access token.
      * @param AccessTokenInterface $accessToken
-     * @param string|null          $userId        Filters the list for specific VIPs. To specify more than one user, include the user_id
-     *                                            parameter for each user to get. For example, &user_id=1234&user_id=5678. The maximum
-     *                                            number of IDs that you may specify is 100. Ignores the ID of those users in the list that
-     *                                            aren’t VIPs.
-     * @param int                  $first         The maximum number of items to return per page in the response. The minimum page size is
+     * @param string|null          $userId        Filters the list for specific VIPs. To specify more than one user,
+     *                                            include the user_id parameter for each user to get. For example,
+     *                                            &user_id=1234&user_id=5678. The maximum number of IDs that you may
+     *                                            specify is 100. Ignores the ID of those users in the list that aren’t
+     *                                            VIPs.
+     * @param int                  $first         The maximum number of items to return per page in the response. The
+     *                                            minimum page size is
      *                                            1 item per page and the maximum is 100. The default is 20.
-     * @param string|null          $after         The cursor used to get the next page of results. The Pagination object in the response
-     *                                            contains the cursor’s value.
+     * @param string|null          $after         The cursor used to get the next page of results. The Pagination
+     *                                            object in the response contains the cursor’s value.
      *
      * @return TwitchPaginatedDataResponse<VIP[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function getVips(
         string $broadcasterId,
@@ -587,12 +614,12 @@ class ModerationApi extends AbstractApi
      * Requires a user access token that includes the channel:manage:vips scope.
      *
      * @param string               $userId        The ID of the user to give VIP status to.
-     * @param string               $broadcasterId The ID of the broadcaster that’s adding the user as a VIP. This ID must match the user ID
-     *                                            in the access token.
+     * @param string               $broadcasterId The ID of the broadcaster that’s adding the user as a VIP. This ID
+     *                                            must match the user ID in the access token.
      * @param AccessTokenInterface $accessToken
      *
      * @return void
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function addChannelVip(
         string $userId,
@@ -613,9 +640,9 @@ class ModerationApi extends AbstractApi
     /**
      * Removes the specified user as a VIP in the broadcaster’s channel.
      *
-     * If the broadcaster is removing the user’s VIP status, the ID in the broadcaster_id query parameter must match the user ID in the
-     * access token; otherwise, if the user is removing their VIP status themselves, the ID in the user_id query parameter must match the
-     * user ID in the access token.
+     * If the broadcaster is removing the user’s VIP status, the ID in the broadcaster_id query parameter must match
+     * the user ID in the access token; otherwise, if the user is removing their VIP status themselves, the ID in the
+     * user_id query parameter must match the user ID in the access token.
      *
      * Rate Limits: The broadcaster may remove a maximum of 10 VIPs within a 10-second window.
      *
@@ -623,11 +650,12 @@ class ModerationApi extends AbstractApi
      * Requires a user access token that includes the channel:manage:vips scope.
      *
      * @param string               $userId        The ID of the user to remove VIP status from.
-     * @param string               $broadcasterId The ID of the broadcaster who owns the channel where the user has VIP status.
+     * @param string               $broadcasterId The ID of the broadcaster who owns the channel where the user has VIP
+     *                                            status.
      * @param AccessTokenInterface $accessToken
      *
      * @return void
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function removeChannelVip(
         string $userId,
@@ -648,21 +676,23 @@ class ModerationApi extends AbstractApi
     /**
      * Activates or deactivates the broadcaster’s Shield Mode.
      *
-     * Twitch’s Shield Mode feature is like a panic button that broadcasters can push to protect themselves from chat abuse coming from one
-     * or more accounts. When activated, Shield Mode applies the overrides that the broadcaster configured in the Twitch UX. If the
-     * broadcaster hasn’t configured Shield Mode, it applies default overrides.
+     * Twitch’s Shield Mode feature is like a panic button that broadcasters can push to protect themselves from chat
+     * abuse coming from one or more accounts. When activated, Shield Mode applies the overrides that the broadcaster
+     * configured in the Twitch UX. If the broadcaster hasn’t configured Shield Mode, it applies default overrides.
      *
      * Authorization:
      * Requires a user access token that includes the moderator:manage:shield_mode scope.
      *
-     * @param string                        $broadcasterId The ID of the broadcaster whose Shield Mode you want to activate or deactivate.
-     * @param string                        $moderatorId   The ID of the broadcaster or a user that is one of the broadcaster’s moderators.
-     *                                                     This ID must match the user ID in the access token.
+     * @param string                        $broadcasterId The ID of the broadcaster whose Shield Mode you want to
+     *                                                     activate or deactivate.
+     * @param string                        $moderatorId   The ID of the broadcaster or a user that is one of the
+     *                                                     broadcaster’s moderators. This ID must match the user ID in
+     *                                                     the access token.
      * @param UpdateShieldModeStatusRequest $body
      * @param AccessTokenInterface          $accessToken
      *
      * @return TwitchDataResponse<ShieldModeStatus[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function updateShieldModeStatus(
         string $broadcasterId,
@@ -686,19 +716,20 @@ class ModerationApi extends AbstractApi
     /**
      * Gets the broadcaster’s Shield Mode activation status.
      *
-     * To receive notification when the broadcaster activates and deactivates Shield Mode, subscribe to the channel.shield_mode.begin and
-     * channel.shield_mode.end subscription types.
+     * To receive notification when the broadcaster activates and deactivates Shield Mode, subscribe to the
+     * channel.shield_mode.begin and channel.shield_mode.end subscription types.
      *
      * Authorization:
      * Requires a user access token that includes the moderator:read:shield_mode or moderator:manage:shield_mode scope.
      *
-     * @param string               $broadcasterId The ID of the broadcaster whose Shield Mode activation status you want to get.
-     * @param string               $moderatorId   The ID of the broadcaster or a user that is one of the broadcaster’s moderators. This ID
-     *                                            must match the user ID in the access token.
+     * @param string               $broadcasterId The ID of the broadcaster whose Shield Mode activation status you
+     *                                            want to get.
+     * @param string               $moderatorId   The ID of the broadcaster or a user that is one of the broadcaster’s
+     *                                            moderators. This ID must match the user ID in the access token.
      * @param AccessTokenInterface $accessToken
      *
      * @return TwitchDataResponse<ShieldModeStatus[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function getShieldModeStatus(
         string $broadcasterId,

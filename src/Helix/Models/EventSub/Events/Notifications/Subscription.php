@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Events\Notifications;
 
 use SimplyStream\TwitchApiBundle\Helix\Models\SerializesModels;
@@ -25,19 +27,23 @@ final readonly class Subscription
     ) {
     }
 
-    public function getCumulativeMonths(): int {
+    public function getCumulativeMonths(): int
+    {
         return $this->cumulativeMonths;
     }
 
-    public function getSubTier(): string {
+    public function getSubTier(): string
+    {
         return $this->subTier;
     }
 
-    public function isPrime(): bool {
+    public function isPrime(): bool
+    {
         return $this->isPrime;
     }
 
-    public function getDurationMonths(): int {
+    public function getDurationMonths(): int
+    {
         return $this->durationMonths;
     }
 }

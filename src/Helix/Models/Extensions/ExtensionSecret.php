@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\Extensions;
 
 final readonly class ExtensionSecret
@@ -14,11 +16,13 @@ final readonly class ExtensionSecret
     ) {
     }
 
-    public function getFormatVersion(): int {
+    public function getFormatVersion(): int
+    {
         return $this->formatVersion;
     }
 
-    public function getSecrets(): array {
+    public function getSecrets(): array
+    {
         return $this->secrets;
     }
 }

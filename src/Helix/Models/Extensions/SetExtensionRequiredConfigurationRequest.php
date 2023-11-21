@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\Extensions;
 
+use SimplyStream\TwitchApiBundle\Helix\Models\AbstractModel;
 use Webmozart\Assert\Assert;
 
-final readonly class SetExtensionRequiredConfigurationRequest
+final readonly class SetExtensionRequiredConfigurationRequest extends AbstractModel
 {
     /**
      * @param string $extensionId           The ID of the extension to update.
@@ -21,15 +24,18 @@ final readonly class SetExtensionRequiredConfigurationRequest
         Assert::stringNotEmpty($this->requiredConfiguration, 'Required configuration can\'t be empty');
     }
 
-    public function getExtensionId(): string {
+    public function getExtensionId(): string
+    {
         return $this->extensionId;
     }
 
-    public function getExtensionVersion(): string {
+    public function getExtensionVersion(): string
+    {
         return $this->extensionVersion;
     }
 
-    public function getRequiredConfiguration(): string {
+    public function getRequiredConfiguration(): string
+    {
         return $this->requiredConfiguration;
     }
 }

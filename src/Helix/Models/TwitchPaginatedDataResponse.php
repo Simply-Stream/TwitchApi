@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models;
 
 /**
@@ -23,11 +25,13 @@ readonly class TwitchPaginatedDataResponse extends TwitchDataResponse implements
         parent::__construct($data);
     }
 
-    public function getPagination(): ?Pagination {
+    public function getPagination(): ?Pagination
+    {
         return $this->pagination;
     }
 
-    public function getTotal(): ?int {
+    public function getTotal(): ?int
+    {
         return $this->total;
     }
 }

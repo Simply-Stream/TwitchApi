@@ -1,8 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Api;
 
+use CuyZ\Valinor\Mapper\MappingError;
+use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
+use SimplyStream\TwitchApiBundle\Helix\Models\ChannelPoints\CreateCustomRewardRequest;
 use SimplyStream\TwitchApiBundle\Helix\Models\ChannelPoints\CustomReward;
 use SimplyStream\TwitchApiBundle\Helix\Models\ChannelPoints\CustomRewardRedemption;
 use SimplyStream\TwitchApiBundle\Helix\Models\ChannelPoints\RedemptionStatusRequest;
@@ -13,23 +18,24 @@ class ChannelPointsApi extends AbstractApi
     protected const BASE_PATH = 'channel_points';
 
     /**
-     * Creates a Custom Reward in the broadcaster’s channel. The maximum number of custom rewards per channel is 50, which includes both
-     * enabled and disabled rewards.
+     * Creates a Custom Reward in the broadcaster’s channel. The maximum number of custom rewards per channel is 50,
+     * which includes both enabled and disabled rewards.
      *
      * Authentication:
      * Requires a user access token that includes the channel:manage:redemptions scope.
      *
-     * @param string               $broadcasterId The ID of the broadcaster to add the custom reward to. This ID must match the user ID
-     *                                            found in the OAuth token.
-     * @param array                $body
-     * @param AccessTokenInterface $accessToken
+     * @param string                    $broadcasterId The ID of the broadcaster to add the custom reward to. This ID
+     *                                                 must match the user ID found in the OAuth token.
+     * @param CreateCustomRewardRequest $body
+     * @param AccessTokenInterface      $accessToken
      *
      * @return TwitchDataResponse<CustomReward[]>
-     * @throws \JsonException
+     * @throws JsonException
+     * @throws MappingError
      */
     public function createCustomRewards(
         string $broadcasterId,
-        array $body,
+        CreateCustomRewardRequest $body,
         AccessTokenInterface $accessToken
     ): TwitchDataResponse {
         return $this->sendRequest(
@@ -46,18 +52,18 @@ class ChannelPointsApi extends AbstractApi
     /**
      * Deletes a custom reward that the broadcaster created.
      *
-     * The app used to create the reward is the only app that may delete it. If the reward’s redemption status is UNFULFILLED at the time
-     * the reward is deleted, its redemption status is marked as FULFILLED.
+     * The app used to create the reward is the only app that may delete it. If the reward’s redemption status is
+     * UNFULFILLED at the time the reward is deleted, its redemption status is marked as FULFILLED.
      *
      * Authentication:
      * Requires a user access token that includes the channel:manage:redemptions scope.
      *
-     * @param string               $broadcasterId The ID of the broadcaster that created the custom reward. This ID must match the user ID
-     *                                            found in the OAuth token.
+     * @param string               $broadcasterId The ID of the broadcaster that created the custom reward. This ID
+     *                                            must match the user ID found in the OAuth token.
      * @param string               $id            The ID of the custom reward to delete.
      * @param AccessTokenInterface $accessToken
      *
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function deleteCustomRewards(
         string $broadcasterId,
@@ -83,21 +89,23 @@ class ChannelPointsApi extends AbstractApi
      *
      * NOTE: A channel may offer a maximum of 50 rewards, which includes both enabled and disabled rewards.
      *
-     * @param string               $broadcasterId         The ID of the broadcaster whose custom rewards you want to get. This ID must
-     *                                                    match the user ID found in the OAuth token.
+     * @param string               $broadcasterId         The ID of the broadcaster whose custom rewards you want to
+     *                                                    get. This ID must match the user ID found in the OAuth token.
      * @param AccessTokenInterface $accessToken
-     * @param string|null          $id                    A list of IDs to filter the rewards by. To specify more than one ID, include this
-     *                                                    parameter for each reward you want to get. For example, id=1234&id=5678. You may
-     *                                                    specify a maximum of 50 IDs.
-     *                                                    Duplicate IDs are ignored. The response contains only the IDs that were found. If
-     *                                                    none of the IDs were found, the response is 404 Not Found.
-     * @param bool                 $onlyManageableRewards A Boolean value that determines whether the response contains only the custom
-     *                                                    rewards that the app may manage (the app is identified by the ID in the Client-Id
-     *                                                    header). Set to true to get only the custom rewards that the app may manage. The
+     * @param string|null          $id                    A list of IDs to filter the rewards by. To specify more than
+     *                                                    one ID, include this parameter for each reward you want to
+     *                                                    get. For example, id=1234&id=5678. You may specify a maximum
+     *                                                    of 50 IDs. Duplicate IDs are ignored. The response contains
+     *                                                    only the IDs that were found. If none of the IDs were found,
+     *                                                    the response is 404 Not Found.
+     * @param bool                 $onlyManageableRewards A Boolean value that determines whether the response contains
+     *                                                    only the custom rewards that the app may manage (the app is
+     *                                                    identified by the ID in the Client-Id header). Set to true to
+     *                                                    get only the custom rewards that the app may manage. The
      *                                                    default is false.
      *
      * @return TwitchDataResponse<CustomReward[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function getCustomReward(
         string $broadcasterId,
@@ -118,41 +126,47 @@ class ChannelPointsApi extends AbstractApi
     }
 
     /**
-     * Gets a list of redemptions for the specified custom reward. The app used to create the reward is the only app that may get the
-     * redemptions.
+     * Gets a list of redemptions for the specified custom reward. The app used to create the reward is the only app
+     * that may get the redemptions.
      *
      * Authentication:
      * Requires a user access token that includes the channel:read:redemptions scope.
      *
-     * @param string               $broadcasterId The ID of the broadcaster that owns the custom reward. This ID must match the user ID
-     *                                            found in the user OAuth token.
-     * @param string               $rewardId      The ID that identifies the custom reward whose redemptions you want to get.
-     * @param string               $status        The status of the redemptions to return. The possible case-sensitive values are:
+     * @param string               $broadcasterId The ID of the broadcaster that owns the custom reward. This ID must
+     *                                            match the user ID found in the user OAuth token.
+     * @param string               $rewardId      The ID that identifies the custom reward whose redemptions you want
+     *                                            to get.
+     * @param string               $status        The status of the redemptions to return. The possible case-sensitive
+     *                                            values are:
      *                                            - CANCELED
      *                                            - FULFILLED
      *                                            - UNFULFILLED
-     *                                            NOTE: This field is required only if you don’t specify the id query parameter.
+     *                                            NOTE: This field is required only if you don’t specify the id query
+     *                                            parameter.
      *
-     *                                            NOTE: Canceled and fulfilled redemptions are returned for only a few days after they’re
-     *                                            canceled or fulfilled.
+     *                                            NOTE: Canceled and fulfilled redemptions are returned for only a few
+     *                                            days after they’re canceled or fulfilled.
      * @param AccessTokenInterface $accessToken
-     * @param string|null          $id            A list of IDs to filter the redemptions by. To specify more than one ID, include this
-     *                                            parameter for each redemption you want to get. For example, id=1234&id=5678. You may
-     *                                            specify a maximum of 50 IDs.
+     * @param string|null          $id            A list of IDs to filter the redemptions by. To specify more than one
+     *                                            ID, include this parameter for each redemption you want to get. For
+     *                                            example, id=1234&id=5678. You may specify a maximum of 50 IDs.
      *
-     *                                            Duplicate IDs are ignored. The response contains only the IDs that were found. If none of
-     *                                            the IDs were found, the response is 404 Not Found.
-     * @param string               $sort          The order to sort redemptions by. The possible case-sensitive values are:
+     *                                            Duplicate IDs are ignored. The response contains only the IDs that
+     *                                            were found. If none of the IDs were found, the response is 404 Not
+     *                                            Found.
+     * @param string               $sort          The order to sort redemptions by. The possible case-sensitive values
+     *                                            are:
      *                                            - OLDEST
      *                                            - NEWEST
      *                                            The default is OLDEST.
-     * @param string|null          $after         The cursor used to get the next page of results. The Pagination object in the response
-     *                                            contains the cursor’s value.
-     * @param int                  $first         The maximum number of redemptions to return per page in the response. The minimum page
-     *                                            size is 1 redemption per page and the maximum is 50. The default is 20.
+     * @param string|null          $after         The cursor used to get the next page of results. The Pagination
+     *                                            object in the response contains the cursor’s value.
+     * @param int                  $first         The maximum number of redemptions to return per page in the response.
+     *                                            The minimum page size is 1 redemption per page and the maximum is 50.
+     *                                            The default is 20.
      *
      * @return TwitchDataResponse<CustomRewardRedemption[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function getCustomRewardRedemption(
         string $broadcasterId,
@@ -186,18 +200,19 @@ class ChannelPointsApi extends AbstractApi
      * Authentication:
      * Requires a user access token that includes the channel:manage:redemptions scope.
      *
-     * @param string               $broadcasterId
-     * @param string               $id
-     * @param array                $body
-     * @param AccessTokenInterface $accessToken
+     * @param string                    $broadcasterId
+     * @param string                    $id
+     * @param CreateCustomRewardRequest $body
+     * @param AccessTokenInterface      $accessToken
      *
      * @return TwitchDataResponse<CustomReward[]>
-     * @throws \JsonException
+     * @throws JsonException
+     * @throws MappingError
      */
     public function updateCustomReward(
         string $broadcasterId,
         string $id,
-        array $body,
+        CreateCustomRewardRequest $body,
         AccessTokenInterface $accessToken
     ): TwitchDataResponse {
         return $this->sendRequest(
@@ -214,23 +229,24 @@ class ChannelPointsApi extends AbstractApi
     }
 
     /**
-     * Updates a redemption’s status. You may update a redemption only if its status is UNFULFILLED. The app used to create the reward is
-     * the only app that may update the redemption.
+     * Updates a redemption’s status. You may update a redemption only if its status is UNFULFILLED. The app used to
+     * create the reward is the only app that may update the redemption.
      *
      * Authentication:
      * Requires a user access token that includes the channel:manage:redemptions scope.
      *
-     * @param string                  $broadcasterId A list of IDs that identify the redemptions to update. To specify more than one ID,
-     *                                               include this parameter for each redemption you want to update. For example,
-     *                                               id=1234&id=5678. You may specify a maximum of 50 IDs.
-     * @param string                  $id            The ID of the broadcaster that’s updating the redemption. This ID must match the user
-     *                                               ID associated with the user OAuth token.
+     * @param string                  $broadcasterId A list of IDs that identify the redemptions to update. To specify
+     *                                               more than one ID, include this parameter for each redemption you
+     *                                               want to update. For example, id=1234&id=5678. You may specify a
+     *                                               maximum of 50 IDs.
+     * @param string                  $id            The ID of the broadcaster that’s updating the redemption. This ID
+     *                                               must match the user ID associated with the user OAuth token.
      * @param string                  $rewardId      The ID that identifies the reward that’s been redeemed.
      * @param RedemptionStatusRequest $body
      * @param AccessTokenInterface    $accessToken
      *
      * @return TwitchDataResponse<CustomRewardRedemption[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function updateRedemptionStatus(
         string $broadcasterId,

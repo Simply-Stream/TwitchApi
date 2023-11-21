@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Events;
 
 use SimplyStream\TwitchApiBundle\Helix\Models\Charity\CharityAmount;
@@ -13,10 +15,12 @@ final readonly class CharityCampaignProgressEvent extends Event
      * @param string        $broadcasterName    The broadcaster’s display name.
      * @param string        $charityName        The charity’s name.
      * @param string        $charityDescription A description of the charity.
-     * @param string        $charityLogo        A URL to an image of the charity’s logo. The image’s type is PNG and its size is 100px X
+     * @param string        $charityLogo        A URL to an image of the charity’s logo. The image’s type is PNG and
+     *                                          its size is 100px X
      *                                          100px.
      * @param string        $charityWebsite     A URL to the charity’s website.
-     * @param CharityAmount $currentAmount      An object that contains the current amount of donations that the campaign has received.
+     * @param CharityAmount $currentAmount      An object that contains the current amount of donations that the
+     *                                          campaign has received.
      * @param CharityAmount $targetAmount       An object that contains the campaign’s target fundraising goal.
      */
     public function __construct(
@@ -33,43 +37,53 @@ final readonly class CharityCampaignProgressEvent extends Event
     ) {
     }
 
-    public function getId(): string {
+    public function getId(): string
+    {
         return $this->id;
     }
 
-    public function getBroadcasterId(): string {
+    public function getBroadcasterId(): string
+    {
         return $this->broadcasterId;
     }
 
-    public function getBroadcasterLogin(): string {
+    public function getBroadcasterLogin(): string
+    {
         return $this->broadcasterLogin;
     }
 
-    public function getBroadcasterName(): string {
+    public function getBroadcasterName(): string
+    {
         return $this->broadcasterName;
     }
 
-    public function getCharityName(): string {
+    public function getCharityName(): string
+    {
         return $this->charityName;
     }
 
-    public function getCharityDescription(): string {
+    public function getCharityDescription(): string
+    {
         return $this->charityDescription;
     }
 
-    public function getCharityLogo(): string {
+    public function getCharityLogo(): string
+    {
         return $this->charityLogo;
     }
 
-    public function getCharityWebsite(): string {
+    public function getCharityWebsite(): string
+    {
         return $this->charityWebsite;
     }
 
-    public function getCurrentAmount(): CharityAmount {
+    public function getCurrentAmount(): CharityAmount
+    {
         return $this->currentAmount;
     }
 
-    public function getTargetAmount(): CharityAmount {
+    public function getTargetAmount(): CharityAmount
+    {
         return $this->targetAmount;
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Events;
 
 use SimplyStream\TwitchApiBundle\Helix\Models\SerializesModels;
@@ -10,7 +12,7 @@ final readonly class MaxPerUserPerStream
 
     /**
      * @param bool $isEnabled Is the setting enabled.
-     * @param int  $value The max per user per stream limit.
+     * @param int  $value     The max per user per stream limit.
      */
     public function __construct(
         private bool $isEnabled,
@@ -18,11 +20,13 @@ final readonly class MaxPerUserPerStream
     ) {
     }
 
-    public function isEnabled(): bool {
+    public function isEnabled(): bool
+    {
         return $this->isEnabled;
     }
 
-    public function getValue(): int {
+    public function getValue(): int
+    {
         return $this->value;
     }
 }

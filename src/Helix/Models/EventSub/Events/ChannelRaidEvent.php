@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Events;
 
 final readonly class ChannelRaidEvent extends Event
@@ -24,31 +26,38 @@ final readonly class ChannelRaidEvent extends Event
     ) {
     }
 
-    public function getFromBroadcasterId(): string {
+    public function getFromBroadcasterId(): string
+    {
         return $this->fromBroadcasterId;
     }
 
-    public function getFromBroadcasterLogin(): string {
+    public function getFromBroadcasterLogin(): string
+    {
         return $this->fromBroadcasterLogin;
     }
 
-    public function getFromBroadcasterName(): string {
+    public function getFromBroadcasterName(): string
+    {
         return $this->fromBroadcasterName;
     }
 
-    public function getToBroadcasterId(): string {
+    public function getToBroadcasterId(): string
+    {
         return $this->toBroadcasterId;
     }
 
-    public function getToBroadcasterLogin(): string {
+    public function getToBroadcasterLogin(): string
+    {
         return $this->toBroadcasterLogin;
     }
 
-    public function getToBroadcasterName(): string {
+    public function getToBroadcasterName(): string
+    {
         return $this->toBroadcasterName;
     }
 
-    public function getViewers(): int {
+    public function getViewers(): int
+    {
         return $this->viewers;
     }
 }

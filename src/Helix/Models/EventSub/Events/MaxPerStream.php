@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Events;
 
 use SimplyStream\TwitchApiBundle\Helix\Models\SerializesModels;
@@ -18,11 +20,13 @@ final readonly class MaxPerStream
     ) {
     }
 
-    public function isEnabled(): bool {
+    public function isEnabled(): bool
+    {
         return $this->isEnabled;
     }
 
-    public function getValue(): int {
+    public function getValue(): int
+    {
         return $this->value;
     }
 }

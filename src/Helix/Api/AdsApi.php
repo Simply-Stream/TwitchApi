@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Api;
 
+use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApiBundle\Helix\Models\Ads\AdSchedule;
 use SimplyStream\TwitchApiBundle\Helix\Models\Ads\Commercial;
@@ -18,8 +21,8 @@ class AdsApi extends AbstractApi
      *
      * NOTE: Only partners and affiliates may run commercials and they must be streaming live at the time.
      *
-     * NOTE: Only the broadcaster may start a commercial; the broadcaster’s editors and moderators may not start commercials on behalf of
-     * the broadcaster.
+     * NOTE: Only the broadcaster may start a commercial; the broadcaster’s editors and moderators may not start
+     * commercials on behalf of the broadcaster.
      *
      * Authentication:
      * Requires a user access token that includes the channel:edit:commercial scope.
@@ -28,7 +31,7 @@ class AdsApi extends AbstractApi
      * @param AccessTokenInterface   $accessToken
      *
      * @return TwitchDataResponse<Commercial[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function startCommercial(
         StartCommercialRequest $body,
@@ -44,18 +47,18 @@ class AdsApi extends AbstractApi
     }
 
     /**
-     * (BETA) This endpoint returns ad schedule related information, including snooze, when the last ad was run, when the next ad is
-     * scheduled, and if the channel is currently in pre-roll free time.
+     * (BETA) This endpoint returns ad schedule related information, including snooze, when the last ad was run, when
+     * the next ad is scheduled, and if the channel is currently in pre-roll free time.
      *
      * Authorization:
-     * Requires a user access token that includes the channel:read:ads scope. The user_id in the user access token must match
-     * the broadcaster_id.
+     * Requires a user access token that includes the channel:read:ads scope. The user_id in the user access token must
+     * match the broadcaster_id.
      *
      * @param string               $broadcasterId Provided broadcaster_id must match the user_id in the auth token.
      * @param AccessTokenInterface $accessToken
      *
      * @return TwitchDataResponse<AdSchedule[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function getAdSchedule(
         string $broadcasterId,
@@ -72,18 +75,18 @@ class AdsApi extends AbstractApi
     }
 
     /**
-     * (BETA) If available, pushes back the timestamp of the upcoming automatic mid-roll ad by 5 minutes. This endpoint duplicates the
-     * snooze functionality in the creator dashboard’s Ads Manager.
+     * (BETA) If available, pushes back the timestamp of the upcoming automatic mid-roll ad by 5 minutes. This endpoint
+     * duplicates the snooze functionality in the creator dashboard’s Ads Manager.
      *
      * Authorization
-     * Requires a user access token that includes the channel:manage:ads scope. The user_id in the user access token must match the
-     * broadcaster_id.
+     * Requires a user access token that includes the channel:manage:ads scope. The user_id in the user access token
+     * must match the broadcaster_id.
      *
      * @param string               $broadcasterId Provided broadcaster_id must match the user_id in the auth token.
      * @param AccessTokenInterface $accessToken
      *
      * @return TwitchDataResponse<SnoozeNextAd[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function snoozeNextAd(
         string $broadcasterId,

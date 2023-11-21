@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\Search;
 
 final readonly class Category
@@ -16,15 +18,18 @@ final readonly class Category
     ) {
     }
 
-    public function getId(): string {
+    public function getId(): string
+    {
         return $this->id;
     }
 
-    public function getName(): string {
+    public function getName(): string
+    {
         return $this->name;
     }
 
-    public function getBoxArtUrl(): string {
+    public function getBoxArtUrl(): string
+    {
         return $this->boxArtUrl;
     }
 }

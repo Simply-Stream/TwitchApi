@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models;
 
-readonly abstract class AbstractModel
+abstract readonly class AbstractModel
 {
     use SerializesModels;
 }

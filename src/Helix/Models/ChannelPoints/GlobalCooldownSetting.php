@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\ChannelPoints;
 
 final readonly class GlobalCooldownSetting
 {
     /**
-     * @param bool $isEnabled             A Boolean value that determines whether to apply a cooldown period. Is true if a cooldown period
-     *                                    is enabled.
+     * @param bool $isEnabled             A Boolean value that determines whether to apply a cooldown period. Is true
+     *                                    if a cooldown period is enabled.
      * @param int  $globalCooldownSeconds The cooldown period, in seconds.
      */
     public function __construct(
@@ -15,11 +17,13 @@ final readonly class GlobalCooldownSetting
     ) {
     }
 
-    public function isEnabled(): bool {
+    public function isEnabled(): bool
+    {
         return $this->isEnabled;
     }
 
-    public function getGlobalCooldownSeconds(): int {
+    public function getGlobalCooldownSeconds(): int
+    {
         return $this->globalCooldownSeconds;
     }
 }

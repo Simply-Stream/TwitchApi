@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 /*
  * MIT License
@@ -24,7 +26,7 @@ class OidcAccessToken extends AccessToken
     {
         parent::__construct($options);
 
-        if (! empty($options['id_token'])) {
+        if (!empty($options['id_token'])) {
             $this->idToken = $options['id_token'];
         }
     }

@@ -1,0 +1,9 @@
+includes:
+    - phpstan-baseline.neon
+
+parameters:
+    level: 0
+    errorFormat: github
+    paths:
+        - src
+        - tests

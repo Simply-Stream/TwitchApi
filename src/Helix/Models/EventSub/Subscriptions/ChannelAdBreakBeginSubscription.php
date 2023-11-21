@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Subscriptions;
 
+use DateTimeImmutable;
 use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Condition\ChannelAdBreakBeginCondition;
 use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Subscription;
 use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Transport;
@@ -18,10 +21,18 @@ final readonly class ChannelAdBreakBeginSubscription extends Subscription
         Transport $transport,
         ?string $id = null,
         ?string $status = null,
-        ?\DateTimeImmutable $createdAt = null,
+        ?DateTimeImmutable $createdAt = null,
         ?string $type = self::TYPE,
         ?string $version = "beta"
     ) {
-        parent::__construct($type, $version, new ChannelAdBreakBeginCondition(...$condition), $transport, $id, $status, $createdAt);
+        parent::__construct(
+            $type,
+            $version,
+            new ChannelAdBreakBeginCondition(...$condition),
+            $transport,
+            $id,
+            $status,
+            $createdAt
+        );
     }
 }

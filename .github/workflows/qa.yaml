@@ -1,0 +1,47 @@
+name: QA
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build-twitch-api-and-run-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build the Docker image
+        run: docker build . --file tests/Dockerfile --tag twitch-cli:latest
+
+      - name: Run Twitch Mock API
+        run: docker run --name twitch-mock-api -p 8000:8080 -d twitch-cli:latest
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
+      # This is just a dirty workaround. I'd like to have a script here, that tries every second to reach the mock api
+      - name: Wait for container to generate mock data
+        run: sleep 10
+
+      - name: Install Dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+      - name: Execute tests (Unit and Functional tests) via PHPUnit
+        run: vendor/bin/phpunit tests
+
+      - name: PHPStan code analysis
+        run: vendor/bin/phpstan analyse
+
+      - name: Check for PHP codestyle compliance
+        run: vendor/bin/php-cs-fixer check --allow-risky=yes
+
+      - name: Stop and remove Docker container
+        if: always()
+        run: docker stop twitch-mock-api && docker rm twitch-mock-api

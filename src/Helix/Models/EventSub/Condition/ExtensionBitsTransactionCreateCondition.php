@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Condition;
 
@@ -11,11 +13,13 @@ final readonly class ExtensionBitsTransactionCreateCondition implements Conditio
     ) {
     }
 
-    public static function getType(): string {
+    public static function getType(): string
+    {
         return self::TYPE;
     }
 
-    public function getExtensionClientId(): string {
+    public function getExtensionClientId(): string
+    {
         return $this->extensionClientId;
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Events\Notifications;
 
 use SimplyStream\TwitchApiBundle\Helix\Models\SerializesModels;
@@ -24,23 +26,28 @@ final readonly class Raid
     ) {
     }
 
-    public function getUserId(): string {
+    public function getUserId(): string
+    {
         return $this->userId;
     }
 
-    public function getUserName(): string {
+    public function getUserName(): string
+    {
         return $this->userName;
     }
 
-    public function getUserLogin(): string {
+    public function getUserLogin(): string
+    {
         return $this->userLogin;
     }
 
-    public function getViewerCount(): int {
+    public function getViewerCount(): int
+    {
         return $this->viewerCount;
     }
 
-    public function getProfileImageUrl(): string {
+    public function getProfileImageUrl(): string
+    {
         return $this->profileImageUrl;
     }
 }

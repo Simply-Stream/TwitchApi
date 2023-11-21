@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Api;
 
+use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApiBundle\Helix\Models\Polls\CreatePollRequest;
 use SimplyStream\TwitchApiBundle\Helix\Models\Polls\EndPollRequest;
@@ -21,22 +24,25 @@ class PollsApi extends AbstractApi
      * Authorization:
      * Requires a user access token that includes the channel:read:polls scope.
      *
-     * @param string               $broadcasterId The ID of the broadcaster that created the polls. This ID must match the user ID in the
-     *                                            user access token.
+     * @param string               $broadcasterId The ID of the broadcaster that created the polls. This ID must match
+     *                                            the user ID in the user access token.
      * @param AccessTokenInterface $accessToken
-     * @param string|null          $id            A list of IDs that identify the polls to return. To specify more than one ID, include
-     *                                            this parameter for each poll you want to get. For example, id=1234&id=5678. You may
-     *                                            specify a maximum of 20 IDs.
+     * @param string|null          $id            A list of IDs that identify the polls to return. To specify more than
+     *                                            one ID, include this parameter for each poll you want to get. For
+     *                                            example, id=1234&id=5678. You may specify a maximum of 20 IDs.
      *
-     *                                            Specify this parameter only if you want to filter the list that the request returns. The
-     *                                            endpoint ignores duplicate IDs and thosenot owned by this broadcaster.
-     * @param int                  $first         The maximum number of items to return per page in the response. The minimum page size is
-     *                                            1 item per page and the maximum is 20 items per page. The default is 20.
-     * @param string|null          $after         The cursor used to get the next page of results. The Pagination object in the response
-     *                                            contains the cursor’s value.
+     *                                            Specify this parameter only if you want to filter the list that the
+     *                                            request returns. The endpoint ignores duplicate IDs and thosenot
+     *                                            owned by this broadcaster.
+     * @param int                  $first         The maximum number of items to return per page in the response. The
+     *                                            minimum page size is
+     *                                            1 item per page and the maximum is 20 items per page. The default is
+     *                                            20.
+     * @param string|null          $after         The cursor used to get the next page of results. The Pagination
+     *                                            object in the response contains the cursor’s value.
      *
      * @return TwitchPaginatedDataResponse<Poll[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function getPolls(
         string $broadcasterId,
@@ -70,7 +76,7 @@ class PollsApi extends AbstractApi
      * @param AccessTokenInterface $accessToken
      *
      * @return TwitchDataResponse<Poll[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function createPoll(
         CreatePollRequest $body,
@@ -95,7 +101,7 @@ class PollsApi extends AbstractApi
      * @param AccessTokenInterface $accessToken
      *
      * @return TwitchDataResponse<Poll[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function endPoll(
         EndPollRequest $body,

@@ -1,14 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\Clip;
 
 final readonly class ClipProcess
 {
     /**
-     * @param string $editUrl A URL that you can use to edit the clip’s title, identify the part of the clip to publish, and publish the
-     *                        clip.
+     * @param string $editUrl A URL that you can use to edit the clip’s title, identify the part of the clip to
+     *                        publish, and publish the clip.
      *
-     *                        The URL is valid for up to 24 hours or until the clip is published, whichever comes first.
+     *                        The URL is valid for up to 24 hours or until the clip is published, whichever comes
+     *                        first.
      * @param string $id      An ID that uniquely identifies the clip.
      */
     public function __construct(
@@ -17,11 +20,13 @@ final readonly class ClipProcess
     ) {
     }
 
-    public function getEditUrl(): string {
+    public function getEditUrl(): string
+    {
         return $this->editUrl;
     }
 
-    public function getId(): string {
+    public function getId(): string
+    {
         return $this->id;
     }
 }

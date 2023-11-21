@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\CCLs;
 
 final readonly class ContentClassificationLabel
@@ -12,7 +14,8 @@ final readonly class ContentClassificationLabel
     ) {
     }
 
-    public function getContentClassificationLabels(): array {
+    public function getContentClassificationLabels(): array
+    {
         return $this->contentClassificationLabels;
     }
 }

@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Api;
 
+use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApiBundle\Helix\Models\Chat\ChannelEmote;
 use SimplyStream\TwitchApiBundle\Helix\Models\Chat\ChatBadge;
@@ -26,23 +29,25 @@ class ChatApi extends AbstractApi
      *
      * NOTE: There is a delay between when users join and leave a chat and when the list is updated accordingly.
      *
-     * To determine whether a user is a moderator or VIP, use the Get Moderators and Get VIPs endpoints. You can check the roles of up to
+     * To determine whether a user is a moderator or VIP, use the Get Moderators and Get VIPs endpoints. You can check
+     * the roles of up to
      * 100 users.
      *
      * Authorization:
      * Requires a user access token that includes the moderator:read:chatters scope.
      *
      * @param string               $broadcasterId The ID of the broadcaster whose list of chatters you want to get.
-     * @param string               $moderatorId   The ID of the broadcaster or one of the broadcaster’s moderators. This ID must match the
-     *                                            user ID in the user access token.
+     * @param string               $moderatorId   The ID of the broadcaster or one of the broadcaster’s moderators.
+     *                                            This ID must match the user ID in the user access token.
      * @param AccessTokenInterface $accessToken
-     * @param int                  $first         The maximum number of items to return per page in the response. The minimum page size is
+     * @param int                  $first         The maximum number of items to return per page in the response. The
+     *                                            minimum page size is
      *                                            1 item per page and the maximum is 1,000. The default is 100.
-     * @param string|null          $after         The cursor used to get the next page of results. The Pagination object in the response
-     *                                            contains the cursor’s value.
+     * @param string|null          $after         The cursor used to get the next page of results. The Pagination
+     *                                            object in the response contains the cursor’s value.
      *
      * @return TwitchPaginatedDataResponse<Chatter[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function getChatters(
         string $broadcasterId,
@@ -65,8 +70,8 @@ class ChatApi extends AbstractApi
     }
 
     /**
-     * Gets all emotes that the specified Twitch channel created. Broadcasters create these custom emotes for users who subscribe to or
-     * follow the channel or cheer Bits in the channel’s chat window. Learn More
+     * Gets all emotes that the specified Twitch channel created. Broadcasters create these custom emotes for users who
+     * subscribe to or follow the channel or cheer Bits in the channel’s chat window. Learn More
      *
      * For information about the custom emotes, see subscriber emotes, Bits tier emotes, and follower emotes.
      *
@@ -75,11 +80,12 @@ class ChatApi extends AbstractApi
      * Authorization:
      * Requires an app access token or user access token.
      *
-     * @param string                    $broadcasterId An ID that identifies the broadcaster whose emotes you want to get.
+     * @param string                    $broadcasterId An ID that identifies the broadcaster whose emotes you want to
+     *                                                 get.
      * @param AccessTokenInterface|null $accessToken
      *
      * @return TwitchTemplatedDataResponse<ChannelEmote[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function getChannelEmotes(
         string $broadcasterId,
@@ -104,7 +110,7 @@ class ChatApi extends AbstractApi
      * @param AccessTokenInterface|null $accessToken
      *
      * @return TwitchTemplatedDataResponse<GlobalEmote[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function getGlobalEmotes(
         AccessTokenInterface $accessToken = null
@@ -119,22 +125,23 @@ class ChatApi extends AbstractApi
     /**
      * Gets emotes for one or more specified emote sets.
      *
-     * An emote set groups emotes that have a similar context. For example, Twitch places all the subscriber emotes that a broadcaster
-     * uploads for their channel in the same emote set.
+     * An emote set groups emotes that have a similar context. For example, Twitch places all the subscriber emotes
+     * that a broadcaster uploads for their channel in the same emote set.
      *
      * Authorization:
      * Requires an app access token or user access token.
      *
-     * @param string                    $emoteSetId An ID that identifies the emote set to get. Include this parameter for each emote set
-     *                                              you want to get. For example, emote_set_id=1234&emote_set_id=5678. You may specify a
-     *                                              maximum of 25 IDs. The response contains only the IDs that were found and ignores
-     *                                              duplicate IDs.
+     * @param string                    $emoteSetId An ID that identifies the emote set to get. Include this parameter
+     *                                              for each emote set you want to get. For example,
+     *                                              emote_set_id=1234&emote_set_id=5678. You may specify a maximum of
+     *                                              25 IDs. The response contains only the IDs that were found and
+     *                                              ignores duplicate IDs.
      *
      *                                              To get emote set IDs, use the Get Channel Emotes API.
      * @param AccessTokenInterface|null $accessToken
      *
      * @return TwitchTemplatedDataResponse<EmoteSet[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function getEmoteSets(
         string $emoteSetId,
@@ -151,8 +158,8 @@ class ChatApi extends AbstractApi
     }
 
     /**
-     * Gets all badges that the specified broadcaster created. The list is empty if the broadcaster hasn’t created custom chat badges. For
-     * information about custom badges, see subscriber badges and Bits badges.
+     * Gets all badges that the specified broadcaster created. The list is empty if the broadcaster hasn’t created
+     * custom chat badges. For information about custom badges, see subscriber badges and Bits badges.
      *
      * Authorization:
      * Requires an app access token or user access token.
@@ -161,7 +168,7 @@ class ChatApi extends AbstractApi
      * @param AccessTokenInterface|null $accessToken
      *
      * @return TwitchDataResponse<ChatBadge[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function getChannelChatBadges(
         string $broadcasterId,
@@ -178,8 +185,8 @@ class ChatApi extends AbstractApi
     }
 
     /**
-     * Gets the list of chat badges that Twitch created. Users can use these badges in any channel’s chat room. For information about chat
-     * badges, see Twitch Chat Badges Guide.
+     * Gets the list of chat badges that Twitch created. Users can use these badges in any channel’s chat room. For
+     * information about chat badges, see Twitch Chat Badges Guide.
      *
      * Authorization:
      * Requires an app access token or user access token.
@@ -187,7 +194,7 @@ class ChatApi extends AbstractApi
      * @param AccessTokenInterface|null $accessToken
      *
      * @return TwitchDataResponse<ChatBadge[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function getGlobalChatBadges(
         AccessTokenInterface $accessToken = null
@@ -208,17 +215,20 @@ class ChatApi extends AbstractApi
      * Requires an app access token or user access token.
      *
      * @param string                    $broadcasterId The ID of the broadcaster whose chat settings you want to get.
-     * @param string|null               $moderatorId   The ID of a user that has permission to moderate the broadcaster’s chat room, or the
-     *                                                 broadcaster’s ID if they’re getting the settings.
+     * @param string|null               $moderatorId   The ID of a user that has permission to moderate the
+     *                                                 broadcaster’s chat room, or the broadcaster’s ID if they’re
+     *                                                 getting the settings.
      *
-     *                                                 This field is required only if you want to include the non_moderator_chat_delay and
-     *                                                 non_moderator_chat_delay_duration settings in the response.
+     *                                                 This field is required only if you want to include the
+     *                                                 non_moderator_chat_delay and non_moderator_chat_delay_duration
+     *                                                 settings in the response.
      *
-     *                                                 If you specify this field, this ID must match the user ID in the user access token.
+     *                                                 If you specify this field, this ID must match the user ID in the
+     *                                                 user access token.
      * @param AccessTokenInterface|null $accessToken
      *
      * @return TwitchDataResponse<ChatSettings[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function getChatSettings(
         string $broadcasterId,
@@ -242,15 +252,17 @@ class ChatApi extends AbstractApi
      * Authentication:
      * Requires a user access token that includes the moderator:manage:chat_settings scope.
      *
-     * @param string                    $broadcasterId The ID of the broadcaster whose chat settings you want to update.
-     * @param string                    $moderatorId   The ID of a user that has permission to moderate the broadcaster’s chat room, or the
-     *                                                 broadcaster’s ID if they’re making the update. This ID must match the user ID in the
-     *                                                 user access token.
+     * @param string                    $broadcasterId The ID of the broadcaster whose chat settings you want to
+     *                                                 update.
+     * @param string                    $moderatorId   The ID of a user that has permission to moderate the
+     *                                                 broadcaster’s chat room, or the broadcaster’s ID if they’re
+     *                                                 making the update. This ID must match the user ID in the user
+     *                                                 access token.
      * @param UpdateChatSettingsRequest $body
      * @param AccessTokenInterface|null $accessToken
      *
      * @return TwitchDataResponse<ChatSettings[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function updateChatSettings(
         string $broadcasterId,
@@ -277,16 +289,17 @@ class ChatApi extends AbstractApi
      * Authorization:
      * Requires a user access token that includes the moderator:manage:announcements scope.
      *
-     * @param string                      $broadcasterId The ID of the broadcaster that owns the chat room to send the announcement to.
-     * @param string                      $moderatorId   The ID of a user who has permission to moderate the broadcaster’s chat room, or
-     *                                                   the
-     *                                                   broadcaster’s ID if they’re sending the announcement. This ID must match the user
-     *                                                   ID in the user access token.
+     * @param string                      $broadcasterId The ID of the broadcaster that owns the chat room to send the
+     *                                                   announcement to.
+     * @param string                      $moderatorId   The ID of a user who has permission to moderate the
+     *                                                   broadcaster’s chat room, or the broadcaster’s ID if they’re
+     *                                                   sending the announcement. This ID must match the user ID in
+     *                                                   the user access token.
      * @param SendChatAnnouncementRequest $body
      * @param AccessTokenInterface|null   $accessToken
      *
      * @return void
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function sendChatAnnouncement(
         string $broadcasterId,
@@ -307,31 +320,33 @@ class ChatApi extends AbstractApi
     }
 
     /**
-     * Sends a Shoutout to the specified broadcaster. Typically, you send Shoutouts when you or one of your moderators notice another
-     * broadcaster in your chat, the other broadcaster is coming up in conversation, or after they raid your broadcast.
+     * Sends a Shoutout to the specified broadcaster. Typically, you send Shoutouts when you or one of your moderators
+     * notice another broadcaster in your chat, the other broadcaster is coming up in conversation, or after they raid
+     * your broadcast.
      *
-     * Twitch’s Shoutout feature is a great way for you to show support for other broadcasters and help them grow. Viewers who do not
-     * follow the other broadcaster will see a pop-up Follow button in your chat that they can click to follow the other broadcaster. Learn
-     * More
+     * Twitch’s Shoutout feature is a great way for you to show support for other broadcasters and help them grow.
+     * Viewers who do not follow the other broadcaster will see a pop-up Follow button in your chat that they can click
+     * to follow the other broadcaster. Learn More
      *
-     * Rate Limits The broadcaster may send a Shoutout once every 2 minutes. They may send the same broadcaster a Shoutout once every 60
-     * minutes.
+     * Rate Limits The broadcaster may send a Shoutout once every 2 minutes. They may send the same broadcaster a
+     * Shoutout once every 60 minutes.
      *
-     * To receive notifications when a Shoutout is sent or received, subscribe to the channel.shoutout.create and channel.shoutout.receive
-     * subscription types. The channel.shoutout.create event includes cooldown periods that indicate when the broadcaster may send another
-     * Shoutout without exceeding the endpoint’s rate limit.
+     * To receive notifications when a Shoutout is sent or received, subscribe to the channel.shoutout.create and
+     * channel.shoutout.receive subscription types. The channel.shoutout.create event includes cooldown periods that
+     * indicate when the broadcaster may send another Shoutout without exceeding the endpoint’s rate limit.
      *
      * Authorization
      * Requires a user access token that includes the moderator:manage:shoutouts scope.
      *
      * @param string               $fromBroadcasterId The ID of the broadcaster that’s sending the Shoutout.
      * @param string               $toBroadcasterId   The ID of the broadcaster that’s receiving the Shoutout.
-     * @param string               $moderatorId       The ID of the broadcaster or a user that is one of the broadcaster’s moderators. This
-     *                                                ID must match the user ID in the access token.
+     * @param string               $moderatorId       The ID of the broadcaster or a user that is one of the
+     *                                                broadcaster’s moderators. This ID must match the user ID in the
+     *                                                access token.
      * @param AccessTokenInterface $accessToken
      *
      * @return void
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function sendShoutout(
         string $fromBroadcasterId,
@@ -357,15 +372,17 @@ class ChatApi extends AbstractApi
      * Authorization:
      * Requires an app access token or user access token.
      *
-     * @param string                    $userId         The ID of the user whose username color you want to get. To specify more than one
-     *                                                  user, include the user_id parameter for each user to get. For example,
-     *                                                  &user_id=1234&user_id=5678. The maximum number of IDs that you may specify is 100.
+     * @param string                    $userId         The ID of the user whose username color you want to get. To
+     *                                                  specify more than one user, include the user_id parameter for
+     *                                                  each user to get. For example,
+     *                                                  &user_id=1234&user_id=5678. The maximum number of IDs that you
+     *                                                  may specify is 100.
      *
      *                                                  The API ignores duplicate IDs and IDs that weren’t found.
      * @param AccessTokenInterface|null $accessToken
      *
      * @return TwitchDataResponse<UserChatColor[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function getUserChatColor(
         string $userId,
@@ -387,10 +404,10 @@ class ChatApi extends AbstractApi
      * Authorization:
      * Requires a user access token that includes the user:manage:chat_color scope.
      *
-     * @param string               $userId The ID of the user whose chat color you want to update. This ID must match the user ID in the
-     *                                     access token.
-     * @param string               $color  The color to use for the user’s name in chat. All users may specify one of the following named
-     *                                     color values.
+     * @param string               $userId The ID of the user whose chat color you want to update. This ID must match
+     *                                     the user ID in the access token.
+     * @param string               $color  The color to use for the user’s name in chat. All users may specify one of
+     *                                     the following named color values.
      *                                     - blue
      *                                     - blue_violet
      *                                     - cadet_blue
@@ -407,12 +424,12 @@ class ChatApi extends AbstractApi
      *                                     - spring_green
      *                                     - yellow_green
      *
-     *                                     Turbo and Prime users may specify a named color or a Hex color code like #9146FF. If you use a
-     *                                     Hex color code, remember to URL encode it.
+     *                                     Turbo and Prime users may specify a named color or a Hex color code like
+     *                                     #9146FF. If you use a Hex color code, remember to URL encode it.
      * @param AccessTokenInterface $accessToken
      *
      * @return TwitchResponseInterface
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function updateUserChatColor(
         string $userId,

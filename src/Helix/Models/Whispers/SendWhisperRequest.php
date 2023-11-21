@@ -1,8 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\Whispers;
 
-final readonly class SendWhisperRequest
+use SimplyStream\TwitchApiBundle\Helix\Models\AbstractModel;
+
+final readonly class SendWhisperRequest extends AbstractModel
 {
     /**
      * @param string $message The whisper message to send. The message must not be empty.
@@ -17,7 +21,8 @@ final readonly class SendWhisperRequest
     ) {
     }
 
-    public function getMessage(): string {
+    public function getMessage(): string
+    {
         return $this->message;
     }
 }

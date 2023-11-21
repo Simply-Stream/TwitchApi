@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Api;
 
+use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApiBundle\Helix\Models\Predictions\CreatePredictionRequest;
 use SimplyStream\TwitchApiBundle\Helix\Models\Predictions\EndPredictionRequest;
@@ -19,19 +22,22 @@ class PredictionsApi extends AbstractApi
      * Authorization:
      * Requires a user access token that includes the channel:read:predictions scope.
      *
-     * @param string               $broadcasterId The ID of the broadcaster whose predictions you want to get. This ID must match the user
-     *                                            ID associated with the user access token.
+     * @param string               $broadcasterId The ID of the broadcaster whose predictions you want to get. This ID
+     *                                            must match the user ID associated with the user access token.
      * @param AccessTokenInterface $accessToken
-     * @param string|null          $id            The ID of the prediction to get. To specify more than one ID, include this parameter for
-     *                                            each prediction you want to get. For example, id=1234&id=5678. You may specify a maximum
-     *                                            of 25 IDs. The endpoint ignores duplicate IDs and those not owned by the broadcaster.
-     * @param int                  $first         The maximum number of items to return per page in the response. The minimum page size is
-     *                                            1 item per page and the maximum is 25 items per page. The default is 20.
-     * @param string|null          $after         The cursor used to get the next page of results. The Pagination object in the response
-     *                                            contains the cursor’s value.
+     * @param string|null          $id            The ID of the prediction to get. To specify more than one ID, include
+     *                                            this parameter for each prediction you want to get. For example,
+     *                                            id=1234&id=5678. You may specify a maximum of 25 IDs. The endpoint
+     *                                            ignores duplicate IDs and those not owned by the broadcaster.
+     * @param int                  $first         The maximum number of items to return per page in the response. The
+     *                                            minimum page size is
+     *                                            1 item per page and the maximum is 25 items per page. The default is
+     *                                            20.
+     * @param string|null          $after         The cursor used to get the next page of results. The Pagination
+     *                                            object in the response contains the cursor’s value.
      *
      * @return TwitchPaginatedDataResponse<Prediction[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function getPredictions(
         string $broadcasterId,
@@ -56,8 +62,8 @@ class PredictionsApi extends AbstractApi
     /**
      * Creates a Channel Points Prediction.
      *
-     * With a Channel Points Prediction, the broadcaster poses a question and viewers try to predict the outcome. The prediction runs as
-     * soon as it’s created. The broadcaster may run only one prediction at a time.
+     * With a Channel Points Prediction, the broadcaster poses a question and viewers try to predict the outcome. The
+     * prediction runs as soon as it’s created. The broadcaster may run only one prediction at a time.
      *
      * Authorization:
      * Requires a user access token that includes the channel:manage:predictions scope.
@@ -66,7 +72,7 @@ class PredictionsApi extends AbstractApi
      * @param AccessTokenInterface    $accessToken
      *
      * @return TwitchDataResponse<Prediction[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function createPrediction(
         CreatePredictionRequest $body,
@@ -91,7 +97,7 @@ class PredictionsApi extends AbstractApi
      * @param AccessTokenInterface $accessToken
      *
      * @return TwitchDataResponse<Prediction[]>
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function endPrediction(
         EndPredictionRequest $body,

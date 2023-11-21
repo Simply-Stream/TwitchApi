@@ -1,6 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Events;
+
+use DateTimeImmutable;
 
 final readonly class ChannelPollEndEvent extends Event
 {
@@ -13,9 +17,10 @@ final readonly class ChannelPollEndEvent extends Event
      * @param array               $choices              An array of choices for the poll. Includes vote counts.
      * @param BitsVoting          $bitsVoting           Not supported.
      * @param ChannelPointsVoting $channelPointsVoting  The Channel Points voting settings for the poll.
-     * @param string              $status               The status of the poll. Valid values are completed, archived, and terminated.
-     * @param \DateTimeImmutable  $startedAt            The time the poll started.
-     * @param \DateTimeImmutable  $endedAt              The time the poll ended.
+     * @param string              $status               The status of the poll. Valid values are completed, archived,
+     *                                                  and terminated.
+     * @param DateTimeImmutable   $startedAt            The time the poll started.
+     * @param DateTimeImmutable   $endedAt              The time the poll ended.
      */
     public function __construct(
         private string $id,
@@ -27,52 +32,63 @@ final readonly class ChannelPollEndEvent extends Event
         private BitsVoting $bitsVoting,
         private ChannelPointsVoting $channelPointsVoting,
         private string $status,
-        private \DateTimeImmutable $startedAt,
-        private \DateTimeImmutable $endedAt
+        private DateTimeImmutable $startedAt,
+        private DateTimeImmutable $endedAt
     ) {
     }
 
-    public function getId(): string {
+    public function getId(): string
+    {
         return $this->id;
     }
 
-    public function getBroadcasterUserId(): string {
+    public function getBroadcasterUserId(): string
+    {
         return $this->broadcasterUserId;
     }
 
-    public function getBroadcasterUserLogin(): string {
+    public function getBroadcasterUserLogin(): string
+    {
         return $this->broadcasterUserLogin;
     }
 
-    public function getBroadcasterUserName(): string {
+    public function getBroadcasterUserName(): string
+    {
         return $this->broadcasterUserName;
     }
 
-    public function getTitle(): string {
+    public function getTitle(): string
+    {
         return $this->title;
     }
 
-    public function getChoices(): array {
+    public function getChoices(): array
+    {
         return $this->choices;
     }
 
-    public function getBitsVoting(): BitsVoting {
+    public function getBitsVoting(): BitsVoting
+    {
         return $this->bitsVoting;
     }
 
-    public function getChannelPointsVoting(): ChannelPointsVoting {
+    public function getChannelPointsVoting(): ChannelPointsVoting
+    {
         return $this->channelPointsVoting;
     }
 
-    public function getStatus(): string {
+    public function getStatus(): string
+    {
         return $this->status;
     }
 
-    public function getStartedAt(): \DateTimeImmutable {
+    public function getStartedAt(): DateTimeImmutable
+    {
         return $this->startedAt;
     }
 
-    public function getEndedAt(): \DateTimeImmutable {
+    public function getEndedAt(): DateTimeImmutable
+    {
         return $this->endedAt;
     }
 }
