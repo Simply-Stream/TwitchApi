@@ -1,6 +1,6 @@
 # Twitch API (by Simply-Stream.com)
 
-(This section will show some metrics, when they are set up) 
+[![QA](https://github.com/Simply-Stream/TwitchApi/actions/workflows/qa.yaml/badge.svg?branch=main)](https://github.com/Simply-Stream/TwitchApi/actions/workflows/qa.yaml) 
 
 -------------------------------
 
