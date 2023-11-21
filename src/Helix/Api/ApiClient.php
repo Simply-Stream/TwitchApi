@@ -59,7 +59,7 @@ class ApiClient implements ApiClientInterface
         protected ?array $options = null,
         protected TokenStorageInterface $tokenStorage = new InMemoryStorage()
     ) {
-        if (! empty($this->options['token'])) {
+        if (!empty($this->options['token'])) {
             foreach ($this->options['token'] as $grant => $token) {
                 $this->tokenStorage->save(
                     $grant,
@@ -85,7 +85,7 @@ class ApiClient implements ApiClientInterface
         ?AccessTokenInterface $accessToken = null,
         array $headers = []
     ): ?TwitchResponseInterface {
-        if (! $accessToken) {
+        if (!$accessToken) {
             $accessToken = $this->getAccessToken('client_credentials');
         }
 
