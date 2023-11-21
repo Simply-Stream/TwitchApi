@@ -40,4 +40,5 @@ jobs:
         run: vendor/bin/phpstan analyse
 
       - name: Stop and remove Docker container
+        if: always()
         run: docker stop twitch-mock-api && docker rm twitch-mock-api

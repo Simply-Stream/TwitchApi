@@ -1,0 +1,6 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Template type T of method SimplyStream\\\\TwitchApiBundle\\\\Helix\\\\EventSub\\\\EventSubService\\:\\:subscribe\\(\\) is not referenced in a parameter\\.$#"
+			count: 1
+			path: src/Helix/EventSub/EventSubService.php
