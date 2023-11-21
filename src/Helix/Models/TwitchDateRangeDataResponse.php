@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Models;
+namespace SimplyStream\TwitchApi\Helix\Models;
 
-use SimplyStream\TwitchApiBundle\Helix\Models\Analytics\DateRange;
+use SimplyStream\TwitchApi\Helix\Models\Analytics\DateRange;
 
 readonly class TwitchDateRangeDataResponse extends TwitchDataResponse
 {

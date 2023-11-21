@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub;
+namespace SimplyStream\TwitchApi\Helix\Models\EventSub;
 
-use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Events\EventInterface;
+use SimplyStream\TwitchApi\Helix\Models\EventSub\Events\EventInterface;
 
 /**
  * @template Tsubscription

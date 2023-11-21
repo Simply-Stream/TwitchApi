@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Models\Subscriptions;
+namespace SimplyStream\TwitchApi\Helix\Models\Subscriptions;
 
 final readonly class Subscription
 {

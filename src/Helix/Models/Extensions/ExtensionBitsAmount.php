@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Models\Extensions;
+namespace SimplyStream\TwitchApi\Helix\Models\Extensions;
 
 use Webmozart\Assert\Assert;
 

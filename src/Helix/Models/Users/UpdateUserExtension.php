@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Models\Users;
+namespace SimplyStream\TwitchApi\Helix\Models\Users;
 
-use SimplyStream\TwitchApiBundle\Helix\Models\AbstractModel;
+use SimplyStream\TwitchApi\Helix\Models\AbstractModel;
 
 final readonly class UpdateUserExtension extends AbstractModel
 {

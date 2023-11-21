@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Api;
+namespace SimplyStream\TwitchApi\Helix\Api;
 
 use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchDataResponse;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchPaginatedDataResponse;
-use SimplyStream\TwitchApiBundle\Helix\Models\Videos\Video;
+use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
+use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
+use SimplyStream\TwitchApi\Helix\Models\Videos\Video;
 
 class VideosApi extends AbstractApi
 {

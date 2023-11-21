@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Api;
+namespace SimplyStream\TwitchApi\Helix\Api;
 
 use CuyZ\Valinor\Mapper\MappingError;
 use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
-use SimplyStream\TwitchApiBundle\Helix\Models\Streams\CreateStreamMarkerRequest;
-use SimplyStream\TwitchApiBundle\Helix\Models\Streams\Stream;
-use SimplyStream\TwitchApiBundle\Helix\Models\Streams\StreamKey;
-use SimplyStream\TwitchApiBundle\Helix\Models\Streams\StreamMarker;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchDataResponse;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchPaginatedDataResponse;
+use SimplyStream\TwitchApi\Helix\Models\Streams\CreateStreamMarkerRequest;
+use SimplyStream\TwitchApi\Helix\Models\Streams\Stream;
+use SimplyStream\TwitchApi\Helix\Models\Streams\StreamKey;
+use SimplyStream\TwitchApi\Helix\Models\Streams\StreamMarker;
+use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
+use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
 
 class StreamsApi extends AbstractApi
 {

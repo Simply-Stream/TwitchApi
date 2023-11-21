@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Api;
+namespace SimplyStream\TwitchApi\Helix\Api;
 
 use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
-use SimplyStream\TwitchApiBundle\Helix\Models\Search\Category;
-use SimplyStream\TwitchApiBundle\Helix\Models\Search\Channel;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchPaginatedDataResponse;
+use SimplyStream\TwitchApi\Helix\Models\Search\Category;
+use SimplyStream\TwitchApi\Helix\Models\Search\Channel;
+use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
 
 class SearchApi extends AbstractApi
 {

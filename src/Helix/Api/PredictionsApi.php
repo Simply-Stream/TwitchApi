@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Api;
+namespace SimplyStream\TwitchApi\Helix\Api;
 
 use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
-use SimplyStream\TwitchApiBundle\Helix\Models\Predictions\CreatePredictionRequest;
-use SimplyStream\TwitchApiBundle\Helix\Models\Predictions\EndPredictionRequest;
-use SimplyStream\TwitchApiBundle\Helix\Models\Predictions\Prediction;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchDataResponse;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchPaginatedDataResponse;
+use SimplyStream\TwitchApi\Helix\Models\Predictions\CreatePredictionRequest;
+use SimplyStream\TwitchApi\Helix\Models\Predictions\EndPredictionRequest;
+use SimplyStream\TwitchApi\Helix\Models\Predictions\Prediction;
+use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
+use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
 
 class PredictionsApi extends AbstractApi
 {

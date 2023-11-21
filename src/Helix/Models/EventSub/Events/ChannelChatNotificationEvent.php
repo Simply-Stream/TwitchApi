@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Events;
+namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Events;
 
-use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Events\Notifications\Badge;
-use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Events\Notifications\Message;
+use SimplyStream\TwitchApi\Helix\Models\EventSub\Events\Notifications\Badge;
+use SimplyStream\TwitchApi\Helix\Models\EventSub\Events\Notifications\Message;
 
 final readonly class ChannelChatNotificationEvent extends Event
 {

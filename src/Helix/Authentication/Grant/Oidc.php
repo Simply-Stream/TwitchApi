@@ -2,19 +2,10 @@
 
 declare(strict_types=1);
 
-/*
- * MIT License
- *
- * Copyright (c) 2021 AaricDev (simply-stream.com)
- */
-
-namespace SimplyStream\TwitchApiBundle\Helix\Authentication\Grant;
+namespace SimplyStream\TwitchApi\Helix\Authentication\Grant;
 
 use League\OAuth2\Client\Grant\AbstractGrant;
 
-/**
- * @package SimplyStream\TwitchApiBundle\Helix\Authentication\Grant
- */
 class Oidc extends AbstractGrant
 {
     /**

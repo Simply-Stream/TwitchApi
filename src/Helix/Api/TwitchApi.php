@@ -2,11 +2,8 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Api;
+namespace SimplyStream\TwitchApi\Helix\Api;
 
-/**
- * @package SimplyStream\TwitchApiBundle\Helix\Api
- */
 class TwitchApi
 {
     public function __construct(

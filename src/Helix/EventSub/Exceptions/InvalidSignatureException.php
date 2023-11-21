@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\EventSub\Exceptions;
+namespace SimplyStream\TwitchApi\Helix\EventSub\Exceptions;
 
 use Exception;
 

@@ -2,20 +2,11 @@
 
 declare(strict_types=1);
 
-/*
- * MIT License
- *
- * Copyright (c) 2021 AaricDev (simply-stream.com)
- */
-
-namespace SimplyStream\TwitchApiBundle\Helix\Authentication;
+namespace SimplyStream\TwitchApi\Helix\Authentication;
 
 use RuntimeException;
 use Throwable;
 
-/**
- * @package SimplyStream\TwitchApiBundle\Helix\Authentication
- */
 class AccessTokenNotFoundException extends RuntimeException
 {
     /**

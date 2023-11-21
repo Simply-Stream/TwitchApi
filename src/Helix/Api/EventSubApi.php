@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Api;
+namespace SimplyStream\TwitchApi\Helix\Api;
 
 use CuyZ\Valinor\Mapper\MappingError;
 use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
-use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\CreateEventSubSubscriptionRequest;
-use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\EventSubResponse;
-use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\PaginatedEventSubResponse;
-use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Subscription;
+use SimplyStream\TwitchApi\Helix\Models\EventSub\CreateEventSubSubscriptionRequest;
+use SimplyStream\TwitchApi\Helix\Models\EventSub\EventSubResponse;
+use SimplyStream\TwitchApi\Helix\Models\EventSub\PaginatedEventSubResponse;
+use SimplyStream\TwitchApi\Helix\Models\EventSub\Subscription;
 
 class EventSubApi extends AbstractApi
 {

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub;
+namespace SimplyStream\TwitchApi\Helix\Models\EventSub;
 
-use SimplyStream\TwitchApiBundle\Helix\Models\SerializesModels;
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 use Webmozart\Assert\Assert;
 
 final readonly class Transport

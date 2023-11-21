@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Api;
+namespace SimplyStream\TwitchApi\Helix\Api;
 
 use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
-use SimplyStream\TwitchApiBundle\Helix\Models\Charity\CharityCampaign;
-use SimplyStream\TwitchApiBundle\Helix\Models\Charity\CharityCampaignDonation;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchDataResponse;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchPaginatedDataResponse;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchResponseInterface;
+use SimplyStream\TwitchApi\Helix\Models\Charity\CharityCampaign;
+use SimplyStream\TwitchApi\Helix\Models\Charity\CharityCampaignDonation;
+use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
+use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
+use SimplyStream\TwitchApi\Helix\Models\TwitchResponseInterface;
 
 class CharityApi extends AbstractApi
 {

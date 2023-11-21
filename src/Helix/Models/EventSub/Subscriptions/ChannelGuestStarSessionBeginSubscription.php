@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Subscriptions;
+namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Subscriptions;
 
 use DateTimeImmutable;
-use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Condition\ChannelGuestStarSessionBeginCondition;
-use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Subscription;
-use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Transport;
+use SimplyStream\TwitchApi\Helix\Models\EventSub\Condition\ChannelGuestStarSessionBeginCondition;
+use SimplyStream\TwitchApi\Helix\Models\EventSub\Subscription;
+use SimplyStream\TwitchApi\Helix\Models\EventSub\Transport;
 
 /**
  * (BETA) The host began a new Guest Star session.

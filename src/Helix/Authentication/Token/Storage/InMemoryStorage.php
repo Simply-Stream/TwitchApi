@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Authentication\Token\Storage;
+namespace SimplyStream\TwitchApi\Helix\Authentication\Token\Storage;
 
 use League\OAuth2\Client\Token\AccessTokenInterface;
 

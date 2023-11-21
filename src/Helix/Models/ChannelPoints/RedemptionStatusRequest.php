@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Models\ChannelPoints;
+namespace SimplyStream\TwitchApi\Helix\Models\ChannelPoints;
 
-use SimplyStream\TwitchApiBundle\Helix\Models\AbstractModel;
+use SimplyStream\TwitchApi\Helix\Models\AbstractModel;
 use Webmozart\Assert\Assert;
 
 final readonly class RedemptionStatusRequest extends AbstractModel

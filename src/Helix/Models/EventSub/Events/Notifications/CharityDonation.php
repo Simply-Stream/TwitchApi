@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Events\Notifications;
+namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Events\Notifications;
 
-use SimplyStream\TwitchApiBundle\Helix\Models\Charity\CharityAmount;
-use SimplyStream\TwitchApiBundle\Helix\Models\SerializesModels;
+use SimplyStream\TwitchApi\Helix\Models\Charity\CharityAmount;
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class CharityDonation
 {

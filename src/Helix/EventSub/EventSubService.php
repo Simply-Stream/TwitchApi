@@ -2,13 +2,7 @@
 
 declare(strict_types=1);
 
-/*
- * MIT License
- *
- * Copyright (c) 2021 AaricDev (simply-stream.com)
- */
-
-namespace SimplyStream\TwitchApiBundle\Helix\EventSub;
+namespace SimplyStream\TwitchApi\Helix\EventSub;
 
 use CuyZ\Valinor\Mapper\MappingError;
 use CuyZ\Valinor\Mapper\Object\DynamicConstructor;
@@ -21,26 +15,23 @@ use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use Psr\Http\Message\RequestInterface;
 use RuntimeException;
-use SimplyStream\TwitchApiBundle\Helix\Api\EventSubApi;
-use SimplyStream\TwitchApiBundle\Helix\EventSub\Exceptions\ChallengeMissingException;
-use SimplyStream\TwitchApiBundle\Helix\EventSub\Exceptions\InvalidSignatureException;
-use SimplyStream\TwitchApiBundle\Helix\EventSub\Exceptions\MissingHeaderException;
-use SimplyStream\TwitchApiBundle\Helix\EventSub\Exceptions\UnsupportedEventException;
-use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\EventResponse;
-use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Events\EventInterface;
-use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\EventSubResponse;
-use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\PaginatedEventSubResponse;
-use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Subscription;
-use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Subscriptions\Subscriptions;
-use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Transport;
+use SimplyStream\TwitchApi\Helix\Api\EventSubApi;
+use SimplyStream\TwitchApi\Helix\EventSub\Exceptions\ChallengeMissingException;
+use SimplyStream\TwitchApi\Helix\EventSub\Exceptions\InvalidSignatureException;
+use SimplyStream\TwitchApi\Helix\EventSub\Exceptions\MissingHeaderException;
+use SimplyStream\TwitchApi\Helix\EventSub\Exceptions\UnsupportedEventException;
+use SimplyStream\TwitchApi\Helix\Models\EventSub\EventResponse;
+use SimplyStream\TwitchApi\Helix\Models\EventSub\Events\EventInterface;
+use SimplyStream\TwitchApi\Helix\Models\EventSub\EventSubResponse;
+use SimplyStream\TwitchApi\Helix\Models\EventSub\PaginatedEventSubResponse;
+use SimplyStream\TwitchApi\Helix\Models\EventSub\Subscription;
+use SimplyStream\TwitchApi\Helix\Models\EventSub\Subscriptions\Subscriptions;
+use SimplyStream\TwitchApi\Helix\Models\EventSub\Transport;
 
 use function array_key_exists;
 use function current;
 use function hash_hmac;
 
-/**
- * @package SimplyStream\TwitchApiBundle\Helix\EventSub
- */
 class EventSubService
 {
     public const WEBHOOK_CALLBACK_MESSAGE_SIGNATURE_HEADER = 'Twitch-Eventsub-Message-Signature';

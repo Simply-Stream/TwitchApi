@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub;
+namespace SimplyStream\TwitchApi\Helix\Models\EventSub;
 
-use SimplyStream\TwitchApiBundle\Helix\Models\AbstractModel;
-use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Condition\ConditionInterface;
+use SimplyStream\TwitchApi\Helix\Models\AbstractModel;
+use SimplyStream\TwitchApi\Helix\Models\EventSub\Condition\ConditionInterface;
 
 final readonly class CreateEventSubSubscriptionRequest extends AbstractModel
 {

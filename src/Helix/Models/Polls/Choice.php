@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Models\Polls;
+namespace SimplyStream\TwitchApi\Helix\Models\Polls;
 
 final readonly class Choice
 {

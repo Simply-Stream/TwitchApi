@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Models\CCLs;
+namespace SimplyStream\TwitchApi\Helix\Models\CCLs;
 
 final readonly class ContentClassificationLabel
 {

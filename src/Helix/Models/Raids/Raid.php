@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Models\Raids;
+namespace SimplyStream\TwitchApi\Helix\Models\Raids;
 
 use DateTimeImmutable;
 

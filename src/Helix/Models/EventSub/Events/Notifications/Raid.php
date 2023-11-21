@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Events\Notifications;
+namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Events\Notifications;
 
-use SimplyStream\TwitchApiBundle\Helix\Models\SerializesModels;
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class Raid
 {

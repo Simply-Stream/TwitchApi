@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Api;
+namespace SimplyStream\TwitchApi\Helix\Api;
 
 use CuyZ\Valinor\Mapper\MappingError;
 use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchDataResponse;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchPaginatedDataResponse;
-use SimplyStream\TwitchApiBundle\Helix\Models\Users\UpdateUserExtension;
-use SimplyStream\TwitchApiBundle\Helix\Models\Users\User;
-use SimplyStream\TwitchApiBundle\Helix\Models\Users\UserActiveExtension;
-use SimplyStream\TwitchApiBundle\Helix\Models\Users\UserBlock;
-use SimplyStream\TwitchApiBundle\Helix\Models\Users\UserExtension;
+use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
+use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
+use SimplyStream\TwitchApi\Helix\Models\Users\UpdateUserExtension;
+use SimplyStream\TwitchApi\Helix\Models\Users\User;
+use SimplyStream\TwitchApi\Helix\Models\Users\UserActiveExtension;
+use SimplyStream\TwitchApi\Helix\Models\Users\UserBlock;
+use SimplyStream\TwitchApi\Helix\Models\Users\UserExtension;
 use Webmozart\Assert\Assert;
 
 class UsersApi extends AbstractApi

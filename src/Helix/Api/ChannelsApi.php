@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Api;
+namespace SimplyStream\TwitchApi\Helix\Api;
 
 use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
-use SimplyStream\TwitchApiBundle\Helix\Models\Channels\ChannelEditor;
-use SimplyStream\TwitchApiBundle\Helix\Models\Channels\ChannelFollow;
-use SimplyStream\TwitchApiBundle\Helix\Models\Channels\ChannelInformation;
-use SimplyStream\TwitchApiBundle\Helix\Models\Channels\FollowedChannel;
-use SimplyStream\TwitchApiBundle\Helix\Models\Channels\ModifyChannelInformationRequest;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchDataResponse;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchPaginatedDataResponse;
+use SimplyStream\TwitchApi\Helix\Models\Channels\ChannelEditor;
+use SimplyStream\TwitchApi\Helix\Models\Channels\ChannelFollow;
+use SimplyStream\TwitchApi\Helix\Models\Channels\ChannelInformation;
+use SimplyStream\TwitchApi\Helix\Models\Channels\FollowedChannel;
+use SimplyStream\TwitchApi\Helix\Models\Channels\ModifyChannelInformationRequest;
+use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
+use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
 
 class ChannelsApi extends AbstractApi
 {

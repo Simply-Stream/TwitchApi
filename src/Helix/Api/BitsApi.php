@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Api;
+namespace SimplyStream\TwitchApi\Helix\Api;
 
 use DateTime;
 use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
-use SimplyStream\TwitchApiBundle\Helix\Models\Bits\BitsLeaderboard;
-use SimplyStream\TwitchApiBundle\Helix\Models\Bits\Cheermote;
-use SimplyStream\TwitchApiBundle\Helix\Models\Bits\ExtensionTransactions;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchDataResponse;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchDateRangeDataResponse;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchPaginatedDataResponse;
+use SimplyStream\TwitchApi\Helix\Models\Bits\BitsLeaderboard;
+use SimplyStream\TwitchApi\Helix\Models\Bits\Cheermote;
+use SimplyStream\TwitchApi\Helix\Models\Bits\ExtensionTransactions;
+use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
+use SimplyStream\TwitchApi\Helix\Models\TwitchDateRangeDataResponse;
+use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
 
 class BitsApi extends AbstractApi
 {

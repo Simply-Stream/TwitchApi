@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Models\Charity;
+namespace SimplyStream\TwitchApi\Helix\Models\Charity;
 
 final readonly class CharityCampaignDonation
 {

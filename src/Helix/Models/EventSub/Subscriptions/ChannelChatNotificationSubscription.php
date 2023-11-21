@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Subscriptions;
+namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Subscriptions;
 
 use DateTimeImmutable;
-use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Condition\ChannelChatNotificationCondition;
-use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Subscription;
-use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Transport;
+use SimplyStream\TwitchApi\Helix\Models\EventSub\Condition\ChannelChatNotificationCondition;
+use SimplyStream\TwitchApi\Helix\Models\EventSub\Subscription;
+use SimplyStream\TwitchApi\Helix\Models\EventSub\Transport;
 
 /**
  * (BETA) A notification for when an event that appears in chat has occurred.

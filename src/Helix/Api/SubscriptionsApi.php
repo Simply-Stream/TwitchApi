@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Api;
+namespace SimplyStream\TwitchApi\Helix\Api;
 
 use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
-use SimplyStream\TwitchApiBundle\Helix\Models\Subscriptions\Subscription;
-use SimplyStream\TwitchApiBundle\Helix\Models\Subscriptions\TwitchPaginatedSubPointsResponse;
+use SimplyStream\TwitchApi\Helix\Models\Subscriptions\Subscription;
+use SimplyStream\TwitchApi\Helix\Models\Subscriptions\TwitchPaginatedSubPointsResponse;
 
 class SubscriptionsApi extends AbstractApi
 {

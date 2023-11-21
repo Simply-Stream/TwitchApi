@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Models\Users;
+namespace SimplyStream\TwitchApi\Helix\Models\Users;
 
 final readonly class UpdateUserChatColorRequest
 {

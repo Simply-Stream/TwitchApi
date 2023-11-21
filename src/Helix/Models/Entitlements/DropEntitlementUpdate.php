@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Models\Entitlements;
+namespace SimplyStream\TwitchApi\Helix\Models\Entitlements;
 
 final readonly class DropEntitlementUpdate
 {

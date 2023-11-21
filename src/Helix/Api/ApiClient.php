@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Api;
+namespace SimplyStream\TwitchApi\Helix\Api;
 
 use CuyZ\Valinor\Mapper\MappingError;
 use CuyZ\Valinor\Mapper\Object\DynamicConstructor;
@@ -20,15 +20,15 @@ use Psr\Http\Message\UriFactoryInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerTrait;
 use Psr\Log\LogLevel;
-use SimplyStream\TwitchApiBundle\Helix\Authentication\Provider\TwitchProvider;
-use SimplyStream\TwitchApiBundle\Helix\Authentication\Token\Storage\InMemoryStorage;
-use SimplyStream\TwitchApiBundle\Helix\Authentication\Token\Storage\TokenStorageInterface;
-use SimplyStream\TwitchApiBundle\Helix\EventSub\Exceptions\InvalidAccessTokenException;
-use SimplyStream\TwitchApiBundle\Helix\Models\AbstractModel;
-use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Subscription;
-use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Subscriptions\Subscriptions;
-use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Transport;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchResponseInterface;
+use SimplyStream\TwitchApi\Helix\Authentication\Provider\TwitchProvider;
+use SimplyStream\TwitchApi\Helix\Authentication\Token\Storage\InMemoryStorage;
+use SimplyStream\TwitchApi\Helix\Authentication\Token\Storage\TokenStorageInterface;
+use SimplyStream\TwitchApi\Helix\EventSub\Exceptions\InvalidAccessTokenException;
+use SimplyStream\TwitchApi\Helix\Models\AbstractModel;
+use SimplyStream\TwitchApi\Helix\Models\EventSub\Subscription;
+use SimplyStream\TwitchApi\Helix\Models\EventSub\Subscriptions\Subscriptions;
+use SimplyStream\TwitchApi\Helix\Models\EventSub\Transport;
+use SimplyStream\TwitchApi\Helix\Models\TwitchResponseInterface;
 use Stringable;
 
 use function json_decode;

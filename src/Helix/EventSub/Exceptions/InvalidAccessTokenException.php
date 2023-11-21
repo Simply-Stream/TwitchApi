@@ -2,21 +2,12 @@
 
 declare(strict_types=1);
 
-/*
- * MIT License
- *
- * Copyright (c) 2021 AaricDev (simply-stream.com)
- */
-
-namespace SimplyStream\TwitchApiBundle\Helix\EventSub\Exceptions;
+namespace SimplyStream\TwitchApi\Helix\EventSub\Exceptions;
 
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use RuntimeException;
 use Throwable;
 
-/**
- * @package SimplyStream\TwitchApiBundle\Helix\EventSub\Exceptions
- */
 class InvalidAccessTokenException extends RuntimeException
 {
     /**

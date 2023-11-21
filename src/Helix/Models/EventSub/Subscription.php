@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub;
+namespace SimplyStream\TwitchApi\Helix\Models\EventSub;
 
 use DateTimeImmutable;
-use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Condition\ConditionInterface;
-use SimplyStream\TwitchApiBundle\Helix\Models\SerializesModels;
+use SimplyStream\TwitchApi\Helix\Models\EventSub\Condition\ConditionInterface;
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 readonly class Subscription
 {

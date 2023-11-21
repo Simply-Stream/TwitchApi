@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Models\Ads;
+namespace SimplyStream\TwitchApi\Helix\Models\Ads;
 
-use SimplyStream\TwitchApiBundle\Helix\Models\AbstractModel;
+use SimplyStream\TwitchApi\Helix\Models\AbstractModel;
 use Webmozart\Assert\Assert;
 
 final readonly class StartCommercialRequest extends AbstractModel

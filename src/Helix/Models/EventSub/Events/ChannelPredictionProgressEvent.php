@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Events;
+namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Events;
 
 use DateTimeImmutable;
-use SimplyStream\TwitchApiBundle\Helix\Models\Predictions\Outcome;
+use SimplyStream\TwitchApi\Helix\Models\Predictions\Outcome;
 
 final readonly class ChannelPredictionProgressEvent extends Event
 {

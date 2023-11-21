@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Models\Ads;
+namespace SimplyStream\TwitchApi\Helix\Models\Ads;
 
 final readonly class Commercial
 {

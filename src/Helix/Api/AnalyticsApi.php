@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Api;
+namespace SimplyStream\TwitchApi\Helix\Api;
 
 use DateTime;
 use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
-use SimplyStream\TwitchApiBundle\Helix\Models\Analytics\ExtensionAnalytics;
-use SimplyStream\TwitchApiBundle\Helix\Models\Analytics\GameAnalytics;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchPaginatedDataResponse;
+use SimplyStream\TwitchApi\Helix\Models\Analytics\ExtensionAnalytics;
+use SimplyStream\TwitchApi\Helix\Models\Analytics\GameAnalytics;
+use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
 
 class AnalyticsApi extends AbstractApi
 {

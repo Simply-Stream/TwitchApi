@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Api;
+namespace SimplyStream\TwitchApi\Helix\Api;
 
 use League\OAuth2\Client\Token\AccessTokenInterface;
-use SimplyStream\TwitchApiBundle\Helix\Models\AbstractModel;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchResponseInterface;
+use SimplyStream\TwitchApi\Helix\Models\AbstractModel;
+use SimplyStream\TwitchApi\Helix\Models\TwitchResponseInterface;
 
 /**
  * @template T

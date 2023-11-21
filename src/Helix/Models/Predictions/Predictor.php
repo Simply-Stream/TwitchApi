@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Models\Predictions;
+namespace SimplyStream\TwitchApi\Helix\Models\Predictions;
 
-use SimplyStream\TwitchApiBundle\Helix\Models\SerializesModels;
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class Predictor
 {

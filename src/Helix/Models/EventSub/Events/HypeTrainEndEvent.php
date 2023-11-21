@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Events;
+namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Events;
 
 use DateTimeImmutable;
-use SimplyStream\TwitchApiBundle\Helix\Models\HypeTrain\Contribution;
+use SimplyStream\TwitchApi\Helix\Models\HypeTrain\Contribution;
 
 final readonly class HypeTrainEndEvent extends Event
 {

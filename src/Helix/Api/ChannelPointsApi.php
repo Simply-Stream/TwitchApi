@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Api;
+namespace SimplyStream\TwitchApi\Helix\Api;
 
 use CuyZ\Valinor\Mapper\MappingError;
 use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
-use SimplyStream\TwitchApiBundle\Helix\Models\ChannelPoints\CreateCustomRewardRequest;
-use SimplyStream\TwitchApiBundle\Helix\Models\ChannelPoints\CustomReward;
-use SimplyStream\TwitchApiBundle\Helix\Models\ChannelPoints\CustomRewardRedemption;
-use SimplyStream\TwitchApiBundle\Helix\Models\ChannelPoints\RedemptionStatusRequest;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchDataResponse;
+use SimplyStream\TwitchApi\Helix\Models\ChannelPoints\CreateCustomRewardRequest;
+use SimplyStream\TwitchApi\Helix\Models\ChannelPoints\CustomReward;
+use SimplyStream\TwitchApi\Helix\Models\ChannelPoints\CustomRewardRedemption;
+use SimplyStream\TwitchApi\Helix\Models\ChannelPoints\RedemptionStatusRequest;
+use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
 
 class ChannelPointsApi extends AbstractApi
 {

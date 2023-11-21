@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Models\ChannelPoints;
+namespace SimplyStream\TwitchApi\Helix\Models\ChannelPoints;
 
 final readonly class MaxPerUserPerStreamSetting
 {

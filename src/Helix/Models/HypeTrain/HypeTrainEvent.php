@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Models\HypeTrain;
+namespace SimplyStream\TwitchApi\Helix\Models\HypeTrain;
 
 use DateTimeImmutable;
 

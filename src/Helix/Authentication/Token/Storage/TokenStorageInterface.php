@@ -2,13 +2,7 @@
 
 declare(strict_types=1);
 
-/*
- * MIT License
- *
- * Copyright (c) 2021 AaricDev (simply-stream.com)
- */
-
-namespace SimplyStream\TwitchApiBundle\Helix\Authentication\Token\Storage;
+namespace SimplyStream\TwitchApi\Helix\Authentication\Token\Storage;
 
 use League\OAuth2\Client\Token\AccessTokenInterface;
 

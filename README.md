@@ -1,6 +1,6 @@
 # Twitch API (by Simply-Stream.com)
 
-[![QA](https://github.com/Simply-Stream/TwitchApi/actions/workflows/qa.yaml/badge.svg?branch=main)](https://github.com/Simply-Stream/TwitchApi/actions/workflows/qa.yaml) 
+[![QA](https://github.com/Simply-Stream/TwitchApi/actions/workflows/qa.yaml/badge.svg?branch=main)](https://github.com/Simply-Stream/TwitchApi/actions/workflows/qa.yaml)
 
 -------------------------------
 
@@ -92,17 +92,26 @@ To use the websocket implementation, you should check out the following projects
 To get everything up and running, you need to set some things up.
 
 ```php
-// You can use every PSR-18 compatible client here, that implements the ClientInterface from psr/http-client
 $client = new Client();
 // Same for the request factory, it just needs to implement the RequestFactoryInterface.
 // Optionally the StreamFactoryInterface and UriFactoryInterface, too.
 $requestFactory = new RequestFactory();
 
+// This provider is about to be removed. Please consider using https://github.com/vertisan/oauth2-twitch-helix
+$twitchProvider = new TwitchProvider([
+    'clientId' => 'YOUR_TWITCH_ID',
+    'clientSecret' => 'YOUR_TWITCH_SECRET',
+    'urlAuthorize' => 'https://id.twitch.tv/oauth2/authorize',
+    'urlAccessToken' => 'https://id.twitch.tv/oauth2/token',
+    'urlResourceOwnerDetails' => 'https://id.twitch.tv/oauth2/userinfo',
+    'redirectUri' => 'http://localhost/check/twitch',
+    'scopes' => 'a space separated list of scopes',
+]);
 
 $apiClient = new ApiClient(
     $client,
     $requestFactory,
-    $this->createTwitchProvider(),
+    $twitchProvider,
     new \CuyZ\Valinor\MapperBuilder(),
     $requestFactory,
     ['clientId' => 'YOUR_CLIENT_ID', 'webhook' => ['secret' => 'YOUR_SECRET']]
@@ -116,6 +125,16 @@ foreach($response->getData() as $user) {
 }
 ```
 
+### Bring your own client
+
+Instead of forcing you to implement yet another HTTP client, this library gives you the opportunity to use your own.
+The only restriction you got: It has to be PSR-18 compliant and implement the
+interface `\Psr\Http\Client\ClientInterface`.
+
+We recommend either using the all in one package [Guzzlehttp](https://packagist.org/packages/guzzlehttp/guzzle])
+or [PHP-HTTP](https://packagist.org/packages/php-http/curl-client) with the PSR7 implementation [Nyholm/PSR7](https://github.com/Nyholm/psr7)
+or [Guzzle/PSR7](https://packagist.org/packages/guzzlehttp/psr7).
+
 ## Supported Frameworks
 
 Currently, there is only an integration for [Symfony](https://symfony.com).
@@ -126,15 +145,17 @@ Currently, there is only an integration for [Symfony](https://symfony.com).
 ## TODO List
 
 Even though most of this library is ready to use, there's still a lot to do. Here is a brief overview of what will come
-next:
+next ordered more or less by priority:
 
 - More tests!
+- Factories/Builder to easily instantiate the APIs and maybe some DTOs, especially the TwitchApi class
 - Middleware features, to easily extend requests (e.g.: RateLimitMiddleware)
 - A guideline for contributions
 
 ## Contribution
 
 We welcome contributions! Feel free to open issues, submit pull requests, or join our community discussions.
+A short guide for contribution will follow.
 
 ## Support
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Models;
+namespace SimplyStream\TwitchApi\Helix\Models;
 
 /**
  * Contains the information used to page through the list of results. The object is empty if there are no more pages

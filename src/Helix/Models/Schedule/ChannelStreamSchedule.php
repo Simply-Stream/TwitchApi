@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Models\Schedule;
+namespace SimplyStream\TwitchApi\Helix\Models\Schedule;
 
 final readonly class ChannelStreamSchedule
 {

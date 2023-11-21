@@ -1,41 +1,47 @@
 <?php
 
-namespace SimplyStream\TwitchApiBundle\Tests\Functional;
+namespace SimplyStream\TwitchApi\Tests\Functional;
 
 use CuyZ\Valinor\MapperBuilder;
 use GuzzleHttp\Client;
 use Http\Discovery\Psr17Factory;
 use InvalidArgumentException;
 use League\OAuth2\Client\Token\AccessToken;
-use SimplyStream\TwitchApiBundle\Helix\Api\ApiClient;
-use SimplyStream\TwitchApiBundle\Helix\Api\UsersApi;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchDataResponse;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchPaginatedDataResponse;
-use SimplyStream\TwitchApiBundle\Helix\Models\Users\UpdateUserExtension;
-use SimplyStream\TwitchApiBundle\Helix\Models\Users\User;
-use SimplyStream\TwitchApiBundle\Helix\Models\Users\UserActiveExtension;
+use SimplyStream\TwitchApi\Helix\Api\ApiClient;
+use SimplyStream\TwitchApi\Helix\Api\UsersApi;
+use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
+use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
+use SimplyStream\TwitchApi\Helix\Models\Users\Component;
+use SimplyStream\TwitchApi\Helix\Models\Users\Overlay;
+use SimplyStream\TwitchApi\Helix\Models\Users\Panel;
+use SimplyStream\TwitchApi\Helix\Models\Users\UpdateUserExtension;
+use SimplyStream\TwitchApi\Helix\Models\Users\User;
+use SimplyStream\TwitchApi\Helix\Models\Users\UserActiveExtension;
+use SimplyStream\TwitchApi\Helix\Models\Users\UserExtension;
 
 class UsersApiTest extends FunctionalTestCase
 {
-    public static function getUsersThrowsExceptionWhenMoreThan100UsersAreRequestedDataProvider() {
+    public static function getUsersThrowsExceptionWhenMoreThan100UsersAreRequestedDataProvider()
+    {
         // Just generate some strings, the content doesn't matter, we only need more than 100 keys
         return [
             'Test with 101 IDs' => [
-                'id' => array_fill(0, 101, uniqid()),
+                'id' => array_fill(0, 101, uniqid('', true)),
                 'logins' => []
             ],
             'Test with 101 logins' => [
                 'id' => [],
-                'logins' => array_fill(0, 101, uniqid()),
+                'logins' => array_fill(0, 101, uniqid('', true)),
             ],
             'Test with 50 ids and 51 logins' => [
-                'id' => array_fill(0, 50, uniqid()),
-                'logins' => array_fill(0, 51, uniqid()),
+                'id' => array_fill(0, 50, uniqid('', true)),
+                'logins' => array_fill(0, 51, uniqid('', true)),
             ]
         ];
     }
 
-    public function testGetUsers() {
+    public function testGetUsers()
+    {
         $mockUser = $this->users[0];
 
         $client = new Client();
@@ -52,7 +58,10 @@ class UsersApiTest extends FunctionalTestCase
         $apiClient->setBaseUrl('http://localhost:8000/mock/');
 
         $usersApi = new UsersApi($apiClient);
-        $usersResponse = $usersApi->getUsers(logins: [$mockUser['login']], accessToken: new AccessToken($this->appAccessToken));
+        $usersResponse = $usersApi->getUsers(logins: [$mockUser['login']],
+            accessToken: new AccessToken(
+                $this->appAccessToken
+            ));
 
         $this->assertInstanceOf(TwitchDataResponse::class, $usersResponse);
         $this->assertIsArray($usersResponse->getData());
@@ -77,7 +86,8 @@ class UsersApiTest extends FunctionalTestCase
         }
     }
 
-    public function testGetUSersThrowsExceptionWhenIdOrLoginsIsNotSet() {
+    public function testGetUSersThrowsExceptionWhenIdOrLoginsIsNotSet()
+    {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('You need to specify at least one "id" or "login"');
 
@@ -102,7 +112,8 @@ class UsersApiTest extends FunctionalTestCase
      * @dataProvider getUsersThrowsExceptionWhenMoreThan100UsersAreRequestedDataProvider
      * @throws \JsonException
      */
-    public function testGetUsersThrowsExceptionWhenMoreThan100UsersAreRequested(array $ids, array $logins) {
+    public function testGetUsersThrowsExceptionWhenMoreThan100UsersAreRequested(array $ids, array $logins)
+    {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('You can only request a total amount of 100 users at once');
 
@@ -122,7 +133,8 @@ class UsersApiTest extends FunctionalTestCase
         $usersApi->getUsers(ids: $ids, logins: $logins);
     }
 
-    public function testUpdateUser() {
+    public function testUpdateUser()
+    {
         $mockUser = $this->users[0];
 
         $client = new Client();
@@ -169,7 +181,8 @@ class UsersApiTest extends FunctionalTestCase
         }
     }
 
-    public function testUpdateUserThrowsExceptionWhenDescriptionIsTooLong() {
+    public function testUpdateUserThrowsExceptionWhenDescriptionIsTooLong()
+    {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('A description can not be longer than 300 characters');
 
@@ -187,12 +200,18 @@ class UsersApiTest extends FunctionalTestCase
         $apiClient->setBaseUrl('http://localhost:8000/mock/');
 
         $usersApi = new UsersApi($apiClient);
-        $accessToken = new AccessToken(['access_token' => 'doesn\'t matter, will throw an exception beforehand', 'token_type' => 'bearer']);
+        $accessToken = new AccessToken(
+            ['access_token' => 'doesn\'t matter, will throw an exception beforehand', 'token_type' => 'bearer']
+        );
 
-        $usersApi->updateUser($accessToken, 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum');
+        $usersApi->updateUser(
+            $accessToken,
+            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum'
+        );
     }
 
-    public function testBlockUser() {
+    public function testBlockUser()
+    {
         // There won't be any response object to check. The test is considered successful, when no exception is thrown
         $this->expectNotToPerformAssertions();
 
@@ -210,10 +229,14 @@ class UsersApiTest extends FunctionalTestCase
         $apiClient->setBaseUrl('http://localhost:8000/mock/');
 
         $usersApi = new UsersApi($apiClient);
-        $usersApi->blockUser($this->users[1]['id'], new AccessToken($this->getAccessTokenForUser($this->users[0]['id'], ['user:manage:blocked_users'])));
+        $usersApi->blockUser(
+            $this->users[1]['id'],
+            new AccessToken($this->getAccessTokenForUser($this->users[0]['id'], ['user:manage:blocked_users']))
+        );
     }
 
-    public function testGetUsersBlockList() {
+    public function testGetUsersBlockList()
+    {
         $client = new Client();
 
         $requestFactory = new Psr17Factory();
@@ -228,7 +251,9 @@ class UsersApiTest extends FunctionalTestCase
         $apiClient->setBaseUrl('http://localhost:8000/mock/');
 
         $usersApi = new UsersApi($apiClient);
-        $accessToken = new AccessToken($this->getAccessTokenForUser($this->users[0]['id'], ['user:read:blocked_users']));
+        $accessToken = new AccessToken(
+            $this->getAccessTokenForUser($this->users[0]['id'], ['user:read:blocked_users'])
+        );
         $userBlockListResponse = $usersApi->getUserBlockList($this->users[0]['id'], $accessToken);
 
         $this->assertInstanceOf(TwitchPaginatedDataResponse::class, $userBlockListResponse);
@@ -245,7 +270,8 @@ class UsersApiTest extends FunctionalTestCase
         // $this->assertIsString($userBlockListResponse->getPagination()->getCursor());
     }
 
-    public function testUnblockUser() {
+    public function testUnblockUser()
+    {
         // There won't be any response object to check (yet). The test is considered successful, when no exception is thrown
         $this->expectNotToPerformAssertions();
 
@@ -263,11 +289,14 @@ class UsersApiTest extends FunctionalTestCase
         $apiClient->setBaseUrl('http://localhost:8000/mock/');
 
         $usersApi = new UsersApi($apiClient);
-        $accessToken = new AccessToken($this->getAccessTokenForUser($this->users[0]['id'], ['user:manage:blocked_users']));
+        $accessToken = new AccessToken(
+            $this->getAccessTokenForUser($this->users[0]['id'], ['user:manage:blocked_users'])
+        );
         $usersApi->unblockUser($this->users[1]['id'], $accessToken);
     }
 
-    public function testGetUserExtensions() {
+    public function testGetUserExtensions()
+    {
         $this->markTestSkipped('"/users/extensions/list" endpoint does not exist on mock-api');
 
         $client = new Client();
@@ -297,7 +326,8 @@ class UsersApiTest extends FunctionalTestCase
         }
     }
 
-    public function testGetUserActiveExtensionsWithUserToken() {
+    public function testGetUserActiveExtensionsWithUserToken()
+    {
         $this->markTestSkipped('"/users/extensions" endpoint does not exist on mock-api');
 
         $client = new Client();
@@ -325,7 +355,8 @@ class UsersApiTest extends FunctionalTestCase
         }
     }
 
-    public function testGetUserActiveExtensionsWithAppToken() {
+    public function testGetUserActiveExtensionsWithAppToken()
+    {
         $this->markTestSkipped('"/users/extensions" endpoint does not exist on mock-api');
 
         $client = new Client();
@@ -353,14 +384,20 @@ class UsersApiTest extends FunctionalTestCase
         }
     }
 
-    public function testUpdateUserExtensions() {
+    public function testUpdateUserExtensions()
+    {
         // @TODO: Create an extension and validate this test
         $this->markTestSkipped('This test "might" be correct, but I can\'t actually validate the response.');
 
-        $updateUserExtensionsBody = new UpdateUserExtension(json_decode(<<<'JSON'
+        $updateUserExtensionsBody = new UpdateUserExtension(
+            json_decode(
+                <<<'JSON'
 {"data":{"panel":{"1":{"active":true,"id":"123","version":"1.2.5","name":"Some Extension"}}}}
 JSON
-            , true));
+                ,
+                true
+            )
+        );
 
         $client = new Client();
 

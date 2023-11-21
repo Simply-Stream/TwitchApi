@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Models\Entitlements;
+namespace SimplyStream\TwitchApi\Helix\Models\Entitlements;
 
-use SimplyStream\TwitchApiBundle\Helix\Models\AbstractModel;
+use SimplyStream\TwitchApi\Helix\Models\AbstractModel;
 use Webmozart\Assert\Assert;
 
 final readonly class UpdateDropEntitlementRequest extends AbstractModel

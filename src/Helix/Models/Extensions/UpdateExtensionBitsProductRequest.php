@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Models\Extensions;
+namespace SimplyStream\TwitchApi\Helix\Models\Extensions;
 
 use DateTimeImmutable;
-use SimplyStream\TwitchApiBundle\Helix\Models\AbstractModel;
+use SimplyStream\TwitchApi\Helix\Models\AbstractModel;
 use Webmozart\Assert\Assert;
 
 final readonly class UpdateExtensionBitsProductRequest extends AbstractModel

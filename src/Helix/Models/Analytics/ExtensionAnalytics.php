@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Models\Analytics;
+namespace SimplyStream\TwitchApi\Helix\Models\Analytics;
 
 final readonly class ExtensionAnalytics
 {

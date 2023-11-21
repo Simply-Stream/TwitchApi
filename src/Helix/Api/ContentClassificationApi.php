@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Api;
+namespace SimplyStream\TwitchApi\Helix\Api;
 
 use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
-use SimplyStream\TwitchApiBundle\Helix\Models\CCLs\ContentClassificationLabel;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchDataResponse;
+use SimplyStream\TwitchApi\Helix\Models\CCLs\ContentClassificationLabel;
+use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
 
 class ContentClassificationApi extends AbstractApi
 {

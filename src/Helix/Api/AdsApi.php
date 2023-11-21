@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Api;
+namespace SimplyStream\TwitchApi\Helix\Api;
 
 use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
-use SimplyStream\TwitchApiBundle\Helix\Models\Ads\AdSchedule;
-use SimplyStream\TwitchApiBundle\Helix\Models\Ads\Commercial;
-use SimplyStream\TwitchApiBundle\Helix\Models\Ads\SnoozeNextAd;
-use SimplyStream\TwitchApiBundle\Helix\Models\Ads\StartCommercialRequest;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchDataResponse;
+use SimplyStream\TwitchApi\Helix\Models\Ads\AdSchedule;
+use SimplyStream\TwitchApi\Helix\Models\Ads\Commercial;
+use SimplyStream\TwitchApi\Helix\Models\Ads\SnoozeNextAd;
+use SimplyStream\TwitchApi\Helix\Models\Ads\StartCommercialRequest;
+use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
 
 class AdsApi extends AbstractApi
 {

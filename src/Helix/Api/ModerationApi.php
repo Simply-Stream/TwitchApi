@@ -2,26 +2,26 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Api;
+namespace SimplyStream\TwitchApi\Helix\Api;
 
 use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
-use SimplyStream\TwitchApiBundle\Helix\Models\Moderation\AddBlockedTermRequest;
-use SimplyStream\TwitchApiBundle\Helix\Models\Moderation\AutoModSettings;
-use SimplyStream\TwitchApiBundle\Helix\Models\Moderation\AutoModStatus;
-use SimplyStream\TwitchApiBundle\Helix\Models\Moderation\BannedUser;
-use SimplyStream\TwitchApiBundle\Helix\Models\Moderation\BanUserRequest;
-use SimplyStream\TwitchApiBundle\Helix\Models\Moderation\BlockedTerm;
-use SimplyStream\TwitchApiBundle\Helix\Models\Moderation\CheckAutoModStatusRequest;
-use SimplyStream\TwitchApiBundle\Helix\Models\Moderation\ManageHeldAutoModMessageRequest;
-use SimplyStream\TwitchApiBundle\Helix\Models\Moderation\Moderator;
-use SimplyStream\TwitchApiBundle\Helix\Models\Moderation\ShieldModeStatus;
-use SimplyStream\TwitchApiBundle\Helix\Models\Moderation\UpdateAutoModSettingsRequest;
-use SimplyStream\TwitchApiBundle\Helix\Models\Moderation\UpdateShieldModeStatusRequest;
-use SimplyStream\TwitchApiBundle\Helix\Models\Moderation\UserBan;
-use SimplyStream\TwitchApiBundle\Helix\Models\Moderation\VIP;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchDataResponse;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchPaginatedDataResponse;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\AddBlockedTermRequest;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\AutoModSettings;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\AutoModStatus;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\BannedUser;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\BanUserRequest;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\BlockedTerm;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\CheckAutoModStatusRequest;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\ManageHeldAutoModMessageRequest;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\Moderator;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\ShieldModeStatus;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\UpdateAutoModSettingsRequest;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\UpdateShieldModeStatusRequest;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\UserBan;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\VIP;
+use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
+use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
 
 class ModerationApi extends AbstractApi
 {

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Models\Whispers;
+namespace SimplyStream\TwitchApi\Helix\Models\Whispers;
 
-use SimplyStream\TwitchApiBundle\Helix\Models\AbstractModel;
+use SimplyStream\TwitchApi\Helix\Models\AbstractModel;
 
 final readonly class SendWhisperRequest extends AbstractModel
 {

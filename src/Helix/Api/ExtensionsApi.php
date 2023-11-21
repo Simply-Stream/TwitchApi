@@ -2,22 +2,22 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Api;
+namespace SimplyStream\TwitchApi\Helix\Api;
 
 use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
-use SimplyStream\TwitchApiBundle\Helix\Models\Extensions\Extension;
-use SimplyStream\TwitchApiBundle\Helix\Models\Extensions\ExtensionBitsProduct;
-use SimplyStream\TwitchApiBundle\Helix\Models\Extensions\ExtensionConfigurationSegment;
-use SimplyStream\TwitchApiBundle\Helix\Models\Extensions\ExtensionLiveChannel;
-use SimplyStream\TwitchApiBundle\Helix\Models\Extensions\ExtensionSecret;
-use SimplyStream\TwitchApiBundle\Helix\Models\Extensions\SendExtensionChatMessageRequest;
-use SimplyStream\TwitchApiBundle\Helix\Models\Extensions\SendExtensionPubSubMessageRequest;
-use SimplyStream\TwitchApiBundle\Helix\Models\Extensions\SetExtensionConfigurationSegmentRequest;
-use SimplyStream\TwitchApiBundle\Helix\Models\Extensions\SetExtensionRequiredConfigurationRequest;
-use SimplyStream\TwitchApiBundle\Helix\Models\Extensions\UpdateExtensionBitsProductRequest;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchDataResponse;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchPaginatedDataResponse;
+use SimplyStream\TwitchApi\Helix\Models\Extensions\Extension;
+use SimplyStream\TwitchApi\Helix\Models\Extensions\ExtensionBitsProduct;
+use SimplyStream\TwitchApi\Helix\Models\Extensions\ExtensionConfigurationSegment;
+use SimplyStream\TwitchApi\Helix\Models\Extensions\ExtensionLiveChannel;
+use SimplyStream\TwitchApi\Helix\Models\Extensions\ExtensionSecret;
+use SimplyStream\TwitchApi\Helix\Models\Extensions\SendExtensionChatMessageRequest;
+use SimplyStream\TwitchApi\Helix\Models\Extensions\SendExtensionPubSubMessageRequest;
+use SimplyStream\TwitchApi\Helix\Models\Extensions\SetExtensionConfigurationSegmentRequest;
+use SimplyStream\TwitchApi\Helix\Models\Extensions\SetExtensionRequiredConfigurationRequest;
+use SimplyStream\TwitchApi\Helix\Models\Extensions\UpdateExtensionBitsProductRequest;
+use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
+use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
 
 class ExtensionsApi extends AbstractApi
 {

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Events;
+namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Events;
 
 use DateTimeImmutable;
-use SimplyStream\TwitchApiBundle\Helix\Models\Polls\Choice;
+use SimplyStream\TwitchApi\Helix\Models\Polls\Choice;
 
 final readonly class ChannelPollBeginEvent extends Event
 {

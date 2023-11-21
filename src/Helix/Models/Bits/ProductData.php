@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Models\Bits;
+namespace SimplyStream\TwitchApi\Helix\Models\Bits;
 
 final readonly class ProductData
 {

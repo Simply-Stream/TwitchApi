@@ -2,13 +2,7 @@
 
 declare(strict_types=1);
 
-/*
- * MIT License
- *
- * Copyright (c) 2021 AaricDev (simply-stream.com)
- */
-
-namespace SimplyStream\TwitchApiBundle\Helix\Authentication\Provider;
+namespace SimplyStream\TwitchApi\Helix\Authentication\Provider;
 
 use Firebase\JWT\JWK;
 use Firebase\JWT\JWT;
@@ -16,12 +10,11 @@ use League\OAuth2\Client\Grant\AbstractGrant;
 use League\OAuth2\Client\Provider\GenericProvider;
 use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Token\AccessTokenInterface;
-use SimplyStream\TwitchApiBundle\Helix\Authentication\Token\OidcAccessToken;
+use SimplyStream\TwitchApi\Helix\Authentication\Token\OidcAccessToken;
 
 use function array_merge;
 
 /**
- * @package    SimplyStream\TwitchApiBundle\Helix\Authentication\Provider
  * @deprecated Will be removed in a later update, use https://github.com/vertisan/oauth2-twitch-helix instead
  */
 class TwitchProvider extends GenericProvider

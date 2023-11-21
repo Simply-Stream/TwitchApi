@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub;
+namespace SimplyStream\TwitchApi\Helix\Models\EventSub;
 
-use SimplyStream\TwitchApiBundle\Helix\Models\Pagination;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchPaginatedDataResponse;
+use SimplyStream\TwitchApi\Helix\Models\Pagination;
+use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
 
 /**
  * @template T

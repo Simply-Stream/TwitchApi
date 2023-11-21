@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Models\Clip;
+namespace SimplyStream\TwitchApi\Helix\Models\Clip;
 
 use DateTimeImmutable;
 

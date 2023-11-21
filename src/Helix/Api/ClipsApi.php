@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Api;
+namespace SimplyStream\TwitchApi\Helix\Api;
 
 use DateTime;
 use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use RuntimeException;
-use SimplyStream\TwitchApiBundle\Helix\Models\Clip\Clip;
-use SimplyStream\TwitchApiBundle\Helix\Models\Clip\ClipProcess;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchDataResponse;
+use SimplyStream\TwitchApi\Helix\Models\Clip\Clip;
+use SimplyStream\TwitchApi\Helix\Models\Clip\ClipProcess;
+use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
 
 class ClipsApi extends AbstractApi
 {

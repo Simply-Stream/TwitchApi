@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Models\Channels;
+namespace SimplyStream\TwitchApi\Helix\Models\Channels;
 
 use DateTimeImmutable;
 

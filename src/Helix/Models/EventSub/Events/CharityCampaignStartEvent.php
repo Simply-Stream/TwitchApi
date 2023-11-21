@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Events;
+namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Events;
 
 use DateTimeImmutable;
-use SimplyStream\TwitchApiBundle\Helix\Models\Charity\CharityAmount;
+use SimplyStream\TwitchApi\Helix\Models\Charity\CharityAmount;
 
 final readonly class CharityCampaignStartEvent extends Event
 {

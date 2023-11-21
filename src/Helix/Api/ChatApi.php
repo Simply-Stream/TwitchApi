@@ -2,23 +2,23 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Api;
+namespace SimplyStream\TwitchApi\Helix\Api;
 
 use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
-use SimplyStream\TwitchApiBundle\Helix\Models\Chat\ChannelEmote;
-use SimplyStream\TwitchApiBundle\Helix\Models\Chat\ChatBadge;
-use SimplyStream\TwitchApiBundle\Helix\Models\Chat\ChatSettings;
-use SimplyStream\TwitchApiBundle\Helix\Models\Chat\Chatter;
-use SimplyStream\TwitchApiBundle\Helix\Models\Chat\EmoteSet;
-use SimplyStream\TwitchApiBundle\Helix\Models\Chat\GlobalEmote;
-use SimplyStream\TwitchApiBundle\Helix\Models\Chat\SendChatAnnouncementRequest;
-use SimplyStream\TwitchApiBundle\Helix\Models\Chat\UpdateChatSettingsRequest;
-use SimplyStream\TwitchApiBundle\Helix\Models\Chat\UserChatColor;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchDataResponse;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchPaginatedDataResponse;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchResponseInterface;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchTemplatedDataResponse;
+use SimplyStream\TwitchApi\Helix\Models\Chat\ChannelEmote;
+use SimplyStream\TwitchApi\Helix\Models\Chat\ChatBadge;
+use SimplyStream\TwitchApi\Helix\Models\Chat\ChatSettings;
+use SimplyStream\TwitchApi\Helix\Models\Chat\Chatter;
+use SimplyStream\TwitchApi\Helix\Models\Chat\EmoteSet;
+use SimplyStream\TwitchApi\Helix\Models\Chat\GlobalEmote;
+use SimplyStream\TwitchApi\Helix\Models\Chat\SendChatAnnouncementRequest;
+use SimplyStream\TwitchApi\Helix\Models\Chat\UpdateChatSettingsRequest;
+use SimplyStream\TwitchApi\Helix\Models\Chat\UserChatColor;
+use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
+use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
+use SimplyStream\TwitchApi\Helix\Models\TwitchResponseInterface;
+use SimplyStream\TwitchApi\Helix\Models\TwitchTemplatedDataResponse;
 
 class ChatApi extends AbstractApi
 {

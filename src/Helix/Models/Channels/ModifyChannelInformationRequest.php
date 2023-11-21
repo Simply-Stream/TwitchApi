@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Models\Channels;
+namespace SimplyStream\TwitchApi\Helix\Models\Channels;
 
-use SimplyStream\TwitchApiBundle\Helix\Models\AbstractModel;
-use SimplyStream\TwitchApiBundle\Helix\Models\CCLs\Label;
+use SimplyStream\TwitchApi\Helix\Models\AbstractModel;
+use SimplyStream\TwitchApi\Helix\Models\CCLs\Label;
 use Webmozart\Assert\Assert;
 
 final readonly class ModifyChannelInformationRequest extends AbstractModel

@@ -1,12 +1,12 @@
 <?php
 
-namespace SimplyStream\TwitchApiBundle\Tests\Functional;
+namespace SimplyStream\TwitchApi\Tests\Functional;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Nyholm\Psr7\Request;
 use PHPUnit\Framework\TestCase;
-use SimplyStream\TwitchApiBundle\Helix\Authentication\Provider\TwitchProvider;
+use SimplyStream\TwitchApi\Helix\Authentication\Provider\TwitchProvider;
 
 class FunctionalTestCase extends TestCase
 {

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Subscriptions;
+namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Subscriptions;
 
 use DateTimeImmutable;
-use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Condition\ChannelSubscriptionMessageCondition;
-use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Subscription;
-use SimplyStream\TwitchApiBundle\Helix\Models\EventSub\Transport;
+use SimplyStream\TwitchApi\Helix\Models\EventSub\Condition\ChannelSubscriptionMessageCondition;
+use SimplyStream\TwitchApi\Helix\Models\EventSub\Subscription;
+use SimplyStream\TwitchApi\Helix\Models\EventSub\Transport;
 
 /**
  * A notification when a user sends a resubscription chat message in a specific channel.

@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApiBundle\Helix\Api;
+namespace SimplyStream\TwitchApi\Helix\Api;
 
 use DateTime;
 use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
-use SimplyStream\TwitchApiBundle\Helix\Models\Schedule\ChannelStreamSchedule;
-use SimplyStream\TwitchApiBundle\Helix\Models\Schedule\CreateChannelStreamScheduleSegmentRequest;
-use SimplyStream\TwitchApiBundle\Helix\Models\Schedule\UpdateChannelStreamScheduleSegmentRequest;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchDataResponse;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchPaginatedDataResponse;
-use SimplyStream\TwitchApiBundle\Helix\Models\TwitchResponseInterface;
+use SimplyStream\TwitchApi\Helix\Models\Schedule\ChannelStreamSchedule;
+use SimplyStream\TwitchApi\Helix\Models\Schedule\CreateChannelStreamScheduleSegmentRequest;
+use SimplyStream\TwitchApi\Helix\Models\Schedule\UpdateChannelStreamScheduleSegmentRequest;
+use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
+use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
+use SimplyStream\TwitchApi\Helix\Models\TwitchResponseInterface;
 
 class ScheduleApi extends AbstractApi
 {

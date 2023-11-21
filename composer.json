@@ -32,12 +32,12 @@
     },
     "autoload": {
         "psr-4": {
-            "SimplyStream\\TwitchApiBundle\\": "src/"
+            "SimplyStream\\TwitchApi\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "SimplyStream\\TwitchApiBundle\\Tests\\": "tests/"
+            "SimplyStream\\TwitchApi\\Tests\\": "tests/"
         }
     },
     "config": {
