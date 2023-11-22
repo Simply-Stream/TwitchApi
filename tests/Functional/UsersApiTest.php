@@ -11,17 +11,11 @@ use SimplyStream\TwitchApi\Helix\Api\ApiClient;
 use SimplyStream\TwitchApi\Helix\Api\UsersApi;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
 use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
-use SimplyStream\TwitchApi\Helix\Models\Users\Component;
-use SimplyStream\TwitchApi\Helix\Models\Users\Overlay;
-use SimplyStream\TwitchApi\Helix\Models\Users\Panel;
-use SimplyStream\TwitchApi\Helix\Models\Users\UpdateUserExtension;
 use SimplyStream\TwitchApi\Helix\Models\Users\User;
-use SimplyStream\TwitchApi\Helix\Models\Users\UserActiveExtension;
-use SimplyStream\TwitchApi\Helix\Models\Users\UserExtension;
 
 class UsersApiTest extends FunctionalTestCase
 {
-    public static function getUsersThrowsExceptionWhenMoreThan100UsersAreRequestedDataProvider()
+    public static function getUsersThrowsExceptionWhenMoreThan100UsersAreRequestedDataProvider(): array
     {
         // Just generate some strings, the content doesn't matter, we only need more than 100 keys
         return [
@@ -40,7 +34,7 @@ class UsersApiTest extends FunctionalTestCase
         ];
     }
 
-    public function testGetUsers()
+    public function testGetUsers(): void
     {
         $mockUser = $this->users[0];
 
@@ -50,7 +44,6 @@ class UsersApiTest extends FunctionalTestCase
         $apiClient = new ApiClient(
             $client,
             $requestFactory,
-            $this->createTwitchProvider(),
             new MapperBuilder(),
             $requestFactory,
             ['clientId' => $this->clients['ID'], 'webhook' => ['secret' => '1234567890']]
@@ -58,10 +51,12 @@ class UsersApiTest extends FunctionalTestCase
         $apiClient->setBaseUrl('http://localhost:8000/mock/');
 
         $usersApi = new UsersApi($apiClient);
-        $usersResponse = $usersApi->getUsers(logins: [$mockUser['login']],
+        $usersResponse = $usersApi->getUsers(
+            logins: [$mockUser['login']],
             accessToken: new AccessToken(
                 $this->appAccessToken
-            ));
+            )
+        );
 
         $this->assertInstanceOf(TwitchDataResponse::class, $usersResponse);
         $this->assertIsArray($usersResponse->getData());
@@ -86,7 +81,7 @@ class UsersApiTest extends FunctionalTestCase
         }
     }
 
-    public function testGetUSersThrowsExceptionWhenIdOrLoginsIsNotSet()
+    public function testGetUSersThrowsExceptionWhenIdOrLoginsIsNotSet(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('You need to specify at least one "id" or "login"');
@@ -96,7 +91,6 @@ class UsersApiTest extends FunctionalTestCase
         $apiClient = new ApiClient(
             $client,
             $requestFactory,
-            $this->createTwitchProvider(),
             new MapperBuilder(),
             $requestFactory,
             ['clientId' => $this->clients['ID'], 'webhook' => ['secret' => '1234567890']]
@@ -112,7 +106,7 @@ class UsersApiTest extends FunctionalTestCase
      * @dataProvider getUsersThrowsExceptionWhenMoreThan100UsersAreRequestedDataProvider
      * @throws \JsonException
      */
-    public function testGetUsersThrowsExceptionWhenMoreThan100UsersAreRequested(array $ids, array $logins)
+    public function testGetUsersThrowsExceptionWhenMoreThan100UsersAreRequested(array $ids, array $logins): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('You can only request a total amount of 100 users at once');
@@ -122,7 +116,6 @@ class UsersApiTest extends FunctionalTestCase
         $apiClient = new ApiClient(
             $client,
             $requestFactory,
-            $this->createTwitchProvider(),
             new MapperBuilder(),
             $requestFactory,
             ['clientId' => $this->clients['ID'], 'webhook' => ['secret' => '1234567890']]
@@ -133,7 +126,7 @@ class UsersApiTest extends FunctionalTestCase
         $usersApi->getUsers(ids: $ids, logins: $logins);
     }
 
-    public function testUpdateUser()
+    public function testUpdateUser(): void
     {
         $mockUser = $this->users[0];
 
@@ -143,7 +136,6 @@ class UsersApiTest extends FunctionalTestCase
         $apiClient = new ApiClient(
             $client,
             $requestFactory,
-            $this->createTwitchProvider(),
             new MapperBuilder(),
             $requestFactory,
             ['clientId' => $this->clients['ID'], 'webhook' => ['secret' => '1234567890']]
@@ -181,7 +173,7 @@ class UsersApiTest extends FunctionalTestCase
         }
     }
 
-    public function testUpdateUserThrowsExceptionWhenDescriptionIsTooLong()
+    public function testUpdateUserThrowsExceptionWhenDescriptionIsTooLong(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('A description can not be longer than 300 characters');
@@ -192,7 +184,6 @@ class UsersApiTest extends FunctionalTestCase
         $apiClient = new ApiClient(
             $client,
             $requestFactory,
-            $this->createTwitchProvider(),
             new MapperBuilder(),
             $requestFactory,
             ['clientId' => $this->clients['ID'], 'webhook' => ['secret' => '1234567890']]
@@ -210,7 +201,7 @@ class UsersApiTest extends FunctionalTestCase
         );
     }
 
-    public function testBlockUser()
+    public function testBlockUser(): void
     {
         // There won't be any response object to check. The test is considered successful, when no exception is thrown
         $this->expectNotToPerformAssertions();
@@ -221,7 +212,6 @@ class UsersApiTest extends FunctionalTestCase
         $apiClient = new ApiClient(
             $client,
             $requestFactory,
-            $this->createTwitchProvider(),
             new MapperBuilder(),
             $requestFactory,
             ['clientId' => $this->clients['ID'], 'webhook' => ['secret' => '1234567890']]
@@ -235,7 +225,7 @@ class UsersApiTest extends FunctionalTestCase
         );
     }
 
-    public function testGetUsersBlockList()
+    public function testGetUsersBlockList(): void
     {
         $client = new Client();
 
@@ -243,7 +233,6 @@ class UsersApiTest extends FunctionalTestCase
         $apiClient = new ApiClient(
             $client,
             $requestFactory,
-            $this->createTwitchProvider(),
             new MapperBuilder(),
             $requestFactory,
             ['clientId' => $this->clients['ID'], 'webhook' => ['secret' => '1234567890']]
@@ -259,18 +248,18 @@ class UsersApiTest extends FunctionalTestCase
         $this->assertInstanceOf(TwitchPaginatedDataResponse::class, $userBlockListResponse);
         $this->assertGreaterThan(0, count($userBlockListResponse->getData()));
 
-        // foreach ($userBlockListResponse->getData() as $block) {
-        //     $this->assertSame($this->users[1]['id'], $block->getUserId());
-        //     $this->assertSame($this->users[1]['login'], $block->getUserLogin());
-        //     $this->assertSame($this->users[1]['display_name'], $block->getDisplayName());
-        // }
+        foreach ($userBlockListResponse->getData() as $block) {
+            $this->assertIsString($block->getUserId());
+            $this->assertIsString($block->getUserLogin());
+            $this->assertIsString($block->getDisplayName());
+        }
 
         // Because we are using the mock-api, these values are not set (yet).
         // $this->assertInstanceOf(Pagination::class, $userBlockListResponse->getPagination());
         // $this->assertIsString($userBlockListResponse->getPagination()->getCursor());
     }
 
-    public function testUnblockUser()
+    public function testUnblockUser(): void
     {
         // There won't be any response object to check (yet). The test is considered successful, when no exception is thrown
         $this->expectNotToPerformAssertions();
@@ -281,7 +270,6 @@ class UsersApiTest extends FunctionalTestCase
         $apiClient = new ApiClient(
             $client,
             $requestFactory,
-            $this->createTwitchProvider(),
             new MapperBuilder(),
             $requestFactory,
             ['clientId' => $this->clients['ID'], 'webhook' => ['secret' => '1234567890']]
@@ -295,148 +283,144 @@ class UsersApiTest extends FunctionalTestCase
         $usersApi->unblockUser($this->users[1]['id'], $accessToken);
     }
 
-    public function testGetUserExtensions()
+    public function testGetUserExtensions(): void
     {
         $this->markTestSkipped('"/users/extensions/list" endpoint does not exist on mock-api');
 
-        $client = new Client();
-
-        $requestFactory = new Psr17Factory();
-        $apiClient = new ApiClient(
-            $client,
-            $requestFactory,
-            $this->createTwitchProvider(),
-            new MapperBuilder(),
-            $requestFactory,
-            ['clientId' => $this->clients['ID'], 'webhook' => ['secret' => '1234567890']]
-        );
-        $apiClient->setBaseUrl('http://localhost:8000/mock/');
-
-        $accessToken = new AccessToken($this->getAccessTokenForUser($this->users[0]['id'], ['user:edit:broadcast']));
-        $usersApi = new UsersApi($apiClient);
-        $usersExtensionResponse = $usersApi->getUserExtensions($accessToken);
-
-        $this->assertInstanceOf(TwitchDataResponse::class, $usersExtensionResponse);
-        $this->assertCount(1, $usersExtensionResponse->getData());
-
-        foreach ($usersExtensionResponse->getData() as $extension) {
-            $this->assertInstanceOf(UserExtension::class, $extension);
-            $this->assertTrue($extension->canActivate());
-            $this->assertEquals('123456', $extension->getId());
-        }
+        //        $client = new Client();
+        //
+        //        $requestFactory = new Psr17Factory();
+        //        $apiClient = new ApiClient(
+        //            $client,
+        //            $requestFactory,
+        //            new MapperBuilder(),
+        //            $requestFactory,
+        //            ['clientId' => $this->clients['ID'], 'webhook' => ['secret' => '1234567890']]
+        //        );
+        //        $apiClient->setBaseUrl('http://localhost:8000/mock/');
+        //
+        //        $accessToken = new AccessToken($this->getAccessTokenForUser($this->users[0]['id'], ['user:edit:broadcast']));
+        //        $usersApi = new UsersApi($apiClient);
+        //        $usersExtensionResponse = $usersApi->getUserExtensions($accessToken);
+        //
+        //        $this->assertInstanceOf(TwitchDataResponse::class, $usersExtensionResponse);
+        //        $this->assertCount(1, $usersExtensionResponse->getData());
+        //
+        //        foreach ($usersExtensionResponse->getData() as $extension) {
+        //            $this->assertInstanceOf(UserExtension::class, $extension);
+        //            $this->assertTrue($extension->canActivate());
+        //            $this->assertEquals('123456', $extension->getId());
+        //        }
     }
 
-    public function testGetUserActiveExtensionsWithUserToken()
+    public function testGetUserActiveExtensionsWithUserToken(): void
     {
         $this->markTestSkipped('"/users/extensions" endpoint does not exist on mock-api');
 
-        $client = new Client();
-
-        $requestFactory = new Psr17Factory();
-        $apiClient = new ApiClient(
-            $client,
-            $requestFactory,
-            $this->createTwitchProvider(),
-            new MapperBuilder(),
-            $requestFactory,
-            ['clientId' => $this->clients['ID'], 'webhook' => ['secret' => '1234567890']]
-        );
-        $apiClient->setBaseUrl('http://localhost:8000/mock/');
-
-        $accessToken = new AccessToken($this->getAccessTokenForUser($this->users[0]['id'], ['user:edit:broadcast']));
-        $usersApi = new UsersApi($apiClient);
-        $usersGetActiveExtensions = $usersApi->getUserActiveExtensions(accessToken: $accessToken);
-
-        $this->assertInstanceOf(TwitchDataResponse::class, $usersGetActiveExtensions);
-        $this->assertIsNotArray($usersGetActiveExtensions->getData());
-
-        foreach ($usersGetActiveExtensions->getData() as $extension) {
-            $this->assertInstanceOf(UserActiveExtension::class, $extension);
-        }
+        //        $client = new Client();
+        //
+        //        $requestFactory = new Psr17Factory();
+        //        $apiClient = new ApiClient(
+        //            $client,
+        //            $requestFactory,
+        //            new MapperBuilder(),
+        //            $requestFactory,
+        //            ['clientId' => $this->clients['ID'], 'webhook' => ['secret' => '1234567890']]
+        //        );
+        //        $apiClient->setBaseUrl('http://localhost:8000/mock/');
+        //
+        //        $accessToken = new AccessToken($this->getAccessTokenForUser($this->users[0]['id'], ['user:edit:broadcast']));
+        //        $usersApi = new UsersApi($apiClient);
+        //        $usersGetActiveExtensions = $usersApi->getUserActiveExtensions(accessToken: $accessToken);
+        //
+        //        $this->assertInstanceOf(TwitchDataResponse::class, $usersGetActiveExtensions);
+        //        $this->assertIsNotArray($usersGetActiveExtensions->getData());
+        //
+        //        foreach ($usersGetActiveExtensions->getData() as $extension) {
+        //            $this->assertInstanceOf(UserActiveExtension::class, $extension);
+        //        }
     }
 
-    public function testGetUserActiveExtensionsWithAppToken()
+    public function testGetUserActiveExtensionsWithAppToken(): void
     {
         $this->markTestSkipped('"/users/extensions" endpoint does not exist on mock-api');
 
-        $client = new Client();
-
-        $requestFactory = new Psr17Factory();
-        $apiClient = new ApiClient(
-            $client,
-            $requestFactory,
-            $this->createTwitchProvider(),
-            new MapperBuilder(),
-            $requestFactory,
-            ['clientId' => $this->clients['ID'], 'webhook' => ['secret' => '1234567890']]
-        );
-        $apiClient->setBaseUrl('http://localhost:8000/mock/');
-
-        $accessToken = new AccessToken($this->getAccessTokenForUser($this->users[0]['id'], ['user:edit:broadcast']));
-        $usersApi = new UsersApi($apiClient);
-        $usersGetActiveExtensions = $usersApi->getUserActiveExtensions('123456789', accessToken: $accessToken);
-
-        $this->assertInstanceOf(TwitchDataResponse::class, $usersGetActiveExtensions);
-        $this->assertIsNotArray($usersGetActiveExtensions->getData());
-
-        foreach ($usersGetActiveExtensions->getData() as $extension) {
-            $this->assertInstanceOf(UserActiveExtension::class, $extension);
-        }
+        //        $client = new Client();
+        //
+        //        $requestFactory = new Psr17Factory();
+        //        $apiClient = new ApiClient(
+        //            $client,
+        //            $requestFactory,
+        //            new MapperBuilder(),
+        //            $requestFactory,
+        //            ['clientId' => $this->clients['ID'], 'webhook' => ['secret' => '1234567890']]
+        //        );
+        //        $apiClient->setBaseUrl('http://localhost:8000/mock/');
+        //
+        //        $accessToken = new AccessToken($this->getAccessTokenForUser($this->users[0]['id'], ['user:edit:broadcast']));
+        //        $usersApi = new UsersApi($apiClient);
+        //        $usersGetActiveExtensions = $usersApi->getUserActiveExtensions('123456789', accessToken: $accessToken);
+        //
+        //        $this->assertInstanceOf(TwitchDataResponse::class, $usersGetActiveExtensions);
+        //        $this->assertIsNotArray($usersGetActiveExtensions->getData());
+        //
+        //        foreach ($usersGetActiveExtensions->getData() as $extension) {
+        //            $this->assertInstanceOf(UserActiveExtension::class, $extension);
+        //        }
     }
 
-    public function testUpdateUserExtensions()
+    public function testUpdateUserExtensions(): void
     {
         // @TODO: Create an extension and validate this test
         $this->markTestSkipped('This test "might" be correct, but I can\'t actually validate the response.');
 
-        $updateUserExtensionsBody = new UpdateUserExtension(
-            json_decode(
-                <<<'JSON'
-{"data":{"panel":{"1":{"active":true,"id":"123","version":"1.2.5","name":"Some Extension"}}}}
-JSON
-                ,
-                true
-            )
-        );
-
-        $client = new Client();
-
-        $requestFactory = new Psr17Factory();
-        $apiClient = new ApiClient(
-            $client,
-            $requestFactory,
-            $this->createTwitchProvider(),
-            new MapperBuilder(),
-            $requestFactory,
-            ['clientId' => $this->clients['ID'], 'webhook' => ['secret' => '1234567890']]
-        );
-        $apiClient->setBaseUrl('http://localhost:8000/mock/');
-
-        $accessToken = new AccessToken($this->getAccessTokenForUser($this->users[0]['id'], ['user:edit:broadcast']));
-        $usersApi = new UsersApi($apiClient);
-        $updateUserExtensionsResponse = $usersApi->updateUserExtensions($updateUserExtensionsBody, $accessToken);
-
-        $this->assertInstanceOf(TwitchDataResponse::class, $updateUserExtensionsResponse);
-
-        $data = $updateUserExtensionsResponse->getData();
-
-        $this->assertInstanceOf(UserActiveExtension::class, $data);
-        $this->assertIsArray($data->getPanel());
-
-        foreach ($data->getPanel() as $panel) {
-            $this->assertInstanceOf(Panel::class, $panel);
-        }
-
-        $this->assertIsArray($data->getOverlay());
-
-        foreach ($data->getOverlay() as $overlay) {
-            $this->assertInstanceOf(Overlay::class, $overlay);
-        }
-
-        $this->assertIsArray($data->getComponent());
-
-        foreach ($data->getComponent() as $component) {
-            $this->assertInstanceOf(Component::class, $component);
-        }
+        //        $updateUserExtensionsBody = new UpdateUserExtension(
+        //            json_decode(
+        //                <<<'JSON'
+        //{"data":{"panel":{"1":{"active":true,"id":"123","version":"1.2.5","name":"Some Extension"}}}}
+        //JSON
+        //                ,
+        //                true
+        //            )
+        //        );
+        //
+        //        $client = new Client();
+        //
+        //        $requestFactory = new Psr17Factory();
+        //        $apiClient = new ApiClient(
+        //            $client,
+        //            $requestFactory,
+        //            new MapperBuilder(),
+        //            $requestFactory,
+        //            ['clientId' => $this->clients['ID'], 'webhook' => ['secret' => '1234567890']]
+        //        );
+        //        $apiClient->setBaseUrl('http://localhost:8000/mock/');
+        //
+        //        $accessToken = new AccessToken($this->getAccessTokenForUser($this->users[0]['id'], ['user:edit:broadcast']));
+        //        $usersApi = new UsersApi($apiClient);
+        //        $updateUserExtensionsResponse = $usersApi->updateUserExtensions($updateUserExtensionsBody, $accessToken);
+        //
+        //        $this->assertInstanceOf(TwitchDataResponse::class, $updateUserExtensionsResponse);
+        //
+        //        $data = $updateUserExtensionsResponse->getData();
+        //
+        //        $this->assertInstanceOf(UserActiveExtension::class, $data);
+        //        $this->assertIsArray($data->getPanel());
+        //
+        //        foreach ($data->getPanel() as $panel) {
+        //            $this->assertInstanceOf(Panel::class, $panel);
+        //        }
+        //
+        //        $this->assertIsArray($data->getOverlay());
+        //
+        //        foreach ($data->getOverlay() as $overlay) {
+        //            $this->assertInstanceOf(Overlay::class, $overlay);
+        //        }
+        //
+        //        $this->assertIsArray($data->getComponent());
+        //
+        //        foreach ($data->getComponent() as $component) {
+        //            $this->assertInstanceOf(Component::class, $component);
+        //        }
     }
 }

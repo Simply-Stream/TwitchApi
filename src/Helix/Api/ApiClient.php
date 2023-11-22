@@ -6,24 +6,20 @@ namespace SimplyStream\TwitchApi\Helix\Api;
 
 use CuyZ\Valinor\Mapper\MappingError;
 use CuyZ\Valinor\Mapper\Object\DynamicConstructor;
+use CuyZ\Valinor\Mapper\Source\Exception\InvalidSource;
 use CuyZ\Valinor\Mapper\Source\Source;
 use CuyZ\Valinor\Mapper\Tree\Message\Messages;
 use CuyZ\Valinor\MapperBuilder;
 use DateTimeImmutable;
 use InvalidArgumentException;
-use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
-use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Token\AccessTokenInterface;
+use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\UriFactoryInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerTrait;
 use Psr\Log\LogLevel;
-use SimplyStream\TwitchApi\Helix\Authentication\Provider\TwitchProvider;
-use SimplyStream\TwitchApi\Helix\Authentication\Token\Storage\InMemoryStorage;
-use SimplyStream\TwitchApi\Helix\Authentication\Token\Storage\TokenStorageInterface;
-use SimplyStream\TwitchApi\Helix\EventSub\Exceptions\InvalidAccessTokenException;
 use SimplyStream\TwitchApi\Helix\Models\AbstractModel;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Subscription;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Subscriptions\Subscriptions;
@@ -44,37 +40,35 @@ class ApiClient implements ApiClientInterface
     /**
      * @param ClientInterface         $client
      * @param RequestFactoryInterface $requestFactory
-     * @param TwitchProvider          $twitch
      * @param MapperBuilder           $mapperBuilder
      * @param UriFactoryInterface     $uriFactory
      * @param array|null              $options
-     * @param TokenStorageInterface   $tokenStorage
      */
     public function __construct(
         protected ClientInterface $client,
         protected RequestFactoryInterface $requestFactory,
-        protected TwitchProvider $twitch,
         protected MapperBuilder $mapperBuilder,
         protected UriFactoryInterface $uriFactory,
-        protected ?array $options = null,
-        protected TokenStorageInterface $tokenStorage = new InMemoryStorage()
+        protected ?array $options = null
     ) {
-        if (!empty($this->options['token'])) {
-            foreach ($this->options['token'] as $grant => $token) {
-                $this->tokenStorage->save(
-                    $grant,
-                    new AccessToken([
-                        'access_token' => $token['token'],
-                        'expires_in' => $token['expires_in'],
-                        'token_type' => $token['token_type'],
-                    ])
-                );
-            }
-        }
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @param string                    $path
+     * @param array                     $query
+     * @param string|null               $type
+     * @param string                    $method
+     * @param AbstractModel|null        $body
+     * @param AccessTokenInterface|null $accessToken
+     * @param array                     $headers
+     *
+     * @return TwitchResponseInterface|null
+     * @throws MappingError
+     * @throws InvalidSource
+     * @throws \JsonException
+     * @throws ClientExceptionInterface
      */
     public function sendRequest(
         string $path,
@@ -85,10 +79,6 @@ class ApiClient implements ApiClientInterface
         ?AccessTokenInterface $accessToken = null,
         array $headers = []
     ): ?TwitchResponseInterface {
-        if (!$accessToken) {
-            $accessToken = $this->getAccessToken('client_credentials');
-        }
-
         $uri = $this->uriFactory->createUri($this->getBaseUrl() . $path)
             ->withQuery($this->buildQueryString(array_filter($query)));
         $request = $this->requestFactory->createRequest($method, $uri);
@@ -98,12 +88,15 @@ class ApiClient implements ApiClientInterface
         }
 
         $request = $request
-            ->withHeader(
-                'Authorization',
-                ucfirst($accessToken->getValues()['token_type']) . ' ' . $accessToken->getToken()
-            )
             ->withHeader('Content-Type', 'application/json')
             ->withHeader('Client-ID', $this->options['clientId']);
+
+        if ($accessToken) {
+            $request = $request->withHeader(
+                'Authorization',
+                ucfirst($accessToken->getValues()['token_type']) . ' ' . $accessToken->getToken()
+            );
+        }
 
         if ($headers) {
             foreach ($headers as $header => $value) {
@@ -156,45 +149,13 @@ class ApiClient implements ApiClientInterface
     }
 
     /**
-     * @param string $grant
+     * Returns the current baseUrl set for the twitch endpoint
      *
-     * @return AccessTokenInterface
+     * @return string
      */
-    protected function getAccessToken(string $grant): AccessTokenInterface
-    {
-        if ($this->tokenStorage->has($grant)) {
-            return $this->tokenStorage->get($grant);
-        }
-
-        $accessToken = null;
-
-        try {
-            $accessToken = $this->twitch->getAccessToken($grant);
-        } catch (IdentityProviderException $e) {
-            throw new InvalidAccessTokenException($accessToken, $e->getMessage());
-        }
-
-        return $accessToken;
-    }
-
-    public function getBaseUrl(): string
+    private function getBaseUrl(): string
     {
         return $this->baseUrl;
-    }
-
-    /**
-     * This method allows you to change the API endpoint for Twitch.
-     * Can be useful to change this to the Twitch mock data server
-     *
-     * @param string $baseUrl
-     *
-     * @return self
-     */
-    public function setBaseUrl(string $baseUrl): self
-    {
-        $this->baseUrl = $baseUrl;
-
-        return $this;
     }
 
     /**
@@ -229,19 +190,22 @@ class ApiClient implements ApiClientInterface
     /**
      * {@inheritDoc}
      */
-    public function log($level, Stringable|string $message, array $context = []): void
+    private function log($level, Stringable|string $message, array $context = []): void
     {
         $this->logger?->log($level, $message, $context);
     }
 
     /**
-     * @param TokenStorageInterface $tokenStorage
+     * This method allows you to change the API endpoint for Twitch.
+     * Can be useful to change this to the Twitch mock data server
      *
-     * @return $this
+     * @param string $baseUrl
+     *
+     * @return self
      */
-    public function setTokenStorage(TokenStorageInterface $tokenStorage): self
+    public function setBaseUrl(string $baseUrl): self
     {
-        $this->tokenStorage = $tokenStorage;
+        $this->baseUrl = $baseUrl;
 
         return $this;
     }
