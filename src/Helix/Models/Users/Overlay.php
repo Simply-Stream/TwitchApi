@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Users;
 
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
+
 final readonly class Overlay
 {
+    use SerializesModels;
+
     /**
      * @param bool        $active  A Boolean value that determines the extension’s activation state. If false, the user
      *                             has not configured this overlay extension.

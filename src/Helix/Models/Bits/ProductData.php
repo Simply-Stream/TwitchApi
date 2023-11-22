@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Bits;
 
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
+
 final readonly class ProductData
 {
+    use SerializesModels;
+
     /**
      * @param string $sku           An ID that identifies the digital product.
      * @param string $domain        Set to twitch.ext. + <the extension's ID>.

@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Models\Bits;
 
 use DateTimeImmutable;
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class Cheermote
 {
+    use SerializesModels;
+
     /**
      * @param string            $prefix        The name portion of the Cheermote string that you use in chat to cheer
      *                                         Bits. The full Cheermote string is the concatenation of {prefix} +

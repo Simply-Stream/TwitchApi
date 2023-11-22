@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Polls;
 
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
+
 final readonly class Choice
 {
+    use SerializesModels;
+
     /**
      * @param string $id                 An ID that identifies this choice.
      * @param string $title              The choice’s title. The title may contain a maximum of 25 characters.

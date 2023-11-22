@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Bits;
 
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
+
 final readonly class Tier
 {
+    use SerializesModels;
+
     /**
      * @param int    $minBits        The minimum number of Bits that you must cheer at this tier level. The maximum
      *                               number of Bits that you can cheer at this level is determined by the required

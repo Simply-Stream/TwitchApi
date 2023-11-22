@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Models\HypeTrain;
 
 use DateTimeImmutable;
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class EventData
 {
+    use SerializesModels;
+
     /**
      * @param string            $broadcasterId     The ID of the broadcaster that’s running the Hype Train.
      * @param DateTimeImmutable $cooldownEndTime   The UTC date and time (in RFC3339 format) that another Hype Train

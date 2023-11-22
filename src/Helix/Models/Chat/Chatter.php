@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Chat;
 
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
+
 final readonly class Chatter
 {
+    use SerializesModels;
+
     /**
      * @param string $userId    The ID of a user that’s connected to the broadcaster’s chat room.
      * @param string $userLogin The user’s login name.

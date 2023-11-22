@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Models\GuestStar;
 
 use DateTimeImmutable;
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class GuestStarInvite
 {
+    use SerializesModels;
+
     /**
      * @param string            $userId            Twitch User ID corresponding to the invited guest
      * @param DateTimeImmutable $invitedAt         Timestamp when this user was invited to the session.

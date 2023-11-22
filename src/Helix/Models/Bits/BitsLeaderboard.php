@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Bits;
 
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
+
 final readonly class BitsLeaderboard
 {
+    use SerializesModels;
+
     /**
      * @param string $userId    An ID that identifies a user on the leaderboard.
      * @param string $userLogin The user’s login name.

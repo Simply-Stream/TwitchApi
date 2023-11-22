@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Users;
 
-final readonly class UpdateUserChatColorRequest
+use SimplyStream\TwitchApi\Helix\Models\AbstractModel;
+
+final readonly class UpdateUserChatColorRequest extends AbstractModel
 {
     /**
      * @param string $userId The ID of the user whose chat color you want to update. This ID must match the user ID in

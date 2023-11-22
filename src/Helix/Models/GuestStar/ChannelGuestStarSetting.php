@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\GuestStar;
 
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
+
 final readonly class ChannelGuestStarSetting
 {
+    use SerializesModels;
+
     /**
      * @param bool   $isModeratorSendLiveEnabled  Flag determining if Guest Star moderators have access to control
      *                                            whether a guest is live once assigned to a slot.

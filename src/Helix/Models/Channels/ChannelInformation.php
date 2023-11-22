@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Channels;
 
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
+
 final readonly class ChannelInformation
 {
+    use SerializesModels;
+
     /**
      * @param string   $broadcasterId               An ID that uniquely identifies the broadcaster.
      * @param string   $broadcasterLogin            The broadcaster’s login name.

@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Models\Users;
 
 use DateTimeImmutable;
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class User
 {
+    use SerializesModels;
+
     /**
      * @param string            $id               An ID that identifies the user.
      * @param string            $login            The user’s login name.

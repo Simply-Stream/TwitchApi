@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Models\Bits;
 
 use DateTimeImmutable;
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class ExtensionTransactions
 {
+    use SerializesModels;
+
     /**
      * @param string            $id                An ID that identifies the transaction.
      * @param DateTimeImmutable $timestamp         The UTC date and time (in RFC3339 format) of the transaction.

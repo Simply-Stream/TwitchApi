@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Models\Moderation;
 
 use DateTimeImmutable;
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class BlockedTerm
 {
+    use SerializesModels;
+
     /**
      * @param string            $broadcasterId  The broadcaster that owns the list of blocked terms.
      * @param string            $moderatorId    The moderator that blocked the word or phrase from being used in the

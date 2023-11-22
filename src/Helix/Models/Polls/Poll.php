@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Models\Polls;
 
 use DateTimeImmutable;
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class Poll
 {
+    use SerializesModels;
+
     /**
      * @param string            $id                          An ID that identifies the poll.
      * @param string            $broadcasterId               An ID that identifies the broadcaster that created the

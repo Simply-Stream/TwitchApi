@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Models\Ads;
 
 use DateTimeImmutable;
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class SnoozeNextAd
 {
+    use SerializesModels;
+
     /**
      * @param int               $snoozeCount      The number of snoozes available for the broadcaster.
      * @param DateTimeImmutable $snoozeRefreshAt  The UTC timestamp when the broadcaster will gain an additional

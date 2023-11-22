@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Models\Channels;
 
 use DateTimeImmutable;
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class FollowedChannel
 {
+    use SerializesModels;
+
     /**
      * @param string            $broadcasterId     An ID that uniquely identifies the broadcaster that this user is
      *                                             following.

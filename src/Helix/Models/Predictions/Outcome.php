@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Predictions;
 
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
+
 final readonly class Outcome
 {
+    use SerializesModels;
+
     /**
      * @param string      $id                   An ID that identifies this outcome.
      * @param string      $title                The outcome’s text.

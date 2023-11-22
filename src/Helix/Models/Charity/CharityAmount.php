@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Charity;
 
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
+
 final readonly class CharityAmount
 {
+    use SerializesModels;
+
     /**
      * @param int    $value         The monetary amount. The amount is specified in the currency’s minor unit. For
      *                              example, the minor units for USD is cents, so if the amount is $5.50 USD, value is

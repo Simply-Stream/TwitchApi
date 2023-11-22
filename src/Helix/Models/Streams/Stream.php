@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Models\Streams;
 
 use DateTimeImmutable;
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class Stream
 {
+    use SerializesModels;
+
     /**
      * @param string            $id            An ID that identifies the stream. You can use this ID later to look up
      *                                         the video on demand

@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\CCLs;
 
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
+
 final readonly class Label
 {
+    use SerializesModels;
+
     /**
      * @param string $id        ID of the Content Classification Labels that must be added/removed from the channel.
      *                          Can be one of the following values:

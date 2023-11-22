@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Chat;
 
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
+
 readonly class Emote
 {
+    use SerializesModels;
+
     /**
      * @param string   $id          An ID that identifies this emote.
      * @param string   $name        The name of the emote. This is the name that viewers type in the chat window to get

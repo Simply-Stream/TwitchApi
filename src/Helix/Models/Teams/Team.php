@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Models\Teams;
 
 use DateTimeImmutable;
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class Team
 {
+    use SerializesModels;
+
     /**
      * @param string            $broadcasterId       An ID that identifies the broadcaster.
      * @param string            $broadcasterLogin    The broadcaster’s login name.

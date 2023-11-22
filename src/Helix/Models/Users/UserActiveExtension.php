@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Users;
 
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
+
 final readonly class UserActiveExtension
 {
+    use SerializesModels;
+
     /**
      * @param Panel[]     $panel     A dictionary that contains the data for a panel extension. The dictionary’s key is
      *                               a sequential number beginning with 1. The following fields contain the panel’s

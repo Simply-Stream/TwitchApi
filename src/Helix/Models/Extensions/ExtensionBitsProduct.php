@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Models\Extensions;
 
 use DateTimeImmutable;
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class ExtensionBitsProduct
 {
+    use SerializesModels;
+
     /**
      * @param string              $sku           The product’s SKU. The SKU is unique across an extension’s products.
      * @param ExtensionBitsAmount $cost          An object that contains the product’s cost information.

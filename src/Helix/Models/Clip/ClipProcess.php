@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Clip;
 
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
+
 final readonly class ClipProcess
 {
+    use SerializesModels;
+
     /**
      * @param string $editUrl A URL that you can use to edit the clip’s title, identify the part of the clip to
      *                        publish, and publish the clip.

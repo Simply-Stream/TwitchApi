@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Models\Channels;
 
 use DateTimeImmutable;
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class ChannelFollow
 {
+    use SerializesModels;
+
     /**
      * @param DateTimeImmutable $followedAt The UTC timestamp when the user started following the broadcaster.
      * @param string            $userId     An ID that uniquely identifies the user that’s following the broadcaster.

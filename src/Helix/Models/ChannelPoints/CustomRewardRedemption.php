@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Models\ChannelPoints;
 
 use DateTimeImmutable;
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class CustomRewardRedemption
 {
+    use SerializesModels;
+
     /**
      * @param string            $broadcasterId     The ID that uniquely identifies the broadcaster.
      * @param string            $broadcasterLogin  The broadcaster’s login name.

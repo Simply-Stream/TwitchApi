@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Chat;
 
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
+
 final readonly class Version
 {
+    use SerializesModels;
+
     /**
      * @param string $id          An ID that identifies this version of the badge. The ID can be any value. For
      *                            example, for Bits, the ID is the Bits tier level, but for World of Warcraft, it could

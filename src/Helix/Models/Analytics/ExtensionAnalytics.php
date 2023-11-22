@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Analytics;
 
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
+
 final readonly class ExtensionAnalytics
 {
+    use SerializesModels;
+
     /**
      * @param string    $extensionId An ID that identifies the extension that the report was generated for.
      * @param string    $URL         The URL that you use to download the report. The URL is valid for 5 minutes.

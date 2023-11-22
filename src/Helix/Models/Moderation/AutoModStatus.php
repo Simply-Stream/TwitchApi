@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Moderation;
 
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
+
 final readonly class AutoModStatus
 {
+    use SerializesModels;
+
     /**
      * @param string $msgId       The caller-defined ID passed in the request.
      * @param bool   $isPermitted A Boolean value that indicates whether Twitch would approve the message for chat or

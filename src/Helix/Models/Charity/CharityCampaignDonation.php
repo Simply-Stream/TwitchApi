@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Charity;
 
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
+
 final readonly class CharityCampaignDonation
 {
+    use SerializesModels;
+
     /**
      * @param string        $id         An ID that identifies the donation. The ID is unique across campaigns.
      * @param string        $campaignId An ID that identifies the charity campaign that the donation applies to.

@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Models\Goals;
 
 use DateTimeImmutable;
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class CreatorGoal
 {
+    use SerializesModels;
+
     /**
      * @param string            $id                An ID that identifies this goal.
      * @param string            $broadcasterId     An ID that identifies the broadcaster that created the goal.

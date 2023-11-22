@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Models\Predictions;
 
 use DateTimeImmutable;
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class Prediction
 {
+    use SerializesModels;
+
     /**
      * @param string            $id                 An ID that identifies this prediction.
      * @param string            $broadcasterId      An ID that identifies the broadcaster that created the prediction.

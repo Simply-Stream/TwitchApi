@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Extensions;
 
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 use Webmozart\Assert\Assert;
 
 final readonly class ExtensionBitsAmount
 {
+    use SerializesModels;
+
     /**
      * @param int    $amount The product’s price.
      * @param string $type   The type of currency. Possible values are:

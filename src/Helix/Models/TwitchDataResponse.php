@@ -9,6 +9,8 @@ namespace SimplyStream\TwitchApi\Helix\Models;
  */
 readonly class TwitchDataResponse implements TwitchResponseInterface
 {
+    use SerializesModels;
+
     /**
      * @param T $data
      */

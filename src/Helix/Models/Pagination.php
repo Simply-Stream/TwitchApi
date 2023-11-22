@@ -12,6 +12,8 @@ namespace SimplyStream\TwitchApi\Helix\Models;
  */
 class Pagination
 {
+    use SerializesModels;
+
     /**
      * @param string|null $cursor The cursor used to get the next page of results. Use the cursor to set the request’s
      *                            after query parameter.

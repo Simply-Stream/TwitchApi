@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\HypeTrain;
 
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
+
 final readonly class Contribution
 {
+    use SerializesModels;
+
     /**
      * @param int    $total The total amount contributed. If type is BITS, total represents the amount of Bits used. If
      *                      type is SUBS, total is 500, 1000, or 2500 to represent tier 1, 2, or 3 subscriptions,

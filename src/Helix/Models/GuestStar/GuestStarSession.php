@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Models\GuestStar;
 
 use DateTimeImmutable;
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class GuestStarSession
 {
+    use SerializesModels;
+
     /**
      * @param string            $id               ID uniquely representing the Guest Star session.
      * @param array             $guests           List of guests currently interacting with the Guest Star session.

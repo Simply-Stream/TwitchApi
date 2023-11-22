@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Search;
 
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
+
 final readonly class Category
 {
+    use SerializesModels;
+
     /**
      * @param string $id        An ID that uniquely identifies the game or category.
      * @param string $name      The name of the game or category.

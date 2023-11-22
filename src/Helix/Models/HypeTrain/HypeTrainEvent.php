@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Models\HypeTrain;
 
 use DateTimeImmutable;
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class HypeTrainEvent
 {
+    use SerializesModels;
+
     /**
      * @param string            $id              An ID that identifies this event.
      * @param string            $eventType       The type of event. The string is in the form, hypetrain.{event_name}.

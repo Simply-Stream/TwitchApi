@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Models\Entitlements;
 
 use SimplyStream\TwitchApi\Helix\Models\AbstractModel;
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 use Webmozart\Assert\Assert;
 
 final readonly class UpdateDropEntitlementRequest extends AbstractModel
 {
+    use SerializesModels;
+
     /**
      * @param string[]    $entitlementIds   A list of IDs that identify the entitlements to update. You may specify a
      *                                      maximum of 100 IDs.

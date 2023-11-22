@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Moderation;
 
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
+
 final readonly class AutoModSettings
 {
+    use SerializesModels;
+
     /**
      * @param string $broadcasterId           The broadcaster’s ID.
      * @param string $moderatorId             The moderator’s ID.

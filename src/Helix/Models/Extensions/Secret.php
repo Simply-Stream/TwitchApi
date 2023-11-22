@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Models\Extensions;
 
 use DateTimeImmutable;
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class Secret
 {
+    use SerializesModels;
+
     /**
      * @param string            $content    The raw secret that you use with JWT encoding.
      * @param DateTimeImmutable $activeAt   The UTC date and time (in RFC3339 format) that you may begin using this

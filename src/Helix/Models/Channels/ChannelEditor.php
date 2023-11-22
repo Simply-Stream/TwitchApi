@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Models\Channels;
 
 use DateTimeImmutable;
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class ChannelEditor
 {
+    use SerializesModels;
+
     /**
      * @param string            $userId     An ID that uniquely identifies a user with editor permissions.
      * @param string            $userName   The user’s display name.

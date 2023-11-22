@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Models\Entitlements;
 
 use DateTimeImmutable;
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class DropEntitlement
 {
+    use SerializesModels;
+
     /**
      * @param string            $id                An ID that identifies the entitlement.
      * @param string            $benefitId         An ID that identifies the benefit (reward).

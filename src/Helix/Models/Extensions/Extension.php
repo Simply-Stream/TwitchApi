@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Extensions;
 
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
+
 final readonly class Extension
 {
+    use SerializesModels;
+
     /**
      * @param string   $authorName                The name of the user or organization that owns the extension.
      * @param bool     $bitsEnabled               A Boolean value that determines whether the extension has features

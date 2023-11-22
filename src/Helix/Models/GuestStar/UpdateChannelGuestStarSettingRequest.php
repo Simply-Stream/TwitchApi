@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\GuestStar;
 
+use SimplyStream\TwitchApi\Helix\Models\AbstractModel;
 use Webmozart\Assert\Assert;
 
-final readonly class UpdateChannelGuestStarSettingRequest
+final readonly class UpdateChannelGuestStarSettingRequest extends AbstractModel
 {
     /**
      * @param bool|null   $isModeratorSendLiveEnabled  Flag determining if Guest Star moderators have access to control

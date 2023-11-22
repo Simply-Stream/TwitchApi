@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Chat;
 
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
+
 final readonly class ChatSettings
 {
+    use SerializesModels;
+
     /**
      * @param string $broadcasterId                 The ID of the broadcaster specified in the request.
      * @param bool   $emoteMode                     A Boolean value that determines whether chat messages must contain

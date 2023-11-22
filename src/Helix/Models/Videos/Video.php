@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Models\Videos;
 
 use DateTimeImmutable;
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class Video
 {
+    use SerializesModels;
+
     /**
      * @param string            $id             An ID that identifies the video.
      * @param string            $streamId       The ID of the stream that the video originated from if the video’s type

@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Models\Moderation;
 
 use DateTimeImmutable;
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class BannedUser
 {
+    use SerializesModels;
+
     /**
      * @param string            $userId          The ID of the banned user.
      * @param string            $userLogin       The banned user’s login name.

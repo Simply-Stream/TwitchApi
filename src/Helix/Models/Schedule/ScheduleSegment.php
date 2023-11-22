@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Models\Schedule;
 
 use DateTimeImmutable;
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class ScheduleSegment
 {
+    use SerializesModels;
+
     /**
      * @param string                          $id            An ID that identifies this broadcast segment.
      * @param DateTimeImmutable               $startTime     The UTC date and time (in RFC3339 format) of when the

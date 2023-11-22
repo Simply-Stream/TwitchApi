@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Schedule;
 
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
+
 final readonly class ChannelStreamSchedule
 {
+    use SerializesModels;
+
     /**
      * @param ScheduleSegment[] $segments
      * @param string            $broadcasterId

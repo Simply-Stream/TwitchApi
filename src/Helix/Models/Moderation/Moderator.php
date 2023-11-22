@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Moderation;
 
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
+
 final readonly class Moderator
 {
+    use SerializesModels;
+
     /**
      * @param string $userId    The ID of the user that has permission to moderate the broadcaster’s channel.
      * @param string $userLogin The user’s login name.

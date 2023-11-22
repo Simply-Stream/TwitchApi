@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Models\Clip;
 
 use DateTimeImmutable;
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class Clip
 {
+    use SerializesModels;
+
     /**
      * @param string            $id               An ID that uniquely identifies the clip.
      * @param string            $url              A URL to the clip.

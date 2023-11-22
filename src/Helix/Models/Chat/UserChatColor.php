@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Chat;
 
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
+
 final readonly class UserChatColor
 {
+    use SerializesModels;
+
     /**
      * @param string $userId    An ID that uniquely identifies the user.
      * @param string $userLogin The user’s login name.

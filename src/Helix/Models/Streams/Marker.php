@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Models\Streams;
 
 use DateTimeImmutable;
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class Marker
 {
+    use SerializesModels;
+
     /**
      * @param string            $id               An ID that identifies this marker.
      * @param DateTimeImmutable $createdAt        The UTC date and time (in RFC3339 format) of when the user created

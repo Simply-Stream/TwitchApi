@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Models\Search;
 
 use DateTimeImmutable;
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class Channel
 {
+    use SerializesModels;
+
     /**
      * @param string            $broadcasterLanguage  The ISO 639-1 two-letter language code of the language used by
      *                                                the broadcaster. For example, en for English. If the broadcaster

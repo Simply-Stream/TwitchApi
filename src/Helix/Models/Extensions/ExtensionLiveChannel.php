@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Extensions;
 
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
+
 final readonly class ExtensionLiveChannel
 {
+    use SerializesModels;
+
     /**
      * @param string $broadcasterId   The ID of the broadcaster that is streaming live and has installed or activated
      *                                the extension.

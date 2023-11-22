@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Models\Moderation;
 
 use DateTimeImmutable;
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class UserBan
 {
+    use SerializesModels;
+
     /**
      * @param string            $broadcasterId  The broadcaster whose chat room the user was banned from chatting in.
      * @param string            $moderatorId    The moderator that banned or put the user in the timeout.

@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Ads;
 
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
+
 final readonly class Commercial
 {
+    use SerializesModels;
+
     /**
      * @param int    $length     The length of the commercial you requested. If you request a commercial that’s longer
      *                           than 180 seconds, the API uses 180 seconds.

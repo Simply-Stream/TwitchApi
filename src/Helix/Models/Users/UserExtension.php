@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Users;
 
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
+
 final readonly class UserExtension
 {
+    use SerializesModels;
+
     /**
      * @param string   $id          An ID that identifies the extension.
      * @param string   $version     The extension’s version.

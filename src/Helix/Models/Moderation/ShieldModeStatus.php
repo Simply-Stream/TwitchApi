@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Models\Moderation;
 
 use DateTimeImmutable;
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class ShieldModeStatus
 {
+    use SerializesModels;
+
     /**
      * @param bool              $isActive         A Boolean value that determines whether Shield Mode is active. Is
      *                                            true if Shield Mode is active; otherwise, false.

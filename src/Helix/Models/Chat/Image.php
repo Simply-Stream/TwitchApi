@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Chat;
 
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
+
 final readonly class Image
 {
+    use SerializesModels;
+
     /**
      * @param string $url1x The URL to a small version of the image.
      * @param string $url2x The URL to a medium version of the image.

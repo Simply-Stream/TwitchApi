@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Entitlements;
 
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
+
 final readonly class DropEntitlementUpdate
 {
+    use SerializesModels;
+
     /**
      * @param string   $status A string that indicates whether the status of the entitlements in the ids field were
      *                         successfully updated. Possible values are:
