@@ -5,16 +5,13 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Subscriptions;
 
 use DateTimeImmutable;
-use SimplyStream\TwitchApi\Helix\Models\EventSub\Condition\GoalsBeginCondition;
+use SimplyStream\TwitchApi\Helix\Models\EventSub\Condition\CharityCampaignStopCondition;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Subscription;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Transport;
 
-/**
- * Get notified when a broadcaster begins a goal.
- */
-final readonly class GoalsBeginSubscription extends Subscription
+final readonly class CharityCampaignStopSubscription extends Subscription
 {
-    public const TYPE = 'channel.goal.begin';
+    public const TYPE = 'channel.charity_campaign.stop';
 
     public function __construct(
         array $condition,
@@ -28,11 +25,12 @@ final readonly class GoalsBeginSubscription extends Subscription
         parent::__construct(
             $type,
             $version,
-            new GoalsBeginCondition(...$condition),
+            new CharityCampaignStopCondition(...$condition),
             $transport,
             $id,
             $status,
             $createdAt
         );
     }
+
 }

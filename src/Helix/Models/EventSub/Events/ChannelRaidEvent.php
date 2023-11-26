@@ -7,53 +7,53 @@ namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Events;
 final readonly class ChannelRaidEvent extends Event
 {
     /**
-     * @param string $fromBroadcasterId    The broadcaster ID that created the raid.
-     * @param string $fromBroadcasterLogin The broadcaster login that created the raid.
-     * @param string $fromBroadcasterName  The broadcaster display name that created the raid.
-     * @param string $toBroadcasterId      The broadcaster ID that received the raid.
-     * @param string $toBroadcasterLogin   The broadcaster login that received the raid.
-     * @param string $toBroadcasterName    The broadcaster display name that received the raid.
-     * @param int    $viewers              The number of viewers in the raid.
+     * @param string $fromBroadcasterUserId    The broadcaster ID that created the raid.
+     * @param string $fromBroadcasterUserLogin The broadcaster login that created the raid.
+     * @param string $fromBroadcasterUserName  The broadcaster display name that created the raid.
+     * @param string $toBroadcasterUserId      The broadcaster ID that received the raid.
+     * @param string $toBroadcasterUserLogin   The broadcaster login that received the raid.
+     * @param string $toBroadcasterUserName    The broadcaster display name that received the raid.
+     * @param int    $viewers                  The number of viewers in the raid.
      */
     public function __construct(
-        private string $fromBroadcasterId,
-        private string $fromBroadcasterLogin,
-        private string $fromBroadcasterName,
-        private string $toBroadcasterId,
-        private string $toBroadcasterLogin,
-        private string $toBroadcasterName,
+        private string $fromBroadcasterUserId,
+        private string $fromBroadcasterUserLogin,
+        private string $fromBroadcasterUserName,
+        private string $toBroadcasterUserId,
+        private string $toBroadcasterUserLogin,
+        private string $toBroadcasterUserName,
         private int $viewers
     ) {
     }
 
-    public function getFromBroadcasterId(): string
+    public function getFromBroadcasterUserId(): string
     {
-        return $this->fromBroadcasterId;
+        return $this->fromBroadcasterUserId;
     }
 
-    public function getFromBroadcasterLogin(): string
+    public function getFromBroadcasterUserLogin(): string
     {
-        return $this->fromBroadcasterLogin;
+        return $this->fromBroadcasterUserLogin;
     }
 
-    public function getFromBroadcasterName(): string
+    public function getFromBroadcasterUserName(): string
     {
-        return $this->fromBroadcasterName;
+        return $this->fromBroadcasterUserName;
     }
 
-    public function getToBroadcasterId(): string
+    public function getToBroadcasterUserId(): string
     {
-        return $this->toBroadcasterId;
+        return $this->toBroadcasterUserId;
     }
 
-    public function getToBroadcasterLogin(): string
+    public function getToBroadcasterUserLogin(): string
     {
-        return $this->toBroadcasterLogin;
+        return $this->toBroadcasterUserLogin;
     }
 
-    public function getToBroadcasterName(): string
+    public function getToBroadcasterUserName(): string
     {
-        return $this->toBroadcasterName;
+        return $this->toBroadcasterUserName;
     }
 
     public function getViewers(): int

@@ -8,6 +8,7 @@ use CuyZ\Valinor\Mapper\MappingError;
 use CuyZ\Valinor\Mapper\Object\DynamicConstructor;
 use CuyZ\Valinor\Mapper\Source\Exception\InvalidSource;
 use CuyZ\Valinor\Mapper\Source\Source;
+use CuyZ\Valinor\Mapper\Tree\Message\Messages;
 use CuyZ\Valinor\Mapper\TreeMapper;
 use CuyZ\Valinor\MapperBuilder;
 use DateTimeImmutable;
@@ -23,8 +24,10 @@ use SimplyStream\TwitchApi\Helix\EventSub\Exceptions\UnsupportedEventException;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\EventResponse;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Events\EventInterface;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\EventSubResponse;
+use SimplyStream\TwitchApi\Helix\Models\EventSub\MultipleEventResponse;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\PaginatedEventSubResponse;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Subscription;
+use SimplyStream\TwitchApi\Helix\Models\EventSub\Subscriptions\DropEntitlementGrantSubscription;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Subscriptions\Subscriptions;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Transport;
 
@@ -59,6 +62,7 @@ class EventSubService
         protected array $options
     ) {
         $this->mapper = $mapperBuilder
+            ->registerConstructor(fn (string $time): DateTimeImmutable => new DateTimeImmutable($time))
             ->registerConstructor(
                 #[DynamicConstructor]
                 function (string $className, array $value): Subscription {
@@ -138,21 +142,32 @@ class EventSubService
      * @throws UnsupportedEventException
      * @throws ChallengeMissingException
      */
-    public function handleSubscriptionCallback(RequestInterface $request, ?string $secret = null): EventResponse
-    {
+    public function handleSubscriptionCallback(
+        RequestInterface $request,
+        ?string $secret = null
+    ): MultipleEventResponse|EventResponse {
         $this->verifySignature($request, $secret);
         $type = $this->extractType($request);
 
-        /** @var EventResponse $eventResponse */
-        $eventResponse = $this->mapper->map(
-            sprintf(
-                '%s<%s, %s>',
-                EventResponse::class,
-                Subscriptions::MAP[$type],
-                EventInterface::AVAILABLE_EVENTS[$type]
-            ),
-            Source::json((string)$request->getBody())->camelCaseKeys()
-        );
+        try {
+            /** @var MultipleEventResponse|EventResponse $eventResponse */
+            $eventResponse = $this->mapper->map(
+                sprintf(
+                    '%s<%s, %s>',
+                    $type === DropEntitlementGrantSubscription::TYPE ? MultipleEventResponse::class : EventResponse::class,
+                    Subscriptions::MAP[$type],
+                    EventInterface::AVAILABLE_EVENTS[$type]
+                ),
+                Source::json((string)$request->getBody())->camelCaseKeys()
+            );
+        } catch (MappingError $mappingError) {
+            $messages = Messages::flattenFromNode($mappingError->node())->errors();
+            foreach ($messages as $message) {
+                echo $message . PHP_EOL;
+            }
+
+            throw $mappingError;
+        }
 
         if ($eventResponse->getSubscription()->getStatus(
         ) === self::WEBHOOK_CALLBACK_VERIFICATION_PENDING && !$eventResponse->getChallenge()) {

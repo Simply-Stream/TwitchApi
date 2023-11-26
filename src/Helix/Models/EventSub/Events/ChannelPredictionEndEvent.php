@@ -21,7 +21,7 @@ final readonly class ChannelPredictionEndEvent extends Event
      * @param string            $status                The status of the Channel Points Prediction. Valid values are
      *                                                 resolved and canceled.
      * @param DateTimeImmutable $startedAt             The time the Channel Points Prediction started.
-     * @param DateTimeImmutable $ended                 The time the Channel Points Prediction ended.
+     * @param DateTimeImmutable $endedAt               The time the Channel Points Prediction ended.
      */
     public function __construct(
         private string $id,
@@ -33,7 +33,7 @@ final readonly class ChannelPredictionEndEvent extends Event
         private array $outcomes,
         private string $status,
         private DateTimeImmutable $startedAt,
-        private DateTimeImmutable $ended
+        private DateTimeImmutable $endedAt
     ) {
     }
 
@@ -82,8 +82,8 @@ final readonly class ChannelPredictionEndEvent extends Event
         return $this->startedAt;
     }
 
-    public function getEnded(): DateTimeImmutable
+    public function getEndedAt(): DateTimeImmutable
     {
-        return $this->ended;
+        return $this->endedAt;
     }
 }

@@ -9,28 +9,28 @@ use SimplyStream\TwitchApi\Helix\Models\Charity\CharityAmount;
 final readonly class CharityDonationEvent extends Event
 {
     /**
-     * @param string        $id                 An ID that identifies the donation. The ID is unique across campaigns.
-     * @param string        $campaignId         An ID that identifies the charity campaign.
-     * @param string        $broadcasterId      An ID that identifies the broadcaster that’s running the campaign.
-     * @param string        $broadcasterLogin   The broadcaster’s login name.
-     * @param string        $broadcasterName    The broadcaster’s display name.
-     * @param string        $userId             An ID that identifies the user that donated to the campaign.
-     * @param string        $userLogin          The user’s login name.
-     * @param string        $userName           The user’s display name.
-     * @param string        $charityName        The charity’s name.
-     * @param string        $charityDescription A description of the charity.
-     * @param string        $charityLogo        A URL to an image of the charity’s logo. The image’s type is PNG and
-     *                                          its size is 100px X
-     *                                          100px.
-     * @param string        $charityWebsite     A URL to the charity’s website.
-     * @param CharityAmount $amount             An object that contains the amount of money that the user donated.
+     * @param string        $id                   An ID that identifies the donation. The ID is unique across campaigns.
+     * @param string        $campaignId           An ID that identifies the charity campaign.
+     * @param string        $broadcasterUserId    An ID that identifies the broadcaster that’s running the campaign.
+     * @param string        $broadcasterUserLogin The broadcaster’s login name.
+     * @param string        $broadcasterUserName  The broadcaster’s display name.
+     * @param string        $userId               An ID that identifies the user that donated to the campaign.
+     * @param string        $userLogin            The user’s login name.
+     * @param string        $userName             The user’s display name.
+     * @param string        $charityName          The charity’s name.
+     * @param string        $charityDescription   A description of the charity.
+     * @param string        $charityLogo          A URL to an image of the charity’s logo. The image’s type is PNG and
+     *                                            its size is 100px X
+     *                                            100px.
+     * @param string        $charityWebsite       A URL to the charity’s website.
+     * @param CharityAmount $amount               An object that contains the amount of money that the user donated.
      */
     public function __construct(
         private string $id,
         private string $campaignId,
-        private string $broadcasterId,
-        private string $broadcasterLogin,
-        private string $broadcasterName,
+        private string $broadcasterUserId,
+        private string $broadcasterUserLogin,
+        private string $broadcasterUserName,
         private string $userId,
         private string $userLogin,
         private string $userName,
@@ -52,19 +52,19 @@ final readonly class CharityDonationEvent extends Event
         return $this->campaignId;
     }
 
-    public function getBroadcasterId(): string
+    public function getBroadcasterUserId(): string
     {
-        return $this->broadcasterId;
+        return $this->broadcasterUserId;
     }
 
-    public function getBroadcasterLogin(): string
+    public function getBroadcasterUserLogin(): string
     {
-        return $this->broadcasterLogin;
+        return $this->broadcasterUserLogin;
     }
 
-    public function getBroadcasterName(): string
+    public function getBroadcasterUserName(): string
     {
-        return $this->broadcasterName;
+        return $this->broadcasterUserName;
     }
 
     public function getUserId(): string

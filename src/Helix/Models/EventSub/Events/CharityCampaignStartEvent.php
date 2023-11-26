@@ -10,26 +10,26 @@ use SimplyStream\TwitchApi\Helix\Models\Charity\CharityAmount;
 final readonly class CharityCampaignStartEvent extends Event
 {
     /**
-     * @param string            $id                  An ID that identifies the charity campaign.
-     * @param string            $broadcasterId       An ID that identifies the broadcaster that’s running the campaign.
-     * @param string            $broadcasterLogin    The broadcaster’s login name.
-     * @param string            $broadcasterName     The broadcaster’s display name.
-     * @param string            $charityName         The charity’s name.
-     * @param string            $charityDescription  A description of the charity.
-     * @param string            $charityLogo         A URL to an image of the charity’s logo. The image’s type is PNG
-     *                                               and its size is 100px X 100px.
-     * @param string            $charityWebsite      A URL to the charity’s website.
-     * @param CharityAmount     $currentAmount       An object that contains the current amount of donations that the
-     *                                               campaign has received.
-     * @param CharityAmount     $targetAmount        An object that contains the campaign’s target fundraising goal.
-     * @param DateTimeImmutable $startedAt           The UTC timestamp (in RFC3339 format) of when the broadcaster
-     *                                               started the campaign.
+     * @param string            $id                   An ID that identifies the charity campaign.
+     * @param string            $broadcasterUserId    An ID that identifies the broadcaster that’s running the campaign.
+     * @param string            $broadcasterUserLogin The broadcaster’s login name.
+     * @param string            $broadcasterUserName  The broadcaster’s display name.
+     * @param string            $charityName          The charity’s name.
+     * @param string            $charityDescription   A description of the charity.
+     * @param string            $charityLogo          A URL to an image of the charity’s logo. The image’s type is PNG
+     *                                                and its size is 100px X 100px.
+     * @param string            $charityWebsite       A URL to the charity’s website.
+     * @param CharityAmount     $currentAmount        An object that contains the current amount of donations that the
+     *                                                campaign has received.
+     * @param CharityAmount     $targetAmount         An object that contains the campaign’s target fundraising goal.
+     * @param DateTimeImmutable $startedAt            The UTC timestamp (in RFC3339 format) of when the broadcaster
+     *                                                started the campaign.
      */
     public function __construct(
         private string $id,
-        private string $broadcasterId,
-        private string $broadcasterLogin,
-        private string $broadcasterName,
+        private string $broadcasterUserId,
+        private string $broadcasterUserLogin,
+        private string $broadcasterUserName,
         private string $charityName,
         private string $charityDescription,
         private string $charityLogo,
@@ -45,19 +45,19 @@ final readonly class CharityCampaignStartEvent extends Event
         return $this->id;
     }
 
-    public function getBroadcasterId(): string
+    public function getBroadcasterUserId(): string
     {
-        return $this->broadcasterId;
+        return $this->broadcasterUserId;
     }
 
-    public function getBroadcasterLogin(): string
+    public function getBroadcasterUserLogin(): string
     {
-        return $this->broadcasterLogin;
+        return $this->broadcasterUserLogin;
     }
 
-    public function getBroadcasterName(): string
+    public function getBroadcasterUserName(): string
     {
-        return $this->broadcasterName;
+        return $this->broadcasterUserName;
     }
 
     public function getCharityName(): string

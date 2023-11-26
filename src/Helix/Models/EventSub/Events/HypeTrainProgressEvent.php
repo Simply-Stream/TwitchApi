@@ -18,8 +18,8 @@ final readonly class HypeTrainProgressEvent extends Event
      * @param int               $progress              The number of points contributed to the Hype Train at the
      *                                                 current level.
      * @param int               $goal                  The number of points required to reach the next level.
-     * @param Contribution      $topContributions      The contributors with the most points contributed.
-     * @param Contribution      $lastContributions     The most recent contribution.
+     * @param Contribution[]    $topContributions      The contributors with the most points contributed.
+     * @param Contribution      $lastContribution      The most recent contribution.
      * @param int               $level                 The current level of the Hype Train.
      * @param DateTimeImmutable $startedAt             The time when the Hype Train started.
      * @param DateTimeImmutable $expiresAt             The time when the Hype Train expires. The expiration is extended
@@ -33,8 +33,8 @@ final readonly class HypeTrainProgressEvent extends Event
         private int $total,
         private int $progress,
         private int $goal,
-        private Contribution $topContributions,
-        private Contribution $lastContributions,
+        private array $topContributions,
+        private Contribution $lastContribution,
         private int $level,
         private DateTimeImmutable $startedAt,
         private DateTimeImmutable $expiresAt
@@ -76,14 +76,14 @@ final readonly class HypeTrainProgressEvent extends Event
         return $this->goal;
     }
 
-    public function getTopContributions(): Contribution
+    public function getTopContributions(): array
     {
         return $this->topContributions;
     }
 
-    public function getLastContributions(): Contribution
+    public function getLastContribution(): Contribution
     {
-        return $this->lastContributions;
+        return $this->lastContribution;
     }
 
     public function getLevel(): int

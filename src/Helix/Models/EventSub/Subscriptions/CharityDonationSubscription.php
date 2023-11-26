@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Subscriptions;
 
 use DateTimeImmutable;
-use SimplyStream\TwitchApi\Helix\Models\EventSub\Condition\GoalsProgressCondition;
+use SimplyStream\TwitchApi\Helix\Models\EventSub\Condition\CharityDonationCondition;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Subscription;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Transport;
 
 /**
- * Get notified when progress (either positive or negative) is made towards a broadcaster’s goal.
+ * Sends an event notification when a user donates to the broadcaster’s charity campaign.
  */
-final readonly class GoalsProgressSubscription extends Subscription
+final readonly class CharityDonationSubscription extends Subscription
 {
-    public const TYPE = 'channel.goal.progress';
+    public const TYPE = 'channel.charity_campaign.donate';
 
     public function __construct(
         array $condition,
@@ -28,7 +28,7 @@ final readonly class GoalsProgressSubscription extends Subscription
         parent::__construct(
             $type,
             $version,
-            new GoalsProgressCondition(...$condition),
+            new CharityDonationCondition(...$condition),
             $transport,
             $id,
             $status,

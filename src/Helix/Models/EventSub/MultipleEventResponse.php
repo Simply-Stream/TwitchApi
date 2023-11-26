@@ -4,20 +4,19 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\EventSub;
 
-use SimplyStream\TwitchApi\Helix\Models\EventSub\Events\EventInterface;
 use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 /**
  * @template Tsubscription
  * @template Tevent
  */
-final readonly class EventResponse
+final readonly class MultipleEventResponse
 {
     use SerializesModels;
 
     /**
      * @param Tsubscription $subscription  Metadata about the subscription.
-     * @param Tevent        $event         Returns the user ID, user name, title, language, category ID, category name,
+     * @param array<Tevent> $events        Returns the user ID, user name, title, language, category ID, category name,
      *                                     and content classification labels for the given broadcaster.
      * @param string|null   $challenge     Your response must return a 200 status code, the response body must contain
      *                                     the raw challenge value, and you must set the Content-Type response header
@@ -27,7 +26,7 @@ final readonly class EventResponse
      */
     public function __construct(
         private Subscription $subscription,
-        private ?EventInterface $event,
+        private ?array $events,
         private ?string $challenge = null
     ) {
     }
@@ -37,9 +36,9 @@ final readonly class EventResponse
         return $this->subscription;
     }
 
-    public function getEvent(): ?EventInterface
+    public function getEvents(): array
     {
-        return $this->event;
+        return $this->events;
     }
 
     public function getChallenge(): ?string

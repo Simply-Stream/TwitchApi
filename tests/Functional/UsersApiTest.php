@@ -13,7 +13,7 @@ use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
 use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
 use SimplyStream\TwitchApi\Helix\Models\Users\User;
 
-class UsersApiTest extends FunctionalTestCase
+class UsersApiTest extends UserAwareFunctionalTestCase
 {
     public static function getUsersThrowsExceptionWhenMoreThan100UsersAreRequestedDataProvider(): array
     {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models;
 
+use DateTimeImmutable;
 use ReflectionClass;
 use ReflectionException;
 
@@ -14,13 +15,13 @@ trait SerializesModels
      */
     public function toArray(): array
     {
-        return $this->convert($this);
+        return self::convert($this);
     }
 
     /**
      * @throws ReflectionException
      */
-    private function convert($object)
+    protected static function convert($object): array
     {
         if (is_object($object)) {
             $reflection = new ReflectionClass($object);
@@ -35,9 +36,15 @@ trait SerializesModels
                         ltrim(preg_replace('/[A-Z]([A-Z](?![a-z]))*/', '_$0', $property->getName()), '_')
                     )] = self::convert($value);
                 } else {
-                    $array[strtolower(
-                        ltrim(preg_replace('/[A-Z]([A-Z](?![a-z]))*/', '_$0', $property->getName()), '_')
-                    )] = $value;
+                    if ($value instanceof DateTimeImmutable) {
+                        $array[strtolower(
+                            ltrim(preg_replace('/[A-Z]([A-Z](?![a-z]))*/', '_$0', $property->getName()), '_')
+                        )] = $value->format(DATE_RFC3339_EXTENDED);
+                    } else {
+                        $array[strtolower(
+                            ltrim(preg_replace('/[A-Z]([A-Z](?![a-z]))*/', '_$0', $property->getName()), '_')
+                        )] = $value;
+                    }
                 }
             }
 

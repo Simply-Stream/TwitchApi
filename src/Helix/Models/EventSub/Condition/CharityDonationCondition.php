@@ -6,23 +6,17 @@ namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Condition;
 
 use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
-final readonly class ShoutoutReceivedCondition implements ConditionInterface
+final readonly class CharityDonationCondition implements ConditionInterface
 {
     use SerializesModels;
 
     public function __construct(
-        private string $broadcasterUserId,
-        private string $moderatorUserId
+        private string $broadcasterUserId
     ) {
     }
 
     public function getBroadcasterUserId(): string
     {
         return $this->broadcasterUserId;
-    }
-
-    public function getModeratorUserId(): string
-    {
-        return $this->moderatorUserId;
     }
 }

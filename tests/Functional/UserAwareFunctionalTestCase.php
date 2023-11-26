@@ -9,7 +9,7 @@ use Nyholm\Psr7\Request;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientExceptionInterface;
 
-class FunctionalTestCase extends TestCase
+class UserAwareFunctionalTestCase extends TestCase
 {
     protected array $clients;
     protected array $appAccessToken;

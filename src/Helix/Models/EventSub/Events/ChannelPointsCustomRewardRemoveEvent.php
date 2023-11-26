@@ -44,7 +44,7 @@ final readonly class ChannelPointsCustomRewardRemoveEvent extends Event
      *                                                                   cooldown is in seconds.
      * @param DateTimeImmutable|null $cooldownExpiresAt                  Timestamp of the cooldown expiration. null if
      *                                                                   the reward isn’t on cooldown.
-     * @param int|null               $redemptionsRedeemedCurrentStrea    The number of redemptions redeemed during the
+     * @param int|null               $redemptionsRedeemedCurrentStream   The number of redemptions redeemed during the
      *                                                                   current live stream. Counts against the
      *                                                                   max_per_stream limit. null if the broadcasters
      *                                                                   stream isn’t live or max_per_stream isn’t
@@ -70,7 +70,7 @@ final readonly class ChannelPointsCustomRewardRemoveEvent extends Event
         private Image $defaultImage,
         private GlobalCooldown $globalCooldown,
         private ?DateTimeImmutable $cooldownExpiresAt = null,
-        private ?int $redemptionsRedeemedCurrentStrea = null
+        private ?int $redemptionsRedeemedCurrentStream = null
     ) {
     }
 
@@ -169,8 +169,8 @@ final readonly class ChannelPointsCustomRewardRemoveEvent extends Event
         return $this->cooldownExpiresAt;
     }
 
-    public function getRedemptionsRedeemedCurrentStrea(): ?int
+    public function getRedemptionsRedeemedCurrentStream(): ?int
     {
-        return $this->redemptionsRedeemedCurrentStrea;
+        return $this->redemptionsRedeemedCurrentStream;
     }
 }

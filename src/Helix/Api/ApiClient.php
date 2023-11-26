@@ -121,6 +121,7 @@ class ApiClient implements ApiClientInterface
         try {
             $source = Source::json($responseContent);
             return $this->mapperBuilder
+                ->registerConstructor(fn (string $time): DateTimeImmutable => new DateTimeImmutable($time))
                 ->registerConstructor(
                     #[DynamicConstructor]
                     function (string $className, array $value): Subscription {

@@ -30,13 +30,13 @@ readonly class Subscription
      *                                           created.
      */
     public function __construct(
-        private string $type,
-        private string $version,
-        private ConditionInterface $condition,
-        private Transport $transport,
-        private ?string $id = null,
-        private ?string $status = null,
-        private ?DateTimeImmutable $createdAt = null
+        protected string $type,
+        protected string $version,
+        protected ConditionInterface $condition,
+        protected Transport $transport,
+        protected ?string $id = null,
+        protected ?string $status = null,
+        protected ?DateTimeImmutable $createdAt = null
     ) {
     }
 

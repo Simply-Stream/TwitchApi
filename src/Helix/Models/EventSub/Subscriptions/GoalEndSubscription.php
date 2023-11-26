@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Subscriptions;
 
 use DateTimeImmutable;
-use SimplyStream\TwitchApi\Helix\Models\EventSub\Condition\ShoutoutReceivedCondition;
+use SimplyStream\TwitchApi\Helix\Models\EventSub\Condition\GoalsEndCondition;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Subscription;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Transport;
 
 /**
- * Sends a notification when the specified broadcaster receives a Shoutout.
+ * Get notified when a broadcaster ends a goal.
  */
-final readonly class ShoutoutReceivedSubscription extends Subscription
+final readonly class GoalEndSubscription extends Subscription
 {
-    public const TYPE = 'channel.shoutout.receive';
+    public const TYPE = 'channel.goal.end';
 
     public function __construct(
         array $condition,
@@ -28,7 +28,7 @@ final readonly class ShoutoutReceivedSubscription extends Subscription
         parent::__construct(
             $type,
             $version,
-            new ShoutoutReceivedCondition(...$condition),
+            new GoalsEndCondition(...$condition),
             $transport,
             $id,
             $status,

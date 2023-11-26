@@ -11,18 +11,18 @@ final readonly class Predictor
     use SerializesModels;
 
     /**
-     * @param string $userId            An ID that identifies the viewer.
-     * @param string $userName          The viewer’s display name.
-     * @param string $userLogin         The viewer’s login name.
-     * @param int    $channelPointsUsed The number of Channel Points the viewer spent.
-     * @param int    $channelPointsWon  The number of Channel Points distributed to the viewer.
+     * @param string   $userId            An ID that identifies the viewer.
+     * @param string   $userName          The viewer’s display name.
+     * @param string   $userLogin         The viewer’s login name.
+     * @param int|null $channelPointsUsed The number of Channel Points the viewer spent.
+     * @param int|null $channelPointsWon  The number of Channel Points distributed to the viewer.
      */
     public function __construct(
         private string $userId,
         private string $userName,
         private string $userLogin,
-        private int $channelPointsUsed,
-        private int $channelPointsWon
+        private ?int $channelPointsUsed = null,
+        private ?int $channelPointsWon = null
     ) {
     }
 
@@ -41,12 +41,12 @@ final readonly class Predictor
         return $this->userLogin;
     }
 
-    public function getChannelPointsUsed(): int
+    public function getChannelPointsUsed(): ?int
     {
         return $this->channelPointsUsed;
     }
 
-    public function getChannelPointsWon(): int
+    public function getChannelPointsWon(): ?int
     {
         return $this->channelPointsWon;
     }
