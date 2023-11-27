@@ -27,19 +27,19 @@ class UserAwareFunctionalTestCase extends TestCase
         parent::setUp();
         $client = new Client();
         $this->users = json_decode(
-            $client->send(new Request('GET', 'http://localhost:8000/units/users'))->getBody(),
+            (string)$client->send(new Request('GET', 'http://localhost:8000/units/users'))->getBody(),
             true,
             512,
             JSON_THROW_ON_ERROR
         )['data'];
         $this->clients = json_decode(
-            $client->send(new Request('GET', 'http://localhost:8000/units/clients'))->getBody(),
+            (string)$client->send(new Request('GET', 'http://localhost:8000/units/clients'))->getBody(),
             true,
             512,
             JSON_THROW_ON_ERROR
         )['data'][0];
         $this->appAccessToken = json_decode(
-            $client->sendRequest(
+            (string)$client->sendRequest(
                 (new Request(
                     'POST',
                     'http://localhost:8000/auth/token?' . http_build_query([
