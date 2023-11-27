@@ -84,7 +84,7 @@ class ApiClient implements ApiClientInterface
         $request = $this->requestFactory->createRequest($method, $uri);
 
         if ($body) {
-            $request->withBody($this->requestFactory->createStream(json_encode($body, JSON_THROW_ON_ERROR)));
+            $request = $request->withBody($this->requestFactory->createStream(json_encode($body, JSON_THROW_ON_ERROR)));
         }
 
         $request = $request

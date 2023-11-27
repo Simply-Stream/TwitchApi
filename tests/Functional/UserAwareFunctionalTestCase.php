@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApi\Tests\Functional;
 
 use GuzzleHttp\Client;
@@ -66,7 +68,7 @@ class UserAwareFunctionalTestCase extends TestCase
         $client = new Client();
 
         return json_decode(
-            $client->sendRequest(
+            (string)$client->sendRequest(
                 (new Request(
                     'POST',
                     'http://localhost:8000/auth/authorize?' . http_build_query([
@@ -74,7 +76,7 @@ class UserAwareFunctionalTestCase extends TestCase
                         'client_secret' => $this->clients['Secret'],
                         'grant_type' => 'user_token',
                         'user_id' => $userId,
-                        'scope' => implode(' ', $scopes)
+                        'scope' => implode(' ', $scopes),
                     ])
                 ))
             )->getBody(),

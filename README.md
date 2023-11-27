@@ -35,17 +35,18 @@ composer req simplystream/twitch-api
 
 | API                      | Implemented | Tested |
 |--------------------------|-------------|--------|
-| AdsApi                   | ✅           | ❌      |
-| AnalyticsApi             | ✅           | ❌      |
-| BitsApi                  | ✅           | ❌      |
-| ChannelPointsAPi         | ✅           | ❌      |
+| AdsApi                   | ✅           | ℹ️     |
+| AnalyticsApi             | ✅           | ❗      |
+| BitsApi                  | ✅           | ℹ️     |
+| ChannelPointsApi         | ✅           | ℹ️     |
 | ChannelsApi              | ✅           | ❌      |
 | CharityApi               | ✅           | ❌      |
 | ChatApi                  | ✅           | ❌      |
 | ClipsApi                 | ✅           | ❌      |
 | ContentClassificationApi | ✅           | ❌      |
 | EntitlementsApi          | ✅           | ❌      |
-| EventSubAapi             | ✅           | ❌      |
+| EventSubApi              | ✅           | ❌      |
+| EventSub system          | ✅           | ✅      |
 | ExtensionsApi            | ✅           | ❌      |
 | GamesApi                 | ✅           | ❌      |
 | GoalsApi                 | ✅           | ❌      |
@@ -60,9 +61,12 @@ composer req simplystream/twitch-api
 | StreamsApi               | ✅           | ❌      |
 | SubscriptionsApi         | ✅           | ❌      |
 | TeamsApi                 | ✅           | ❌      |
-| UsersApi                 | ✅           | ✅      |
+| UsersApi                 | ✅           | ℹ️     |
 | VideosApi                | ✅           | ❌      |
 | WhispersApi              | ✅           | ❌      |
+
+❗ = Tests can't be implemented due to lack of mock-api-data
+️️ℹ️ = Some tests are available, some are missing due to lack of mock-api data
 
 **Tested in this case means, that functional or unit tests exist.**
 
@@ -131,7 +135,7 @@ build into this library. This provider is now removed and you need to give the `
 AccessToken yourself!
 
 Due to the fact that this library still requires the PHP league implementation of an AccessTokenInterface, we recommend
-using https://github.com/vertisan/oauth2-twitch-helix to generate an AccessToken. 
+using https://github.com/vertisan/oauth2-twitch-helix to generate an AccessToken.
 
 ## Supported Frameworks
 

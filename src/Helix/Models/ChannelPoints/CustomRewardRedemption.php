@@ -19,7 +19,7 @@ final readonly class CustomRewardRedemption
      * @param string            $userId            The user’s login name.
      * @param string            $userLogin         The ID that uniquely identifies the user that redeemed the reward.
      * @param string            $userName          The user’s display name.
-     * @param string            $userInput         The text the user entered at the prompt when they redeemed the
+     * @param string|null       $userInput         The text the user entered at the prompt when they redeemed the
      *                                             reward; otherwise, an empty string if user input was not required.
      * @param string            $status            The state of the redemption. Possible values are:
      *                                             - CANCELED
@@ -37,10 +37,10 @@ final readonly class CustomRewardRedemption
         private string $userId,
         private string $userLogin,
         private string $userName,
-        private string $userInput,
         private string $status,
         private DateTimeImmutable $redeemedAt,
-        private Reward $reward
+        private Reward $reward,
+        private ?string $userInput = null
     ) {
     }
 
@@ -79,11 +79,6 @@ final readonly class CustomRewardRedemption
         return $this->userName;
     }
 
-    public function getUserInput(): string
-    {
-        return $this->userInput;
-    }
-
     public function getStatus(): string
     {
         return $this->status;
@@ -97,5 +92,10 @@ final readonly class CustomRewardRedemption
     public function getReward(): Reward
     {
         return $this->reward;
+    }
+
+    public function getUserInput(): ?string
+    {
+        return $this->userInput;
     }
 }

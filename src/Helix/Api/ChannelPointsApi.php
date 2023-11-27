@@ -12,6 +12,8 @@ use SimplyStream\TwitchApi\Helix\Models\ChannelPoints\CustomReward;
 use SimplyStream\TwitchApi\Helix\Models\ChannelPoints\CustomRewardRedemption;
 use SimplyStream\TwitchApi\Helix\Models\ChannelPoints\RedemptionStatusRequest;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
+use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
+use Webmozart\Assert\Assert;
 
 class ChannelPointsApi extends AbstractApi
 {
@@ -136,7 +138,8 @@ class ChannelPointsApi extends AbstractApi
      *                                            match the user ID found in the user OAuth token.
      * @param string               $rewardId      The ID that identifies the custom reward whose redemptions you want
      *                                            to get.
-     * @param string               $status        The status of the redemptions to return. The possible case-sensitive
+     * @param AccessTokenInterface $accessToken
+     * @param string|null          $status        The status of the redemptions to return. The possible case-sensitive
      *                                            values are:
      *                                            - CANCELED
      *                                            - FULFILLED
@@ -146,7 +149,6 @@ class ChannelPointsApi extends AbstractApi
      *
      *                                            NOTE: Canceled and fulfilled redemptions are returned for only a few
      *                                            days after they’re canceled or fulfilled.
-     * @param AccessTokenInterface $accessToken
      * @param string|null          $id            A list of IDs to filter the redemptions by. To specify more than one
      *                                            ID, include this parameter for each redemption you want to get. For
      *                                            example, id=1234&id=5678. You may specify a maximum of 50 IDs.
@@ -167,17 +169,22 @@ class ChannelPointsApi extends AbstractApi
      *
      * @return TwitchDataResponse<CustomRewardRedemption[]>
      * @throws JsonException
+     * @throws MappingError
      */
     public function getCustomRewardRedemption(
         string $broadcasterId,
         string $rewardId,
-        string $status,
         AccessTokenInterface $accessToken,
-        string $id = null,
+        ?string $status = null,
+        ?string $id = null,
         string $sort = 'OLDEST',
-        string $after = null,
+        ?string $after = null,
         int $first = 20,
     ): TwitchDataResponse {
+        if (!$id) {
+            Assert::stringNotEmpty($status);
+        }
+
         return $this->sendRequest(
             path: self::BASE_PATH . '/custom_rewards/redemptions',
             query: [
@@ -189,7 +196,7 @@ class ChannelPointsApi extends AbstractApi
                 'after' => $after,
                 'first' => $first,
             ],
-            type: sprintf('%s<%s[]>', TwitchDataResponse::class, CustomRewardRedemption::class),
+            type: sprintf('%s<%s[]>', TwitchPaginatedDataResponse::class, CustomRewardRedemption::class),
             accessToken: $accessToken
         );
     }

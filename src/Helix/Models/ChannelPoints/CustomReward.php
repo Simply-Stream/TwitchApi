@@ -23,9 +23,6 @@ final readonly class CustomReward
      *                                                                      redeem the reward if user input is required
      *                                                                      (see the is_user_input_required field).
      * @param int                        $cost                              The cost of the reward in Channel Points.
-     * @param array                      $image                             A set of custom images for the reward. This
-     *                                                                      field is set to null if the broadcaster
-     *                                                                      didn’t upload images.
      * @param array                      $defaultImage                      A set of default images for the reward.
      * @param string                     $backgroundColor                   The background color to use for the reward.
      *                                                                      The color is in Hex format (for example,
@@ -62,13 +59,16 @@ final readonly class CustomReward
      *                                                                      redeemed. If false, status is UNFULFILLED
      *                                                                      and follows the normal request queue
      *                                                                      process.
-     * @param int                        $redemptionsRedeemedCurrentStream  The number of redemptions redeemed during
+     * @param int|null                   $redemptionsRedeemedCurrentStream  The number of redemptions redeemed during
      *                                                                      the current live stream. The number counts
      *                                                                      against the max_per_stream_setting limit.
      *                                                                      This field is null if the broadcaster’s
      *                                                                      stream isn’t live or max_per_stream_setting
      *                                                                      isn’t enabled.
-     * @param DateTimeImmutable          $cooldownExpiresAt                 The timestamp of when the cooldown period
+     * @param array|null                 $image                             A set of custom images for the reward. This
+     *                                                                      field is set to null if the broadcaster
+     *                                                                      didn’t upload images.
+     * @param DateTimeImmutable|null     $cooldownExpiresAt                 The timestamp of when the cooldown period
      *                                                                      expires. Is null if the reward isn’t in a
      *                                                                      cooldown state (see the
      *                                                                      global_cooldown_setting field).
@@ -81,7 +81,6 @@ final readonly class CustomReward
         private string $title,
         private string $prompt,
         private int $cost,
-        private array $image,
         private array $defaultImage,
         private string $backgroundColor,
         private bool $isEnabled,
@@ -92,8 +91,9 @@ final readonly class CustomReward
         private bool $isPaused,
         private bool $isInStock,
         private bool $shouldRedemptionsSkipRequestQueue,
-        private int $redemptionsRedeemedCurrentStream,
-        private DateTimeImmutable $cooldownExpiresAt
+        private ?int $redemptionsRedeemedCurrentStream = null,
+        private ?array $image = null,
+        private ?DateTimeImmutable $cooldownExpiresAt = null
     ) {
     }
 
@@ -130,11 +130,6 @@ final readonly class CustomReward
     public function getCost(): int
     {
         return $this->cost;
-    }
-
-    public function getImage(): array
-    {
-        return $this->image;
     }
 
     public function getDefaultImage(): array
@@ -192,7 +187,12 @@ final readonly class CustomReward
         return $this->redemptionsRedeemedCurrentStream;
     }
 
-    public function getCooldownExpiresAt(): DateTimeImmutable
+    public function getImage(): ?array
+    {
+        return $this->image;
+    }
+
+    public function getCooldownExpiresAt(): ?DateTimeImmutable
     {
         return $this->cooldownExpiresAt;
     }

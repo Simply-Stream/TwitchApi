@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApi\Tests\Functional;
 
 use CuyZ\Valinor\MapperBuilder;
@@ -102,9 +104,12 @@ class UsersApiTest extends UserAwareFunctionalTestCase
     }
 
     /**
+     * @param array $ids
+     * @param array $logins
+     *
      * @return void
-     * @dataProvider getUsersThrowsExceptionWhenMoreThan100UsersAreRequestedDataProvider
      * @throws \JsonException
+     * @dataProvider getUsersThrowsExceptionWhenMoreThan100UsersAreRequestedDataProvider
      */
     public function testGetUsersThrowsExceptionWhenMoreThan100UsersAreRequested(array $ids, array $logins): void
     {
