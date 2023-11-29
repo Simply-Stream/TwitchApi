@@ -44,7 +44,7 @@ class GamesApi extends AbstractApi
                 'before' => $before,
                 'first' => $first
             ],
-            type: sprintf('%s<%s>', TwitchPaginatedDataResponse::class, Game::class),
+            type: sprintf('%s<%s[]>', TwitchPaginatedDataResponse::class, Game::class),
             accessToken: $accessToken
         );
     }
