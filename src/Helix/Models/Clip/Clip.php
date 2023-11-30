@@ -32,7 +32,7 @@ final readonly class Clip
      *                                            in RFC3339 format.
      * @param string            $thumbnailUrl     A URL to a thumbnail image of the clip.
      * @param float             $duration         The length of the clip, in seconds. Precision is 0.1.
-     * @param int               $vodOffset        The zero-based offset, in seconds, to where the clip starts in the
+     * @param int|null          $vodOffset        The zero-based offset, in seconds, to where the clip starts in the
      *                                            video (VOD). Is null if the video is not available or hasn’t been
      *                                            created yet from the live stream (see video_id).
      *
@@ -58,8 +58,8 @@ final readonly class Clip
         private DateTimeImmutable $createdAt,
         private string $thumbnailUrl,
         private float $duration,
-        private int $vodOffset,
-        private bool $isFeatured
+        private bool $isFeatured,
+        private ?int $vodOffset = null
     ) {
     }
 
@@ -138,13 +138,13 @@ final readonly class Clip
         return $this->duration;
     }
 
-    public function getVodOffset(): int
-    {
-        return $this->vodOffset;
-    }
-
     public function isFeatured(): bool
     {
         return $this->isFeatured;
+    }
+
+    public function getVodOffset(): ?int
+    {
+        return $this->vodOffset;
     }
 }
