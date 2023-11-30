@@ -11,6 +11,7 @@ use RuntimeException;
 use SimplyStream\TwitchApi\Helix\Models\Clip\Clip;
 use SimplyStream\TwitchApi\Helix\Models\Clip\ClipProcess;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
+use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
 
 class ClipsApi extends AbstractApi
 {
@@ -130,9 +131,9 @@ class ClipsApi extends AbstractApi
                 'after' => $after,
                 'before' => $before,
                 'first' => $first,
-                'is_featured' => $isFeatured
+                'is_featured' => $isFeatured,
             ],
-            type: sprintf('%s<%s[]>', TwitchDataResponse::class, Clip::class),
+            type: sprintf('%s<%s[]>', TwitchPaginatedDataResponse::class, Clip::class),
             accessToken: $accessToken
         );
     }
