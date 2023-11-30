@@ -16,6 +16,15 @@ final readonly class ChannelPointsCustomRewardUpdateSubscription extends Subscri
 {
     public const TYPE = 'channel.channel_points_custom_reward.update';
 
+    /**
+     * @param array{broadcasterUserId: non-empty-string, rewardId: non-empty-string|null} $condition
+     * @param Transport                                                                   $transport
+     * @param string|null                                                                 $id
+     * @param string|null                                                                 $status
+     * @param DateTimeImmutable|null                                                      $createdAt
+     * @param string|null                                                                 $type
+     * @param string|null                                                                 $version
+     */
     public function __construct(
         array $condition,
         Transport $transport,
@@ -28,7 +37,10 @@ final readonly class ChannelPointsCustomRewardUpdateSubscription extends Subscri
         parent::__construct(
             $type,
             $version,
-            new ChannelPointsCustomRewardUpdateCondition(...$condition),
+            new ChannelPointsCustomRewardUpdateCondition(
+                $condition['broadcasterUserId'],
+                $condition['rewardId'] ?? null
+            ),
             $transport,
             $id,
             $status,

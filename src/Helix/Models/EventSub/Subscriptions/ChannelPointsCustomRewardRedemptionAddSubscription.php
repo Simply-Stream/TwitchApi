@@ -16,6 +16,15 @@ final readonly class ChannelPointsCustomRewardRedemptionAddSubscription extends 
 {
     public const TYPE = 'channel.channel_points_custom_reward_redemption.add';
 
+    /**
+     * @param array{broadcasterUserId: non-empty-string, rewardId: non-empty-string|null} $condition
+     * @param Transport                                                                   $transport
+     * @param string|null                                                                 $id
+     * @param string|null                                                                 $status
+     * @param DateTimeImmutable|null                                                      $createdAt
+     * @param string|null                                                                 $type
+     * @param string|null                                                                 $version
+     */
     public function __construct(
         array $condition,
         Transport $transport,
@@ -28,7 +37,10 @@ final readonly class ChannelPointsCustomRewardRedemptionAddSubscription extends 
         parent::__construct(
             $type,
             $version,
-            new ChannelPointsCustomRewardRedemptionAddCondition(...$condition),
+            new ChannelPointsCustomRewardRedemptionAddCondition(
+                $condition['broadcasterUserId'],
+                $condition['rewardId'] ?? null
+            ),
             $transport,
             $id,
             $status,

@@ -13,6 +13,15 @@ final readonly class CharityCampaignStartSubscription extends Subscription
 {
     public const TYPE = 'channel.charity_campaign.start';
 
+    /**
+     * @param array{broadcasterUserId: non-empty-string} $condition
+     * @param Transport                                  $transport
+     * @param string|null                                $id
+     * @param string|null                                $status
+     * @param DateTimeImmutable|null                     $createdAt
+     * @param string|null                                $type
+     * @param string|null                                $version
+     */
     public function __construct(
         array $condition,
         Transport $transport,
@@ -25,7 +34,7 @@ final readonly class CharityCampaignStartSubscription extends Subscription
         parent::__construct(
             $type,
             $version,
-            new CharityCampaignStartCondition(...$condition),
+            new CharityCampaignStartCondition($condition['broadcasterUserId']),
             $transport,
             $id,
             $status,

@@ -16,6 +16,15 @@ final readonly class ChannelGuestStarGuestUpdateSubscription extends Subscriptio
 {
     public const TYPE = 'channel.guest_star_guest.update';
 
+    /**
+     * @param array{broadcasterUserId: non-empty-string, moderatorUserId: non-empty-string} $condition
+     * @param Transport                                                                     $transport
+     * @param string|null                                                                   $id
+     * @param string|null                                                                   $status
+     * @param DateTimeImmutable|null                                                        $createdAt
+     * @param string|null                                                                   $type
+     * @param string|null                                                                   $version
+     */
     public function __construct(
         array $condition,
         Transport $transport,
@@ -28,7 +37,7 @@ final readonly class ChannelGuestStarGuestUpdateSubscription extends Subscriptio
         parent::__construct(
             $type,
             $version,
-            new ChannelGuestStarGuestUpdateCondition(...$condition),
+            new ChannelGuestStarGuestUpdateCondition($condition['broadcasterUserId'], $condition['moderatorUserId']),
             $transport,
             $id,
             $status,

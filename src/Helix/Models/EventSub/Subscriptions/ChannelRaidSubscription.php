@@ -16,6 +16,15 @@ final readonly class ChannelRaidSubscription extends Subscription
 {
     public const TYPE = 'channel.raid';
 
+    /**
+     * @param array{fromBroadcasterUserId: non-empty-string|null, toBroadcasterUserId: non-empty-string|null} $condition
+     * @param Transport                                                                                       $transport
+     * @param string|null                                                                                     $id
+     * @param string|null                                                                                     $status
+     * @param DateTimeImmutable|null                                                                          $createdAt
+     * @param string|null                                                                                     $type
+     * @param string|null                                                                                     $version
+     */
     public function __construct(
         array $condition,
         Transport $transport,
@@ -28,7 +37,10 @@ final readonly class ChannelRaidSubscription extends Subscription
         parent::__construct(
             $type,
             $version,
-            new ChannelRaidCondition(...$condition),
+            new ChannelRaidCondition(
+                $condition['fromBroadcasterUserId'] ?? null,
+                $condition['toBroadcasterUserId'] ?? null
+            ),
             $transport,
             $id,
             $status,

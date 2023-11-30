@@ -16,6 +16,15 @@ final readonly class ChannelChatClearUserMessagesSubscription extends Subscripti
 {
     public const TYPE = 'channel.chat.clear_user_messages';
 
+    /**
+     * @param array{broadcasterUserId: non-empty-string, userId: non-empty-string} $condition
+     * @param Transport                                                            $transport
+     * @param string|null                                                          $id
+     * @param string|null                                                          $status
+     * @param DateTimeImmutable|null                                               $createdAt
+     * @param string|null                                                          $type
+     * @param string|null                                                          $version
+     */
     public function __construct(
         array $condition,
         Transport $transport,
@@ -28,7 +37,7 @@ final readonly class ChannelChatClearUserMessagesSubscription extends Subscripti
         parent::__construct(
             $type,
             $version,
-            new ChannelChatClearUserMessagesCondition(...$condition),
+            new ChannelChatClearUserMessagesCondition($condition['broadcasterUserId'], $condition['userId']),
             $transport,
             $id,
             $status,

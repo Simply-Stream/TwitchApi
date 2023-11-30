@@ -16,6 +16,15 @@ final readonly class ShieldModeEndSubscription extends Subscription
 {
     public const TYPE = 'channel.shield_mode.end';
 
+    /**
+     * @param array{broadcasterUserId: non-empty-string, moderatorUserId: non-empty-string} $condition
+     * @param Transport                                                                     $transport
+     * @param string|null                                                                   $id
+     * @param string|null                                                                   $status
+     * @param DateTimeImmutable|null                                                        $createdAt
+     * @param string|null                                                                   $type
+     * @param string|null                                                                   $version
+     */
     public function __construct(
         array $condition,
         Transport $transport,
@@ -28,7 +37,7 @@ final readonly class ShieldModeEndSubscription extends Subscription
         parent::__construct(
             $type,
             $version,
-            new ShieldModeEndCondition(...$condition),
+            new ShieldModeEndCondition($condition['broadcasterUserId'], $condition['moderatorUserId']),
             $transport,
             $id,
             $status,

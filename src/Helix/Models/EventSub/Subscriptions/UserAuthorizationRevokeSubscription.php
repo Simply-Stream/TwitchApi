@@ -16,6 +16,15 @@ final readonly class UserAuthorizationRevokeSubscription extends Subscription
 {
     public const TYPE = 'user.authorization.revoke';
 
+    /**
+     * @param array{clientId: non-empty-string} $condition
+     * @param Transport                         $transport
+     * @param string|null                       $id
+     * @param string|null                       $status
+     * @param DateTimeImmutable|null            $createdAt
+     * @param string|null                       $type
+     * @param string|null                       $version
+     */
     public function __construct(
         array $condition,
         Transport $transport,
@@ -28,7 +37,7 @@ final readonly class UserAuthorizationRevokeSubscription extends Subscription
         parent::__construct(
             $type,
             $version,
-            new UserAuthorizationRevokeCondition(...$condition),
+            new UserAuthorizationRevokeCondition($condition['clientId']),
             $transport,
             $id,
             $status,

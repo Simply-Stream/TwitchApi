@@ -16,6 +16,15 @@ final readonly class ChannelPredictionBeginSubscription extends Subscription
 {
     public const TYPE = 'channel.prediction.begin';
 
+    /**
+     * @param array{broadcasterUserId: non-empty-string} $condition
+     * @param Transport                                  $transport
+     * @param string|null                                $id
+     * @param string|null                                $status
+     * @param DateTimeImmutable|null                     $createdAt
+     * @param string|null                                $type
+     * @param string|null                                $version
+     */
     public function __construct(
         array $condition,
         Transport $transport,
@@ -28,7 +37,7 @@ final readonly class ChannelPredictionBeginSubscription extends Subscription
         parent::__construct(
             $type,
             $version,
-            new ChannelPredictionBeginCondition(...$condition),
+            new ChannelPredictionBeginCondition($condition['broadcasterUserId']),
             $transport,
             $id,
             $status,
