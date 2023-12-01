@@ -6,7 +6,7 @@ namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Condition;
 
 use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
-class ChannelChatMessageDeleteCondition implements ConditionInterface
+final readonly class ChannelChatMessageDeleteCondition implements ConditionInterface
 {
     use SerializesModels;
 

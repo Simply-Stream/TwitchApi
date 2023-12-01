@@ -21,6 +21,8 @@ readonly class TwitchDataResponse implements TwitchResponseInterface
 
     /**
      * @return T
+     * @TODO: Replace arrays by Collections with iterable interface. With that we'll have some nice helper functions like
+     *        $collection->first(), ->each(), etc.
      */
     public function getData(): mixed
     {

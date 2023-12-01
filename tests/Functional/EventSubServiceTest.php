@@ -754,7 +754,7 @@ JSON,
                 'type' => 'channel.goal.begin',
                 'signature' => 'sha256=94af83cda03291b02fdcdfcdbef442f32e57c8d281dff41f325bbe9ea2f1399e',
                 'assertions' => function (EventResponse $eventResponse) {
-                    self::assertInstanceOf(Events\GoalEvent::class, $eventResponse->getEvent());
+                    self::assertInstanceOf(Events\GoalBeginEvent::class, $eventResponse->getEvent());
                     self::assertInstanceOf(
                         Subscriptions\GoalBeginSubscription::class,
                         $eventResponse->getSubscription()
@@ -795,7 +795,7 @@ JSON,
                 'type' => 'channel.goal.progress',
                 'signature' => 'sha256=c621d6cbd68da820ff64021c020c265293710d69c81409842ea7301c936896a7',
                 'assertions' => function (EventResponse $eventResponse) {
-                    self::assertInstanceOf(Events\GoalEvent::class, $eventResponse->getEvent());
+                    self::assertInstanceOf(Events\GoalProgressEvent::class, $eventResponse->getEvent());
                     self::assertInstanceOf(
                         Subscriptions\GoalProgressSubscription::class,
                         $eventResponse->getSubscription()
@@ -838,7 +838,7 @@ JSON,
                 'type' => 'channel.goal.end',
                 'signature' => 'sha256=65e8a764da24f1418fce764f7f2eb8da634bd68b8eb2d8a4d034e313e94c4e44',
                 'assertions' => function (EventResponse $eventResponse) {
-                    self::assertInstanceOf(Events\GoalEvent::class, $eventResponse->getEvent());
+                    self::assertInstanceOf(Events\GoalEndEvent::class, $eventResponse->getEvent());
                     self::assertInstanceOf(Subscriptions\GoalEndSubscription::class, $eventResponse->getSubscription());
                 },
             ],

@@ -6,14 +6,14 @@ namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Events;
 
 use DateTimeImmutable;
 
-final readonly class GoalEvent extends Event
+final readonly class GoalBeginEvent extends Event
 {
     /**
-     * @param string                 $id                    An ID that identifies this event.
-     * @param string                 $broadcasterUserId     An ID that uniquely identifies the broadcaster.
-     * @param string                 $broadcasterUserName   The broadcaster’s display name.
-     * @param string                 $broadcasterUserLogin  The broadcaster’s user handle.
-     * @param string                 $type                  The type of goal. Possible values are:
+     * @param string            $id                         An ID that identifies this event.
+     * @param string            $broadcasterUserId          An ID that uniquely identifies the broadcaster.
+     * @param string            $broadcasterUserName        The broadcaster’s display name.
+     * @param string            $broadcasterUserLogin       The broadcaster’s user handle.
+     * @param string            $type                       The type of goal. Possible values are:
      *                                                      - follow — The goal is to increase followers.
      *                                                      - subscription — The goal is to increase subscriptions. This
      *                                                      type shows the net increase or decrease in tier points
@@ -30,9 +30,9 @@ final readonly class GoalEvent extends Event
      *                                                      subscriptions. This type shows only the net increase in the
      *                                                      number of subscriptions (it does not account for users that
      *                                                      unsubscribed since the goal started).
-     * @param string                 $description           A description of the goal, if specified. The description may
+     * @param string            $description                A description of the goal, if specified. The description may
      *                                                      contain a maximum of 40 characters.
-     * @param int                    $currentAmount         The goal’s current value.
+     * @param int               $currentAmount              The goal’s current value.
      *                                                      The goal’s type determines how this value is increased or
      *                                                      decreased.
      *                                                      - If type is follow, this field is set to the broadcaster's
@@ -52,18 +52,11 @@ final readonly class GoalEvent extends Event
      *                                                      field is increased by 2, not 1.
      *                                                      - If type is new_subscription_count, this field is increased
      *                                                      by 1 for each new subscription.
-     * @param int                    $targetAmount          The goal’s target value. For example, if the broadcaster has
+     * @param int               $targetAmount               The goal’s target value. For example, if the broadcaster has
      *                                                      200 followers before creating the goal, and their goal is to
      *                                                      double that number, this field is set to 400.
-     * @param DateTimeImmutable      $startedAt             The UTC timestamp in RFC 3339 format, which indicates when
+     * @param DateTimeImmutable $startedAt                  The UTC timestamp in RFC 3339 format, which indicates when
      *                                                      the broadcaster created the goal.
-     * @param bool|null              $isAchieved            A Boolean value that indicates whether the broadcaster
-     *                                                      achieved their goal. Is true if the goal was achieved;
-     *                                                      otherwise, false. Only the channel.goal.end event includes
-     *                                                      this field.
-     * @param DateTimeImmutable|null $endedAt               The UTC timestamp in RFC 3339 format, which indicates when
-     *                                                      the broadcaster ended the goal. Only the channel.goal.end
-     *                                                      event includes this field.
      */
     public function __construct(
         private string $id,
@@ -74,9 +67,7 @@ final readonly class GoalEvent extends Event
         private string $description,
         private int $currentAmount,
         private int $targetAmount,
-        private DateTimeImmutable $startedAt,
-        private ?bool $isAchieved = null,
-        private ?DateTimeImmutable $endedAt = null
+        private DateTimeImmutable $startedAt
     ) {
     }
 
@@ -123,15 +114,5 @@ final readonly class GoalEvent extends Event
     public function getStartedAt(): DateTimeImmutable
     {
         return $this->startedAt;
-    }
-
-    public function getIsAchieved(): ?bool
-    {
-        return $this->isAchieved;
-    }
-
-    public function getEndedAt(): ?DateTimeImmutable
-    {
-        return $this->endedAt;
     }
 }
