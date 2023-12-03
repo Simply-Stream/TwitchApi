@@ -9,12 +9,14 @@ use GuzzleHttp\Client;
 use Http\Discovery\Psr17Factory;
 use InvalidArgumentException;
 use League\OAuth2\Client\Token\AccessToken;
+use PHPUnit\Framework\Attributes\CoversClass;
 use SimplyStream\TwitchApi\Helix\Api\ApiClient;
 use SimplyStream\TwitchApi\Helix\Api\UsersApi;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
 use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
 use SimplyStream\TwitchApi\Helix\Models\Users\User;
 
+#[CoversClass(UsersApi::class)]
 class UsersApiTest extends UserAwareFunctionalTestCase
 {
     public static function getUsersThrowsExceptionWhenMoreThan100UsersAreRequestedDataProvider(): array
@@ -23,7 +25,7 @@ class UsersApiTest extends UserAwareFunctionalTestCase
         return [
             'Test with 101 IDs' => [
                 'id' => array_fill(0, 101, uniqid('', true)),
-                'logins' => []
+                'logins' => [],
             ],
             'Test with 101 logins' => [
                 'id' => [],
@@ -32,7 +34,7 @@ class UsersApiTest extends UserAwareFunctionalTestCase
             'Test with 50 ids and 51 logins' => [
                 'id' => array_fill(0, 50, uniqid('', true)),
                 'logins' => array_fill(0, 51, uniqid('', true)),
-            ]
+            ],
         ];
     }
 

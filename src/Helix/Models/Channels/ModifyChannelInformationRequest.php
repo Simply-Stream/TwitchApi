@@ -57,7 +57,7 @@ final readonly class ModifyChannelInformationRequest extends AbstractModel
 
         Assert::maxLength($this->delay, 900, 'The maximum delay is 900 seconds');
 
-        if (count($this->tags) > 0) {
+        if (null !== $this->tags && count($this->tags) > 0) {
             Assert::allString($this->tags, 'Tags need to be strings');
             Assert::maxCount($this->tags, 10, 'A channel may specify a maximum of 10 tags');
             Assert::allMaxLength($this->tags, 25, 'Each tag is limited to a maximum of 25 characters');
@@ -66,7 +66,7 @@ final readonly class ModifyChannelInformationRequest extends AbstractModel
             // There should also be a validation for "non-special-characters". Twitch doesn't specify this more. Beside alphabetical, Umlauts also seems to be allowed.
         }
 
-        if (count($this->contentClassificationLabels) > 0) {
+        if (null !== $this->contentClassificationLabels && count($this->contentClassificationLabels) > 0) {
             Assert::allIsInstanceOf(
                 $this->contentClassificationLabels,
                 Label::class,

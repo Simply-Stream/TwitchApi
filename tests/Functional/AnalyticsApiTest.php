@@ -8,9 +8,11 @@ use CuyZ\Valinor\MapperBuilder;
 use GuzzleHttp\Client;
 use Http\Discovery\Psr17Factory;
 use League\OAuth2\Client\Token\AccessToken;
+use PHPUnit\Framework\Attributes\CoversClass;
 use SimplyStream\TwitchApi\Helix\Api\AnalyticsApi;
 use SimplyStream\TwitchApi\Helix\Api\ApiClient;
 
+#[CoversClass(AnalyticsApi::class)]
 class AnalyticsApiTest extends UserAwareFunctionalTestCase
 {
     public function testGetExtensionAnalytics()

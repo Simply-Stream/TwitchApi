@@ -8,12 +8,14 @@ use CuyZ\Valinor\MapperBuilder;
 use GuzzleHttp\Client;
 use Http\Discovery\Psr17Factory;
 use League\OAuth2\Client\Token\AccessToken;
+use PHPUnit\Framework\Attributes\CoversClass;
 use SimplyStream\TwitchApi\Helix\Api\AdsApi;
 use SimplyStream\TwitchApi\Helix\Api\ApiClient;
 use SimplyStream\TwitchApi\Helix\Models\Ads\Commercial;
 use SimplyStream\TwitchApi\Helix\Models\Ads\StartCommercialRequest;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
 
+#[CoversClass(AdsApi::class)]
 class AdsApiTest extends UserAwareFunctionalTestCase
 {
     public function testStartCommercial()

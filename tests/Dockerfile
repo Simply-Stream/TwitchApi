@@ -1,6 +1,6 @@
 FROM homebrew/brew AS download_twitch_cli
 
-RUN brew install twitchdev/twitch/twitch-cli
+RUN brew update-reset && brew install twitchdev/twitch/twitch-cli
 
 FROM ubuntu:23.10
 ARG TWITCH_CLI_VERSION=1.1.21

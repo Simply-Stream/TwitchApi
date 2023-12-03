@@ -8,6 +8,7 @@ use CuyZ\Valinor\MapperBuilder;
 use GuzzleHttp\Client;
 use Http\Discovery\Psr17Factory;
 use League\OAuth2\Client\Token\AccessToken;
+use PHPUnit\Framework\Attributes\CoversClass;
 use SimplyStream\TwitchApi\Helix\Api\ApiClient;
 use SimplyStream\TwitchApi\Helix\Api\BitsApi;
 use SimplyStream\TwitchApi\Helix\Models\Bits\BitsLeaderboard;
@@ -15,6 +16,7 @@ use SimplyStream\TwitchApi\Helix\Models\Bits\Cheermote;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDateRangeDataResponse;
 
+#[CoversClass(BitsApi::class)]
 class BitsApiTest extends UserAwareFunctionalTestCase
 {
     public function testGetBitsLeaderboard()

@@ -10,6 +10,7 @@ use CuyZ\Valinor\MapperBuilder;
 use GuzzleHttp\Client;
 use Http\Discovery\Psr17Factory;
 use Nyholm\Psr7\Stream;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use SimplyStream\TwitchApi\Helix\Api\ApiClient;
 use SimplyStream\TwitchApi\Helix\Api\EventSubApi;
@@ -24,6 +25,7 @@ use SimplyStream\TwitchApi\Helix\Models\EventSub\Events;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\MultipleEventResponse;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Subscriptions;
 
+#[CoversClass(EventSubService::class)]
 class EventSubServiceTest extends TestCase
 {
     /**

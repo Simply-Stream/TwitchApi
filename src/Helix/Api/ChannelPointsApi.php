@@ -167,7 +167,7 @@ class ChannelPointsApi extends AbstractApi
      *                                            The minimum page size is 1 redemption per page and the maximum is 50.
      *                                            The default is 20.
      *
-     * @return TwitchDataResponse<CustomRewardRedemption[]>
+     * @return TwitchPaginatedDataResponse<CustomRewardRedemption[]>
      * @throws JsonException
      * @throws MappingError
      */

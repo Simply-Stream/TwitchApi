@@ -8,9 +8,11 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use JsonException;
 use Nyholm\Psr7\Request;
+use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientExceptionInterface;
 
+#[CoversNothing]
 class UserAwareFunctionalTestCase extends TestCase
 {
     protected array $clients;
