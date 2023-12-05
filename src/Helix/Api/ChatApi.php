@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
+use CuyZ\Valinor\Mapper\MappingError;
 use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApi\Helix\Models\Chat\ChannelEmote;
 use SimplyStream\TwitchApi\Helix\Models\Chat\ChatBadge;
+use SimplyStream\TwitchApi\Helix\Models\Chat\ChatColorEnum;
 use SimplyStream\TwitchApi\Helix\Models\Chat\ChatSettings;
 use SimplyStream\TwitchApi\Helix\Models\Chat\Chatter;
 use SimplyStream\TwitchApi\Helix\Models\Chat\EmoteSet;
@@ -30,8 +32,7 @@ class ChatApi extends AbstractApi
      * NOTE: There is a delay between when users join and leave a chat and when the list is updated accordingly.
      *
      * To determine whether a user is a moderator or VIP, use the Get Moderators and Get VIPs endpoints. You can check
-     * the roles of up to
-     * 100 users.
+     * the roles of up to 100 users.
      *
      * Authorization:
      * Requires a user access token that includes the moderator:read:chatters scope.
@@ -107,13 +108,13 @@ class ChatApi extends AbstractApi
      * Authorization
      * Requires an app access token or user access token.
      *
-     * @param AccessTokenInterface|null $accessToken
+     * @param AccessTokenInterface $accessToken
      *
      * @return TwitchTemplatedDataResponse<GlobalEmote[]>
      * @throws JsonException
      */
     public function getGlobalEmotes(
-        AccessTokenInterface $accessToken = null
+        AccessTokenInterface $accessToken
     ): TwitchTemplatedDataResponse {
         return $this->sendRequest(
             path: self::BASE_PATH . '/emotes/global',
@@ -131,21 +132,22 @@ class ChatApi extends AbstractApi
      * Authorization:
      * Requires an app access token or user access token.
      *
-     * @param string                    $emoteSetId An ID that identifies the emote set to get. Include this parameter
+     * @param string               $emoteSetId      An ID that identifies the emote set to get. Include this parameter
      *                                              for each emote set you want to get. For example,
      *                                              emote_set_id=1234&emote_set_id=5678. You may specify a maximum of
      *                                              25 IDs. The response contains only the IDs that were found and
      *                                              ignores duplicate IDs.
      *
      *                                              To get emote set IDs, use the Get Channel Emotes API.
-     * @param AccessTokenInterface|null $accessToken
+     * @param AccessTokenInterface $accessToken
      *
      * @return TwitchTemplatedDataResponse<EmoteSet[]>
      * @throws JsonException
+     * @throws MappingError
      */
     public function getEmoteSets(
         string $emoteSetId,
-        AccessTokenInterface $accessToken = null
+        AccessTokenInterface $accessToken
     ): TwitchTemplatedDataResponse {
         return $this->sendRequest(
             path: self::BASE_PATH . '/emotes/set',
@@ -191,13 +193,14 @@ class ChatApi extends AbstractApi
      * Authorization:
      * Requires an app access token or user access token.
      *
-     * @param AccessTokenInterface|null $accessToken
+     * @param AccessTokenInterface $accessToken
      *
      * @return TwitchDataResponse<ChatBadge[]>
      * @throws JsonException
+     * @throws MappingError
      */
     public function getGlobalChatBadges(
-        AccessTokenInterface $accessToken = null
+        AccessTokenInterface $accessToken
     ): TwitchDataResponse {
         return $this->sendRequest(
             path: self::BASE_PATH . '/badges/global',
@@ -214,8 +217,10 @@ class ChatApi extends AbstractApi
      * Authorization:
      * Requires an app access token or user access token.
      *
-     * @param string                    $broadcasterId The ID of the broadcaster whose chat settings you want to get.
-     * @param string|null               $moderatorId   The ID of a user that has permission to moderate the
+     * @param string               $broadcasterId      The ID of the broadcaster whose chat settings you want to get.
+     * @param AccessTokenInterface $accessToken
+     *
+     * @param string|null          $moderatorId        The ID of a user that has permission to moderate the
      *                                                 broadcaster’s chat room, or the broadcaster’s ID if they’re
      *                                                 getting the settings.
      *
@@ -225,15 +230,15 @@ class ChatApi extends AbstractApi
      *
      *                                                 If you specify this field, this ID must match the user ID in the
      *                                                 user access token.
-     * @param AccessTokenInterface|null $accessToken
      *
      * @return TwitchDataResponse<ChatSettings[]>
      * @throws JsonException
+     * @throws MappingError
      */
     public function getChatSettings(
         string $broadcasterId,
+        AccessTokenInterface $accessToken,
         string $moderatorId = null,
-        AccessTokenInterface $accessToken = null
     ): TwitchDataResponse {
         return $this->sendRequest(
             path: self::BASE_PATH . '/settings',
@@ -406,7 +411,7 @@ class ChatApi extends AbstractApi
      *
      * @param string               $userId The ID of the user whose chat color you want to update. This ID must match
      *                                     the user ID in the access token.
-     * @param string               $color  The color to use for the user’s name in chat. All users may specify one of
+     * @param ChatColorEnum|string $color  The color to use for the user’s name in chat. All users may specify one of
      *                                     the following named color values.
      *                                     - blue
      *                                     - blue_violet
@@ -428,19 +433,20 @@ class ChatApi extends AbstractApi
      *                                     #9146FF. If you use a Hex color code, remember to URL encode it.
      * @param AccessTokenInterface $accessToken
      *
-     * @return TwitchResponseInterface
+     * @return void
      * @throws JsonException
+     * @throws MappingError
      */
     public function updateUserChatColor(
         string $userId,
-        string $color,
+        ChatColorEnum|string $color,
         AccessTokenInterface $accessToken
     ): void {
         $this->sendRequest(
             path: self::BASE_PATH . '/color',
             query: [
                 'user_id' => $userId,
-                'color' => $color,
+                'color' => $color instanceof ChatColorEnum ? $color->value : $color,
             ],
             method: 'PUT',
             accessToken: $accessToken

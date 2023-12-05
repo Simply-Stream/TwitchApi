@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
+use CuyZ\Valinor\Mapper\MappingError;
 use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApi\Helix\Models\Charity\CharityCampaign;
@@ -14,16 +15,16 @@ use SimplyStream\TwitchApi\Helix\Models\TwitchResponseInterface;
 
 class CharityApi extends AbstractApi
 {
-    protected const BASE_PATH = 'charity/campaigns';
+    protected const BASE_PATH = 'charity';
 
     /**
-     * (BETA) Gets information about the charity campaign that a broadcaster is running. For example, the campaign’s
+     * Gets information about the charity campaign that a broadcaster is running. For example, the campaign’s
      * fundraising goal and the current amount of donations.
      *
      * To receive events when progress is made towards the campaign’s goal or the broadcaster changes the fundraising
      * goal, subscribe to the channel.charity_campaign.progress subscription type.
      *
-     * Authorization:
+     * Authorization
      * Requires a user access token that includes the channel:read:charity scope.
      *
      * @param string               $broadcasterId The ID of the broadcaster that’s currently running a charity
@@ -38,7 +39,7 @@ class CharityApi extends AbstractApi
         AccessTokenInterface $accessToken
     ): TwitchDataResponse {
         return $this->sendRequest(
-            path: self::BASE_PATH,
+            path: self::BASE_PATH . '/campaigns',
             query: [
                 'broadcaster_id' => $broadcasterId,
             ],
@@ -48,11 +49,11 @@ class CharityApi extends AbstractApi
     }
 
     /**
-     * (BETA) Gets the list of donations that users have made to the broadcaster’s active charity campaign.
+     * Gets the list of donations that users have made to the broadcaster’s active charity campaign.
      *
      * To receive events as donations occur, subscribe to the channel.charity_campaign.donate subscription type.
      *
-     * Authorization:
+     * Authorization
      * Requires a user access token that includes the channel:read:charity scope.
      *
      * @param string               $broadcasterId The ID of the broadcaster that’s currently running a charity
@@ -66,6 +67,7 @@ class CharityApi extends AbstractApi
      *
      * @return TwitchPaginatedDataResponse<CharityCampaignDonation[]>
      * @throws JsonException
+     * @throws MappingError
      */
     public function getCharityCampaignDonations(
         string $broadcasterId,
@@ -74,7 +76,7 @@ class CharityApi extends AbstractApi
         string $after = null
     ): TwitchResponseInterface {
         return $this->sendRequest(
-            path: self::BASE_PATH,
+            path: self::BASE_PATH . '/donations',
             query: [
                 'broadcaster_id' => $broadcasterId,
                 'first' => $first,

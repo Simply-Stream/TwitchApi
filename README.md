@@ -39,9 +39,9 @@ composer req simplystream/twitch-api
 | AnalyticsApi             | ✅           | ❗      |
 | BitsApi                  | ✅           | ℹ️     |
 | ChannelPointsApi         | ✅           | ℹ️     |
-| ChannelsApi              | ✅           | ❌      |
-| CharityApi               | ✅           | ❌      |
-| ChatApi                  | ✅           | ❌      |
+| ChannelsApi              | ✅           | ℹ️     |
+| CharityApi               | ✅           | ℹ️     |
+| ChatApi                  | ✅           | ℹ️     |
 | ClipsApi                 | ✅           | ❌      |
 | ContentClassificationApi | ✅           | ❌      |
 | EntitlementsApi          | ✅           | ❌      |
@@ -65,8 +65,9 @@ composer req simplystream/twitch-api
 | VideosApi                | ✅           | ❌      |
 | WhispersApi              | ✅           | ❌      |
 
-❗ = Tests can't be implemented due to lack of mock-api-data
-️️ℹ️ = Some tests are available, some are missing due to lack of mock-api data
+❗ = Tests can't be implemented due to lack of mock-api-data. Mapping should work on Twitch prod systems
+️️ℹ️ = Some tests are available, some are missing due to lack of mock-api data. Mapping should work on Twitch prod
+systems
 
 **Tested in this case means, that functional or unit tests exist.**
 

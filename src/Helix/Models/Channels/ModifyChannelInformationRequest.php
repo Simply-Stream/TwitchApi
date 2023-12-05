@@ -44,11 +44,13 @@ final readonly class ModifyChannelInformationRequest extends AbstractModel
         private ?string $title = null,
         private ?int $delay = null,
         private ?array $tags = null,
-        private ?array $contentClassificationLabels = [],
+        private ?array $contentClassificationLabels = null,
         private ?bool $isBrandedContent = null
     ) {
         if (null !== $this->broadcasterLanguage) {
-            Assert::regex($this->broadcasterLanguage, '^[a-zA-Z]{2}$');
+            // The regex was broken for some reason, so we check at least for 2 alpha-characters
+            Assert::length($this->broadcasterLanguage, 2);
+            Assert::allAlpha($this->broadcasterLanguage);
         }
 
         if (null !== $this->title) {

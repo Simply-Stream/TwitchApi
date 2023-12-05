@@ -79,7 +79,7 @@ final readonly class UpdateChatSettingsRequest extends AbstractModel
         private ?bool $subscriberMode = null,
         private ?bool $uniqueChatMode = null
     ) {
-        if ($this->followerMode) {
+        if (null !== $this->followerMode) {
             Assert::lessThanEq(
                 $this->followerModeDuration,
                 129600,
@@ -87,7 +87,7 @@ final readonly class UpdateChatSettingsRequest extends AbstractModel
             );
         }
 
-        if ($this->nonModeratorChatDelay) {
+        if (null !== $this->nonModeratorChatDelay) {
             Assert::inArray(
                 $this->nonModeratorChatDelayDuration,
                 [2, 4, 6],
@@ -95,7 +95,7 @@ final readonly class UpdateChatSettingsRequest extends AbstractModel
             );
         }
 
-        if ($this->slowMode) {
+        if (null !== $this->slowMode) {
             Assert::greaterThanEq($this->slowModeWaitTime, 3, 'Slow mode minimum value is 3 seconds');
             Assert::lessThanEq($this->slowModeWaitTime, 120, 'Slow mode maximum value is 120 seconds');
         }

@@ -8,6 +8,7 @@ use Http\Discovery\Psr17Factory;
 use League\OAuth2\Client\Token\AccessToken;
 use SimplyStream\TwitchApi\Helix\Api\ApiClient;
 use SimplyStream\TwitchApi\Helix\Api\ChannelsApi;
+use SimplyStream\TwitchApi\Helix\Models\Channels\ChannelInformation;
 use SimplyStream\TwitchApi\Helix\Models\Channels\ModifyChannelInformationRequest;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
 
@@ -36,6 +37,7 @@ class ChannelsApiTest extends UserAwareFunctionalTestCase
 
         $this->assertInstanceOf(TwitchDataResponse::class, $channelInformationResponse);
         $channelInformation = $channelInformationResponse->getData();
+        $this->assertContainsOnlyInstancesOf(ChannelInformation::class, $channelInformation);
         $this->assertCount(1, $channelInformation);
 
         $channelInfo = $channelInformation[0];
@@ -69,17 +71,16 @@ class ChannelsApiTest extends UserAwareFunctionalTestCase
         $apiClient->setBaseUrl('http://localhost:8000/mock/');
 
         $channelsApi = new ChannelsApi($apiClient);
-
         $channelInformationResponse = $channelsApi->getChannelInformation(
             [$testUser['id']],
             new AccessToken($this->appAccessToken)
         );
 
-        $this->assertFalse($channelInformationResponse->getData()[0]->isBrandedContent());
+        $this->assertSame('en', $channelInformationResponse->getData()[0]->getBroadcasterLanguage());
 
         $channelsApi->modifyChannelInformation(
             $this->users[0]['id'],
-            new ModifyChannelInformationRequest(isBrandedContent: true),
+            new ModifyChannelInformationRequest(broadcasterLanguage: 'de'),
             new AccessToken($this->getAccessTokenForUser($testUser['id'], ['channel:manage:broadcast']))
         );
 
@@ -88,6 +89,43 @@ class ChannelsApiTest extends UserAwareFunctionalTestCase
             new AccessToken($this->appAccessToken)
         );
 
-        $this->assertTrue($channelInformationResponse->getData()[0]->isBrandedContent());
+        $this->assertSame('de', $channelInformationResponse->getData()[0]->getBroadcasterLanguage());
+
+        $channelsApi->modifyChannelInformation(
+            $this->users[0]['id'],
+            new ModifyChannelInformationRequest(broadcasterLanguage: 'en'),
+            new AccessToken($this->getAccessTokenForUser($testUser['id'], ['channel:manage:broadcast']))
+        );
+
+        $channelInformationResponse = $channelsApi->getChannelInformation(
+            [$testUser['id']],
+            new AccessToken($this->appAccessToken)
+        );
+
+        $this->assertSame('en', $channelInformationResponse->getData()[0]->getBroadcasterLanguage());
+    }
+
+    public function testGetFollowedChannels()
+    {
+        $this->markTestSkipped('FollowedChannels endpoint is currently not implemented by the twitch mock-api');
+
+        $testUser = $this->users[0];
+        $client = new Client();
+
+        $requestFactory = new Psr17Factory();
+        $apiClient = new ApiClient(
+            $client,
+            $requestFactory,
+            new MapperBuilder(),
+            $requestFactory,
+            ['clientId' => $this->clients['ID'], 'webhook' => ['secret' => '1234567890']]
+        );
+        $apiClient->setBaseUrl('http://localhost:8000/mock/');
+
+        $channelsApi = new ChannelsApi($apiClient);
+        $channelFollowersResponse = $channelsApi->getChannelFollowers(
+            $testUser['id'],
+            new AccessToken($this->getAccessTokenForUser($testUser['id'], ['user:read:follows']))
+        );
     }
 }

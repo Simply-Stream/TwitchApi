@@ -6,6 +6,7 @@ namespace SimplyStream\TwitchApi\Helix\Models;
 
 /**
  * @template T
+ * @extends TwitchDataResponse<T>
  */
 readonly class TwitchTemplatedDataResponse extends TwitchDataResponse
 {

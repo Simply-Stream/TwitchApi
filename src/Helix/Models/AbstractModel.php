@@ -10,6 +10,7 @@ abstract readonly class AbstractModel implements \JsonSerializable
 
     public function jsonSerialize(): mixed
     {
-        return $this->toArray();
+        // Not sure if this will stay like this, null values could possibly be wanted
+        return array_filter($this->toArray(), fn ($value) => null !== $value);
     }
 }
