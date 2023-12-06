@@ -42,8 +42,8 @@ composer req simplystream/twitch-api
 | ChannelsApi              | ✅           | ℹ️     |
 | CharityApi               | ✅           | ℹ️     |
 | ChatApi                  | ✅           | ℹ️     |
-| ClipsApi                 | ✅           | ❌      |
-| ContentClassificationApi | ✅           | ❌      |
+| ClipsApi                 | ✅           | ℹ️     |
+| ContentClassificationApi | ✅           | ✅      |
 | EntitlementsApi          | ✅           | ❌      |
 | EventSubApi              | ✅           | ❌      |
 | EventSub system          | ✅           | ✅      |

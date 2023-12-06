@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
+use CuyZ\Valinor\Mapper\MappingError;
 use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApi\Helix\Models\CCLs\ContentClassificationLabel;
@@ -19,7 +20,8 @@ class ContentClassificationApi extends AbstractApi
      * Authorization
      * Requires an app access token or user access token.
      *
-     * @param string                    $locale Locale for the Content Classification Labels. You may specify a maximum
+     * @param AccessTokenInterface $accessToken
+     * @param string               $locale      Locale for the Content Classification Labels. You may specify a maximum
      *                                          of 1 locale. Default: “en-US” Supported locales: "bg-BG", "cs-CZ",
      *                                          "da-DK", "da-DK", "de-DE", "el-GR",
      *                                          "en-GB", "en-US", "es-ES", "es-MX", "fi-FI", "fr-FR", "hu-HU", "it-IT",
@@ -27,14 +29,14 @@ class ContentClassificationApi extends AbstractApi
      *                                          "nl-NL", "no-NO", "pl-PL", "pt-BT", "pt-PT", "ro-RO", "ru-RU", "sk-SK",
      *                                          "sv-SE", "th-TH",
      *                                          "tr-TR", "vi-VN", "zh-CN", "zh-TW"
-     * @param AccessTokenInterface|null $accessToken
      *
      * @return TwitchDataResponse<ContentClassificationLabel[]>
      * @throws JsonException
+     * @throws MappingError
      */
     public function getContentClassificationLevels(
-        string $locale = 'en-US',
-        AccessTokenInterface $accessToken = null
+        AccessTokenInterface $accessToken,
+        string $locale = 'en-US'
     ): TwitchDataResponse {
         return $this->sendRequest(
             path: self::BASE_PATH,

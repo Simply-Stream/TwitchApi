@@ -18,6 +18,8 @@ class CharityApiTest extends UserAwareFunctionalTestCase
 {
     public function testGetCharityCampaign()
     {
+        $this->markTestSkipped('Waiting for https://github.com/twitchdev/twitch-cli/pull/300 to be approved');
+
         $testUser = $this->users[0];
         $client = new Client();
 
@@ -69,6 +71,8 @@ class CharityApiTest extends UserAwareFunctionalTestCase
 
     public function testGetCharityCampaignDonations()
     {
+        $this->markTestSkipped('Waiting for https://github.com/twitchdev/twitch-cli/pull/300 to be approved');
+
         $testUser = $this->users[0];
         $client = new Client();
 

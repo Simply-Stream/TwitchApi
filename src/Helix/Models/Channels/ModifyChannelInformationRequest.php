@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Models\Channels;
 
 use SimplyStream\TwitchApi\Helix\Models\AbstractModel;
-use SimplyStream\TwitchApi\Helix\Models\CCLs\Label;
 use Webmozart\Assert\Assert;
 
 final readonly class ModifyChannelInformationRequest extends AbstractModel
@@ -50,7 +49,7 @@ final readonly class ModifyChannelInformationRequest extends AbstractModel
         if (null !== $this->broadcasterLanguage) {
             // The regex was broken for some reason, so we check at least for 2 alpha-characters
             Assert::length($this->broadcasterLanguage, 2);
-            Assert::allAlpha($this->broadcasterLanguage);
+            Assert::alpha($this->broadcasterLanguage);
         }
 
         if (null !== $this->title) {

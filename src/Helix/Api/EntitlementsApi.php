@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
+use CuyZ\Valinor\Mapper\MappingError;
 use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApi\Helix\Models\Entitlements\DropEntitlement;
@@ -23,66 +24,64 @@ class EntitlementsApi extends AbstractApi
      * used.
      *
      * Access token type | Parameter        | Description
-     * ------------------|------------------|----------------------------------------------------------------------------------------------
+     * ------------------|------------------|--------------------------------------------------------------------------
      * App               | None             | If you don’t specify request parameters, the request returns all
-     * entitlements that your
-     *                   |                  | organization owns.
-     * ------------------|------------------|----------------------------------------------------------------------------------------------
+     *                   |                  | entitlements that your organization owns.
+     * ------------------|------------------|--------------------------------------------------------------------------
      * App               | user_id          | The request returns all entitlements for any game that the organization
-     * granted to the
-     *                   |                  | specified user.
-     * ------------------|------------------|----------------------------------------------------------------------------------------------
+     *                   |                  | granted to the specified user.
+     * ------------------|------------------|--------------------------------------------------------------------------
      * App               | user_id, game_id | The request returns all entitlements that the specified game granted to
-     * the specified user.
-     * ------------------|------------------|----------------------------------------------------------------------------------------------
+     *                   |                  | the specified user.
+     * ------------------|------------------|--------------------------------------------------------------------------
      * App               | game_id          | The request returns all entitlements that the specified game granted to
-     * all entitled users.
-     * ------------------|------------------|----------------------------------------------------------------------------------------------
+     *                   |                  | all entitled users.
+     * ------------------|------------------|--------------------------------------------------------------------------
      * User              | None             | If you don’t specify request parameters, the request returns all
-     * entitlements for any game
-     *                   |                  | that organization granted to the user identified in the access token.
-     * ------------------|------------------|----------------------------------------------------------------------------------------------
+     *                   |                  | entitlements for any game that organization granted to the user identified
+     *                   |                  | in the access token.
+     * ------------------|------------------|--------------------------------------------------------------------------
      * User              | user_id          | Invalid.
-     * ------------------|------------------|----------------------------------------------------------------------------------------------
+     * ------------------|------------------|--------------------------------------------------------------------------
      * User              | user_id, game_id | Invalid.
-     * ------------------|------------------|----------------------------------------------------------------------------------------------
+     * ------------------|------------------|--------------------------------------------------------------------------
      * User              | game_id          | The request returns all entitlements that the specified game granted to
-     * the user identified in
-     *                   |                  | the token.
-     * ------------------|------------------|----------------------------------------------------------------------------------------------
+     *                   |                  | the user identified in the token.
+     * ------------------|------------------|--------------------------------------------------------------------------
      *
      * Authentication:
      * Requires an app access token or user access token. The client ID in the access token must own the game.
      *
-     * @param string|null               $id                An ID that identifies the entitlement to get. Include this
+     * @param AccessTokenInterface $accessToken
+     * @param string|null          $id                     An ID that identifies the entitlement to get. Include this
      *                                                     parameter for each entitlement you want to get. For example,
      *                                                     id=1234&id=5678. You may specify a maximum of 100 IDs.
-     * @param string|null               $userId            An ID that identifies a user that was granted entitlements.
-     * @param string|null               $gameId            An ID that identifies a game that offered entitlements.
-     * @param string|null               $fulfillmentStatus The entitlement’s fulfillment status. Used to filter the
+     * @param string|null          $userId                 An ID that identifies a user that was granted entitlements.
+     * @param string|null          $gameId                 An ID that identifies a game that offered entitlements.
+     * @param string|null          $fulfillmentStatus      The entitlement’s fulfillment status. Used to filter the
      *                                                     list to only those with the specified status. Possible
      *                                                     values are:
      *                                                     - CLAIMED
      *                                                     - FULFILLED
-     * @param string|null               $after             The cursor used to get the next page of results. The
+     * @param string|null          $after                  The cursor used to get the next page of results. The
      *                                                     Pagination object in the response contains the cursor’s
      *                                                     value.
-     * @param int                       $first             The maximum number of entitlements to return per page in the
+     * @param int                  $first                  The maximum number of entitlements to return per page in the
      *                                                     response. The minimum page size is 1 entitlement per page
      *                                                     and the maximum is 1000. The default is 20.
-     * @param AccessTokenInterface|null $accessToken
      *
      * @return TwitchPaginatedDataResponse<DropEntitlement[]>
      * @throws JsonException
+     * @throws MappingError
      */
     public function getDropsEntitlements(
+        AccessTokenInterface $accessToken,
         string $id = null,
         string $userId = null,
         string $gameId = null,
         string $fulfillmentStatus = null,
         string $after = null,
         int $first = 20,
-        AccessTokenInterface $accessToken = null
     ): TwitchPaginatedDataResponse {
         return $this->sendRequest(
             path: self::BASE_PATH . '/drops',
