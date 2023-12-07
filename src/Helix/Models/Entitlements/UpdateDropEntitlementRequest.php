@@ -13,19 +13,19 @@ final readonly class UpdateDropEntitlementRequest extends AbstractModel
     use SerializesModels;
 
     /**
-     * @param string[]    $entitlementIds   A list of IDs that identify the entitlements to update. You may specify a
-     *                                      maximum of 100 IDs.
-     * @param string|null $fulfilmentStatus The fulfillment status to set the entitlements to. Possible values are:
-     *                                      - CLAIMED — The user claimed the benefit.
-     *                                      - FULFILLED — The developer granted the benefit that the user claimed.
+     * @param string[]    $entitlementIds    A list of IDs that identify the entitlements to update. You may specify a
+     *                                       maximum of 100 IDs.
+     * @param string|null $fulfillmentStatus The fulfillment status to set the entitlements to. Possible values are:
+     *                                       - CLAIMED — The user claimed the benefit.
+     *                                       - FULFILLED — The developer granted the benefit that the user claimed.
      */
     public function __construct(
         private array $entitlementIds = [],
-        private ?string $fulfilmentStatus = null
+        private ?string $fulfillmentStatus = null
     ) {
-        if (null !== $this->fulfilmentStatus) {
+        if (null !== $this->fulfillmentStatus) {
             Assert::inArray(
-                $this->fulfilmentStatus,
+                $this->fulfillmentStatus,
                 ['CLAIMED', 'FULFILLED'],
                 'Fulfilment status got an invalid value. Allowed values are: CLAIMED, FULFILLED'
             );
@@ -40,8 +40,8 @@ final readonly class UpdateDropEntitlementRequest extends AbstractModel
         return $this->entitlementIds;
     }
 
-    public function getFulfilmentStatus(): ?string
+    public function getFulfillmentStatus(): ?string
     {
-        return $this->fulfilmentStatus;
+        return $this->fulfillmentStatus;
     }
 }
