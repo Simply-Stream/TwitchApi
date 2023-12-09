@@ -45,10 +45,10 @@ composer req simplystream/twitch-api
 | ClipsApi                 | ✅           | ℹ️     |
 | ContentClassificationApi | ✅           | ✅      |
 | EntitlementsApi          | ✅           | ✅      |
-| EventSubApi              | ✅           | ❌      |
+| EventSubApi              | ✅           | ❗      |
 | EventSub system          | ✅           | ✅      |
-| ExtensionsApi            | ✅           | ❌      |
-| GamesApi                 | ✅           | ❌      |
+| ExtensionsApi            | ✅           | ❗      |
+| GamesApi                 | ✅           | ✅      |
 | GoalsApi                 | ✅           | ❌      |
 | GuestStarApi (Beta)      | ✅           | ❌      |
 | HypeTrainApi             | ✅           | ❌      |

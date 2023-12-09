@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
+use CuyZ\Valinor\Mapper\MappingError;
 use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use RuntimeException;
@@ -19,30 +20,32 @@ class GamesApi extends AbstractApi
      * Authentication:
      * Requires an app access token or user access token.
      *
-     * @param string|null               $after  The cursor used to get the next page of results. The Pagination object
+     * @param AccessTokenInterface $accessToken
+     *
+     * @param string|null          $after       The cursor used to get the next page of results. The Pagination object
      *                                          in the response contains the cursor’s value.
-     * @param string|null               $before The cursor used to get the previous page of results. The Pagination
+     * @param string|null          $before      The cursor used to get the previous page of results. The Pagination
      *                                          object in the response contains the cursor’s value.
-     * @param int                       $first  The maximum number of items to return per page in the response. The
+     * @param int                  $first       The maximum number of items to return per page in the response. The
      *                                          minimum page size is 1 item per page and the maximum is 100 items per
      *                                          page. The default is 20.
-     * @param AccessTokenInterface|null $accessToken
      *
      * @return TwitchPaginatedDataResponse<Game[]>
      * @throws JsonException
+     * @throws MappingError
      */
     public function getTopGames(
+        AccessTokenInterface $accessToken,
         string $after = null,
         string $before = null,
         int $first = 20,
-        AccessTokenInterface $accessToken = null
     ): TwitchPaginatedDataResponse {
         return $this->sendRequest(
             path: 'games/top',
             query: [
                 'after' => $after,
                 'before' => $before,
-                'first' => $first
+                'first' => $first,
             ],
             type: sprintf('%s<%s[]>', TwitchPaginatedDataResponse::class, Game::class),
             accessToken: $accessToken
@@ -59,29 +62,31 @@ class GamesApi extends AbstractApi
      * Authentication:
      * Requires an app access token or user access token.
      *
-     * @param array<string>             $id      The ID of the category or game to get. Include this parameter for each
+     * @param AccessTokenInterface $accessToken
+     *
+     * @param array<string>        $id           The ID of the category or game to get. Include this parameter for each
      *                                           category or game you want to get. For example, &id=1234&id=5678. You
      *                                           may specify a maximum of 100 IDs. The endpoint ignores duplicate and
      *                                           invalid IDs or IDs that weren’t found.
-     * @param array<string>             $name    The name of the category or game to get. The name must exactly match
+     * @param array<string>        $name         The name of the category or game to get. The name must exactly match
      *                                           the category’s or game’s title. Include this parameter for each
      *                                           category or game you want to get. For example, &name=foo&name=bar. You
      *                                           may specify a maximum of 100 names. The endpoint ignores duplicate
      *                                           names and names that weren’t found.
-     * @param array<string>             $igdbId  The IGDB ID of the game to get. Include this parameter for each game
+     * @param array<string>        $igdbId       The IGDB ID of the game to get. Include this parameter for each game
      *                                           you want to get. For example, &igdb_id=1234&igdb_id=5678. You may
      *                                           specify a maximum of 100 IDs. The endpoint ignores duplicate and
      *                                           invalid IDs or IDs that weren’t found.
-     * @param AccessTokenInterface|null $accessToken
      *
      * @return TwitchDataResponse<Game[]>
      * @throws JsonException
+     * @throws MappingError
      */
     public function getGames(
+        AccessTokenInterface $accessToken,
         array $id = [],
         array $name = [],
         array $igdbId = [],
-        AccessTokenInterface $accessToken = null
     ): TwitchDataResponse {
         if ((count($id) + count($name) + count($igdbId)) > 100) {
             throw new RuntimeException('You cannot search for more than 100 ids or games');
