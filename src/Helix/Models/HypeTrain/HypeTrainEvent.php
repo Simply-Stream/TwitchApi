@@ -55,9 +55,4 @@ final readonly class HypeTrainEvent
     {
         return $this->eventData;
     }
-
-    public function getTotal(): int
-    {
-        return $this->total;
-    }
 }
