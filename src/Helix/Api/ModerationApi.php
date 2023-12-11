@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
+use CuyZ\Valinor\Mapper\MappingError;
 use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApi\Helix\Models\Moderation\AddBlockedTermRequest;
@@ -245,6 +246,7 @@ class ModerationApi extends AbstractApi
      *
      * @return TwitchDataResponse<UserBan[]>
      * @throws JsonException
+     * @throws MappingError
      */
     public function banUser(
         string $broadcasterId,
@@ -593,7 +595,7 @@ class ModerationApi extends AbstractApi
         string $after = null
     ): TwitchPaginatedDataResponse {
         return $this->sendRequest(
-            path: '/channels/vips',
+            path: 'channels/vips',
             query: [
                 'broadcaster_id' => $broadcasterId,
                 'user_id' => $userId,
@@ -613,21 +615,21 @@ class ModerationApi extends AbstractApi
      * Authorization:
      * Requires a user access token that includes the channel:manage:vips scope.
      *
-     * @param string               $userId        The ID of the user to give VIP status to.
      * @param string               $broadcasterId The ID of the broadcaster that’s adding the user as a VIP. This ID
      *                                            must match the user ID in the access token.
+     * @param string               $userId        The ID of the user to give VIP status to.
      * @param AccessTokenInterface $accessToken
      *
      * @return void
      * @throws JsonException
      */
     public function addChannelVip(
-        string $userId,
         string $broadcasterId,
+        string $userId,
         AccessTokenInterface $accessToken
     ): void {
         $this->sendRequest(
-            path: '/channels/vips',
+            path: 'channels/vips',
             query: [
                 'broadcaster_id' => $broadcasterId,
                 'user_id' => $userId,
@@ -649,21 +651,21 @@ class ModerationApi extends AbstractApi
      * Authorization:
      * Requires a user access token that includes the channel:manage:vips scope.
      *
-     * @param string               $userId        The ID of the user to remove VIP status from.
      * @param string               $broadcasterId The ID of the broadcaster who owns the channel where the user has VIP
      *                                            status.
+     * @param string               $userId        The ID of the user to remove VIP status from.
      * @param AccessTokenInterface $accessToken
      *
      * @return void
      * @throws JsonException
      */
     public function removeChannelVip(
-        string $userId,
         string $broadcasterId,
+        string $userId,
         AccessTokenInterface $accessToken
     ): void {
         $this->sendRequest(
-            path: '/channels/vips',
+            path: 'channels/vips',
             query: [
                 'broadcaster_id' => $broadcasterId,
                 'user_id' => $userId,

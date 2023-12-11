@@ -20,16 +20,14 @@ final readonly class HypeTrainEvent
      * @param string            $version         The version number of the definition of the event’s data. For example,
      *                                           the value is 1 if the data in event_data uses the first definition of
      *                                           the event’s data.
-     * @param EventData         $event_data      The event’s data.
-     * @param int               $total           The current total amount raised.
+     * @param EventData         $eventData       The event’s data.
      */
     public function __construct(
         private string $id,
         private string $eventType,
         private DateTimeImmutable $eventTimestamp,
         private string $version,
-        private EventData $event_data,
-        private int $total
+        private EventData $eventData
     ) {
     }
 
@@ -55,7 +53,7 @@ final readonly class HypeTrainEvent
 
     public function getEventData(): EventData
     {
-        return $this->event_data;
+        return $this->eventData;
     }
 
     public function getTotal(): int

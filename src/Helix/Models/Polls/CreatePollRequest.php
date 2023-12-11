@@ -10,27 +10,30 @@ use Webmozart\Assert\Assert;
 final readonly class CreatePollRequest extends AbstractModel
 {
     /**
-     * @param string              $broadcasterId              The ID of the broadcaster that’s running the poll. This
-     *                                                        ID must match the user ID in the user access token.
-     * @param string              $title                      The question that viewers will vote on. For example, What
-     *                                                        game should I play next? The question may contain a
-     *                                                        maximum of 60 characters.
-     * @param array{title:string} $choices                    A list of choices that viewers may choose from. The list
-     *                                                        must contain a minimum of 2 choices and up to a maximum
-     *                                                        of 5 choices.
-     * @param int                 $duration                   The length of time (in seconds) that the poll will run
-     *                                                        for. The minimum is 15 seconds and the maximum is 1800
-     *                                                        seconds (30 minutes).
-     * @param bool                $channelPointsVotingEnabled A Boolean value that indicates whether viewers may cast
-     *                                                        additional votes using Channel Points. If true, the
-     *                                                        viewer may cast more than one vote but each additional
-     *                                                        vote costs the number of Channel Points specified in
-     *                                                        channel_points_per_vote. The default is false (viewers
-     *                                                        may cast only one vote). For information about Channel
-     *                                                        Points, see Channel Points Guide.
-     * @param int|null            $channelPointsPerVote       The number of points that the viewer must spend to cast
-     *                                                        one additional vote. The minimum is 1 and the maximum is
-     *                                                        1000000. Set only if ChannelPointsVotingEnabled is true.
+     * @param string                     $broadcasterId              The ID of the broadcaster that’s running the poll.
+     *                                                               This ID must match the user ID in the user access
+     *                                                               token.
+     * @param string                     $title                      The question that viewers will vote on.
+     *                                                               For example, What game should I play next? The
+     *                                                               question may contain a maximum of 60 characters.
+     * @param array{array{title:string}} $choices                    A list of choices that viewers may choose from.
+     *                                                               The list must contain a minimum of 2 choices and
+     *                                                               up to a maximum of 5 choices.
+     * @param int                        $duration                   The length of time (in seconds) that the poll will
+     *                                                               run for. The minimum is 15 seconds and the
+     *                                                               maximum is 1800 seconds (30 minutes).
+     * @param bool                       $channelPointsVotingEnabled A Boolean value that indicates whether viewers may
+     *                                                               cast additional votes using Channel Points. If
+     *                                                               true, the viewer may cast more than one vote but
+     *                                                               each additional vote costs the number of Channel
+     *                                                               Points specified in channel_points_per_vote. The
+     *                                                               default is false (viewers may cast only one vote).
+     *                                                               For information about Channel Points, see Channel
+     *                                                               Points Guide.
+     * @param int|null                   $channelPointsPerVote       The number of points that the viewer must spend
+     *                                                               to cast one additional vote. The minimum is 1 and
+     *                                                               the maximum is 1000000. Set only if
+     *                                                               ChannelPointsVotingEnabled is true.
      */
     public function __construct(
         private string $broadcasterId,
@@ -45,7 +48,7 @@ final readonly class CreatePollRequest extends AbstractModel
         Assert::allKeyExists($this->choices, 'title', 'Choices need a title');
 
         foreach ($this->choices as $key => $choice) {
-            Assert::maxLength($choice, 25, sprintf('Choice #%s title can\'t be longer than 25 characters', $key));
+            Assert::maxLength($choice['title'], 25, sprintf('Choice #%s title can\'t be longer than 25 characters', $key));
         }
 
         Assert::greaterThanEq($this->duration, 15, 'A poll needs to be at least 15 seconds long');

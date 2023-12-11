@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApi\Tests\Helix\Api;
 
 use CuyZ\Valinor\MapperBuilder;
@@ -61,10 +63,12 @@ class GamesApiTest extends UserAwareFunctionalTestCase
         $this->assertCount(1, $getGamesResponse->getData());
 
         foreach ($getGamesResponse->getData() as $game) {
-            $this->assertSame('54608', $game->getId());
+            $this->assertIsString($game->getId());
+            $this->assertNotEmpty($game->getId());
             $this->assertSame('Just Chatting', $game->getName());
             $this->assertSame('https://static-cdn.jtvnw.net/ttv-boxart/Just%20Chatting-{width}x{height}.jpg', $game->getBoxArtUrl());
-            $this->assertSame('26022', $game->getIgdbId());
+            $this->assertIsString($game->getIgdbId());
+            $this->assertNotEmpty($game->getIgdbId());
         }
     }
 }

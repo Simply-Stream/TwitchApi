@@ -34,7 +34,7 @@ trait SerializesModels
                 if (is_object($value) && method_exists($value, 'toArray')) {
                     $array[strtolower(
                         ltrim(preg_replace('/[A-Z]([A-Z](?![a-z]))*/', '_$0', $property->getName()), '_')
-                    )] = self::convert($value);
+                    )] = $value->toArray();
                 } else {
                     if ($value instanceof DateTimeImmutable) {
                         $array[strtolower(

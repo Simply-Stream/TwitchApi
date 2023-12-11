@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApi\Helix\Models\CCLs;
 
 use SimplyStream\TwitchApi\Helix\Models\SerializesModels;

@@ -49,11 +49,11 @@ composer req simplystream/twitch-api
 | EventSub system          | ✅           | ✅      |
 | ExtensionsApi            | ✅           | ❗      |
 | GamesApi                 | ✅           | ✅      |
-| GoalsApi                 | ✅           | ❌      |
-| GuestStarApi (Beta)      | ✅           | ❌      |
-| HypeTrainApi             | ✅           | ❌      |
-| ModerationApi            | ✅           | ❌      |
-| PollsApi                 | ✅           | ❌      |
+| GoalsApi                 | ✅           | ✅      |
+| GuestStarApi (Beta)      | ✅           | ❗      |
+| HypeTrainApi             | ✅           | ✅      |
+| ModerationApi            | ✅           | ℹ️     |
+| PollsApi                 | ✅           | ✅      |
 | PredictionsApi           | ✅           | ❌      |
 | RaidsApi                 | ✅           | ❌      |
 | ScheduleApi              | ✅           | ❌      |

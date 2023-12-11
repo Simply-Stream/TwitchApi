@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Events;
 
 use DateTimeImmutable;
-use SimplyStream\TwitchApi\Helix\Models\HypeTrain\Contribution;
+use SimplyStream\TwitchApi\Helix\Models\EventSub\Contribution;
 
 final readonly class HypeTrainBeginEvent extends Event
 {

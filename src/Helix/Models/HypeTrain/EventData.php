@@ -26,6 +26,8 @@ final readonly class EventData
      * @param Contribution[]    $topContributions  The top contributors for each contribution type. For example, the
      *                                             top contributor using BITS (by aggregate) and the top contributor
      *                                             using SUBS (by count).
+     * @param int               $total             The current total amount raised.
+     *
      */
     public function __construct(
         private string $broadcasterId,
@@ -37,6 +39,7 @@ final readonly class EventData
         private int $level,
         private DateTimeImmutable $startedAt,
         private array $topContributions,
+        private int $total,
     ) {
     }
 
@@ -83,5 +86,10 @@ final readonly class EventData
     public function getTopContributions(): array
     {
         return $this->topContributions;
+    }
+
+    public function getTotal(): int
+    {
+        return $this->total;
     }
 }

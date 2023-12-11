@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApi\Tests\Functional;
 
 use CuyZ\Valinor\MapperBuilder;
@@ -484,6 +486,8 @@ class ChatApiTest extends UserAwareFunctionalTestCase
 
     public function testUpdateUserChatColor()
     {
+        $this->markTestSkipped('Mock-Api returns wrong Statuscode');
+
         $testUser = $this->users[0];
         $client = new Client();
 
