@@ -186,7 +186,7 @@ class ChatApiTest extends UserAwareFunctionalTestCase
         $apiClient->setBaseUrl('http://localhost:8000/mock/');
 
         $chatApi = new ChatApi($apiClient);
-        $emoteSetResponse = $chatApi->getEmoteSets(1, new AccessToken($this->appAccessToken));
+        $emoteSetResponse = $chatApi->getEmoteSets("1", new AccessToken($this->appAccessToken));
 
         $this->assertInstanceOf(TwitchTemplatedDataResponse::class, $emoteSetResponse);
         $this->assertCount(15, $emoteSetResponse->getData());
