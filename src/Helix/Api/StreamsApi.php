@@ -234,13 +234,6 @@ class StreamsApi extends AbstractApi
         ?string $before = null,
         ?string $after = null
     ): TwitchPaginatedDataResponse {
-        // At least one of userId or videoId has to be defined
-        if (null !== $userId) {
-            Assert::notEmpty($videoId);
-        } elseif (null !== $videoId) {
-            Assert::notEmpty($userId);
-        }
-
         return $this->sendRequest(
             path: self::BASE_PATH . '/markers',
             query: [
