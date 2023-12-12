@@ -11,20 +11,19 @@ final readonly class ChannelStreamSchedule
     use SerializesModels;
 
     /**
-     * @param ScheduleSegment[] $segments
-     * @param string            $broadcasterId
-     * @param string            $broadcasterName
-     * @param string            $broadcasterLogin
-     * @param array             $vacation
-     * @param array|null        $pagination
+     * @param ScheduleSegment[] $segments         A list that contains the single broadcast segment that you added.
+     * @param string            $broadcasterId    The ID of the broadcaster that owns the broadcast schedule.
+     * @param string            $broadcasterName  The broadcaster’s display name.
+     * @param string            $broadcasterLogin The broadcaster’s login name.
+     * @param Vacation|null     $vacation         The dates when the broadcaster is on vacation and not streaming. Is set to null if
+     *                                            vacation mode is not enabled.
      */
     public function __construct(
         private array $segments,
         private string $broadcasterId,
         private string $broadcasterName,
         private string $broadcasterLogin,
-        private array $vacation,
-        private ?array $pagination = null
+        private ?Vacation $vacation = null,
     ) {
     }
 
@@ -48,13 +47,8 @@ final readonly class ChannelStreamSchedule
         return $this->broadcasterLogin;
     }
 
-    public function getVacation(): array
+    public function getVacation(): ?Vacation
     {
         return $this->vacation;
-    }
-
-    public function getPagination(): ?array
-    {
-        return $this->pagination;
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
+use CuyZ\Valinor\Mapper\MappingError;
 use DateTime;
 use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
@@ -25,35 +26,37 @@ class ScheduleApi extends AbstractApi
      * Authorization:
      * Requires an app access token or user access token.
      *
-     * @param string                    $broadcasterId The ID of the broadcaster that owns the streaming schedule you
+     * @param string               $broadcasterId      The ID of the broadcaster that owns the streaming schedule you
      *                                                 want to get.
-     * @param string|null               $id            The ID of the scheduled segment to return. To specify more than
+     * @param AccessTokenInterface $accessToken
+     *
+     * @param string|null          $id                 The ID of the scheduled segment to return. To specify more than
      *                                                 one segment, include the ID of each segment you want to get. For
      *                                                 example, id=1234&id=5678. You may specify a maximum of 100 IDs.
-     * @param DateTime|null             $starTime      The UTC date and time that identifies when in the broadcaster’s
+     * @param DateTime|null        $starTime           The UTC date and time that identifies when in the broadcaster’s
      *                                                 schedule to start returning segments. If not specified, the
      *                                                 request returns segments starting after the current UTC date and
      *                                                 time. Specify the date and time in RFC3339 format (for example,
      *                                                 2022-09-01T00:00:00Z).
-     * @param string|null               $utcOffset     Not supported.
-     * @param int                       $first         The maximum number of items to return per page in the response.
+     * @param string|null          $utcOffset          Not supported.
+     * @param int                  $first              The maximum number of items to return per page in the response.
      *                                                 The minimum page size is 1 item per page and the maximum is 25
      *                                                 items per page. The default is 20.
-     * @param string|null               $after         The cursor used to get the next page of results. The Pagination
+     * @param string|null          $after              The cursor used to get the next page of results. The Pagination
      *                                                 object in the response contains the cursor’s value.
-     * @param AccessTokenInterface|null $accessToken
      *
-     * @return TwitchPaginatedDataResponse<ChannelStreamSchedule[]>
+     * @return TwitchPaginatedDataResponse<ChannelStreamSchedule>
      * @throws JsonException
+     * @throws MappingError
      */
     public function getChannelStreamSchedule(
         string $broadcasterId,
+        AccessTokenInterface $accessToken,
         string $id = null,
         DateTime $starTime = null,
         string $utcOffset = null,
         int $first = 20,
         string $after = null,
-        AccessTokenInterface $accessToken = null
     ): TwitchPaginatedDataResponse {
         return $this->sendRequest(
             path: self::BASE_PATH,
@@ -65,7 +68,7 @@ class ScheduleApi extends AbstractApi
                 'first' => $first,
                 'after' => $after,
             ],
-            type: sprintf('%s<%s[]>', TwitchPaginatedDataResponse::class, ChannelStreamSchedule::class),
+            type: sprintf('%s<%s>', TwitchPaginatedDataResponse::class, ChannelStreamSchedule::class),
             accessToken: $accessToken
         );
     }
@@ -78,11 +81,10 @@ class ScheduleApi extends AbstractApi
      *
      * @param string $broadcasterId The ID of the broadcaster that owns the streaming schedule you want to get.
      *
-     * @TODO: This might not work. The response from this request is an unstructured text/html mimetype
      * @return TwitchResponseInterface
      * @throws JsonException
      */
-    public function getChanelICalendar(
+    public function getChannelICalendar(
         string $broadcasterId
     ): TwitchResponseInterface {
         return $this->sendRequest(
@@ -90,7 +92,7 @@ class ScheduleApi extends AbstractApi
             query: [
                 'broadcaster_id' => $broadcasterId,
             ],
-            type: 'string',
+            type: sprintf('%s<string>', TwitchDataResponse::class),
         );
     }
 
@@ -168,7 +170,7 @@ class ScheduleApi extends AbstractApi
             query: [
                 'broadcaster_id' => $broadcasterId,
             ],
-            type: sprintf('%s<%s[]>', TwitchDataResponse::class, ChannelStreamSchedule::class),
+            type: sprintf('%s<%s>', TwitchDataResponse::class, ChannelStreamSchedule::class),
             method: 'POST',
             body: $body,
             accessToken: $accessToken

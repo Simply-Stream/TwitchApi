@@ -24,6 +24,7 @@ use SimplyStream\TwitchApi\Helix\Models\AbstractModel;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Subscription;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Subscriptions\Subscriptions;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Transport;
+use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
 use SimplyStream\TwitchApi\Helix\Models\TwitchResponseInterface;
 use Stringable;
 
@@ -116,6 +117,11 @@ class ApiClient implements ApiClientInterface
 
         if ($response->getStatusCode() === 204) {
             return null;
+        }
+
+        // @TODO: For now, this is ok, but might be changed in the future. Or maybe completely discarded
+        if ($response->getHeader('Content-Type')[0] === 'text/calendar') {
+            return new TwitchDataResponse($responseContent);
         }
 
         try {
