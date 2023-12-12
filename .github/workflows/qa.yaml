@@ -42,6 +42,11 @@ jobs:
       - name: Check for PHP codestyle compliance
         run: vendor/bin/php-cs-fixer check --allow-risky=yes
 
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
       - name: Stop and remove Docker container
         if: always()
         run: docker stop twitch-mock-api && docker rm twitch-mock-api
