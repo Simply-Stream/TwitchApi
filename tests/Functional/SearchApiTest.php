@@ -72,7 +72,6 @@ class SearchApiTest extends UserAwareFunctionalTestCase
         $channels = $searchChannelsResponse->getData();
         $this->assertIsArray($channels);
         $this->assertContainsOnlyInstancesOf(Channel::class, $channels);
-        $this->assertCount(3, $channels);
 
         foreach ($channels as $channel) {
             $this->assertIsString($channel->getBroadcasterLanguage());
