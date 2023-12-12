@@ -157,7 +157,7 @@ class ScheduleApi extends AbstractApi
      * @param CreateChannelStreamScheduleSegmentRequest $body
      * @param AccessTokenInterface                      $accessToken
      *
-     * @return TwitchDataResponse<ChannelStreamSchedule[]>
+     * @return TwitchDataResponse<ChannelStreamSchedule>
      * @throws JsonException
      */
     public function createChannelStreamScheduleSegment(
@@ -193,7 +193,7 @@ class ScheduleApi extends AbstractApi
      * @param UpdateChannelStreamScheduleSegmentRequest $body
      * @param AccessTokenInterface                      $accessToken
      *
-     * @return TwitchDataResponse<ChannelStreamSchedule[]>
+     * @return TwitchDataResponse<ChannelStreamSchedule>
      * @throws JsonException
      */
     public function updateChannelStreamScheduleSegment(
@@ -208,7 +208,7 @@ class ScheduleApi extends AbstractApi
                 'broadcaster_id' => $broadcasterId,
                 'id' => $id,
             ],
-            type: sprintf('%s<%s[]>', TwitchDataResponse::class, ChannelStreamSchedule::class),
+            type: sprintf('%s<%s>', TwitchDataResponse::class, ChannelStreamSchedule::class),
             method: 'PATCH',
             body: $body,
             accessToken: $accessToken
