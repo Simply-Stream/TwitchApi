@@ -1,6 +1,6 @@
 # Twitch API (by Simply-Stream.com)
 
-[![QA](https://github.com/Simply-Stream/TwitchApi/actions/workflows/qa.yaml/badge.svg?branch=main)](https://github.com/Simply-Stream/TwitchApi/actions/workflows/qa.yaml)
+[![QA](https://github.com/Simply-Stream/TwitchApi/actions/workflows/qa.yaml/badge.svg?branch=main)](https://github.com/Simply-Stream/TwitchApi/actions/workflows/qa.yaml) [![codecov](https://codecov.io/gh/Simply-Stream/TwitchApi/graph/badge.svg?token=HT6IUJKM97)](https://codecov.io/gh/Simply-Stream/TwitchApi)
 
 -------------------------------
 
