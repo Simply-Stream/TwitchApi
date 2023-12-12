@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
+use CuyZ\Valinor\Mapper\MappingError;
 use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
@@ -25,22 +26,24 @@ class VideosApi extends AbstractApi
      * Authentication:
      * Requires an app access token or user access token.
      *
-     * @param string                    $id       A list of IDs that identify the videos you want to get. To get more
+     * @param AccessTokenInterface $accessToken
+     *
+     * @param string[]             $id            A list of IDs that identify the videos you want to get. To get more
      *                                            than one video, include this parameter for each video you want to
      *                                            get. For example, id=1234&id=5678. You may specify a maximum of 100
      *                                            IDs. The endpoint ignores duplicate IDs and IDs that weren’t found
      *                                            (if there’s at least one valid ID).
      *
      *                                            The id, user_id, and game_id parameters are mutually exclusive.
-     * @param string                    $userId   The ID of the user whose list of videos you want to get.
+     * @param string|null          $userId        The ID of the user whose list of videos you want to get.
      *
      *                                            The id, user_id, and game_id parameters are mutually exclusive.
-     * @param string                    $gameId   A category or game ID. The response contains a maximum of 500 videos
+     * @param string|null          $gameId        A category or game ID. The response contains a maximum of 500 videos
      *                                            that show this content. To get category/game IDs, use the Search
      *                                            Categories endpoint.
      *
      *                                            The id, user_id, and game_id parameters are mutually exclusive.
-     * @param string|null               $language A filter used to filter the list of videos by the language that the
+     * @param string|null          $language      A filter used to filter the list of videos by the language that the
      *                                            video owner broadcasts in. For example, to get videos that were
      *                                            broadcast in German, set this parameter to the ISO 639-1 two-letter
      *                                            code for German (i.e., DE). For a list of supported languages, see
@@ -49,7 +52,7 @@ class VideosApi extends AbstractApi
      *
      *                                            Specify this parameter only if you specify the game_id query
      *                                            parameter.
-     * @param string                    $period   A filter used to filter the list of videos by when they were
+     * @param string               $period        A filter used to filter the list of videos by when they were
      *                                            published. For example, videos published in the last week. Possible
      *                                            values are:
      *                                            - all
@@ -60,7 +63,7 @@ class VideosApi extends AbstractApi
      *
      *                                            Specify this parameter only if you specify the game_id or user_id
      *                                            query parameter.
-     * @param string                    $sort     The order to sort the returned videos in. Possible values are:
+     * @param string               $sort          The order to sort the returned videos in. Possible values are:
      *                                            - time — Sort the results in descending order by when they were
      *                                            created (i.e., latest video first).
      *                                            - trending — Sort the results in descending order by biggest gains in
@@ -70,7 +73,7 @@ class VideosApi extends AbstractApi
      *
      *                                            Specify this parameter only if you specify the game_id or user_id
      *                                            query parameter.
-     * @param string                    $type     A filter used to filter the list of videos by the video’s type.
+     * @param string               $type          A filter used to filter the list of videos by the video’s type.
      *                                            Possible case-sensitive values are:
      *                                            - all
      *                                            - archive — On-demand videos (VODs) of past streams.
@@ -80,31 +83,32 @@ class VideosApi extends AbstractApi
      *
      *                                            Specify this parameter only if you specify the game_id or user_id
      *                                            query parameter.
-     * @param int                       $first    The maximum number of items to return per page in the response. The
+     * @param int                  $first         The maximum number of items to return per page in the response. The
      *                                            minimum page size is
      *                                            1 item per page and the maximum is 100. The default is 20.
      *
      *                                            Specify this parameter only if you specify the game_id or user_id
      *                                            query parameter.
-     * @param string|null               $after    The cursor used to get the next page of results. The Pagination
+     * @param string|null          $after         The cursor used to get the next page of results. The Pagination
      *                                            object in the response contains the cursor’s value.
      *
      *                                            Specify this parameter only if you specify the user_id query
      *                                            parameter.
-     * @param string|null               $before   The cursor used to get the previous page of results. The Pagination
+     * @param string|null          $before        The cursor used to get the previous page of results. The Pagination
      *                                            object in the response contains the cursor’s value.
      *
      *                                            Specify this parameter only if you specify the user_id query
      *                                            parameter.
-     * @param AccessTokenInterface|null $accessToken
      *
      * @return TwitchPaginatedDataResponse<Video[]>
      * @throws JsonException
+     * @throws MappingError
      */
     public function getVideos(
-        string $id,
-        string $userId,
-        string $gameId,
+        AccessTokenInterface $accessToken,
+        array $id = null,
+        string $userId = null,
+        string $gameId = null,
         string $language = null,
         string $period = 'all',
         string $sort = 'time',
@@ -112,7 +116,6 @@ class VideosApi extends AbstractApi
         int $first = 20,
         string $after = null,
         string $before = null,
-        AccessTokenInterface $accessToken = null
     ): TwitchPaginatedDataResponse {
         return $this->sendRequest(
             path: self::BASE_PATH,

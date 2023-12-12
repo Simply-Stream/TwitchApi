@@ -8,11 +8,13 @@ use CuyZ\Valinor\Mapper\MappingError;
 use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApi\Helix\Models\Streams\CreateStreamMarkerRequest;
+use SimplyStream\TwitchApi\Helix\Models\Streams\Marker;
 use SimplyStream\TwitchApi\Helix\Models\Streams\Stream;
 use SimplyStream\TwitchApi\Helix\Models\Streams\StreamKey;
 use SimplyStream\TwitchApi\Helix\Models\Streams\StreamMarker;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
 use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
+use Webmozart\Assert\Assert;
 
 class StreamsApi extends AbstractApi
 {
@@ -53,26 +55,28 @@ class StreamsApi extends AbstractApi
      * Authentication:
      * Requires an app access token or user access token.
      *
-     * @param array|null                $userId    A user ID used to filter the list of streams. Returns only the
+     * @param AccessTokenInterface $accessToken
+     *
+     * @param array                $userId         A user ID used to filter the list of streams. Returns only the
      *                                             streams of those users that are broadcasting. You may specify a
      *                                             maximum of 100 IDs. To specify multiple IDs, include the user_id
      *                                             parameter for each user. For example, &user_id=1234&user_id=5678.
-     * @param array|null                $userLogin A user login name used to filter the list of streams. Returns only
+     * @param array                $userLogin      A user login name used to filter the list of streams. Returns only
      *                                             the streams of those users that are broadcasting. You may specify a
      *                                             maximum of 100 login names. To specify multiple names, include the
      *                                             user_login parameter for each user. For example,
      *                                             &user_login=foo&user_login=bar.
-     * @param string|null               $gameId    A game (category) ID used to filter the list of streams. Returns
+     * @param string|null          $gameId         A game (category) ID used to filter the list of streams. Returns
      *                                             only the streams that are broadcasting the game (category). You may
      *                                             specify a maximum of 100 IDs. To specify multiple IDs, include the
      *                                             game_id parameter for each game. For example,
      *                                             &game_id=9876&game_id=5432.
-     * @param string                    $type      The type of stream to filter the list of streams by. Possible values
+     * @param string               $type           The type of stream to filter the list of streams by. Possible values
      *                                             are:
      *                                             - all
      *                                             - live
      *                                             The default is all.
-     * @param string|null               $language  A language code used to filter the list of streams. Returns only
+     * @param string|null          $language       A language code used to filter the list of streams. Returns only
      *                                             streams that broadcast in the specified language. Specify the
      *                                             language using an ISO 639-1 two-letter language code or other if the
      *                                             broadcast uses a language not in the list of supported stream
@@ -81,21 +85,21 @@ class StreamsApi extends AbstractApi
      *                                             You may specify a maximum of 100 language codes. To specify multiple
      *                                             languages, include the language parameter for each language. For
      *                                             example, &language=de&language=fr.
-     * @param int                       $first     The maximum number of items to return per page in the response. The
+     * @param int                  $first          The maximum number of items to return per page in the response. The
      *                                             minimum page size is
      *                                             1 item per page and the maximum is 100 items per page. The default
      *                                             is 20.
-     * @param string|null               $before    The cursor used to get the previous page of results. The Pagination
+     * @param string|null          $before         The cursor used to get the previous page of results. The Pagination
      *                                             object in the response contains the cursor’s value.
-     * @param string|null               $after     The cursor used to get the next page of results. The Pagination
+     * @param string|null          $after          The cursor used to get the next page of results. The Pagination
      *                                             object in the response contains the cursor’s value.
-     * @param AccessTokenInterface|null $accessToken
      *
      * @return TwitchPaginatedDataResponse<Stream[]>
-     * @throws MappingError
      * @throws JsonException
+     * @throws MappingError
      */
     public function getStreams(
+        AccessTokenInterface $accessToken,
         array $userId = [],
         array $userLogin = [],
         string $gameId = null,
@@ -104,7 +108,6 @@ class StreamsApi extends AbstractApi
         int $first = 20,
         string $before = null,
         string $after = null,
-        AccessTokenInterface $accessToken = null
     ): TwitchPaginatedDataResponse {
         return $this->sendRequest(
             path: self::BASE_PATH,
@@ -177,7 +180,7 @@ class StreamsApi extends AbstractApi
      * @param CreateStreamMarkerRequest $body
      * @param AccessTokenInterface      $accessToken
      *
-     * @return TwitchDataResponse<StreamMarker[]>
+     * @return TwitchDataResponse<Marker[]>
      * @throws JsonException
      */
     public function createStreamMarker(
@@ -186,7 +189,7 @@ class StreamsApi extends AbstractApi
     ): TwitchDataResponse {
         return $this->sendRequest(
             path: self::BASE_PATH . '/markers',
-            type: sprintf('%s<%s[]>', TwitchDataResponse::class, StreamMarker::class),
+            type: sprintf('%s<%s[]>', TwitchDataResponse::class, Marker::class),
             method: 'POST',
             body: $body,
             accessToken: $accessToken
@@ -201,18 +204,18 @@ class StreamsApi extends AbstractApi
      * Authentication:
      * Requires a user access token that includes the user:read:broadcast scope.
      *
-     * @param string               $userId  A user ID. The request returns the markers from this user’s most recent
+     * @param AccessTokenInterface $accessToken
+     * @param string|null          $userId  A user ID. The request returns the markers from this user’s most recent
      *                                      video. This ID must match the user ID in the access token or the user in
      *                                      the access token must be one of the broadcaster’s editors.
      *
      *                                      This parameter and the video_id query parameter are mutually exclusive.
-     * @param string               $videoId A video on demand (VOD)/video ID. The request returns the markers from this
+     * @param string|null          $videoId A video on demand (VOD)/video ID. The request returns the markers from this
      *                                      VOD/video. The user in the access token must own the video or the user must
      *                                      be one of the broadcaster’s editors.
      *
      *                                      This parameter and the user_id query parameter are mutually exclusive.
-     * @param AccessTokenInterface $accessToken
-     * @param int                  $first   The maximum number of items to return per page in the response. The minimum
+     * @param int|null             $first   The maximum number of items to return per page in the response. The minimum
      *                                      page size is 1 item per page and the maximum is 100 items per page. The
      *                                      default is 20.
      * @param string|null          $before  The cursor used to get the previous page of results. The Pagination object
@@ -224,13 +227,20 @@ class StreamsApi extends AbstractApi
      * @throws JsonException
      */
     public function getStreamMarkers(
-        string $userId,
-        string $videoId,
         AccessTokenInterface $accessToken,
-        int $first = 20,
-        string $before = null,
-        string $after = null
+        ?string $userId = null,
+        ?string $videoId = null,
+        ?int $first = 20,
+        ?string $before = null,
+        ?string $after = null
     ): TwitchPaginatedDataResponse {
+        // At least one of userId or videoId has to be defined
+        if (null !== $userId) {
+            Assert::notEmpty($videoId);
+        } elseif (null !== $videoId) {
+            Assert::notEmpty($userId);
+        }
+
         return $this->sendRequest(
             path: self::BASE_PATH . '/markers',
             query: [

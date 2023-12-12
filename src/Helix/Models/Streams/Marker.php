@@ -19,12 +19,14 @@ final readonly class Marker
      *                                            the stream.
      * @param string            $description      A description that the user gave the marker to help them remember why
      *                                            they marked the location.
+     * @param string|null       $url              A URL that opens the video in Twitch Highlighter.
      */
     public function __construct(
         private string $id,
         private DateTimeImmutable $createdAt,
         private int $positionSeconds,
-        private string $description
+        private string $description,
+        private ?string $url = null
     ) {
     }
 
@@ -46,5 +48,10 @@ final readonly class Marker
     public function getDescription(): string
     {
         return $this->description;
+    }
+
+    public function getUrl(): ?string
+    {
+        return $this->url;
     }
 }
