@@ -62,7 +62,7 @@ class PollsApiTest extends UserAwareFunctionalTestCase
                 $this->assertIsString($choice->getId());
                 $this->assertNotEmpty($choice->getId());
 
-                $this->assertSame('Choice ' . $index + 1, $choice->getTitle());
+                $this->assertSame('Choice ' . ($index + 1), $choice->getTitle());
                 $this->assertGreaterThan(0, $choice->getVotes());
                 $this->assertGreaterThanOrEqual(0, $choice->getChannelPointsVotes());
                 $this->assertSame(0, $choice->getBitsVotes());

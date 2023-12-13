@@ -169,8 +169,7 @@ class EventSubService
             throw $mappingError;
         }
 
-        if ($eventResponse->getSubscription()->getStatus(
-        ) === self::WEBHOOK_CALLBACK_VERIFICATION_PENDING && !$eventResponse->getChallenge()) {
+        if ($eventResponse->getSubscription()->getStatus() === self::WEBHOOK_CALLBACK_VERIFICATION_PENDING && !$eventResponse->getChallenge()) {
             throw new ChallengeMissingException('Challenge is missing');
         }
 

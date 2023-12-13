@@ -8,8 +8,8 @@ use SimplyStream\TwitchApi\Helix\Models\EventSub\Events\EventInterface;
 use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 /**
- * @template Tsubscription
- * @template Tevent
+ * @template Tsubscription of Subscription
+ * @template Tevent of EventInterface
  */
 final readonly class EventResponse
 {

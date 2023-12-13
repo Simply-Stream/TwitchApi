@@ -182,8 +182,8 @@ class ExtensionsApi extends AbstractApi
      *      }
      * }
      *
-     * @param array  $body
-     * @param string $jwt
+     * @param SendExtensionPubSubMessageRequest $body
+     * @param string                            $jwt
      *
      * @return void
      * @throws JsonException
@@ -320,9 +320,9 @@ class ExtensionsApi extends AbstractApi
      * see Signing the JWT. The signed JWT must include the role and user_id fields (see JWT Schema). The role field
      * must be set to external.
      *
-     * @param string $broadcasterId The ID of the broadcaster that has activated the extension.
-     * @param string $jwt
-     * @param array  $body
+     * @param string                          $broadcasterId The ID of the broadcaster that has activated the extension.
+     * @param string                          $jwt
+     * @param SendExtensionChatMessageRequest $body
      *
      * @return void
      * @throws JsonException

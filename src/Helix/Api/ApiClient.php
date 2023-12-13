@@ -16,6 +16,7 @@ use League\OAuth2\Client\Token\AccessTokenInterface;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\UriFactoryInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerTrait;
@@ -39,15 +40,15 @@ class ApiClient implements ApiClientInterface
     protected string $baseUrl = 'https://api.twitch.tv/helix/';
 
     /**
-     * @param ClientInterface         $client
-     * @param RequestFactoryInterface $requestFactory
-     * @param MapperBuilder           $mapperBuilder
-     * @param UriFactoryInterface     $uriFactory
-     * @param array|null              $options
+     * @param ClientInterface                                $client
+     * @param RequestFactoryInterface&StreamFactoryInterface $requestFactory
+     * @param MapperBuilder                                  $mapperBuilder
+     * @param UriFactoryInterface                            $uriFactory
+     * @param array|null                                     $options
      */
     public function __construct(
         protected ClientInterface $client,
-        protected RequestFactoryInterface $requestFactory,
+        protected RequestFactoryInterface&StreamFactoryInterface $requestFactory,
         protected MapperBuilder $mapperBuilder,
         protected UriFactoryInterface $uriFactory,
         protected ?array $options = null
@@ -126,6 +127,7 @@ class ApiClient implements ApiClientInterface
 
         try {
             $source = Source::json($responseContent);
+
             return $this->mapperBuilder
                 ->registerConstructor(fn (string $time): DateTimeImmutable => new DateTimeImmutable($time))
                 ->registerConstructor(

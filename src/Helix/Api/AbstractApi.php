@@ -11,7 +11,7 @@ use SimplyStream\TwitchApi\Helix\Models\AbstractModel;
 use SimplyStream\TwitchApi\Helix\Models\TwitchResponseInterface;
 
 /**
- * @template T
+ * @template T of TwitchResponseInterface
  */
 abstract class AbstractApi
 {
