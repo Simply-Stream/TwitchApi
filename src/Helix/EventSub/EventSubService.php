@@ -198,10 +198,10 @@ class EventSubService
         }
 
         $signature = 'sha256=' . hash_hmac(
-                'sha256',
-                $messageId . $timestamp . $content,
-                $secret ?? $this->options['webhook']['secret']
-            );
+            'sha256',
+            $messageId . $timestamp . $content,
+            $secret ?? $this->options['webhook']['secret']
+        );
 
         if ($signature !== $receivedSignature) {
             throw new InvalidSignatureException(
