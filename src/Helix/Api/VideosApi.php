@@ -150,7 +150,7 @@ class VideosApi extends AbstractApi
      *                                 none of the videos are deleted.
      * @param AccessTokenInterface $accessToken
      *
-     * @return TwitchDataResponse<Video[]>
+     * @return TwitchDataResponse<string[]>
      * @throws JsonException
      */
     public function deleteVideos(
@@ -162,7 +162,7 @@ class VideosApi extends AbstractApi
             query: [
                 'id' => $id,
             ],
-            type: sprintf('%s<%s[]>', TwitchDataResponse::class, Video::class),
+            type: sprintf('%s<%s[]>', TwitchDataResponse::class, 'string'),
             method: 'DELETE',
             accessToken: $accessToken
         );

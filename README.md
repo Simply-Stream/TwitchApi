@@ -62,8 +62,8 @@ composer req simplystream/twitch-api
 | SubscriptionsApi         | ✅           | ❗      |
 | TeamsApi                 | ✅           | ✅      |
 | UsersApi                 | ✅           | ℹ️     |
-| VideosApi                | ✅           | ❌      |
-| WhispersApi              | ✅           | ❌      |
+| VideosApi                | ✅           | ℹ️     |
+| WhispersApi              | ✅           | ✅      |
 
 ❗ = Tests can't be implemented due to lack of mock-api-data. Mapping should work on Twitch prod systems
 ️️ℹ️ = Some tests are available, some are missing due to lack of mock-api data. Mapping should work on Twitch prod
