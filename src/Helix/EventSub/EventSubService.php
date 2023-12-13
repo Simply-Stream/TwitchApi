@@ -84,15 +84,15 @@ class EventSubService
     /**
      * Create a subscription on EventSub API
      *
-     * @template T
+     * @template T of Subscription
      *
-     * @param Subscription              $subscription
-     * @param AccessTokenInterface|null $accessToken
+     * @param T                    $subscription
+     * @param AccessTokenInterface $accessToken
      *
-     * @return EventSubResponse<T>
+     * @return EventSubResponse<T[]>
      * @throws JsonException
      */
-    public function subscribe(Subscription $subscription, AccessTokenInterface $accessToken = null): EventSubResponse
+    public function subscribe(Subscription $subscription, AccessTokenInterface $accessToken): EventSubResponse
     {
         try {
             $response = $this->eventSubApi->createEventSubSubscription($subscription, $accessToken);

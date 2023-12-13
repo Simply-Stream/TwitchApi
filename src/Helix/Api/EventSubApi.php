@@ -31,16 +31,18 @@ class EventSubApi extends AbstractApi
      * required scope. However, if the subscription type doesn’t include user authorization, the token may include any
      * scopes or no scopes.
      *
-     * @param Subscription              $subscription
-     * @param AccessTokenInterface|null $accessToken
+     * @template T of Subscription
      *
-     * @return EventSubResponse<Subscription[]>
+     * @param T                    $subscription
+     * @param AccessTokenInterface $accessToken
+     *
+     * @return EventSubResponse<T[]>
      * @throws MappingError
      * @throws JsonException
      */
     public function createEventSubSubscription(
         Subscription $subscription,
-        AccessTokenInterface $accessToken = null
+        AccessTokenInterface $accessToken
     ): EventSubResponse {
         return $this->sendRequest(
             path: self::BASE_PATH . '/subscriptions',

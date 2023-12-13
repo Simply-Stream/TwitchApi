@@ -56,7 +56,7 @@ final readonly class ModifyChannelInformationRequest extends AbstractModel
             Assert::stringNotEmpty($title);
         }
 
-        Assert::maxLength($this->delay, 900, 'The maximum delay is 900 seconds');
+        Assert::lessThanEq($this->delay, 900, 'The maximum delay is 900 seconds');
 
         if (null !== $this->tags && count($this->tags) > 0) {
             Assert::allString($this->tags, 'Tags need to be strings');

@@ -21,12 +21,12 @@ final readonly class StartCommercialRequest extends AbstractModel
         private int $length
     ) {
         Assert::stringNotEmpty($this->broadcasterId, 'Broadcaster ID can\'t be empty');
-        Assert::minLength(
+        Assert::greaterThanEq(
             $this->length,
             1,
             sprintf('A commercial should at least be 1 second long. Got "%s"', $this->length)
         );
-        Assert::maxLength(
+        Assert::lessThanEq(
             $this->length,
             180,
             sprintf('The maximum length you should request is 180 seconds. Got "%s"', $this->length)

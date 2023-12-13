@@ -175,9 +175,9 @@ class ApiClient implements ApiClientInterface
      * @param array           $query
      * @param string|int|null $prefix
      *
-     * @return string|null
+     * @return string
      */
-    private function buildQueryString(array $query, string|int|null $prefix = null)
+    private function buildQueryString(array $query, string|int|null $prefix = null): string
     {
         $queryString = '';
 

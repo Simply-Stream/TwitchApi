@@ -31,7 +31,7 @@ final readonly class SendExtensionPubSubMessageRequest extends AbstractModel
         private bool $isGlobalBroadcast = false,
         private ?string $broadcasterId = null,
     ) {
-        Assert::allIsInstanceOf($this->target, 'string', 'Target can only be an array of strings');
+        Assert::allString($this->target, 'Target can only be an array of strings');
 
         if ($this->isGlobalBroadcast) {
             Assert::null(

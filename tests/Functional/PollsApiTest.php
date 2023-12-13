@@ -117,32 +117,34 @@ class PollsApiTest extends UserAwareFunctionalTestCase
         $this->assertNotEmpty($createPollResponse->getData());
         $this->assertContainsOnlyInstancesOf(Poll::class, $createPollResponse->getData());
 
-        foreach ($createPollResponse as $poll) {
-            $this->assertNotEmpty($poll->getData()->getId());
-            $this->assertIsString($poll->getData()->getId());
-            $this->assertSame($testUser['id'], $poll->getData()->getBroadcasterId());
-            $this->assertSame($testUser['display_name'], $poll->getData()->getBroadcasterName());
-            $this->assertSame($testUser['login'], $poll->getData()->getBroadcasterLogin());
-            $this->assertSame('New Poll', $poll->getData()->getTitle());
-            $this->assertIsArray($poll->getData()->getChoices());
-            $this->assertContainsOnlyInstancesOf(Choice::class, $poll->getData()->getChoices());
-            $this->assertCount(2, $poll->getData()->getChoices());
-            foreach ($poll->getData()->getChoices() as $index => $choice) {
+        foreach ($createPollResponse->getData() as $poll) {
+            $this->assertNotEmpty($poll->getId());
+            $this->assertIsString($poll->getId());
+            $this->assertSame($testUser['id'], $poll->getBroadcasterId());
+            $this->assertSame($testUser['display_name'], $poll->getBroadcasterName());
+            $this->assertSame($testUser['login'], $poll->getBroadcasterLogin());
+            $this->assertSame('New Poll', $poll->getTitle());
+            $this->assertIsArray($poll->getChoices());
+            $this->assertContainsOnlyInstancesOf(Choice::class, $poll->getChoices());
+            $this->assertCount(2, $poll->getChoices());
+
+            foreach ($poll->getChoices() as $index => $choice) {
                 $this->assertIsString($choice->getId());
                 $this->assertNotEmpty($choice->getId());
                 $this->assertSame('Choice ' . ($index + 1), $choice->getTitle());
-                $this->assertNull($choice->getVotes());
-                $this->assertNull($choice->getChannelPointsVotes());
-                $this->assertNull($choice->getBitsVotes());
+                $this->assertSame(0, $choice->getVotes());
+                $this->assertSame(0, $choice->getChannelPointsVotes());
+                $this->assertSame(0, $choice->getBitsVotes());
             }
-            $this->assertFalse($poll->getData()->isBitsVotingEnabled());
-            $this->assertSame(0, $poll->getData()->getBitsPerVote());
-            $this->assertFalse($poll->getData()->isChannelPointsVotingEnabled());
-            $this->assertSame(0, $poll->getData()->getChannelPointsPerVote());
-            $this->assertSame('ACTIVE', $poll->getData()->getStatus());
-            $this->assertGreaterThanOrEqual(300, $poll->getData()->getDuration());
-            $this->assertInstanceOf(\DateTimeImmutable::class, $poll->getData()->getStartedAt());
-            $this->assertNull($poll->getData()->getEndedAt());
+
+            $this->assertFalse($poll->isBitsVotingEnabled());
+            $this->assertSame(0, $poll->getBitsPerVote());
+            $this->assertFalse($poll->isChannelPointsVotingEnabled());
+            $this->assertSame(0, $poll->getChannelPointsPerVote());
+            $this->assertSame('ACTIVE', $poll->getStatus());
+            $this->assertGreaterThanOrEqual(300, $poll->getDuration());
+            $this->assertInstanceOf(\DateTimeImmutable::class, $poll->getStartedAt());
+            $this->assertNull($poll->getEndedAt());
         }
     }
 
@@ -179,32 +181,35 @@ class PollsApiTest extends UserAwareFunctionalTestCase
         $this->assertNotEmpty($endPollResponse->getData());
         $this->assertContainsOnlyInstancesOf(Poll::class, $endPollResponse->getData());
 
-        foreach ($endPollResponse as $poll) {
-            $this->assertNotEmpty($poll->getData()->getId());
-            $this->assertIsString($poll->getData()->getId());
-            $this->assertSame($testUser['id'], $poll->getData()->getBroadcasterId());
-            $this->assertSame($testUser['display_name'], $poll->getData()->getBroadcasterName());
-            $this->assertSame($testUser['login'], $poll->getData()->getBroadcasterLogin());
-            $this->assertSame('New Poll', $poll->getData()->getTitle());
-            $this->assertIsArray($poll->getData()->getChoices());
-            $this->assertContainsOnlyInstancesOf(Choice::class, $poll->getData()->getChoices());
-            $this->assertCount(2, $poll->getData()->getChoices());
-            foreach ($poll->getData()->getChoices() as $index => $choice) {
+        foreach ($endPollResponse->getData() as $poll) {
+            $this->assertNotEmpty($poll->getId());
+            $this->assertIsString($poll->getId());
+            $this->assertSame($testUser['id'], $poll->getBroadcasterId());
+            $this->assertSame($testUser['display_name'], $poll->getBroadcasterName());
+            $this->assertSame($testUser['login'], $poll->getBroadcasterLogin());
+            $this->assertIsString($poll->getTitle());
+            $this->assertNotEmpty($poll->getTitle());
+            $this->assertIsArray($poll->getChoices());
+            $this->assertContainsOnlyInstancesOf(Choice::class, $poll->getChoices());
+            $this->assertCount(2, $poll->getChoices());
+
+            foreach ($poll->getChoices() as $index => $choice) {
                 $this->assertIsString($choice->getId());
                 $this->assertNotEmpty($choice->getId());
                 $this->assertSame('Choice ' . ($index + 1), $choice->getTitle());
-                $this->assertNull($choice->getVotes());
-                $this->assertNull($choice->getChannelPointsVotes());
-                $this->assertNull($choice->getBitsVotes());
+                $this->assertIsInt($choice->getVotes());
+                $this->assertIsInt($choice->getChannelPointsVotes());
+                $this->assertSame(0, $choice->getBitsVotes());
             }
-            $this->assertFalse($poll->getData()->isBitsVotingEnabled());
-            $this->assertSame(0, $poll->getData()->getBitsPerVote());
-            $this->assertFalse($poll->getData()->isChannelPointsVotingEnabled());
-            $this->assertSame(0, $poll->getData()->getChannelPointsPerVote());
-            $this->assertSame('ARCHIVED', $poll->getData()->getStatus());
-            $this->assertGreaterThanOrEqual(300, $poll->getData()->getDuration());
-            $this->assertInstanceOf(\DateTimeImmutable::class, $poll->getData()->getStartedAt());
-            $this->assertNull($poll->getData()->getEndedAt());
+
+            $this->assertFalse($poll->isBitsVotingEnabled());
+            $this->assertSame(0, $poll->getBitsPerVote());
+            $this->assertFalse($poll->isChannelPointsVotingEnabled());
+            $this->assertSame(0, $poll->getChannelPointsPerVote());
+            $this->assertSame('ARCHIVED', $poll->getStatus());
+            $this->assertGreaterThanOrEqual(300, $poll->getDuration());
+            $this->assertInstanceOf(\DateTimeImmutable::class, $poll->getStartedAt());
+            $this->assertInstanceOf(\DateTimeImmutable::class, $poll->getEndedAt());
         }
     }
 }
