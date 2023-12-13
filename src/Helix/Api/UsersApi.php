@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
-use CuyZ\Valinor\Mapper\MappingError;
-use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
 use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
@@ -33,26 +31,28 @@ class UsersApi extends AbstractApi
      * To include the user’s verified email address in the response, you must use a user access token that includes the
      * user:read:email scope.
      *
-     * Authentication:
+     * Authorization
      * Requires an app access token or user access token.
      *
-     * @param array                     $ids    The ID of the user to get. To specify more than one user, include the
+     * URL
+     * GET https://api.twitch.tv/helix/users
+     *
+     * @param AccessTokenInterface $accessToken Requires an app access token or user access token.
+     * @param array                $ids         The ID of the user to get. To specify more than one user, include the
      *                                          id parameter for each user to get. For example, id=1234&id=5678. The
      *                                          maximum number of IDs you may specify is
      *                                          100.
-     * @param array                     $logins The login name of the user to get. To specify more than one user,
+     * @param array                $logins      The login name of the user to get. To specify more than one user,
      *                                          include the login parameter for each user to get. For example,
      *                                          login=foo&login=bar. The maximum number of login names you may specify
      *                                          is 100.
-     * @param AccessTokenInterface|null $accessToken
      *
      * @return TwitchDataResponse<User[]>
-     * @throws JsonException
      */
     public function getUsers(
+        AccessTokenInterface $accessToken,
         array $ids = [],
         array $logins = [],
-        AccessTokenInterface $accessToken = null
     ): TwitchDataResponse {
         Assert::greaterThan(count($ids) + count($logins), 0, 'You need to specify at least one "id" or "login"');
         Assert::lessThanEq(
@@ -79,10 +79,13 @@ class UsersApi extends AbstractApi
      * To include the user’s verified email address in the response, the user access token must also include the
      * user:read:email scope.
      *
-     * Authentication:
+     * Authorization
      * Requires a user access token that includes the user:edit scope.
      *
-     * @param AccessTokenInterface $accessToken
+     * URL
+     * PUT https://api.twitch.tv/helix/users
+     *
+     * @param AccessTokenInterface $accessToken Requires a user access token that includes the user:edit scope.
      * @param string|null          $description The string to update the channel’s description to. The description is
      *                                          limited to a maximum of 300 characters.
      *
@@ -91,7 +94,6 @@ class UsersApi extends AbstractApi
      *                                          ?description=).
      *
      * @return TwitchDataResponse<User[]>
-     * @throws JsonException
      */
     public function updateUser(
         AccessTokenInterface $accessToken,
@@ -113,12 +115,16 @@ class UsersApi extends AbstractApi
     /**
      * Gets the list of users that the broadcaster has blocked. Read More
      *
-     * Authentication:
+     * Authorization
      * Requires a user access token that includes the user:read:blocked_users scope.
+     *
+     * URL
+     * GET https://api.twitch.tv/helix/users/blocks
      *
      * @param string               $broadcasterId The ID of the broadcaster whose list of blocked users you want to
      *                                            get.
-     * @param AccessTokenInterface $accessToken
+     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the
+     *                                            user:read:blocked_users scope.
      * @param int                  $first         The maximum number of items to return per page in the response. The
      *                                            minimum page size is
      *                                            1 item per page and the maximum is 100. The default is 20.
@@ -126,8 +132,6 @@ class UsersApi extends AbstractApi
      *                                            object in the response contains the cursor’s value.
      *
      * @return TwitchDataResponse<UserBlock[]>
-     * @throws JsonException
-     * @throws MappingError
      */
     public function getUserBlockList(
         string $broadcasterId,
@@ -153,12 +157,16 @@ class UsersApi extends AbstractApi
      *
      * To learn more about blocking users, see Block Other Users on Twitch.
      *
-     * Authentication:
+     * Authorization
      * Requires a user access token that includes the user:manage:blocked_users scope.
+     *
+     * URL
+     * PUT https://api.twitch.tv/helix/users/blocks
      *
      * @param string               $targetUserId  The ID of the user to block. The API ignores the request if the
      *                                            broadcaster has already blocked the user.
-     * @param AccessTokenInterface $accessToken
+     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the
+     *                                            user:manage:blocked_users scope.
      * @param string|null          $sourceContext The location where the harassment took place that is causing the
      *                                            brodcaster to block the user. Possible values are:
      *                                            - chat
@@ -170,7 +178,6 @@ class UsersApi extends AbstractApi
      *                                            - other
      *
      * @return void
-     * @throws JsonException
      */
     public function blockUser(
         string $targetUserId,
@@ -194,16 +201,19 @@ class UsersApi extends AbstractApi
      * Removes the user from the broadcaster’s list of blocked users. The user ID in the OAuth token identifies the
      * broadcaster who’s removing the block.
      *
-     * Authentication:
+     * Authorization
      * Requires a user access token that includes the user:manage:blocked_users scope.
+     *
+     * URL
+     * DELETE https://api.twitch.tv/helix/users/blocks
      *
      * @param string               $targetUserId The ID of the user to remove from the broadcaster’s list of blocked
      *                                           users. The API ignores the request if the broadcaster hasn’t blocked
      *                                           the user.
-     * @param AccessTokenInterface $accessToken
+     * @param AccessTokenInterface $accessToken  Requires a user access token that includes the
+     *                                           user:manage:blocked_users scope.
      *
      * @return void
-     * @throws JsonException
      */
     public function unblockUser(
         string $targetUserId,
@@ -223,14 +233,18 @@ class UsersApi extends AbstractApi
      * Gets a list of all extensions (both active and inactive) that the broadcaster has installed. The user ID in the
      * access token identifies the broadcaster.
      *
-     * Authentication:
+     * Authorization
      * Requires a user access token that includes the user:read:broadcast or user:edit:broadcast scope. To include
      * inactive extensions, you must include the user:edit:broadcast scope.
      *
-     * @param AccessTokenInterface $accessToken
+     * URL
+     * GET https://api.twitch.tv/helix/users/extensions/list
+     *
+     * @param AccessTokenInterface $accessToken Requires a user access token that includes the user:read:broadcast or
+     *                                          user:edit:broadcast scope. To include inactive extensions, you must
+     *                                          include the user:edit:broadcast scope.
      *
      * @return TwitchDataResponse<UserExtension[]>
-     * @throws JsonException
      */
     public function getUserExtensions(
         AccessTokenInterface $accessToken
@@ -248,23 +262,25 @@ class UsersApi extends AbstractApi
      * NOTE: To include extensions that you have under development, you must specify a user access token that includes
      * the user:read:broadcast or user:edit:broadcast scope.
      *
-     * Authentication:
+     * Authorization
      * Requires an app access token or user access token.
      *
-     * @param string|null               $userId The ID of the broadcaster whose active extensions you want to get.
+     * URL
+     * GET https://api.twitch.tv/helix/users/extensions
      *
-     *                                               This parameter is required if you specify an app access token and
-     *                                               is optional if you specify a user access token. If you specify a
-     *                                               user access token and don’t specify this parameter, the API uses
-     *                                               the user ID from the access token.
-     * @param AccessTokenInterface|null $accessToken
+     * @param AccessTokenInterface $accessToken Requires an app access token or user access token.
+     * @param string|null          $userId      The ID of the broadcaster whose active extensions you want to get.
+     *
+     *                                          This parameter is required if you specify an app access token and
+     *                                          is optional if you specify a user access token. If you specify a
+     *                                          user access token and don’t specify this parameter, the API uses
+     *                                          the user ID from the access token.
      *
      * @return TwitchDataResponse<UserActiveExtension[]>
-     * @throws JsonException
      */
     public function getUserActiveExtensions(
+        AccessTokenInterface $accessToken,
         string $userId = null,
-        AccessTokenInterface $accessToken = null
     ): TwitchDataResponse {
         return $this->sendRequest(
             path: self::BASE_PATH . '/extensions',
@@ -283,14 +299,17 @@ class UsersApi extends AbstractApi
      * NOTE: If you try to activate an extension under multiple extension types, the last write wins (and there is no
      * guarantee of write order).
      *
-     * Authentication:
+     * Authorization
      * Requires a user access token that includes the user:edit:broadcast scope.
      *
+     * URL
+     * PUT https://api.twitch.tv/helix/users/extensions
+     *
      * @param UpdateUserExtension  $body
-     * @param AccessTokenInterface $accessToken
+     * @param AccessTokenInterface $accessToken Requires a user access token that includes the user:edit:broadcast
+     *                                          scope.
      *
      * @return TwitchDataResponse<UserActiveExtension>
-     * @throws JsonException
      */
     public function updateUserExtensions(
         UpdateUserExtension $body,

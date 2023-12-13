@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
-use CuyZ\Valinor\Mapper\MappingError;
-use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApi\Helix\Models\Streams\CreateStreamMarkerRequest;
 use SimplyStream\TwitchApi\Helix\Models\Streams\Marker;
@@ -22,15 +20,18 @@ class StreamsApi extends AbstractApi
     /**
      * Gets the channel’s stream key.
      *
-     * Authentication:
+     * Authorization
      * Requires a user access token that includes the channel:read:stream_key scope.
+     *
+     * URL
+     * https://api.twitch.tv/helix/streams/key
      *
      * @param string               $broadcasterId The ID of the broadcaster that owns the channel. The ID must match
      *                                            the user ID in the access token.
-     * @param AccessTokenInterface $accessToken
+     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the
+     *                                            channel:read:stream_key scope.
      *
      * @return TwitchDataResponse<StreamKey[]>
-     * @throws JsonException
      */
     public function getStreamKey(
         string $broadcasterId,
@@ -47,15 +48,17 @@ class StreamsApi extends AbstractApi
     }
 
     /**
-     * Gets a list of all broadcasters that are streaming. The list is in descending order by the number of viewers
-     * watching the stream. Because viewers come and go during a stream, it’s possible to find duplicate or missing
-     * streams in the list as you page through the results.
+     * Gets a list of all streams. The list is in descending order by the number of viewers watching the stream.
+     * Because viewers come and go during a stream, it’s possible to find duplicate or missing streams in the list as
+     * you page through the results.
      *
-     * Authentication:
+     * Authorization
      * Requires an app access token or user access token.
      *
-     * @param AccessTokenInterface $accessToken
+     * URL
+     * GET https://api.twitch.tv/helix/streams
      *
+     * @param AccessTokenInterface $accessToken    Requires an app access token or user access token.
      * @param array                $userId         A user ID used to filter the list of streams. Returns only the
      *                                             streams of those users that are broadcasting. You may specify a
      *                                             maximum of 100 IDs. To specify multiple IDs, include the user_id
@@ -94,8 +97,6 @@ class StreamsApi extends AbstractApi
      *                                             object in the response contains the cursor’s value.
      *
      * @return TwitchPaginatedDataResponse<Stream[]>
-     * @throws JsonException
-     * @throws MappingError
      */
     public function getStreams(
         AccessTokenInterface $accessToken,
@@ -126,22 +127,24 @@ class StreamsApi extends AbstractApi
     }
 
     /**
-     * Gets a list of live streams of broadcasters that the specified user follows.
+     * Gets the list of broadcasters that the user follows and that are streaming live.
      *
-     * Authentication:
+     * Authorization
      * Requires a user access token that includes the user:read:follows scope.
      *
-     * @param string               $userId The ID of the user whose list of followed streams you want to get. This ID
-     *                                     must match the user ID in the access token.
-     * @param AccessTokenInterface $accessToken
-     * @param int                  $first  The maximum number of items to return per page in the response. The minimum
-     *                                     page size is 1 item per page and the maximum is 100 items per page. The
-     *                                     default is 100.
-     * @param string|null          $after  The cursor used to get the next page of results. The Pagination object in
-     *                                     the response contains the cursor’s value.
+     * URL
+     * GET https://api.twitch.tv/helix/streams/followed
+     *
+     * @param string               $userId      The ID of the user whose list of followed streams you want to get. This
+     *                                          ID must match the user ID in the access token.
+     * @param AccessTokenInterface $accessToken Requires a user access token that includes the user:read:follows scope.
+     * @param int                  $first       The maximum number of items to return per page in the response. The
+     *                                          minimum page size is 1 item per page and the maximum is 100 items per
+     *                                          page. The default is 100.
+     * @param string|null          $after       The cursor used to get the next page of results. The Pagination object
+     *                                          in the response contains the cursor’s value.
      *
      * @return TwitchPaginatedDataResponse<Stream[]>
-     * @throws JsonException
      */
     public function getFollowedStreams(
         string $userId,
@@ -173,14 +176,17 @@ class StreamsApi extends AbstractApi
      * - If the stream is a premiere (a live, first-viewing event that combines uploaded videos with live chat)
      * - If the stream is a rerun of a past broadcast, including past premieres.
      *
-     * Authentication:
+     * Authorization
      * Requires a user access token that includes the channel:manage:broadcast scope.
      *
+     * URL
+     * POST https://api.twitch.tv/helix/streams/markers
+     *
      * @param CreateStreamMarkerRequest $body
-     * @param AccessTokenInterface      $accessToken
+     * @param AccessTokenInterface      $accessToken Requires a user access token that includes the
+     *                                               channel:manage:broadcast scope.
      *
      * @return TwitchDataResponse<Marker[]>
-     * @throws JsonException
      */
     public function createStreamMarker(
         CreateStreamMarkerRequest $body,
@@ -200,30 +206,34 @@ class StreamsApi extends AbstractApi
      * arbitrary point in a live stream that the broadcaster or editor marked, so they can return to that spot later to
      * create video highlights (see Video Producer, Highlights in the Twitch UX).
      *
-     * Authentication:
-     * Requires a user access token that includes the user:read:broadcast scope.
+     * Authorization
+     * Requires a user access token that includes the user:read:broadcast or channel:manage:broadcast scope.
      *
-     * @param AccessTokenInterface $accessToken
-     * @param string|null          $userId  A user ID. The request returns the markers from this user’s most recent
-     *                                      video. This ID must match the user ID in the access token or the user in
-     *                                      the access token must be one of the broadcaster’s editors.
+     * URL
+     * GET https://api.twitch.tv/helix/streams/markers
+     *
+     * @param AccessTokenInterface $accessToken Requires a user access token that includes the user:read:broadcast or
+     *                                          channel:manage:broadcast scope.
+     * @param string|null          $userId      A user ID. The request returns the markers from this user’s most recent
+     *                                          video. This ID must match the user ID in the access token or the user
+     *                                          in
+     *                                          the access token must be one of the broadcaster’s editors.
      *
      *                                      This parameter and the video_id query parameter are mutually exclusive.
-     * @param string|null          $videoId A video on demand (VOD)/video ID. The request returns the markers from this
-     *                                      VOD/video. The user in the access token must own the video or the user must
-     *                                      be one of the broadcaster’s editors.
+     * @param string|null          $videoId     A video on demand (VOD)/video ID. The request returns the markers from
+     *                                          this VOD/video. The user in the access token must own the video or the
+     *                                          user must be one of the broadcaster’s editors.
      *
      *                                      This parameter and the user_id query parameter are mutually exclusive.
-     * @param int|null             $first   The maximum number of items to return per page in the response. The minimum
-     *                                      page size is 1 item per page and the maximum is 100 items per page. The
-     *                                      default is 20.
-     * @param string|null          $before  The cursor used to get the previous page of results. The Pagination object
-     *                                      in the response contains the cursor’s value.
-     * @param string|null          $after   The cursor used to get the next page of results. The Pagination object in
-     *                                      the response contains the cursor’s value.
+     * @param int|null             $first       The maximum number of items to return per page in the response. The
+     *                                          minimum page size is 1 item per page and the maximum is 100 items per
+     *                                          page. The default is 20.
+     * @param string|null          $before      The cursor used to get the previous page of results. The Pagination
+     *                                          object in the response contains the cursor’s value.
+     * @param string|null          $after       The cursor used to get the next page of results. The Pagination object
+     *                                          in the response contains the cursor’s value.
      *
      * @return TwitchPaginatedDataResponse<StreamMarker[]>
-     * @throws JsonException
      */
     public function getStreamMarkers(
         AccessTokenInterface $accessToken,

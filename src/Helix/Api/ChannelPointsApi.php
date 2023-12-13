@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
-use CuyZ\Valinor\Mapper\MappingError;
-use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApi\Helix\Models\ChannelPoints\CreateCustomRewardRequest;
 use SimplyStream\TwitchApi\Helix\Models\ChannelPoints\CustomReward;
@@ -23,17 +21,19 @@ class ChannelPointsApi extends AbstractApi
      * Creates a Custom Reward in the broadcaster’s channel. The maximum number of custom rewards per channel is 50,
      * which includes both enabled and disabled rewards.
      *
-     * Authentication:
+     * Authorization
      * Requires a user access token that includes the channel:manage:redemptions scope.
+     *
+     * URL
+     * POST https://api.twitch.tv/helix/channel_points/custom_rewards
      *
      * @param string                    $broadcasterId The ID of the broadcaster to add the custom reward to. This ID
      *                                                 must match the user ID found in the OAuth token.
      * @param CreateCustomRewardRequest $body
-     * @param AccessTokenInterface      $accessToken
+     * @param AccessTokenInterface      $accessToken   Requires a user access token that includes the
+     *                                                 channel:manage:redemptions scope.
      *
      * @return TwitchDataResponse<CustomReward[]>
-     * @throws JsonException
-     * @throws MappingError
      */
     public function createCustomRewards(
         string $broadcasterId,
@@ -57,15 +57,17 @@ class ChannelPointsApi extends AbstractApi
      * The app used to create the reward is the only app that may delete it. If the reward’s redemption status is
      * UNFULFILLED at the time the reward is deleted, its redemption status is marked as FULFILLED.
      *
-     * Authentication:
+     * Authorization
      * Requires a user access token that includes the channel:manage:redemptions scope.
+     *
+     * URL
+     * DELETE https://api.twitch.tv/helix/channel_points/custom_rewards
      *
      * @param string               $broadcasterId The ID of the broadcaster that created the custom reward. This ID
      *                                            must match the user ID found in the OAuth token.
      * @param string               $id            The ID of the custom reward to delete.
-     * @param AccessTokenInterface $accessToken
-     *
-     * @throws JsonException
+     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the
+     *                                            channel:manage:redemptions scope.
      */
     public function deleteCustomRewards(
         string $broadcasterId,
@@ -86,14 +88,18 @@ class ChannelPointsApi extends AbstractApi
     /**
      * Gets a list of custom rewards that the specified broadcaster created.
      *
-     * Authentication:
-     * Requires a user access token that includes the channel:read:redemptions scope.
-     *
      * NOTE: A channel may offer a maximum of 50 rewards, which includes both enabled and disabled rewards.
+     *
+     * Authorization
+     * Requires a user access token that includes the channel:read:redemptions or channel:manage:redemptions scope.
+     *
+     * URL
+     * GET https://api.twitch.tv/helix/channel_points/custom_rewards
      *
      * @param string               $broadcasterId         The ID of the broadcaster whose custom rewards you want to
      *                                                    get. This ID must match the user ID found in the OAuth token.
-     * @param AccessTokenInterface $accessToken
+     * @param AccessTokenInterface $accessToken           Requires a user access token that includes the
+     *                                                    channel:read:redemptions or channel:manage:redemptions scope.
      * @param string|null          $id                    A list of IDs to filter the rewards by. To specify more than
      *                                                    one ID, include this parameter for each reward you want to
      *                                                    get. For example, id=1234&id=5678. You may specify a maximum
@@ -107,7 +113,6 @@ class ChannelPointsApi extends AbstractApi
      *                                                    default is false.
      *
      * @return TwitchDataResponse<CustomReward[]>
-     * @throws JsonException
      */
     public function getCustomReward(
         string $broadcasterId,
@@ -131,14 +136,18 @@ class ChannelPointsApi extends AbstractApi
      * Gets a list of redemptions for the specified custom reward. The app used to create the reward is the only app
      * that may get the redemptions.
      *
-     * Authentication:
-     * Requires a user access token that includes the channel:read:redemptions scope.
+     * Authorization
+     * Requires a user access token that includes the channel:read:redemptions or channel:manage:redemptions scope.
+     *
+     * URL
+     * GET https://api.twitch.tv/helix/channel_points/custom_rewards/redemptions
      *
      * @param string               $broadcasterId The ID of the broadcaster that owns the custom reward. This ID must
      *                                            match the user ID found in the user OAuth token.
      * @param string               $rewardId      The ID that identifies the custom reward whose redemptions you want
      *                                            to get.
-     * @param AccessTokenInterface $accessToken
+     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the
+     *                                            channel:read:redemptions or channel:manage:redemptions scope.
      * @param string|null          $status        The status of the redemptions to return. The possible case-sensitive
      *                                            values are:
      *                                            - CANCELED
@@ -168,8 +177,6 @@ class ChannelPointsApi extends AbstractApi
      *                                            The default is 20.
      *
      * @return TwitchPaginatedDataResponse<CustomRewardRedemption[]>
-     * @throws JsonException
-     * @throws MappingError
      */
     public function getCustomRewardRedemption(
         string $broadcasterId,
@@ -204,17 +211,20 @@ class ChannelPointsApi extends AbstractApi
     /**
      * Updates a custom reward. The app used to create the reward is the only app that may update the reward.
      *
-     * Authentication:
+     * Authorization
      * Requires a user access token that includes the channel:manage:redemptions scope.
      *
-     * @param string                    $broadcasterId
-     * @param string                    $id
+     * URL
+     * PATCH https://api.twitch.tv/helix/channel_points/custom_rewards
+     *
+     * @param string                    $broadcasterId The ID of the broadcaster that’s updating the reward. This ID
+     *                                                 must match the user ID found in the OAuth token.
+     * @param string                    $id            The ID of the reward to update.
      * @param CreateCustomRewardRequest $body
-     * @param AccessTokenInterface      $accessToken
+     * @param AccessTokenInterface      $accessToken   Requires a user access token that includes the
+     *                                                 channel:manage:redemptions scope.
      *
      * @return TwitchDataResponse<CustomReward[]>
-     * @throws JsonException
-     * @throws MappingError
      */
     public function updateCustomReward(
         string $broadcasterId,
@@ -239,8 +249,11 @@ class ChannelPointsApi extends AbstractApi
      * Updates a redemption’s status. You may update a redemption only if its status is UNFULFILLED. The app used to
      * create the reward is the only app that may update the redemption.
      *
-     * Authentication:
+     * Authorization
      * Requires a user access token that includes the channel:manage:redemptions scope.
+     *
+     * URL
+     * PATCH https://api.twitch.tv/helix/channel_points/custom_rewards/redemptions
      *
      * @param string                  $broadcasterId A list of IDs that identify the redemptions to update. To specify
      *                                               more than one ID, include this parameter for each redemption you
@@ -250,10 +263,10 @@ class ChannelPointsApi extends AbstractApi
      *                                               must match the user ID associated with the user OAuth token.
      * @param string                  $rewardId      The ID that identifies the reward that’s been redeemed.
      * @param RedemptionStatusRequest $body
-     * @param AccessTokenInterface    $accessToken
+     * @param AccessTokenInterface    $accessToken   Requires a user access token that includes the
+     *                                               channel:manage:redemptions scope.
      *
      * @return TwitchDataResponse<CustomRewardRedemption[]>
-     * @throws JsonException
      */
     public function updateRedemptionStatus(
         string $broadcasterId,

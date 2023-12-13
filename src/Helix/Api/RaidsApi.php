@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
-use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApi\Helix\Models\Raids\Raid;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
@@ -27,16 +26,19 @@ class RaidsApi extends AbstractApi
      *
      * Rate Limit: The limit is 10 requests within a 10-minute window.
      *
-     * Authorization:
+     * Authorization
      * Requires a user access token that includes the channel:manage:raids scope.
+     *
+     * URL
+     * POST https://api.twitch.tv/helix/raids
      *
      * @param string               $fromBroadcasterId The ID of the broadcaster that’s sending the raiding party. This
      *                                                ID must match the user ID associated with the user access token.
      * @param string               $toBroadcasterId   The ID of the broadcaster to raid.
-     * @param AccessTokenInterface $accessToken
+     * @param AccessTokenInterface $accessToken       Requires a user access token that includes the
+     *                                                channel:manage:raids scope.
      *
      * @return TwitchDataResponse<Raid[]>
-     * @throws JsonException
      */
     public function startRaid(
         string $fromBroadcasterId,
@@ -63,15 +65,18 @@ class RaidsApi extends AbstractApi
      *
      * Rate Limit: The limit is 10 requests within a 10-minute window.
      *
-     * Authorization:
+     * Authorization
      * Requires a user access token that includes the channel:manage:raids scope.
+     *
+     * URL
+     * DELETE https://api.twitch.tv/helix/raids
      *
      * @param string               $broadcasterId The ID of the broadcaster that initiated the raid. This ID must match
      *                                            the user ID associated with the user access token.
-     * @param AccessTokenInterface $accessToken
+     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the channel:manage:raids
+     *                                            scope.
      *
      * @return void
-     * @throws JsonException
      */
     public function cancelRaid(
         string $broadcasterId,

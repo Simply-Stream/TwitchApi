@@ -17,11 +17,14 @@ class TeamsApi extends AbstractApi
     /**
      * Gets the list of Twitch teams that the broadcaster is a member of.
      *
-     * Authentication:
+     * Authorization
      * Requires an app access token or user access token.
      *
+     * URL
+     * GET https://api.twitch.tv/helix/teams/channel
+     *
      * @param string               $broadcasterId The ID of the broadcaster whose teams you want to get.
-     * @param AccessTokenInterface $accessToken
+     * @param AccessTokenInterface $accessToken   Requires an app access token or user access token.
      *
      * @return TwitchDataResponse<ChannelTeam[]>
      * @throws JsonException
@@ -41,13 +44,15 @@ class TeamsApi extends AbstractApi
     }
 
     /**
-     * Gets information about the specified Twitch team.
+     * Gets information about the specified Twitch team. Read More
      *
-     * Authentication:
+     * Authorization
      * Requires an app access token or user access token.
      *
-     * @param AccessTokenInterface $accessToken
+     * URL
+     * GET https://api.twitch.tv/helix/teams
      *
+     * @param AccessTokenInterface $accessToken      Requires an app access token or user access token.
      * @param string|null          $name             The name of the team to get. This parameter and the id parameter
      *                                               are mutually exclusive; you must specify the team’s name or ID but
      *                                               not both.
@@ -56,7 +61,6 @@ class TeamsApi extends AbstractApi
      *                                               not both.
      *
      * @return TwitchDataResponse<Team[]>
-     * @throws JsonException
      */
     public function getTeams(
         AccessTokenInterface $accessToken,

@@ -6,14 +6,12 @@ namespace SimplyStream\TwitchApi\Helix\Api;
 
 use CuyZ\Valinor\Mapper\MappingError;
 use CuyZ\Valinor\Mapper\Object\DynamicConstructor;
-use CuyZ\Valinor\Mapper\Source\Exception\InvalidSource;
 use CuyZ\Valinor\Mapper\Source\Source;
 use CuyZ\Valinor\Mapper\Tree\Message\Messages;
 use CuyZ\Valinor\MapperBuilder;
 use DateTimeImmutable;
 use InvalidArgumentException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
-use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
@@ -67,10 +65,6 @@ class ApiClient implements ApiClientInterface
      * @param array                     $headers
      *
      * @return TwitchResponseInterface|null
-     * @throws MappingError
-     * @throws InvalidSource
-     * @throws \JsonException
-     * @throws ClientExceptionInterface
      */
     public function sendRequest(
         string $path,
@@ -86,7 +80,9 @@ class ApiClient implements ApiClientInterface
         $request = $this->requestFactory->createRequest($method, $uri);
 
         if ($body) {
-            $request = $request->withBody($this->requestFactory->createStream(json_encode($body, JSON_THROW_ON_ERROR)));
+            $request = $request->withBody(
+                $this->requestFactory->createStream(json_encode($body, JSON_THROW_ON_ERROR))
+            );
         }
 
         $request = $request

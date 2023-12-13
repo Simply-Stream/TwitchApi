@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
-use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApi\Helix\Models\Predictions\CreatePredictionRequest;
 use SimplyStream\TwitchApi\Helix\Models\Predictions\EndPredictionRequest;
@@ -19,12 +18,16 @@ class PredictionsApi extends AbstractApi
     /**
      * Gets a list of Channel Points Predictions that the broadcaster created.
      *
-     * Authorization:
-     * Requires a user access token that includes the channel:read:predictions scope.
+     * Authorization
+     * Requires a user access token that includes the channel:read:predictions or channel:manage:predictions scope.
+     *
+     * URL
+     * GET https://api.twitch.tv/helix/predictions
      *
      * @param string               $broadcasterId The ID of the broadcaster whose predictions you want to get. This ID
      *                                            must match the user ID associated with the user access token.
-     * @param AccessTokenInterface $accessToken
+     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the
+     *                                            channel:read:predictions or channel:manage:predictions scope.
      * @param string|null          $id            The ID of the prediction to get. To specify more than one ID, include
      *                                            this parameter for each prediction you want to get. For example,
      *                                            id=1234&id=5678. You may specify a maximum of 25 IDs. The endpoint
@@ -37,7 +40,6 @@ class PredictionsApi extends AbstractApi
      *                                            object in the response contains the cursor’s value.
      *
      * @return TwitchPaginatedDataResponse<Prediction[]>
-     * @throws JsonException
      */
     public function getPredictions(
         string $broadcasterId,
@@ -65,14 +67,17 @@ class PredictionsApi extends AbstractApi
      * With a Channel Points Prediction, the broadcaster poses a question and viewers try to predict the outcome. The
      * prediction runs as soon as it’s created. The broadcaster may run only one prediction at a time.
      *
-     * Authorization:
+     * Authorization
      * Requires a user access token that includes the channel:manage:predictions scope.
      *
+     * URL
+     * POST https://api.twitch.tv/helix/predictions
+     *
      * @param CreatePredictionRequest $body
-     * @param AccessTokenInterface    $accessToken
+     * @param AccessTokenInterface    $accessToken Requires a user access token that includes the
+     *                                             channel:manage:predictions scope.
      *
      * @return TwitchDataResponse<Prediction[]>
-     * @throws JsonException
      */
     public function createPrediction(
         CreatePredictionRequest $body,
@@ -90,14 +95,17 @@ class PredictionsApi extends AbstractApi
     /**
      * Locks, resolves, or cancels a Channel Points Prediction.
      *
-     * Authorization:
+     * Authorization
      * Requires a user access token that includes the channel:manage:predictions scope.
      *
+     * URL
+     * PATCH https://api.twitch.tv/helix/predictions
+     *
      * @param EndPredictionRequest $body
-     * @param AccessTokenInterface $accessToken
+     * @param AccessTokenInterface $accessToken Requires a user access token that includes the
+     *                                          channel:manage:predictions scope.
      *
      * @return TwitchDataResponse<Prediction[]>
-     * @throws JsonException
      */
     public function endPrediction(
         EndPredictionRequest $body,

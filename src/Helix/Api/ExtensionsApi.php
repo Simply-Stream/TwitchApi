@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
-use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApi\Helix\Models\Extensions\Extension;
 use SimplyStream\TwitchApi\Helix\Models\Extensions\ExtensionBitsProduct;
@@ -28,10 +27,13 @@ class ExtensionsApi extends AbstractApi
      *
      * Rate Limits: You may retrieve each segment a maximum of 20 times per minute.
      *
-     * Authorization:
+     * Authorization
      * Requires a signed JSON Web Token (JWT) created by an Extension Backend Service (EBS). For signing requirements,
      * see Signing the JWT. The signed JWT must include the role, user_id, and exp fields (see JWT Schema). The role
      * field must be set to external.
+     *
+     * URL
+     * GET https://api.twitch.tv/helix/extensions/configurations
      *
      * @param string      $extensionId   The ID of the extension that contains the configuration segment you want to
      *                                   get.
@@ -43,13 +45,15 @@ class ExtensionsApi extends AbstractApi
      *                                   You may specify one or more segments. To specify multiple segments, include
      *                                   the segment parameter for each segment to get. For example,
      *                                   segment=broadcaster&segment=developer. Ignores duplicate segments.
-     * @param string      $jwt
+     * @param string      $jwt           Requires a signed JSON Web Token (JWT) created by an Extension Backend Service
+     *                                   (EBS). For signing requirements, see Signing the JWT. The signed JWT must
+     *                                   include the role, user_id, and exp fields (see JWT Schema). The role field
+     *                                   must be set to external.
      * @param string|null $broadcasterId The ID of the broadcaster that installed the extension. This parameter is
      *                                   required if you set the segment parameter to broadcaster or developer. Do not
      *                                   specify this parameter if you set segment to global.
      *
      * @return TwitchDataResponse<ExtensionConfigurationSegment[]>
-     * @throws JsonException
      */
     public function getExtensionConfigurationSegment(
         string $extensionId,
@@ -77,16 +81,22 @@ class ExtensionsApi extends AbstractApi
      *
      * Rate Limits: You may update the configuration a maximum of 20 times per minute.
      *
-     * Authorization:
+     * Authorization
      * Requires a signed JSON Web Token (JWT) created by an Extension Backend Service (EBS). For signing requirements,
      * see Signing the JWT. The signed JWT must include the role, user_id, and exp fields (see JWT Schema). The role
      * field must be set to external.
      *
-     * @param string                                  $jwt
+     * URL
+     * PUT https://api.twitch.tv/helix/extensions/configurations
+     *
+     * @param string                                  $jwt Requires a signed JSON Web Token (JWT) created by an
+     *                                                     Extension Backend Service (EBS). For signing requirements,
+     *                                                     see Signing the JWT. The signed JWT must include the role,
+     *                                                     user_id, and exp fields (see JWT Schema). The role field
+     *                                                     must be set to external.
      * @param SetExtensionConfigurationSegmentRequest $body
      *
      * @return void
-     * @throws JsonException
      */
     public function setExtensionConfigurationSegment(
         string $jwt,
@@ -108,18 +118,25 @@ class ExtensionsApi extends AbstractApi
      * Own Service in Extension Capabilities). For more information, see Required Configurations and Setting Required
      * Configuration.
      *
-     * Authorization:
+     * Authorization
      * Requires a signed JSON Web Token (JWT) created by an EBS. For signing requirements, see Signing the JWT. The
      * signed JWT must include the role, user_id, and exp fields (see JWT Schema). Set the role field to external and
      * the user_id field to the ID of the user that owns the extension.
      *
+     * URL
+     * PUT https://api.twitch.tv/helix/extensions/required_configuration
+     *
      * @param string                                   $broadcasterId The ID of the broadcaster that installed the
      *                                                                extension on their channel.
      * @param SetExtensionRequiredConfigurationRequest $body
-     * @param string                                   $jwt
+     * @param string                                   $jwt           Requires a signed JSON Web Token (JWT) created by
+     *                                                                an EBS. For signing requirements, see Signing the
+     *                                                                JWT. The signed JWT must include the role,
+     *                                                                user_id, and exp fields (see JWT Schema). Set the
+     *                                                                role field to external and the user_id field to
+     *                                                                the ID of the user that owns the extension.
      *
      * @return void
-     * @throws JsonException
      */
     public function setExtensionRequiredConfiguration(
         string $broadcasterId,
@@ -182,11 +199,17 @@ class ExtensionsApi extends AbstractApi
      *      }
      * }
      *
+     * URL
+     * POST https://api.twitch.tv/helix/extensions/pubsub
+     *
      * @param SendExtensionPubSubMessageRequest $body
-     * @param string                            $jwt
+     * @param string                            $jwt Requires a signed JSON Web Token (JWT) created by an Extension
+     *                                               Backend Service (EBS). For signing requirements, see Signing the
+     *                                               JWT. The signed JWT must include the role, user_id, and exp fields
+     *                                               (see JWT Schema) along with the channel_id and pubsub_perms
+     *                                               fields. The role field must be set to external.
      *
      * @return void
-     * @throws JsonException
      */
     public function sendExtensionPubSubMessage(
         SendExtensionPubSubMessageRequest $body,
@@ -208,26 +231,28 @@ class ExtensionsApi extends AbstractApi
      * It may take a few minutes for the list to include or remove broadcasters that have recently gone live or stopped
      * broadcasting.
      *
-     * Authorization:
+     * Authorization
      * Requires an app access token or user access token.
      *
-     * @param string                    $extensionId The ID of the extension to get. Returns the list of broadcasters
+     * URL
+     * GET https://api.twitch.tv/helix/extensions/live
+     *
+     * @param string               $extensionId      The ID of the extension to get. Returns the list of broadcasters
      *                                               that are live and that have installed or activated this extension.
-     * @param int                       $first       The maximum number of items to return per page in the response.
+     * @param AccessTokenInterface $accessToken      Requires an app access token or user access token.
+     * @param int                  $first            The maximum number of items to return per page in the response.
      *                                               The minimum page size is 1 item per page and the maximum is 100
      *                                               items per page. The default is 20.
-     * @param string|null               $after       The cursor used to get the next page of results. The pagination
+     * @param string|null          $after            The cursor used to get the next page of results. The pagination
      *                                               field in the response contains the cursor’s value.
-     * @param AccessTokenInterface|null $accessToken
      *
      * @return TwitchPaginatedDataResponse<ExtensionLiveChannel>
-     * @throws JsonException
      */
     public function getExtensionLiveChannels(
         string $extensionId,
+        AccessTokenInterface $accessToken,
         int $first = 20,
         string $after = null,
-        AccessTokenInterface $accessToken = null
     ): TwitchPaginatedDataResponse {
         return $this->sendRequest(
             path: self::BASE_PATH . '/live',
@@ -244,16 +269,20 @@ class ExtensionsApi extends AbstractApi
     /**
      * Gets an extension’s list of shared secrets.
      *
-     * Authorization:
+     * Authorization
      * Requires a signed JSON Web Token (JWT) created by an Extension Backend Service (EBS). For signing requirements,
      * see Signing the JWT. The signed JWT must include the role, user_id, and exp fields (see JWT Schema). The role
      * field must be set to external.
      *
+     * URL
+     * GET https://api.twitch.tv/helix/extensions/jwt/secrets
+     *
      * @param string $extensionId The ID of the extension whose shared secrets you want to get.
-     * @param string $jwt
+     * @param string $jwt         Requires a signed JSON Web Token (JWT) created by an Extension Backend Service (EBS).
+     *                            For signing requirements, see Signing the JWT. The signed JWT must include the role,
+     *                            user_id, and exp fields (see JWT Schema). The role field must be set to external.
      *
      * @return TwitchDataResponse<ExtensionSecret>
-     * @throws JsonException
      */
     public function getExtensionSecrets(
         string $extensionId,
@@ -275,20 +304,24 @@ class ExtensionsApi extends AbstractApi
      * Creates a shared secret used to sign and verify JWT tokens. Creating a new secret removes the current secrets
      * from service. Use this function only when you are ready to use the new secret it returns.
      *
-     * Authorization:
+     * Authorization
      * Requires a signed JSON Web Token (JWT) created by an Extension Backend Service (EBS). For signing requirements,
      * see Signing the JWT. The signed JWT must include the role, user_id, and exp fields (see JWT Schema). The role
      * field must be set to external.
      *
+     * URL
+     * POST https://api.twitch.tv/helix/extensions/jwt/secrets
+     *
      * @param string $extensionId The ID of the extension to apply the shared secret to.
-     * @param string $jwt
+     * @param string $jwt         Requires a signed JSON Web Token (JWT) created by an Extension Backend Service (EBS).
+     *                            For signing requirements, see Signing the JWT. The signed JWT must include the role,
+     *                            user_id, and exp fields (see JWT Schema). The role field must be set to external.
      * @param int    $delay       The amount of time, in seconds, to delay activating the secret. The delay should
      *                            provide enough time for instances of the extension to gracefully switch over to the
      *                            new secret. The minimum delay is 300 seconds
      *                            (5 minutes). The default is 300 seconds.
      *
      * @return TwitchDataResponse<ExtensionSecret>
-     * @throws JsonException
      */
     public function createExtensionSecret(
         string $extensionId,
@@ -315,17 +348,24 @@ class ExtensionsApi extends AbstractApi
      *
      * Rate Limits: You may send a maximum of 12 messages per minute per channel.
      *
-     * Authorization:
+     * Authorization
      * Requires a signed JSON Web Token (JWT) created by an Extension Backend Service (EBS). For signing requirements,
      * see Signing the JWT. The signed JWT must include the role and user_id fields (see JWT Schema). The role field
      * must be set to external.
      *
-     * @param string                          $broadcasterId The ID of the broadcaster that has activated the extension.
-     * @param string                          $jwt
+     * URL
+     * POST https://api.twitch.tv/helix/extensions/chat
+     *
+     * @param string                          $broadcasterId The ID of the broadcaster that has activated the
+     *                                                       extension.
+     * @param string                          $jwt           Requires a signed JSON Web Token (JWT) created by an
+     *                                                       Extension Backend Service (EBS). For signing requirements,
+     *                                                       see Signing the JWT. The signed JWT must include the role
+     *                                                       and user_id fields (see JWT Schema). The role field must
+     *                                                       be set to external.
      * @param SendExtensionChatMessageRequest $body
      *
      * @return void
-     * @throws JsonException
      */
     public function sendExtensionChatMessage(
         string $broadcasterId,
@@ -347,19 +387,24 @@ class ExtensionsApi extends AbstractApi
     /**
      * Gets information about an extension.
      *
-     * Authorization:
+     * Authorization
      * Requires a signed JSON Web Token (JWT) created by an Extension Backend Service (EBS). For signing requirements,
      * see Signing the JWT. The signed JWT must include the role field (see JWT Schema), and the role field must be set
      * to external.
      *
+     * URL
+     * GET https://api.twitch.tv/helix/extensions
+     *
      * @param string      $extensionId      The ID of the extension to get.
-     * @param string      $jwt
+     * @param string      $jwt              Requires a signed JSON Web Token (JWT) created by an Extension Backend
+     *                                      Service (EBS). For signing requirements, see Signing the JWT. The signed
+     *                                      JWT must include the role field (see JWT Schema), and the role field must
+     *                                      be set to external.
      * @param string|null $extensionVersion The version of the extension to get. If not specified, it returns the
      *                                      latest, released version. If you don’t have a released version, you must
      *                                      specify a version; otherwise, the list is empty.
      *
      * @return TwitchDataResponse<Extension[]>
-     * @throws JsonException
      */
     public function getExtensions(
         string $extensionId,
@@ -380,23 +425,25 @@ class ExtensionsApi extends AbstractApi
     }
 
     /**
-     * Gets information about a released extension. Returns extensions whose state is Released.
+     * Gets information about a released extension. Returns the extension if its state is Released.
      *
-     * Authorization:
+     * Authorization
      * Requires an app access token or user access token.
      *
-     * @param string                    $extensionId      The ID of the extension to get.
-     * @param string|null               $extensionVersion The version of the extension to get. If not specified, it
+     * URL
+     * GET https://api.twitch.tv/helix/extensions/released
+     *
+     * @param string               $extensionId           The ID of the extension to get.
+     * @param AccessTokenInterface $accessToken           Requires an app access token or user access token.
+     * @param string|null          $extensionVersion      The version of the extension to get. If not specified, it
      *                                                    returns the latest version.
-     * @param AccessTokenInterface|null $accessToken
      *
      * @return TwitchDataResponse<Extension>
-     * @throws JsonException
      */
     public function getReleasedExtensions(
         string $extensionId,
+        AccessTokenInterface $accessToken,
         string $extensionVersion = null,
-        AccessTokenInterface $accessToken = null
     ): TwitchDataResponse {
         return $this->sendRequest(
             path: self::BASE_PATH . '/released',
@@ -413,20 +460,23 @@ class ExtensionsApi extends AbstractApi
      * Gets the list of Bits products that belongs to the extension. The client ID in the app access token identifies
      * the extension.
      *
-     * Authorization:
+     * Authorization
      * Requires an app access token. The client ID in the app access token must be the extension’s client ID.
      *
-     * @param bool                      $shouldIncludeAll A Boolean value that determines whether to include disabled
+     * URL
+     * GET https://api.twitch.tv/helix/bits/extensions
+     *
+     * @param bool                 $shouldIncludeAll      A Boolean value that determines whether to include disabled
      *                                                    or expired Bits products in the response. The default is
      *                                                    false.
-     * @param AccessTokenInterface|null $accessToken
+     * @param AccessTokenInterface $accessToken           Requires an app access token. The client ID in the app access
+     *                                                    token must be the extension’s client ID.
      *
      * @return TwitchDataResponse<ExtensionBitsProduct[]>
-     * @throws JsonException
      */
     public function getExtensionBitsProducts(
+        AccessTokenInterface $accessToken,
         bool $shouldIncludeAll = false,
-        AccessTokenInterface $accessToken = null
     ): TwitchDataResponse {
         return $this->sendRequest(
             path: 'bits/' . self::BASE_PATH,
@@ -442,18 +492,21 @@ class ExtensionsApi extends AbstractApi
      * Adds or updates a Bits product that the extension created. If the SKU doesn’t exist, the product is added. You
      * may update all fields except the sku field.
      *
-     * Authorization:
-     * Requires an app access token. The client ID in the app access token must be the extension’s client ID.
+     * Authorization
+     * Requires an app access token. The client ID in the app access token must match the extension’s client ID.
+     *
+     * URL
+     * PUT https://api.twitch.tv/helix/bits/extensions
      *
      * @param UpdateExtensionBitsProductRequest $body
-     * @param AccessTokenInterface|null         $accessToken
+     * @param AccessTokenInterface              $accessToken Requires an app access token. The client ID in the app
+     *                                                       access token must match the extension’s client ID.
      *
      * @return TwitchDataResponse<ExtensionBitsProduct[]>
-     * @throws JsonException
      */
     public function updateExtensionBitsProduct(
         UpdateExtensionBitsProductRequest $body,
-        AccessTokenInterface $accessToken = null
+        AccessTokenInterface $accessToken
     ): TwitchDataResponse {
         return $this->sendRequest(
             path: 'bits/' . self::BASE_PATH,

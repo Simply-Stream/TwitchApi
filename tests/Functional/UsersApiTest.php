@@ -110,7 +110,6 @@ class UsersApiTest extends UserAwareFunctionalTestCase
      * @param array $logins
      *
      * @return void
-     * @throws \JsonException
      * @dataProvider getUsersThrowsExceptionWhenMoreThan100UsersAreRequestedDataProvider
      */
     public function testGetUsersThrowsExceptionWhenMoreThan100UsersAreRequested(array $ids, array $logins): void
@@ -118,6 +117,7 @@ class UsersApiTest extends UserAwareFunctionalTestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('You can only request a total amount of 100 users at once');
 
+        $accessToken = new AccessToken($this->appAccessToken);
         $client = new Client();
         $requestFactory = new Psr17Factory();
         $apiClient = new ApiClient(
@@ -130,7 +130,7 @@ class UsersApiTest extends UserAwareFunctionalTestCase
         $apiClient->setBaseUrl('http://localhost:8000/mock/');
 
         $usersApi = new UsersApi($apiClient);
-        $usersApi->getUsers(ids: $ids, logins: $logins);
+        $usersApi->getUsers($accessToken, ids: $ids, logins: $logins);
     }
 
     public function testUpdateUser(): void

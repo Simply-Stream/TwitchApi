@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
-use CuyZ\Valinor\Mapper\MappingError;
-use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApi\Helix\Models\Entitlements\DropEntitlement;
 use SimplyStream\TwitchApi\Helix\Models\Entitlements\DropEntitlementUpdate;
@@ -38,8 +36,8 @@ class EntitlementsApi extends AbstractApi
      *                   |                  | all entitled users.
      * ------------------|------------------|--------------------------------------------------------------------------
      * User              | None             | If you don’t specify request parameters, the request returns all
-     *                   |                  | entitlements for any game that organization granted to the user identified
-     *                   |                  | in the access token.
+     *                   |                  | entitlements for any game that organization granted to the user
+     *                   |                  | identified in the access token.
      * ------------------|------------------|--------------------------------------------------------------------------
      * User              | user_id          | Invalid.
      * ------------------|------------------|--------------------------------------------------------------------------
@@ -49,10 +47,14 @@ class EntitlementsApi extends AbstractApi
      *                   |                  | the user identified in the token.
      * ------------------|------------------|--------------------------------------------------------------------------
      *
-     * Authentication:
+     * Authorization
      * Requires an app access token or user access token. The client ID in the access token must own the game.
      *
-     * @param AccessTokenInterface $accessToken
+     * URL
+     * GET https://api.twitch.tv/helix/entitlements/drops
+     *
+     * @param AccessTokenInterface $accessToken            Requires an app access token or user access token. The
+     *                                                     client ID in the access token must own the game.
      * @param string|null          $id                     An ID that identifies the entitlement to get. Include this
      *                                                     parameter for each entitlement you want to get. For example,
      *                                                     id=1234&id=5678. You may specify a maximum of 100 IDs.
@@ -71,8 +73,6 @@ class EntitlementsApi extends AbstractApi
      *                                                     and the maximum is 1000. The default is 20.
      *
      * @return TwitchPaginatedDataResponse<DropEntitlement[]>
-     * @throws JsonException
-     * @throws MappingError
      */
     public function getDropsEntitlements(
         AccessTokenInterface $accessToken,
@@ -112,18 +112,21 @@ class EntitlementsApi extends AbstractApi
      *                   | organization in the access token.
      * ------------------------------------------------------------------------------------------------------------------------------------
      *
-     * Authentication:
+     * Authorization
      * Requires an app access token or user access token. The client ID in the access token must own the game.
      *
+     * URL
+     * PATCH https://api.twitch.tv/helix/entitlements/drops
+     *
      * @param UpdateDropEntitlementRequest $body
-     * @param AccessTokenInterface|null    $accessToken
+     * @param AccessTokenInterface         $accessToken Requires an app access token or user access token. The client
+     *                                                  ID in the access token must own the game.
      *
      * @return TwitchDataResponse<DropEntitlementUpdate[]>
-     * @throws JsonException
      */
     public function updateDropsEntitlements(
         UpdateDropEntitlementRequest $body,
-        AccessTokenInterface $accessToken = null
+        AccessTokenInterface $accessToken
     ): TwitchDataResponse {
         return $this->sendRequest(
             path: self::BASE_PATH . '/drops',

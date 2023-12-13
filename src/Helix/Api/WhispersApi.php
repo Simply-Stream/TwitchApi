@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
-use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApi\Helix\Models\Whispers\SendWhisperRequest;
 
@@ -24,17 +23,20 @@ class WhispersApi extends AbstractApi
      * Rate Limits: You may whisper to a maximum of 40 unique recipients per day. Within the per day limit, you may
      * whisper a maximum of 3 whispers per second and a maximum of 100 whispers per minute.
      *
-     * Authorization:
+     * Authorization
      * Requires a user access token that includes the user:manage:whispers scope.
      *
-     * @param string               $fromUserId The ID of the user sending the whisper. This user must have a verified
-     *                                         phone number. This ID must match the user ID in the user access token.
-     * @param string               $toUserId   The ID of the user to receive the whisper.
+     * URL
+     * POST https://api.twitch.tv/helix/whispers
+     *
+     * @param string               $fromUserId  The ID of the user sending the whisper. This user must have a verified
+     *                                          phone number. This ID must match the user ID in the user access token.
+     * @param string               $toUserId    The ID of the user to receive the whisper.
      * @param SendWhisperRequest   $body
-     * @param AccessTokenInterface $accessToken
+     * @param AccessTokenInterface $accessToken Requires a user access token that includes the user:manage:whispers
+     *                                          scope.
      *
      * @return void
-     * @throws JsonException
      */
     public function sendWhisper(
         string $fromUserId,

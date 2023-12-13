@@ -1,6 +1,6 @@
 <?php
 
-namespace SimplyStream\TwitchApi\Tests\Unit\Helix\Models;
+namespace SimplyStream\TwitchApi\Tests\Unit\Helix\Models\Ads;
 
 use PHPUnit\Framework\TestCase;
 use SimplyStream\TwitchApi\Helix\Models\Ads\AdSchedule;

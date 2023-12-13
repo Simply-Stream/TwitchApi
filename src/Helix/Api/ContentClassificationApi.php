@@ -20,7 +20,10 @@ class ContentClassificationApi extends AbstractApi
      * Authorization
      * Requires an app access token or user access token.
      *
-     * @param AccessTokenInterface $accessToken
+     * URL
+     * GET https://api.twitch.tv/helix/content_classification_labels
+     *
+     * @param AccessTokenInterface $accessToken Requires an app access token or user access token.
      * @param string               $locale      Locale for the Content Classification Labels. You may specify a maximum
      *                                          of 1 locale. Default: “en-US” Supported locales: "bg-BG", "cs-CZ",
      *                                          "da-DK", "da-DK", "de-DE", "el-GR",
@@ -31,8 +34,6 @@ class ContentClassificationApi extends AbstractApi
      *                                          "tr-TR", "vi-VN", "zh-CN", "zh-TW"
      *
      * @return TwitchDataResponse<ContentClassificationLabel[]>
-     * @throws JsonException
-     * @throws MappingError
      */
     public function getContentClassificationLevels(
         AccessTokenInterface $accessToken,

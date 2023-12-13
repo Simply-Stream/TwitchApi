@@ -21,12 +21,16 @@ class PollsApi extends AbstractApi
      *
      * Polls are available for 90 days after they’re created.
      *
-     * Authorization:
-     * Requires a user access token that includes the channel:read:polls scope.
+     * Authorization
+     * Requires a user access token that includes the channel:read:polls or channel:manage:polls scope.
+     *
+     * URL
+     * GET https://api.twitch.tv/helix/polls
      *
      * @param string               $broadcasterId The ID of the broadcaster that created the polls. This ID must match
      *                                            the user ID in the user access token.
-     * @param AccessTokenInterface $accessToken
+     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the channel:read:polls or
+     *                                            channel:manage:polls scope.
      * @param string|null          $id            A list of IDs that identify the polls to return. To specify more than
      *                                            one ID, include this parameter for each poll you want to get. For
      *                                            example, id=1234&id=5678. You may specify a maximum of 20 IDs.
@@ -69,14 +73,17 @@ class PollsApi extends AbstractApi
      *
      * The poll begins as soon as it’s created. You may run only one poll at a time.
      *
-     * Authorization:
+     * Authorization
      * Requires a user access token that includes the channel:manage:polls scope.
      *
+     * URL
+     * POST https://api.twitch.tv/helix/polls
+     *
      * @param CreatePollRequest    $body
-     * @param AccessTokenInterface $accessToken
+     * @param AccessTokenInterface $accessToken Requires a user access token that includes the channel:manage:polls
+     *                                          scope.
      *
      * @return TwitchDataResponse<Poll[]>
-     * @throws JsonException
      */
     public function createPoll(
         CreatePollRequest $body,
@@ -94,14 +101,17 @@ class PollsApi extends AbstractApi
     /**
      * Ends an active poll. You have the option to end it or end it and archive it.
      *
-     * Authorization:
+     * Authorization
      * Requires a user access token that includes the channel:manage:polls scope.
      *
+     * URL
+     * PATCH https://api.twitch.tv/helix/polls
+     *
      * @param EndPollRequest       $body
-     * @param AccessTokenInterface $accessToken
+     * @param AccessTokenInterface $accessToken Requires a user access token that includes the channel:manage:polls
+     *                                          scope.
      *
      * @return TwitchDataResponse<Poll[]>
-     * @throws JsonException
      */
     public function endPoll(
         EndPollRequest $body,

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
-use CuyZ\Valinor\Mapper\MappingError;
-use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApi\Helix\Models\AbstractModel;
 use SimplyStream\TwitchApi\Helix\Models\TwitchResponseInterface;
@@ -29,8 +27,6 @@ abstract class AbstractApi
      * @param AccessTokenInterface|null $accessToken
      *
      * @return T|null
-     * @throws MappingError
-     * @throws JsonException
      */
     protected function sendRequest(
         string $path,

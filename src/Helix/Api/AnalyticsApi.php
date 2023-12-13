@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
-use DateTime;
-use JsonException;
+use DateTimeImmutable;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApi\Helix\Models\Analytics\ExtensionAnalytics;
 use SimplyStream\TwitchApi\Helix\Models\Analytics\GameAnalytics;
@@ -19,17 +18,23 @@ class AnalyticsApi extends AbstractApi
      * Gets an analytics report for one or more extensions. The response contains the URLs used to download the reports
      * (CSV files).
      *
-     * Authentication:
+     * Authorization
      * Requires a user access token that includes the analytics:read:extensions scope.
      *
-     * @param AccessTokenInterface $accessToken
-     * @param string|null          $extensionId      The extension’s client ID. If specified, the response contains a
+     * URL
+     * GET https://api.twitch.tv/helix/analytics/extensions
+     *
+     * @see https://dev.twitch.tv/docs/insights Insights & Analytics
+     *
+     * @param AccessTokenInterface   $accessToken    Requires a user access token that includes the
+     *                                               analytics:read:extensions scope.
+     * @param string|null            $extensionId    The extension’s client ID. If specified, the response contains a
      *                                               report for the specified extension. If not specified, the response
      *                                               includes a report for each extension that the authenticated user
      *                                               owns.
-     * @param string|null          $type             The type of analytics report to get. Possible values are:
-     *                                               overview_v2
-     * @param DateTime|null        $startedAt        The reporting window’s start date, in RFC3339 format. Set the time
+     * @param string|null            $type           The type of analytics report to get. Possible values are:
+     *                                               - overview_v2
+     * @param DateTimeImmutable|null $startedAt      The reporting window’s start date, in RFC3339 format. Set the time
      *                                               portion to zeroes
      *                                               (for example, 2021-10-22T00:00:00Z).
      *
@@ -41,7 +46,7 @@ class AnalyticsApi extends AbstractApi
      *
      *                                               The report contains one row of data for each day in the reporting
      *                                               window.
-     * @param DateTime|null        $endedAt          The reporting window’s end date, in RFC3339 format. Set the time
+     * @param DateTimeImmutable|null $endedAt        The reporting window’s end date, in RFC3339 format. Set the time
      *                                               portion to zeroes
      *                                               (for example, 2021-10-27T00:00:00Z). The report is inclusive of
      *                                               the end date.
@@ -51,26 +56,25 @@ class AnalyticsApi extends AbstractApi
      *                                               specify an end date that’s earlier than today minus one to two
      *                                               days. If not, the API ignores your end date and uses an end date
      *                                               that is today minus one to two days.
-     * @param int                  $first            The maximum number of report URLs to return per page in the
+     * @param int                    $first          The maximum number of report URLs to return per page in the
      *                                               response. The minimum page size is 1 URL per page and the maximum
      *                                               is 100 URLs per page. The default is 20.
      *
      *                                               NOTE: While you may specify a maximum value of 100, the response
      *                                               will contain at most 20 URLs per page.
-     * @param string|null          $after            The cursor used to get the next page of results. The Pagination
+     * @param string|null            $after          The cursor used to get the next page of results. The Pagination
      *                                               object in the response contains the cursor’s value.
      *
      *                                               This parameter is ignored if the extension_id parameter is set.
      *
      * @return TwitchPaginatedDataResponse<ExtensionAnalytics[]>
-     * @throws JsonException
      */
     public function getExtensionAnalytics(
         AccessTokenInterface $accessToken,
         string $extensionId = null,
         string $type = null,
-        DateTime $startedAt = null,
-        DateTime $endedAt = null,
+        DateTimeImmutable $startedAt = null,
+        DateTimeImmutable $endedAt = null,
         int $first = 20,
         string $after = null
     ): TwitchPaginatedDataResponse {
@@ -79,8 +83,8 @@ class AnalyticsApi extends AbstractApi
             query: [
                 'extension_id' => $extensionId,
                 'type' => $type,
-                'started_at' => $startedAt?->format(DATE_RFC3339),
-                'ended_at' => $endedAt?->format(DATE_RFC3339),
+                'started_at' => $startedAt?->format(DATE_RFC3339_EXTENDED),
+                'ended_at' => $endedAt?->format(DATE_RFC3339_EXTENDED),
                 'first' => $first,
                 'after' => $after,
             ],
@@ -93,16 +97,22 @@ class AnalyticsApi extends AbstractApi
      * Gets an analytics report for one or more games. The response contains the URLs used to download the reports (CSV
      * files).
      *
-     * Authentication:
+     * Authorization
      * Requires a user access token that includes the analytics:read:games scope.
      *
-     * @param AccessTokenInterface $accessToken
-     * @param string|null          $gameId         The game’s client ID. If specified, the response contains a report
+     * URL
+     * GET https://api.twitch.tv/helix/analytics/games
+     *
+     * @see https://dev.twitch.tv/docs/insights Insights & Analytics
+     *
+     * @param AccessTokenInterface   $accessToken  Requires a user access token that includes the analytics:read:games
+     *                                             scope.
+     * @param string|null            $gameId       The game’s client ID. If specified, the response contains a report
      *                                             for the specified game. If not specified, the response includes a
      *                                             report for each of the authenticated user’s games.
-     * @param string|null          $type           The type of analytics report to get. Possible values are:
+     * @param string|null            $type         The type of analytics report to get. Possible values are:
      *                                             overview_v2
-     * @param DateTime|null        $startedAt      The reporting window’s start date, in RFC3339 format. Set the time
+     * @param DateTimeImmutable|null $startedAt    The reporting window’s start date, in RFC3339 format. Set the time
      *                                             portion to zeroes
      *                                             (for example,
      *                                             2021-10-22T00:00:00Z). If you specify a start date, you must specify
@@ -116,7 +126,7 @@ class AnalyticsApi extends AbstractApi
      *
      *                                             The report contains one row of data for each day in the reporting
      *                                             window.
-     * @param DateTime|null        $endedAt        The reporting window’s end date, in RFC3339 format. Set the time
+     * @param DateTimeImmutable|null $endedAt      The reporting window’s end date, in RFC3339 format. Set the time
      *                                             portion to zeroes (for example,
      *                                             2021-10-22T00:00:00Z). The report is inclusive of the end date.
      *
@@ -125,26 +135,25 @@ class AnalyticsApi extends AbstractApi
      *                                             an end date that’s earlier than today minus one to two days. If not,
      *                                             the API ignores your end date and uses an end date that is today
      *                                             minus one to two days.
-     * @param int                  $first          The maximum number of report URLs to return per page in the
+     * @param int                    $first        The maximum number of report URLs to return per page in the
      *                                             response. The minimum page size is 1 URL per page and the maximum is
      *                                             100 URLs per page. The default is 20.
      *
      *                                             NOTE: While you may specify a maximum value of 100, the response
      *                                             will contain at most 20 URLs per page.
-     * @param string|null          $after          The cursor used to get the next page of results. The Pagination
+     * @param string|null            $after        The cursor used to get the next page of results. The Pagination
      *                                             object in the response contains the cursor’s value.
      *
      *                                             This parameter is ignored if game_id parameter is set.
      *
      * @return TwitchPaginatedDataResponse<GameAnalytics[]>
-     * @throws JsonException
      */
     public function getGameAnalytics(
         AccessTokenInterface $accessToken,
         string $gameId = null,
         string $type = null,
-        DateTime $startedAt = null,
-        DateTime $endedAt = null,
+        DateTimeImmutable $startedAt = null,
+        DateTimeImmutable $endedAt = null,
         int $first = 20,
         string $after = null
     ): TwitchPaginatedDataResponse {

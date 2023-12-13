@@ -17,11 +17,13 @@ class GamesApi extends AbstractApi
     /**
      * Gets information about all broadcasts on Twitch.
      *
-     * Authentication:
+     * Authorization
      * Requires an app access token or user access token.
      *
-     * @param AccessTokenInterface $accessToken
+     * URL
+     * GET https://api.twitch.tv/helix/games/top
      *
+     * @param AccessTokenInterface $accessToken Requires an app access token or user access token.
      * @param string|null          $after       The cursor used to get the next page of results. The Pagination object
      *                                          in the response contains the cursor’s value.
      * @param string|null          $before      The cursor used to get the previous page of results. The Pagination
@@ -31,8 +33,6 @@ class GamesApi extends AbstractApi
      *                                          page. The default is 20.
      *
      * @return TwitchPaginatedDataResponse<Game[]>
-     * @throws JsonException
-     * @throws MappingError
      */
     public function getTopGames(
         AccessTokenInterface $accessToken,
@@ -59,11 +59,13 @@ class GamesApi extends AbstractApi
      * a combination of IDs and names. If you specify a combination of IDs and names, the total number of IDs and names
      * must not exceed 100.
      *
-     * Authentication:
+     * Authorization
      * Requires an app access token or user access token.
      *
-     * @param AccessTokenInterface $accessToken
+     * URL
+     * GET https://api.twitch.tv/helix/games
      *
+     * @param AccessTokenInterface $accessToken  Requires an app access token or user access token.
      * @param array<string>        $id           The ID of the category or game to get. Include this parameter for each
      *                                           category or game you want to get. For example, &id=1234&id=5678. You
      *                                           may specify a maximum of 100 IDs. The endpoint ignores duplicate and
@@ -79,8 +81,6 @@ class GamesApi extends AbstractApi
      *                                           invalid IDs or IDs that weren’t found.
      *
      * @return TwitchDataResponse<Game[]>
-     * @throws JsonException
-     * @throws MappingError
      */
     public function getGames(
         AccessTokenInterface $accessToken,

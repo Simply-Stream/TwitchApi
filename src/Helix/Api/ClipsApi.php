@@ -37,12 +37,15 @@ class ClipsApi extends AbstractApi
      * Clips returns the clip, the clip was successfully created. If after 15 seconds Get Clips hasn’t returned the
      * clip, assume it failed.
      *
-     * Authentication:
+     * Authorization
      * Requires a user access token that includes the clips:edit scope.
+     *
+     * URL
+     * POST https://api.twitch.tv/helix/clips
      *
      * @param string               $broadcasterId The ID of the broadcaster whose stream you want to create a clip
      *                                            from.
-     * @param AccessTokenInterface $accessToken
+     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the clips:edit scope.
      * @param bool                 $hasDelay      A Boolean value that determines whether the API captures the clip at
      *                                            the moment the viewer requests it or after a delay. If false
      *                                            (default), Twitch captures the clip at the moment the viewer requests
@@ -51,7 +54,6 @@ class ClipsApi extends AbstractApi
      *                                            the capture window to the right slightly).
      *
      * @return TwitchDataResponse<ClipProcess[]>
-     * @throws JsonException
      */
     public function createClip(
         string $broadcasterId,
@@ -73,11 +75,13 @@ class ClipsApi extends AbstractApi
     /**
      * Gets one or more video clips that were captured from streams. For information about clips, see How to use clips.
      *
-     * Authentication:
+     * Authorization
      * Requires an app access token or user access token.
      *
-     * @param AccessTokenInterface $accessToken
+     * URL
+     * GET https://api.twitch.tv/helix/clips
      *
+     * @param AccessTokenInterface $accessToken        Requires an app access token or user access token.
      * @param string|null          $broadcasterId      An ID that identifies the broadcaster whose video clips you want
      *                                                 to get. Use this parameter to get clips that were captured from
      *                                                 the broadcaster’s streams.
@@ -104,8 +108,6 @@ class ClipsApi extends AbstractApi
      * @param bool|null            $isFeatured
      *
      * @return TwitchDataResponse<Clip[]>
-     * @throws JsonException
-     * @throws MappingError
      */
     public function getClips(
         AccessTokenInterface $accessToken,

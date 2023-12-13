@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
-use CuyZ\Valinor\Mapper\MappingError;
 use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\CreateEventSubSubscriptionRequest;
@@ -19,7 +18,7 @@ class EventSubApi extends AbstractApi
     /**
      * Creates an EventSub subscription.
      *
-     * Authorization:
+     * Authorization
      * If you use webhooks to receive events, the request must specify an app access token. The request will fail if
      * you use a user access token. If the subscription type requires user authorization, the user must have granted
      * your app (client ID) permissions to receive those events before you subscribe to them. For example, to subscribe
@@ -31,14 +30,22 @@ class EventSubApi extends AbstractApi
      * required scope. However, if the subscription type doesn’t include user authorization, the token may include any
      * scopes or no scopes.
      *
+     * URL
+     * POST https://api.twitch.tv/helix/eventsub/subscriptions
+     *
      * @template T of Subscription
      *
      * @param T                    $subscription
-     * @param AccessTokenInterface $accessToken
+     * @param AccessTokenInterface $accessToken If you use webhooks to receive events, the request must specify an app
+     *                                          access token. The request will fail if you use a user access token. If
+     *                                          the subscription type requires user authorization, the user must have
+     *                                          granted your app (client ID) permissions to receive those events before
+     *                                          you subscribe to them. For example, to subscribe to channel.subscribe
+     *                                          events, your app must get a user access token that includes the
+     *                                          channel:read:subscriptions scope, which adds the required permission to
+     *                                          your app access token’s client ID.
      *
      * @return EventSubResponse<T[]>
-     * @throws MappingError
-     * @throws JsonException
      */
     public function createEventSubSubscription(
         Subscription $subscription,
@@ -69,15 +76,19 @@ class EventSubApi extends AbstractApi
      * If you use WebSockets to receive events, the request must specify a user access token. The request will fail if
      * you use an app access token. The token may include any scopes.
      *
-     * @param string                    $id
-     * @param AccessTokenInterface|null $accessToken
+     * URL
+     * DELETE https://api.twitch.tv/helix/eventsub/subscriptions
+     *
+     * @param string               $id
+     * @param AccessTokenInterface $accessToken      If you use webhooks to receive events, the request must specify an
+     *                                               app access token. The request will fail if you use a user access
+     *                                               token.
      *
      * @return void
-     * @throws JsonException
      */
     public function deleteEventSubSubscription(
         string $id,
-        AccessTokenInterface $accessToken = null
+        AccessTokenInterface $accessToken
     ): void {
         $this->sendRequest(
             path: self::BASE_PATH . '/subscriptions',
@@ -99,38 +110,44 @@ class EventSubApi extends AbstractApi
      * If you use WebSockets to receive events, the request must specify a user access token. The request will fail if
      * you use an app access token. The token may include any scopes.
      *
-     * @param string|null               $status Filter subscriptions by its status. Possible values are:
-     *                                          - enabled — The subscription is enabled.
-     *                                          - webhook_callback_verification_pending — The subscription is pending
-     *                                          verification of the specified callback URL.
-     *                                          - webhook_callback_verification_failed — The specified callback URL
-     *                                          failed verification.
-     *                                          - notification_failures_exceeded — The notification delivery failure
-     *                                          rate was too high.
-     *                                          - authorization_revoked — The authorization was revoked for one or more
-     *                                          users specified in the Condition object.
-     *                                          - user_removed — One of the users specified in the Condition object was
-     *                                          removed.
-     *                                          - version_removed — The subscribed to subscription type and version is
-     *                                          no longer supported.
-     * @param string|null               $type   Filter subscriptions by subscription type. For a list of subscription
-     *                                          types, see Subscription Types.
-     * @param string|null               $userId Filter subscriptions by user ID. The response contains subscriptions
-     *                                          where this ID matches a user ID that you specified in the Condition
-     *                                          object when you created the subscription.
-     * @param string|null               $after  The cursor used to get the next page of results. The pagination object
-     *                                          in the response contains the cursor’s value.
-     * @param AccessTokenInterface|null $accessToken
+     * URL
+     * GET https://api.twitch.tv/helix/eventsub/subscriptions
+     *
+     * @param string|null          $status           Filter subscriptions by its status. Possible values are:
+     *                                               - enabled — The subscription is enabled.
+     *                                               - webhook_callback_verification_pending — The subscription is
+     *                                               pending verification of the specified callback URL.
+     *                                               - webhook_callback_verification_failed — The specified callback
+     *                                               URL
+     *                                               failed verification.
+     *                                               - notification_failures_exceeded — The notification delivery
+     *                                               failure rate was too high.
+     *                                               - authorization_revoked — The authorization was revoked for one or
+     *                                               more users specified in the Condition object.
+     *                                               - user_removed — One of the users specified in the Condition
+     *                                               object was removed.
+     *                                               - version_removed — The subscribed to subscription type and
+     *                                               version is no longer supported.
+     * @param string|null          $type             Filter subscriptions by subscription type. For a list of
+     *                                               subscription types, see Subscription Types.
+     * @param string|null          $userId           Filter subscriptions by user ID. The response contains
+     *                                               subscriptions where this ID matches a user ID that you specified
+     *                                               in the Condition object when you created the subscription.
+     * @param string|null          $after            The cursor used to get the next page of results. The pagination
+     *                                               object in the response contains the cursor’s value.
+     * @param AccessTokenInterface $accessToken      If you use webhooks to receive events, the request must specify an
+     *                                               app access token. The request will fail if you use a user access
+     *                                               token.
      *
      * @return PaginatedEventSubResponse<Subscription[]>
      * @throws JsonException
      */
     public function getEventSubSubscriptions(
+        AccessTokenInterface $accessToken,
         string $status = null,
         string $type = null,
         string $userId = null,
         string $after = null,
-        AccessTokenInterface $accessToken = null
     ): PaginatedEventSubResponse {
         return $this->sendRequest(
             path: self::BASE_PATH . '/subscriptions',

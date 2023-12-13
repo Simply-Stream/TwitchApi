@@ -66,7 +66,7 @@ class BitsApiTest extends UserAwareFunctionalTestCase
         $apiClient->setBaseUrl('http://localhost:8000/mock/');
 
         $bitsApi = new BitsApi($apiClient);
-        $getCheermotesResponse = $bitsApi->getCheermotes($this->users[0]['id'], new AccessToken($this->appAccessToken));
+        $getCheermotesResponse = $bitsApi->getCheermotes(new AccessToken($this->appAccessToken), $this->users[0]['id']);
 
         $this->assertInstanceOf(TwitchDataResponse::class, $getCheermotesResponse);
         $this->assertContainsOnlyInstancesOf(Cheermote::class, $getCheermotesResponse->getData());
@@ -91,10 +91,10 @@ class BitsApiTest extends UserAwareFunctionalTestCase
 
         $bitsApi = new BitsApi($apiClient);
         $getExtensionTransactions = $bitsApi->getExtensionTransactions(
-            '',
-            accessToken: new AccessToken(
+            new AccessToken(
                 $this->appAccessToken
-            )
+            ),
+            ''
         );
     }
 }

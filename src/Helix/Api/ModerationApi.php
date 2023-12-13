@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
-use CuyZ\Valinor\Mapper\MappingError;
 use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApi\Helix\Models\Moderation\AddBlockedTermRequest;
@@ -48,17 +47,20 @@ class ModerationApi extends AbstractApi
      * The above limits are in addition to the standard Twitch API rate limits. The rate limit headers in the response
      * represent the Twitch rate limits and not the above limits.
      *
-     * Authorization:
+     * Authorization
      * Requires a user access token that includes the moderation:read scope.
+     *
+     * URL
+     * POST https://api.twitch.tv/helix/moderation/enforcements/status
      *
      * @param string                    $broadcasterId The ID of the broadcaster whose AutoMod settings and list of
      *                                                 blocked terms are used to check the message. This ID must match
      *                                                 the user ID in the access token.
      * @param CheckAutoModStatusRequest $body
-     * @param AccessTokenInterface      $accessToken
+     * @param AccessTokenInterface      $accessToken   Requires a user access token that includes the moderation:read
+     *                                                 scope.
      *
      * @return TwitchDataResponse<AutoModStatus[]>
-     * @throws JsonException
      */
     public function checkAutoModStatus(
         string $broadcasterId,
@@ -84,14 +86,17 @@ class ModerationApi extends AbstractApi
      * To get messages that AutoMod is holding for review, subscribe to the automod-queue.<moderator_id>.<channel_id>
      * topic using PubSub. PubSub sends a notification to your app when AutoMod holds a message for review.
      *
-     * Authorization:
+     * Authorization
      * Requires a user access token that includes the moderator:manage:automod scope.
      *
+     * URL
+     * POST https://api.twitch.tv/helix/moderation/automod/message
+     *
      * @param ManageHeldAutoModMessageRequest $body
-     * @param AccessTokenInterface            $accessToken
+     * @param AccessTokenInterface            $accessToken Requires a user access token that includes the
+     *                                                     moderator:manage:automod scope.
      *
      * @return void
-     * @throws JsonException
      */
     public function manageHeldAutoModMessages(
         ManageHeldAutoModMessageRequest $body,
@@ -109,15 +114,18 @@ class ModerationApi extends AbstractApi
      * Gets the broadcaster’s AutoMod settings. The settings are used to automatically block inappropriate or harassing
      * messages from appearing in the broadcaster’s chat room.
      *
-     * Authorization:
+     * Authorization
      * Requires a user access token that includes the moderator:read:automod_settings scope.
+     *
+     * URL
+     * GET https://api.twitch.tv/helix/moderation/automod/settings
      *
      * @param string               $broadcasterId
      * @param string               $moderatorId
-     * @param AccessTokenInterface $accessToken
+     * @param AccessTokenInterface $accessToken Requires a user access token that includes the
+     *                                          moderator:read:automod_settings scope.
      *
      * @return TwitchDataResponse<AutoModSettings[]>
-     * @throws JsonException
      */
     public function getAutoModSettings(
         string $broadcasterId,
@@ -139,8 +147,11 @@ class ModerationApi extends AbstractApi
      * Updates the broadcaster’s AutoMod settings. The settings are used to automatically block inappropriate or
      * harassing messages from appearing in the broadcaster’s chat room.
      *
-     * Authorization:
+     * Authorization
      * Requires a user access token that includes the moderator:manage:automod_settings scope.
+     *
+     * URL
+     * PUT https://api.twitch.tv/helix/moderation/automod/settings
      *
      * @param string                       $broadcasterId The ID of the broadcaster whose AutoMod settings you want to
      *                                                    update.
@@ -148,10 +159,10 @@ class ModerationApi extends AbstractApi
      *                                                    moderate the broadcaster’s chat room. This ID must match the
      *                                                    user ID in the user access token.
      * @param UpdateAutoModSettingsRequest $body
-     * @param AccessTokenInterface         $accessToken
+     * @param AccessTokenInterface         $accessToken   Requires a user access token that includes the
+     *                                                    moderator:manage:automod_settings scope.
      *
      * @return TwitchDataResponse<AutoModSettings[]>
-     * @throws JsonException
      */
     public function updateAutoModSettings(
         string $broadcasterId,
@@ -175,12 +186,16 @@ class ModerationApi extends AbstractApi
     /**
      * Gets all users that the broadcaster banned or put in a timeout.
      *
-     * Authentication:
-     * Requires a user access token that includes the moderation:read scope.
+     * Authorization
+     * Requires a user access token that includes the moderation:read or moderator:manage:banned_users scope.
+     *
+     * URL
+     * GET https://api.twitch.tv/helix/moderation/banned
      *
      * @param string               $broadcasterId The ID of the broadcaster whose list of banned users you want to get.
      *                                            This ID must match the user ID in the access token.
-     * @param AccessTokenInterface $accessToken
+     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the moderation:read or
+     *                                            moderator:manage:banned_users scope.
      * @param string|null          $userId        A list of user IDs used to filter the results. To specify more than
      *                                            one ID, include this parameter for each user you want to get. For
      *                                            example, user_id=1234&user_id=5678. You may specify a maximum of 100
@@ -199,7 +214,6 @@ class ModerationApi extends AbstractApi
      *                                            object in the response contains the cursor’s value.
      *
      * @return TwitchPaginatedDataResponse<BannedUser[]>
-     * @throws JsonException
      */
     public function getBannedUsers(
         string $broadcasterId,
@@ -233,8 +247,11 @@ class ModerationApi extends AbstractApi
      *
      * To remove a ban or end a timeout, see Unban user.
      *
-     * Authentication:
+     * Authorization
      * Requires a user access token that includes the moderator:manage:banned_users scope.
+     *
+     * URL
+     * POST https://api.twitch.tv/helix/moderation/bans
      *
      * @param string               $broadcasterId The ID of the broadcaster whose chat room the user is being banned
      *                                            from.
@@ -242,11 +259,10 @@ class ModerationApi extends AbstractApi
      *                                            the broadcaster’s chat room. This ID must match the user ID in the
      *                                            user access token.
      * @param BanUserRequest       $body
-     * @param AccessTokenInterface $accessToken
+     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the
+     *                                            moderator:manage:banned_users scope.
      *
      * @return TwitchDataResponse<UserBan[]>
-     * @throws JsonException
-     * @throws MappingError
      */
     public function banUser(
         string $broadcasterId,
@@ -272,8 +288,11 @@ class ModerationApi extends AbstractApi
      *
      * To ban a user, see Ban user.
      *
-     * Authentication:
+     * Authorization
      * Requires a user access token that includes the moderator:manage:banned_users scope.
+     *
+     * URL
+     * DELETE https://api.twitch.tv/helix/moderation/bans
      *
      * @param string               $broadcasterId The ID of the broadcaster whose chat room the user is banned from
      *                                            chatting in.
@@ -281,10 +300,10 @@ class ModerationApi extends AbstractApi
      *                                            the broadcaster’s chat room. This ID must match the user ID in the
      *                                            user access token.
      * @param string               $userId        The ID of the user to remove the ban or timeout from.
-     * @param AccessTokenInterface $accessToken
+     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the
+     *                                            moderator:manage:banned_users scope.
      *
      * @return void
-     * @throws JsonException
      */
     public function unbanUser(
         string $broadcasterId,
@@ -308,14 +327,19 @@ class ModerationApi extends AbstractApi
      * Gets the broadcaster’s list of non-private, blocked words or phrases. These are the terms that the broadcaster
      * or moderator added manually or that were denied by AutoMod.
      *
-     * Authorization:
-     * Requires a user access token that includes the moderator:read:blocked_terms scope.
+     * Authorization
+     * Requires a user access token that includes the moderator:read:blocked_terms or moderator:manage:blocked_terms
+     * scope.
+     *
+     * URL
+     * GET https://api.twitch.tv/helix/moderation/blocked_terms
      *
      * @param string               $broadcasterId The ID of the broadcaster whose blocked terms you’re getting.
      * @param string               $moderatorId   The ID of the broadcaster or a user that has permission to moderate
      *                                            the broadcaster’s chat room. This ID must match the user ID in the
      *                                            user access token.
-     * @param AccessTokenInterface $accessToken
+     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the
+     *                                            moderator:read:blocked_terms or moderator:manage:blocked_terms scope.
      * @param int                  $first         The maximum number of items to return per page in the response. The
      *                                            minimum page size is
      *                                            1 item per page and the maximum is 100 items per page. The default is
@@ -350,18 +374,21 @@ class ModerationApi extends AbstractApi
      * Adds a word or phrase to the broadcaster’s list of blocked terms. These are the terms that the broadcaster
      * doesn’t want used in their chat room.
      *
-     * Authentication:
+     * Authorization
      * Requires a user access token that includes the moderator:manage:blocked_terms scope.
+     *
+     * URL
+     * POST https://api.twitch.tv/helix/moderation/blocked_terms
      *
      * @param string                $broadcasterId The ID of the broadcaster that owns the list of blocked terms.
      * @param string                $moderatorId   The ID of the broadcaster or a user that has permission to moderate
      *                                             the broadcaster’s chat room. This ID must match the user ID in the
      *                                             user access token.
      * @param AddBlockedTermRequest $body
-     * @param AccessTokenInterface  $accessToken
+     * @param AccessTokenInterface  $accessToken   Requires a user access token that includes the
+     *                                             moderator:manage:blocked_terms scope.
      *
      * @return TwitchPaginatedDataResponse<BlockedTerm[]>
-     * @throws JsonException
      */
     public function addBlockedTerm(
         string $broadcasterId,
@@ -385,8 +412,11 @@ class ModerationApi extends AbstractApi
     /**
      * Removes the word or phrase from the broadcaster’s list of blocked terms.
      *
-     * Authentication:
+     * Authorization
      * Requires a user access token that includes the moderator:manage:blocked_terms scope.
+     *
+     * URL
+     * DELETE https://api.twitch.tv/helix/moderation/blocked_terms
      *
      * @param string               $broadcasterId The ID of the broadcaster that owns the list of blocked terms.
      * @param string               $moderatorId   The ID of the broadcaster or a user that has permission to moderate
@@ -394,10 +424,10 @@ class ModerationApi extends AbstractApi
      *                                            user access token.
      * @param string               $id            The ID of the blocked term to remove from the broadcaster’s list of
      *                                            blocked terms.
-     * @param AccessTokenInterface $accessToken
+     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the
+     *                                            moderator:manage:blocked_terms scope.
      *
      * @return void
-     * @throws JsonException
      */
     public function removeBlockedTerm(
         string $broadcasterId,
@@ -420,16 +450,28 @@ class ModerationApi extends AbstractApi
     /**
      * Removes a single chat message or all chat messages from the broadcaster’s chat room.
      *
-     * Authentication:
+     * Authorization
      * Requires a user access token that includes the moderator:manage:chat_messages scope.
      *
-     * @param string               $broadcasterId
-     * @param string               $moderatorId
-     * @param AccessTokenInterface $accessToken
-     * @param string|null          $messageId
+     * URL
+     * DELETE https://api.twitch.tv/helix/moderation/chat
+     *
+     * @param string               $broadcasterId The ID of the broadcaster that owns the chat room to remove messages
+     *                                            from.
+     * @param string               $moderatorId   The ID of the broadcaster or a user that has permission to moderate
+     *                                            the broadcaster’s chat room. This ID must match the user ID in the
+     *                                            user access token.
+     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the
+     *                                            moderator:manage:chat_messages scope.
+     * @param string|null          $messageId     The ID of the message to remove. The id tag in the PRIVMSG tag
+     *                                            contains the message’s ID. Restrictions:
+     *                                            - The message must have been created within the last 6 hours.
+     *                                            - The message must not belong to the broadcaster.
+     *                                            - The message must not belong to another moderator.
+     *                                            If not specified, the request removes all messages in the
+     *                                            broadcaster’s chat room.
      *
      * @return void
-     * @throws JsonException
      */
     public function deleteChatMessages(
         string $broadcasterId,
@@ -452,13 +494,18 @@ class ModerationApi extends AbstractApi
     /**
      * Gets all users allowed to moderate the broadcaster’s chat room.
      *
-     * Authorization:
+     * Authorization
      * Requires a user access token that includes the moderation:read scope. If your app also adds and removes
      * moderators, you can use the channel:manage:moderators scope instead.
      *
+     * URL
+     * GET https://api.twitch.tv/helix/moderation/moderators
+     *
      * @param string               $broadcasterId      The ID of the broadcaster whose list of moderators you want to
      *                                                 get. This ID must match the user ID in the access token.
-     * @param AccessTokenInterface $accessToken
+     * @param AccessTokenInterface $accessToken        Requires a user access token that includes the moderation:read
+     *                                                 scope. If your app also adds and removes moderators, you can use
+     *                                                 the channel:manage:moderators scope instead.
      * @param string|null          $userId             A list of user IDs used to filter the results. To specify more
      *                                                 than one ID, include this parameter for each moderator you want
      *                                                 to get. For example, user_id=1234&user_id=5678. You may specify
@@ -502,17 +549,20 @@ class ModerationApi extends AbstractApi
      *
      * Rate Limits: The broadcaster may add a maximum of 10 moderators within a 10-second window.
      *
-     * Authorization:
+     * Authorization
      * Requires a user access token that includes the channel:manage:moderators scope.
+     *
+     * URL
+     * POST https://api.twitch.tv/helix/moderation/moderators
      *
      * @param string               $broadcasterId The ID of the broadcaster that owns the chat room. This ID must match
      *                                            the user ID in the access token.
      * @param string               $userId        The ID of the user to add as a moderator in the broadcaster’s chat
      *                                            room.
-     * @param AccessTokenInterface $accessToken
+     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the
+     *                                            channel:manage:moderators scope.
      *
      * @return void
-     * @throws JsonException
      */
     public function addChannelModerator(
         string $broadcasterId,
@@ -535,17 +585,20 @@ class ModerationApi extends AbstractApi
      *
      * Rate Limits: The broadcaster may remove a maximum of 10 moderators within a 10-second window.
      *
-     * Authorization:
+     * Authorization
      * Requires a user access token that includes the channel:manage:moderators scope.
+     *
+     * URL
+     * DELETE https://api.twitch.tv/helix/moderation/moderators
      *
      * @param string               $broadcasterId The ID of the broadcaster that owns the chat room. This ID must match
      *                                            the user ID in the access token.
      * @param string               $userId        The ID of the user to remove as a moderator from the broadcaster’s
      *                                            chat room.
-     * @param AccessTokenInterface $accessToken
+     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the
+     *                                            channel:manage:moderators scope.
      *
      * @return void
-     * @throws JsonException
      */
     public function removeChannelModerator(
         string $broadcasterId,
@@ -566,13 +619,18 @@ class ModerationApi extends AbstractApi
     /**
      * Gets a list of the broadcaster’s VIPs.
      *
-     * Authorization:
+     * Authorization
      * Requires a user access token that includes the channel:read:vips scope. If your app also adds and removes VIP
      * status, you can use the channel:manage:vips scope instead.
      *
+     * URL
+     * GET https://api.twitch.tv/helix/channels/vips
+     *
      * @param string               $broadcasterId The ID of the broadcaster whose list of VIPs you want to get. This ID
      *                                            must match the user ID in the access token.
-     * @param AccessTokenInterface $accessToken
+     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the channel:read:vips
+     *                                            scope. If your app also adds and removes VIP status, you can use the
+     *                                            channel:manage:vips scope instead.
      * @param string|null          $userId        Filters the list for specific VIPs. To specify more than one user,
      *                                            include the user_id parameter for each user to get. For example,
      *                                            &user_id=1234&user_id=5678. The maximum number of IDs that you may
@@ -585,7 +643,6 @@ class ModerationApi extends AbstractApi
      *                                            object in the response contains the cursor’s value.
      *
      * @return TwitchPaginatedDataResponse<VIP[]>
-     * @throws JsonException
      */
     public function getVips(
         string $broadcasterId,
@@ -612,16 +669,19 @@ class ModerationApi extends AbstractApi
      *
      * Rate Limits: The broadcaster may add a maximum of 10 VIPs within a 10-second window.
      *
-     * Authorization:
+     * Authorization
      * Requires a user access token that includes the channel:manage:vips scope.
+     *
+     * URL
+     * POST https://api.twitch.tv/helix/channels/vips
      *
      * @param string               $broadcasterId The ID of the broadcaster that’s adding the user as a VIP. This ID
      *                                            must match the user ID in the access token.
      * @param string               $userId        The ID of the user to give VIP status to.
-     * @param AccessTokenInterface $accessToken
+     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the channel:manage:vips
+     *                                            scope.
      *
      * @return void
-     * @throws JsonException
      */
     public function addChannelVip(
         string $broadcasterId,
@@ -648,16 +708,19 @@ class ModerationApi extends AbstractApi
      *
      * Rate Limits: The broadcaster may remove a maximum of 10 VIPs within a 10-second window.
      *
-     * Authorization:
+     * Authorization
      * Requires a user access token that includes the channel:manage:vips scope.
+     *
+     * URL
+     * DELETE https://api.twitch.tv/helix/channels/vips
      *
      * @param string               $broadcasterId The ID of the broadcaster who owns the channel where the user has VIP
      *                                            status.
      * @param string               $userId        The ID of the user to remove VIP status from.
-     * @param AccessTokenInterface $accessToken
+     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the channel:manage:vips
+     *                                            scope.
      *
      * @return void
-     * @throws JsonException
      */
     public function removeChannelVip(
         string $broadcasterId,
@@ -682,8 +745,11 @@ class ModerationApi extends AbstractApi
      * abuse coming from one or more accounts. When activated, Shield Mode applies the overrides that the broadcaster
      * configured in the Twitch UX. If the broadcaster hasn’t configured Shield Mode, it applies default overrides.
      *
-     * Authorization:
+     * Authorization
      * Requires a user access token that includes the moderator:manage:shield_mode scope.
+     *
+     * URL
+     * PUT https://api.twitch.tv/helix/moderation/shield_mode
      *
      * @param string                        $broadcasterId The ID of the broadcaster whose Shield Mode you want to
      *                                                     activate or deactivate.
@@ -691,7 +757,8 @@ class ModerationApi extends AbstractApi
      *                                                     broadcaster’s moderators. This ID must match the user ID in
      *                                                     the access token.
      * @param UpdateShieldModeStatusRequest $body
-     * @param AccessTokenInterface          $accessToken
+     * @param AccessTokenInterface          $accessToken   Requires a user access token that includes the
+     *                                                     moderator:manage:shield_mode scope.
      *
      * @return TwitchDataResponse<ShieldModeStatus[]>
      * @throws JsonException
@@ -721,17 +788,20 @@ class ModerationApi extends AbstractApi
      * To receive notification when the broadcaster activates and deactivates Shield Mode, subscribe to the
      * channel.shield_mode.begin and channel.shield_mode.end subscription types.
      *
-     * Authorization:
+     * Authorization
      * Requires a user access token that includes the moderator:read:shield_mode or moderator:manage:shield_mode scope.
+     *
+     * URL
+     * GET https://api.twitch.tv/helix/moderation/shield_mode
      *
      * @param string               $broadcasterId The ID of the broadcaster whose Shield Mode activation status you
      *                                            want to get.
      * @param string               $moderatorId   The ID of the broadcaster or a user that is one of the broadcaster’s
      *                                            moderators. This ID must match the user ID in the access token.
-     * @param AccessTokenInterface $accessToken
+     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the
+     *                                            moderator:read:shield_mode or moderator:manage:shield_mode scope.
      *
      * @return TwitchDataResponse<ShieldModeStatus[]>
-     * @throws JsonException
      */
     public function getShieldModeStatus(
         string $broadcasterId,

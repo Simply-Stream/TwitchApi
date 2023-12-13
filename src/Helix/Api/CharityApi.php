@@ -27,12 +27,15 @@ class CharityApi extends AbstractApi
      * Authorization
      * Requires a user access token that includes the channel:read:charity scope.
      *
+     * URL
+     * GET https://api.twitch.tv/helix/charity/campaigns
+     *
      * @param string               $broadcasterId The ID of the broadcaster that’s currently running a charity
      *                                            campaign. This ID must match the user ID in the access token.
-     * @param AccessTokenInterface $accessToken
+     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the channel:read:charity
+     *                                            scope.
      *
      * @return TwitchDataResponse<CharityCampaign[]>
-     * @throws JsonException
      */
     public function getCharityCampaign(
         string $broadcasterId,
@@ -56,9 +59,13 @@ class CharityApi extends AbstractApi
      * Authorization
      * Requires a user access token that includes the channel:read:charity scope.
      *
+     * URL
+     * GET https://api.twitch.tv/helix/charity/donations
+     *
      * @param string               $broadcasterId The ID of the broadcaster that’s currently running a charity
      *                                            campaign. This ID must match the user ID in the access token.
-     * @param AccessTokenInterface $accessToken
+     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the channel:read:charity
+     *                                            scope.
      * @param int                  $first         The maximum number of items to return per page in the response. The
      *                                            minimum page size is
      *                                            1 item per page and the maximum is 100. The default is 20.
@@ -66,8 +73,6 @@ class CharityApi extends AbstractApi
      *                                            object in the response contains the cursor’s value.
      *
      * @return TwitchPaginatedDataResponse<CharityCampaignDonation[]>
-     * @throws JsonException
-     * @throws MappingError
      */
     public function getCharityCampaignDonations(
         string $broadcasterId,

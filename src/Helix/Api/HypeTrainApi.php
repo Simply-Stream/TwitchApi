@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
-use CuyZ\Valinor\Mapper\MappingError;
-use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApi\Helix\Models\HypeTrain\HypeTrainEvent;
 use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
@@ -19,10 +17,14 @@ class HypeTrainApi extends AbstractApi
      *
      * Instead of polling for events, consider subscribing to Hype Train events (Begin, Progress, End).
      *
-     * Authentication:
+     * Authorization
      * Requires a user access token that includes the channel:read:hype_train scope.
      *
-     * @param AccessTokenInterface $accessToken
+     * URL
+     * GET https://api.twitch.tv/helix/hypetrain/events
+     *
+     * @param AccessTokenInterface $accessToken        Requires a user access token that includes the
+     *                                                 channel:read:hype_train scope.
      * @param string               $broadcasterId      The ID of the broadcaster that’s running the Hype Train. This ID
      *                                                 must match the User ID in the user access token.
      * @param int                  $first              The maximum number of items to return per page in the response.
@@ -32,8 +34,6 @@ class HypeTrainApi extends AbstractApi
      *                                                 object in the response contains the cursor’s value.
      *
      * @return TwitchPaginatedDataResponse<HypeTrainEvent[]>
-     * @throws JsonException
-     * @throws MappingError
      */
     public function getHypeTrainEvents(
         string $broadcasterId,

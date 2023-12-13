@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
-use DateTime;
-use JsonException;
+use DateTimeImmutable;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApi\Helix\Models\Bits\BitsLeaderboard;
 use SimplyStream\TwitchApi\Helix\Models\Bits\Cheermote;
@@ -21,13 +20,16 @@ class BitsApi extends AbstractApi
     /**
      * Gets the Bits leaderboard for the authenticated broadcaster.
      *
-     * Authentication:
+     * Authorization
      * Requires a user access token that includes the bits:read scope.
      *
-     * @param AccessTokenInterface $accessToken
-     * @param int                  $count          The number of results to return. The minimum count is 1 and the
+     * URL
+     * GET https://api.twitch.tv/helix/bits/leaderboard
+     *
+     * @param AccessTokenInterface   $accessToken  Requires a user access token that includes the bits:read scope
+     * @param int                    $count        The number of results to return. The minimum count is 1 and the
      *                                             maximum is 100. The default is 10.
-     * @param string               $period         The time period over which data is aggregated (uses the PST time
+     * @param string                 $period       The time period over which data is aggregated (uses the PST time
      *                                             zone). Possible values are:
      *
      *                                             - day — A day spans from 00:00:00 on the day specified in started_at
@@ -43,7 +45,7 @@ class BitsApi extends AbstractApi
      *                                             specified in started_at and runs through 00:00:00 of the first day
      *                                             of the next year.
      *                                             - all — Default. The lifetime of the broadcaster's channel.
-     * @param DateTime|null        $startedAt      The start date, in RFC3339 format, used for determining the
+     * @param DateTimeImmutable|null $startedAt    The start date, in RFC3339 format, used for determining the
      *                                             aggregation period. Specify this parameter only if you specify the
      *                                             period query parameter. The start date is ignored if period is all.
      *
@@ -56,20 +58,19 @@ class BitsApi extends AbstractApi
      *
      *                                             If your start date uses the ‘+’ offset operator (for example,
      *                                             2022-01-01T00:00:00.0+05:00), you must URL encode the start date.
-     * @param string|null          $userId         An ID that identifies a user that cheered bits in the channel. If
+     * @param string|null            $userId       An ID that identifies a user that cheered bits in the channel. If
      *                                             count is greater than
      *                                             1, the response may include users ranked above and below the
      *                                             specified user. To get the leaderboard’s top leaders, don’t specify
      *                                             a user ID.
      *
      * @return TwitchDateRangeDataResponse<BitsLeaderboard[]>
-     * @throws JsonException
      */
     public function getBitsLeaderboard(
         AccessTokenInterface $accessToken,
         int $count = 10,
         string $period = 'all',
-        DateTime $startedAt = null,
+        DateTimeImmutable $startedAt = null,
         string $userId = null
     ): TwitchDateRangeDataResponse {
         return $this->sendRequest(
@@ -77,7 +78,7 @@ class BitsApi extends AbstractApi
             query: [
                 'count' => $count,
                 'period' => $period,
-                'started_at' => $startedAt?->format(DATE_RFC3339),
+                'started_at' => $startedAt?->format(DATE_RFC3339_EXTENDED),
                 'user_id' => $userId,
             ],
             type: sprintf('%s<%s[]>', TwitchDateRangeDataResponse::class, BitsLeaderboard::class),
@@ -89,10 +90,14 @@ class BitsApi extends AbstractApi
      * Gets a list of Cheermotes that users can use to cheer Bits in any Bits-enabled channel’s chat room. Cheermotes
      * are animated emotes that viewers can assign Bits to.
      *
-     * Authentication:
+     * URL
+     * GET https://api.twitch.tv/helix/bits/cheermotes
+     *
+     * Authorization
      * Requires an app access token or user access token.
      *
-     * @param string|null               $broadcasterId The ID of the broadcaster whose custom Cheermotes you want to
+     * @param AccessTokenInterface $accessToken        Requires an app access token or user access token.
+     * @param string|null          $broadcasterId      The ID of the broadcaster whose custom Cheermotes you want to
      *                                                 get. Specify the broadcaster’s ID if you want to include the
      *                                                 broadcaster’s Cheermotes in the response
      *                                                 (not all broadcasters upload Cheermotes). If not specified, the
@@ -100,14 +105,12 @@ class BitsApi extends AbstractApi
      *
      *                                                 If the broadcaster uploaded Cheermotes, the type field in the
      *                                                 response is set to channel_custom.
-     * @param AccessTokenInterface|null $accessToken
      *
      * @return TwitchDataResponse<Cheermote[]>
-     * @throws JsonException
      */
     public function getCheermotes(
+        AccessTokenInterface $accessToken,
         string $broadcasterId = null,
-        AccessTokenInterface $accessToken = null
     ): TwitchDataResponse {
         return $this->sendRequest(
             path: self::BASE_PATH . '/cheermotes',
@@ -120,33 +123,34 @@ class BitsApi extends AbstractApi
     }
 
     /**
-     * Gets a list of transactions for an extension. A transaction records the exchange of a currency (for example,
-     * Bits) for a digital product.
+     * Gets an extension’s list of transactions. A transaction records the exchange of a currency (for example, Bits)
+     * for a digital product.
      *
-     * Authentication:
+     * Authorization
      * Requires an app access token.
      *
-     * @param string                    $extensionId The ID of the extension whose list of transactions you want to
-     *                                               get.
-     * @param string|null               $id          A transaction ID used to filter the list of transactions. Specify
+     * URL
+     * GET https://api.twitch.tv/helix/extensions/transactions
+     *
+     * @param AccessTokenInterface $accessToken      Requires an app access token.
+     * @param string               $extensionId      The ID of the extension whose list of transactions you want to get.
+     * @param string|null          $id               A transaction ID used to filter the list of transactions. Specify
      *                                               this parameter for each transaction you want to get. For example,
      *                                               id=1234&id=5678. You may specify a maximum of 100 IDs.
-     * @param int                       $first       The maximum number of items to return per page in the response.
+     * @param int                  $first            The maximum number of items to return per page in the response.
      *                                               The minimum page size is 1 item per page and the maximum is 100
      *                                               items per page. The default is 20.
-     * @param string|null               $after       The cursor used to get the next page of results. The Pagination
+     * @param string|null          $after            The cursor used to get the next page of results. The Pagination
      *                                               object in the response contains the cursor’s value.
-     * @param AccessTokenInterface|null $accessToken
      *
      * @return TwitchPaginatedDataResponse<ExtensionTransactions[]>
-     * @throws JsonException
      */
     public function getExtensionTransactions(
+        AccessTokenInterface $accessToken,
         string $extensionId,
         string $id = null,
         int $first = 20,
         string $after = null,
-        AccessTokenInterface $accessToken = null
     ): TwitchPaginatedDataResponse {
         return $this->sendRequest(
             path: 'extensions/transactions',

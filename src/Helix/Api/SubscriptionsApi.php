@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
-use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApi\Helix\Models\Subscriptions\Subscription;
 use SimplyStream\TwitchApi\Helix\Models\Subscriptions\TwitchPaginatedSubPointsResponse;
@@ -16,16 +15,19 @@ class SubscriptionsApi extends AbstractApi
     /**
      * Gets a list of users that subscribe to the specified broadcaster.
      *
-     * Authentication:
+     * Authorization
      * Requires a user access token that includes the channel:read:subscriptions scope.
      *
      * A Twitch extensions may use an app access token if the broadcaster has granted the channel:read:subscriptions
      * scope from within the Twitch Extensions manager.
      *
+     * URL
+     * GET https://api.twitch.tv/helix/subscriptions
+     *
      * @param string               $broadcasterId      The broadcaster’s ID. This ID must match the user ID in the
      *                                                 access token.
-     * @param AccessTokenInterface $accessToken
-     *
+     * @param AccessTokenInterface $accessToken        Requires a user access token that includes the
+     *                                                 channel:read:subscriptions scope.
      * @param string|null          $userId             Filters the list to include only the specified subscribers. To
      *                                                 specify more than one subscriber, include this parameter for
      *                                                 each subscriber. For example,
@@ -42,7 +44,6 @@ class SubscriptionsApi extends AbstractApi
      *                                                 object in the response contains the cursor’s value.
      *
      * @return TwitchPaginatedSubPointsResponse<Subscription[]>
-     * @throws JsonException
      */
     public function getBroadcasterSubscriptions(
         string $broadcasterId,
@@ -69,20 +70,23 @@ class SubscriptionsApi extends AbstractApi
     /**
      * Checks whether the user subscribes to the broadcaster’s channel.
      *
-     * Authentication:
+     * Authorization
      * Requires a user access token that includes the user:read:subscriptions scope.
      *
      * A Twitch extensions may use an app access token if the broadcaster has granted the user:read:subscriptions scope
      * from within the Twitch Extensions manager.
      *
+     * URL
+     * GET https://api.twitch.tv/helix/subscriptions/user
+     *
      * @param string               $broadcasterId      The ID of a partner or affiliate broadcaster.
      * @param string               $userId             The ID of the user that you’re checking to see whether they
      *                                                 subscribe to the broadcaster in broadcaster_id. This ID must
      *                                                 match the user ID in the access Token.
-     * @param AccessTokenInterface $accessToken
+     * @param AccessTokenInterface $accessToken        Requires a user access token that includes the
+     *                                                 user:read:subscriptions scope.
      *
      * @return TwitchPaginatedSubPointsResponse<Subscription[]>
-     * @throws JsonException
      */
     public function checkUserSubscription(
         string $broadcasterId,

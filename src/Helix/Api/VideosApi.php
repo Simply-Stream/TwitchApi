@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
-use CuyZ\Valinor\Mapper\MappingError;
 use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
@@ -23,11 +22,13 @@ class VideosApi extends AbstractApi
      * that show playing League of Legends by users that stream in German. The filters apply only if you get videos by
      * user ID or game ID.
      *
-     * Authentication:
+     * Authorization
      * Requires an app access token or user access token.
      *
-     * @param AccessTokenInterface $accessToken
+     * URL
+     * GET https://api.twitch.tv/helix/videos
      *
+     * @param AccessTokenInterface $accessToken   Requires an app access token or user access token.
      * @param string[]             $id            A list of IDs that identify the videos you want to get. To get more
      *                                            than one video, include this parameter for each video you want to
      *                                            get. For example, id=1234&id=5678. You may specify a maximum of 100
@@ -101,8 +102,6 @@ class VideosApi extends AbstractApi
      *                                            parameter.
      *
      * @return TwitchPaginatedDataResponse<Video[]>
-     * @throws JsonException
-     * @throws MappingError
      */
     public function getVideos(
         AccessTokenInterface $accessToken,
@@ -139,19 +138,23 @@ class VideosApi extends AbstractApi
     /**
      * Deletes one or more videos. You may delete past broadcasts, highlights, or uploads.
      *
-     * Authentication:
+     * Authorization
      * Requires a user access token that includes the channel:manage:videos scope.
      *
-     * @param string               $id The list of videos to delete. To specify more than one video, include the id
-     *                                 parameter for each video to delete. For example, id=1234&id=5678. You can delete
-     *                                 a maximum of 5 videos per request. Ignores invalid video IDs.
+     * URL
+     * DELETE https://api.twitch.tv/helix/videos
+     *
+     * @param string               $id          The list of videos to delete. To specify more than one video, include
+     *                                          the id parameter for each video to delete. For example,
+     *                                          id=1234&id=5678. You can delete a maximum of 5 videos per request.
+     *                                          Ignores invalid video IDs.
      *
      *                                 If the user doesn’t have permission to delete one of the videos in the list,
      *                                 none of the videos are deleted.
-     * @param AccessTokenInterface $accessToken
+     * @param AccessTokenInterface $accessToken Requires a user access token that includes the channel:manage:videos
+     *                                          scope.
      *
      * @return TwitchDataResponse<string[]>
-     * @throws JsonException
      */
     public function deleteVideos(
         string $id,

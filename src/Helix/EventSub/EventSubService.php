@@ -25,7 +25,6 @@ use SimplyStream\TwitchApi\Helix\Models\EventSub\EventResponse;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Events\EventInterface;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\EventSubResponse;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\MultipleEventResponse;
-use SimplyStream\TwitchApi\Helix\Models\EventSub\PaginatedEventSubResponse;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Subscription;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Subscriptions\DropEntitlementGrantSubscription;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Subscriptions\Subscriptions;
@@ -109,22 +108,22 @@ class EventSubService
      * @param string $subscriptionId
      *
      * @return void
-     * @throws JsonException
+     * @deprecated
      */
     public function unsubscribe(string $subscriptionId): void
     {
-        $this->eventSubApi->deleteEventSubSubscription($subscriptionId);
+        // $this->eventSubApi->deleteEventSubSubscription($subscriptionId);
     }
 
     /**
      * Returns all current subscriptions from Twitch
      *
-     * @return PaginatedEventSubResponse
-     * @throws JsonException
+     * @return void
+     * @deprecated
      */
-    public function getSubscriptions(): PaginatedEventSubResponse
+    public function getSubscriptions(): void
     {
-        return $this->eventSubApi->getEventSubSubscriptions();
+        // return $this->eventSubApi->getEventSubSubscriptions();
     }
 
     /**
@@ -135,7 +134,8 @@ class EventSubService
      * @param RequestInterface $request
      * @param string|null      $secret
      *
-     * @return EventResponse
+     * @return MultipleEventResponse|EventResponse
+     *
      * @throws InvalidSignatureException
      * @throws InvalidSource
      * @throws MappingError
@@ -198,10 +198,10 @@ class EventSubService
         }
 
         $signature = 'sha256=' . hash_hmac(
-            'sha256',
-            $messageId . $timestamp . $content,
-            $secret ?? $this->options['webhook']['secret']
-        );
+                'sha256',
+                $messageId . $timestamp . $content,
+                $secret ?? $this->options['webhook']['secret']
+            );
 
         if ($signature !== $receivedSignature) {
             throw new InvalidSignatureException(

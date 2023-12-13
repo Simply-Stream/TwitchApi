@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
-use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApi\Helix\Models\GuestStar\ChannelGuestStarSetting;
 use SimplyStream\TwitchApi\Helix\Models\GuestStar\GuestStarInvite;
@@ -24,15 +23,19 @@ class GuestStarApi extends AbstractApi
      * - Requires OAuth Scope: channel:read:guest_star, channel:manage:guest_star, moderator:read:guest_star or
      * moderator:manage:guest_star
      *
+     * URL
+     * GET https://api.twitch.tv/helix/guest_star/channel_settings
+     *
      * @param string               $broadcasterId      The ID of the broadcaster you want to get guest star settings
      *                                                 for.
      * @param string               $moderatorId        The ID of the broadcaster or a user that has permission to
      *                                                 moderate the broadcaster’s chat room. This ID must match the
      *                                                 user ID in the user access token.
-     * @param AccessTokenInterface $accessToken
+     * @param AccessTokenInterface $accessToken        Requires OAuth Scope: channel:read:guest_star,
+     *                                                 channel:manage:guest_star, moderator:read:guest_star or
+     *                                                 moderator:manage:guest_star
      *
      * @return TwitchDataResponse<ChannelGuestStarSetting[]>
-     * @throws JsonException
      */
     public function getChannelGuestStarSettings(
         string $broadcasterId,
@@ -43,7 +46,7 @@ class GuestStarApi extends AbstractApi
             path: self::BASE_PATH . '/channel_settings',
             query: [
                 'broadcaster_id' => $broadcasterId,
-                'moderator_id' => $moderatorId
+                'moderator_id' => $moderatorId,
             ],
             type: sprintf('%s<%s[]>', TwitchDataResponse::class, ChannelGuestStarSetting::class),
             accessToken: $accessToken
@@ -57,13 +60,15 @@ class GuestStarApi extends AbstractApi
      * - Query parameter broadcaster_id must match the user_id in the User-Access token
      * - Requires OAuth Scope: channel:manage:guest_star
      *
+     * URL
+     * PUT https://api.twitch.tv/helix/guest_star/channel_settings
+     *
      * @param string                               $broadcasterId The ID of the broadcaster you want to update Guest
      *                                                            Star settings for.
-     * @param AccessTokenInterface                 $accessToken
+     * @param AccessTokenInterface                 $accessToken   Requires OAuth Scope: channel:manage:guest_star
      * @param UpdateChannelGuestStarSettingRequest $body
      *
      * @return void
-     * @throws JsonException
      */
     public function updateChannelGuestStarSettings(
         string $broadcasterId,
@@ -74,7 +79,7 @@ class GuestStarApi extends AbstractApi
             path: self::BASE_PATH . '/channel_settings',
             query: [
                 'broadcaster_id' => $broadcasterId,
-                ...$body->toArray()
+                ...$body->toArray(),
             ],
             method: 'PUT',
             accessToken: $accessToken
@@ -82,21 +87,23 @@ class GuestStarApi extends AbstractApi
     }
 
     /**
-     * (BETA) Gets information about an ongoing Guest Star session for a particular channel.
+     * (BETA) Programmatically creates a Guest Star session on behalf of the broadcaster. Requires the broadcaster to
+     * be present in the call interface, or the call will be ended automatically.
      *
      * Authorization
-     * - Requires OAuth Scope: channel:read:guest_star, channel:manage:guest_star, moderator:read:guest_star or
-     * moderator:manage:guest_star
-     * - Guests must be either invited or assigned a slot within the session
+     * - Query parameter broadcaster_id must match the user_id in the User-Access token
+     * - Requires OAuth Scope: channel:manage:guest_star
+     *
+     * URL
+     * POST https://api.twitch.tv/helix/guest_star/session
      *
      * @param string               $broadcasterId      ID for the user hosting the Guest Star session.
      * @param string               $moderatorId        The ID of the broadcaster or a user that has permission to
      *                                                 moderate the broadcaster’s chat room. This ID must match the
      *                                                 user ID in the user access token.
-     * @param AccessTokenInterface $accessToken
+     * @param AccessTokenInterface $accessToken        Requires OAuth Scope: channel:manage:guest_star
      *
      * @return TwitchDataResponse<GuestStarSession[]>
-     * @throws JsonException
      */
     public function getGuestStarSession(
         string $broadcasterId,
@@ -128,7 +135,6 @@ class GuestStarApi extends AbstractApi
      * @param AccessTokenInterface $accessToken
      *
      * @return TwitchDataResponse<GuestStarSession[]>
-     * @throws JsonException
      */
     public function createGuestStarSession(
         string $broadcasterId,
@@ -147,12 +153,14 @@ class GuestStarApi extends AbstractApi
 
     /**
      * (BETA) Programmatically ends a Guest Star session on behalf of the broadcaster. Performs the same action as if
-     * the host clicked the
-     * “End Call” button in the Guest Star UI.
+     * the host clicked the “End Call” button in the Guest Star UI.
      *
      * Authorization
      * - Query parameter broadcaster_id must match the user_id in the User-Access token
      * - Requires OAuth Scope: channel:manage:guest_star
+     *
+     * URL
+     * DELETE https://api.twitch.tv/helix/guest_star/session
      *
      * @param string               $broadcasterId The ID of the broadcaster you want to end a Guest Star session for.
      *                                            Provided broadcaster_id must match the user_id in the auth token.
@@ -160,7 +168,6 @@ class GuestStarApi extends AbstractApi
      * @param AccessTokenInterface $accessToken
      *
      * @return TwitchDataResponse<GuestStarSession[]>
-     * @throws JsonException
      */
     public function endGuestStarSession(
         string $broadcasterId,
@@ -188,15 +195,19 @@ class GuestStarApi extends AbstractApi
      * - Requires OAuth Scope: channel:read:guest_star, channel:manage:guest_star, moderator:read:guest_star or
      * moderator:manage:guest_star
      *
+     * URL
+     * GET https://api.twitch.tv/helix/guest_star/invites
+     *
      * @param string               $broadcasterId The ID of the broadcaster running the Guest Star session.
      * @param string               $moderatorId   The ID of the broadcaster or a user that has permission to moderate
      *                                            the broadcaster’s chat room. This ID must match the user_id in the
      *                                            user access token.
      * @param string               $sessionId     The session ID to query for invite status.
-     * @param AccessTokenInterface $accessToken
+     * @param AccessTokenInterface $accessToken   Requires OAuth Scope: channel:read:guest_star,
+     *                                            channel:manage:guest_star, moderator:read:guest_star or
+     *                                            moderator:manage:guest_star
      *
      * @return TwitchDataResponse<GuestStarInvite[]>
-     * @throws JsonException
      */
     public function getGuestStarInvites(
         string $broadcasterId,
@@ -209,7 +220,7 @@ class GuestStarApi extends AbstractApi
             query: [
                 'broadcaster_id' => $broadcasterId,
                 'moderator_id' => $moderatorId,
-                'session_id' => $sessionId
+                'session_id' => $sessionId,
             ],
             type: sprintf('%s<%s[]>', TwitchDataResponse::class, GuestStarInvite::class),
             accessToken: $accessToken
@@ -223,6 +234,9 @@ class GuestStarApi extends AbstractApi
      * - Query parameter moderator_id must match the user_id in the User-Access token
      * - Requires OAuth Scope: channel:manage:guest_star or moderator:manage:guest_star
      *
+     * URL
+     * POST https://api.twitch.tv/helix/guest_star/invites
+     *
      * @param string               $broadcasterId The ID of the broadcaster running the Guest Star session.
      * @param string               $moderatorId   The ID of the broadcaster or a user that has permission to moderate
      *                                            the broadcaster’s chat room. This ID must match the user_id in the
@@ -233,7 +247,6 @@ class GuestStarApi extends AbstractApi
      * @param AccessTokenInterface $accessToken
      *
      * @return void
-     * @throws JsonException
      */
     public function sendGuestStarInvite(
         string $broadcasterId,
@@ -248,7 +261,7 @@ class GuestStarApi extends AbstractApi
                 'broadcaster_id' => $broadcasterId,
                 'moderator_id' => $moderatorId,
                 'session_id' => $sessionId,
-                'guest_id' => $guestId
+                'guest_id' => $guestId,
             ],
             method: 'POST',
             accessToken: $accessToken
@@ -261,6 +274,9 @@ class GuestStarApi extends AbstractApi
      * Authorization
      * - Query parameter moderator_id must match the user_id in the User-Access token
      * - Requires OAuth Scope: channel:manage:guest_star or moderator:manage:guest_star
+     *
+     * URL
+     * DELETE https://api.twitch.tv/helix/guest_star/invites
      *
      * @param string               $broadcasterId The ID of the broadcaster running the Guest Star session.
      * @param string               $moderatorId   The ID of the broadcaster or a user that has permission to moderate
@@ -275,7 +291,6 @@ class GuestStarApi extends AbstractApi
      * @param AccessTokenInterface $accessToken
      *
      * @return void
-     * @throws JsonException
      */
     public function deleteGuestStarInvite(
         string $broadcasterId,
@@ -290,7 +305,7 @@ class GuestStarApi extends AbstractApi
                 'broadcaster_id' => $broadcasterId,
                 'moderator_id' => $moderatorId,
                 'session_id' => $sessionId,
-                'guest_id' => $guestId
+                'guest_id' => $guestId,
             ],
             method: 'DELETE',
             accessToken: $accessToken
@@ -304,6 +319,9 @@ class GuestStarApi extends AbstractApi
      * Authorization
      * - Query parameter moderator_id must match the user_id in the User-Access token
      * - Requires OAuth Scope: channel:manage:guest_star or moderator:manage:guest_star
+     *
+     * URL
+     * POST https://api.twitch.tv/helix/guest_star/slot
      *
      * @param string               $broadcasterId The ID of the broadcaster running the Guest Star session.
      * @param string               $moderatorId   The ID of the broadcaster or a user that has permission to moderate
@@ -321,7 +339,6 @@ class GuestStarApi extends AbstractApi
      * @param AccessTokenInterface $accessToken
      *
      * @return void
-     * @throws JsonException
      */
     public function assignGuestStarSlot(
         string $broadcasterId,
@@ -338,7 +355,7 @@ class GuestStarApi extends AbstractApi
                 'moderator_id' => $moderatorId,
                 'session_id' => $sessionId,
                 'guest_id' => $guestId,
-                'slot_id' => $slotId
+                'slot_id' => $slotId,
             ],
             method: 'POST',
             accessToken: $accessToken
@@ -351,6 +368,9 @@ class GuestStarApi extends AbstractApi
      * Authorization
      * - Query parameter moderator_id must match the user_id in the User-Access token
      * - Requires OAuth Scope: channel:manage:guest_star or moderator:manage:guest_star
+     *
+     * URL
+     * PATCH https://api.twitch.tv/helix/guest_star/slot
      *
      * @param string               $broadcasterId     The ID of the broadcaster running the Guest Star session.
      * @param string               $moderatorId       The ID of the broadcaster or a user that has permission to
@@ -366,7 +386,6 @@ class GuestStarApi extends AbstractApi
      *                                                source_slot_id.
      *
      * @return void
-     * @throws JsonException
      */
     public function updateGuestStarSlot(
         string $broadcasterId,
@@ -383,7 +402,7 @@ class GuestStarApi extends AbstractApi
                 'moderator_id' => $moderatorId,
                 'session_id' => $sessionId,
                 'source_slot_id' => $sourceSlotId,
-                'destination_slot_id' => $destinationSlotId
+                'destination_slot_id' => $destinationSlotId,
             ],
             type: 'array',
             method: 'PATCH',
@@ -400,6 +419,9 @@ class GuestStarApi extends AbstractApi
      * - Query parameter moderator_id must match the user_id in the User-Access token
      * - Requires OAuth Scope: channel:manage:guest_star or moderator:manage:guest_star
      *
+     * URL
+     * DELETE https://api.twitch.tv/helix/guest_star/slot
+     *
      * @param string               $broadcasterId       The ID of the broadcaster running the Guest Star session.
      * @param string               $moderatorId         The ID of the broadcaster or a user that has permission to
      *                                                  moderate the broadcaster’s chat room. This ID must match the
@@ -415,7 +437,6 @@ class GuestStarApi extends AbstractApi
      *                                                  session, sending them back to the invite queue.
      *
      * @return void
-     * @throws JsonException
      */
     public function deleteGuestStarSlot(
         string $broadcasterId,
@@ -434,7 +455,7 @@ class GuestStarApi extends AbstractApi
                 'session_id' => $sessionId,
                 'guest_id' => $guestId,
                 'slot_id' => $slotId,
-                'should_reinvite_guest' => $shouldReinviteGuest
+                'should_reinvite_guest' => $shouldReinviteGuest,
             ],
             type: 'array',
             method: 'DELETE',
@@ -451,6 +472,9 @@ class GuestStarApi extends AbstractApi
      * Authorization
      * - Query parameter moderator_id must match the user_id in the User-Access token
      * - Requires OAuth Scope: channel:manage:guest_star or moderator:manage:guest_star
+     *
+     * URL
+     * PATCH https://api.twitch.tv/helix/guest_star/slot_settings
      *
      * @param string               $broadcasterId  The ID of the broadcaster running the Guest Star session.
      * @param string               $moderatorId    The ID of the broadcaster or a user that has permission to moderate
@@ -474,7 +498,6 @@ class GuestStarApi extends AbstractApi
      *                                             containing the slot.
      *
      * @return void
-     * @throws JsonException
      */
     public function updateGuestStarSlotSettings(
         string $broadcasterId,
@@ -497,7 +520,7 @@ class GuestStarApi extends AbstractApi
                 'is_audio_enabled' => $isAudioEnabled,
                 'is_video_enabled' => $isVideoEnabled,
                 'is_live' => $isLive,
-                'volume' => $volume
+                'volume' => $volume,
             ],
             method: 'PATCH',
             accessToken: $accessToken

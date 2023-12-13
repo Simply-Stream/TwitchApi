@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
-use CuyZ\Valinor\Mapper\MappingError;
 use DateTime;
-use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApi\Helix\Models\Schedule\ChannelStreamSchedule;
 use SimplyStream\TwitchApi\Helix\Models\Schedule\CreateChannelStreamScheduleSegmentRequest;
@@ -21,15 +19,18 @@ class ScheduleApi extends AbstractApi
 
     /**
      * Gets the broadcaster’s streaming schedule. You can get the entire schedule or specific segments of the schedule.
-     * Learn More
      *
-     * Authorization:
+     * Authorization
      * Requires an app access token or user access token.
+     *
+     * URL
+     * GET https://api.twitch.tv/helix/schedule
+     *
+     * @see https://help.twitch.tv/s/article/channel-page-setup#Schedule Schedule
      *
      * @param string               $broadcasterId      The ID of the broadcaster that owns the streaming schedule you
      *                                                 want to get.
-     * @param AccessTokenInterface $accessToken
-     *
+     * @param AccessTokenInterface $accessToken        Requires an app access token or user access token.
      * @param string|null          $id                 The ID of the scheduled segment to return. To specify more than
      *                                                 one segment, include the ID of each segment you want to get. For
      *                                                 example, id=1234&id=5678. You may specify a maximum of 100 IDs.
@@ -46,8 +47,6 @@ class ScheduleApi extends AbstractApi
      *                                                 object in the response contains the cursor’s value.
      *
      * @return TwitchPaginatedDataResponse<ChannelStreamSchedule>
-     * @throws JsonException
-     * @throws MappingError
      */
     public function getChannelStreamSchedule(
         string $broadcasterId,
@@ -76,13 +75,17 @@ class ScheduleApi extends AbstractApi
     /**
      * Gets the broadcaster’s streaming schedule as an iCalendar.
      *
-     * Authorization:
+     * Authorization
      * The Client-Id and Authorization headers are not required.
+     *
+     * URL
+     * GET https://api.twitch.tv/helix/schedule/icalendar
+     *
+     * @see https://datatracker.ietf.org/doc/html/rfc5545
      *
      * @param string $broadcasterId The ID of the broadcaster that owns the streaming schedule you want to get.
      *
      * @return TwitchResponseInterface
-     * @throws JsonException
      */
     public function getChannelICalendar(
         string $broadcasterId
@@ -99,12 +102,16 @@ class ScheduleApi extends AbstractApi
     /**
      * Updates the broadcaster’s schedule settings, such as scheduling a vacation.
      *
-     * Authorization:
+     * Authorization
      * Requires a user access token that includes the channel:manage:schedule scope.
+     *
+     * URL
+     * PATCH https://api.twitch.tv/helix/schedule/settings
      *
      * @param string               $broadcasterId     The ID of the broadcaster whose schedule settings you want to
      *                                                update. The ID must match the user ID in the user access token.
-     * @param AccessTokenInterface $accessToken
+     * @param AccessTokenInterface $accessToken       Requires a user access token that includes the
+     *                                                channel:manage:schedule scope.
      * @param bool                 $isVacationEnabled A Boolean value that indicates whether the broadcaster has
      *                                                scheduled a vacation. Set to true to enable Vacation Mode and add
      *                                                vacation dates, or false to cancel a previously scheduled
@@ -120,7 +127,6 @@ class ScheduleApi extends AbstractApi
      *                                                America/New_York). Required if is_vacation_enabled is true.
      *
      * @return void
-     * @throws JsonException
      */
     public function updateChannelStreamSchedule(
         string $broadcasterId,
@@ -148,17 +154,20 @@ class ScheduleApi extends AbstractApi
      * Adds a single or recurring broadcast to the broadcaster’s streaming schedule. For information about scheduling
      * broadcasts, see Stream Schedule.
      *
-     * Authorization:
+     * Authorization
      * Requires a user access token that includes the channel:manage:schedule scope.
+     *
+     * URL
+     * POST https://api.twitch.tv/helix/schedule/segment
      *
      * @param string                                    $broadcasterId The ID of the broadcaster that owns the schedule
      *                                                                 to add the broadcast segment to. This ID must
      *                                                                 match the user ID in the user access token.
      * @param CreateChannelStreamScheduleSegmentRequest $body
-     * @param AccessTokenInterface                      $accessToken
+     * @param AccessTokenInterface                      $accessToken   Requires a user access token that includes the
+     *                                                                 channel:manage:schedule scope.
      *
      * @return TwitchDataResponse<ChannelStreamSchedule>
-     * @throws JsonException
      */
     public function createChannelStreamScheduleSegment(
         string $broadcasterId,
@@ -183,18 +192,21 @@ class ScheduleApi extends AbstractApi
      * For recurring segments, updating a segment’s title, category, duration, and timezone, changes all segments in
      * the recurring schedule, not just the specified segment.
      *
-     * Authorization:
+     * Authorization
      * Requires a user access token that includes the channel:manage:schedule scope.
+     *
+     * URL
+     * PATCH https://api.twitch.tv/helix/schedule/segment
      *
      * @param string                                    $broadcasterId The ID of the broadcaster who owns the broadcast
      *                                                                 segment to update. This ID must match the user
      *                                                                 ID in the user access token.
      * @param string                                    $id            The ID of the broadcast segment to update.
      * @param UpdateChannelStreamScheduleSegmentRequest $body
-     * @param AccessTokenInterface                      $accessToken
+     * @param AccessTokenInterface                      $accessToken   Requires a user access token that includes the
+     *                                                                 channel:manage:schedule scope.
      *
      * @return TwitchDataResponse<ChannelStreamSchedule>
-     * @throws JsonException
      */
     public function updateChannelStreamScheduleSegment(
         string $broadcasterId,
@@ -220,16 +232,19 @@ class ScheduleApi extends AbstractApi
      *
      * NOTE: For recurring segments, removing a segment removes all segments in the recurring schedule.
      *
-     * Authorization:
+     * Authorization
      * Requires a user access token that includes the channel:manage:schedule scope.
+     *
+     * URL
+     * DELETE https://api.twitch.tv/helix/schedule/segment
      *
      * @param string               $broadcasterId The ID of the broadcaster that owns the streaming schedule. This ID
      *                                            must match the user ID in the user access token.
      * @param string               $id            The ID of the broadcast segment to remove.
-     * @param AccessTokenInterface $accessToken
+     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the
+     *                                            channel:manage:schedule scope.
      *
      * @return void
-     * @throws JsonException
      */
     public function deleteStreamScheduleSegment(
         string $broadcasterId,
