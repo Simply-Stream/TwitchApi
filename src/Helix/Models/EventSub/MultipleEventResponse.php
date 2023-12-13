@@ -9,7 +9,7 @@ use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 /**
  * @template Tsubscription of Subscription
- * @template Tevent of EventInterface[]
+ * @template Tevent of EventInterface
  */
 final readonly class MultipleEventResponse
 {

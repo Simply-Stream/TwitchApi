@@ -98,8 +98,8 @@ To get everything up and running, you need to set some things up.
 
 ```php
 $client = new Client();
-// Same for the request factory, it just needs to implement the RequestFactoryInterface.
-// Optionally the StreamFactoryInterface and UriFactoryInterface, too.
+// Same for the request factory, it just needs to implement the RequestFactoryInterface&StreamFactoryInterface.
+// Optionally the UriFactoryInterface, too, if you want to use the same object for the UriFactory.
 $requestFactory = new RequestFactory();
 
 $apiClient = new ApiClient(
