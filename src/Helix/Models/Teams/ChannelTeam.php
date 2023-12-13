@@ -7,12 +7,14 @@ namespace SimplyStream\TwitchApi\Helix\Models\Teams;
 use DateTimeImmutable;
 use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
-final readonly class Team
+final readonly class ChannelTeam
 {
     use SerializesModels;
 
     /**
-     * @param Member[]          $users               The list of team members.
+     * @param string            $broadcasterId       An ID that identifies the broadcaster.
+     * @param string            $broadcasterName     The broadcaster’s login name.
+     * @param string            $broadcasterLogin    The broadcaster’s display name.
      * @param DateTimeImmutable $createdAt           The UTC date and time (in RFC3339 format) of when the team was
      *                                               created.
      * @param DateTimeImmutable $updatedAt           The UTC date and time (in RFC3339 format) of the last time the
@@ -27,7 +29,9 @@ final readonly class Team
      * @param string|null       $banner              A URL to the team’s banner.
      */
     public function __construct(
-        private array $users,
+        private string $broadcasterId,
+        private string $broadcasterName,
+        private string $broadcasterLogin,
         private DateTimeImmutable $createdAt,
         private DateTimeImmutable $updatedAt,
         private string $info,
@@ -40,9 +44,19 @@ final readonly class Team
     ) {
     }
 
-    public function getUsers(): array
+    public function getBroadcasterId(): string
     {
-        return $this->users;
+        return $this->broadcasterId;
+    }
+
+    public function getBroadcasterName(): string
+    {
+        return $this->broadcasterName;
+    }
+
+    public function getBroadcasterLogin(): string
+    {
+        return $this->broadcasterLogin;
     }
 
     public function getCreatedAt(): DateTimeImmutable

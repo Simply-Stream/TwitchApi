@@ -22,34 +22,35 @@ class SubscriptionsApi extends AbstractApi
      * A Twitch extensions may use an app access token if the broadcaster has granted the channel:read:subscriptions
      * scope from within the Twitch Extensions manager.
      *
-     * @param string                    $broadcasterId The broadcaster’s ID. This ID must match the user ID in the
+     * @param string               $broadcasterId      The broadcaster’s ID. This ID must match the user ID in the
      *                                                 access token.
-     * @param string|null               $userId        Filters the list to include only the specified subscribers. To
+     * @param AccessTokenInterface $accessToken
+     *
+     * @param string|null          $userId             Filters the list to include only the specified subscribers. To
      *                                                 specify more than one subscriber, include this parameter for
      *                                                 each subscriber. For example,
      *                                                 &user_id=1234&user_id=5678. You may specify a maximum of 100
      *                                                 subscribers.
-     * @param int                       $first         The maximum number of items to return per page in the response.
+     * @param int                  $first              The maximum number of items to return per page in the response.
      *                                                 The minimum page size is 1 item per page and the maximum is 100
      *                                                 items per page. The default is 20.
-     * @param string|null               $after         The cursor used to get the next page of results. Do not specify
+     * @param string|null          $after              The cursor used to get the next page of results. Do not specify
      *                                                 if you set the user_id query parameter. The Pagination object in
      *                                                 the response contains the cursor’s value.
-     * @param string|null               $before        The cursor used to get the previous page of results. Do not
+     * @param string|null          $before             The cursor used to get the previous page of results. Do not
      *                                                 specify if you set the user_id query parameter. The Pagination
      *                                                 object in the response contains the cursor’s value.
-     * @param AccessTokenInterface|null $accessToken
      *
      * @return TwitchPaginatedSubPointsResponse<Subscription[]>
      * @throws JsonException
      */
     public function getBroadcasterSubscriptions(
         string $broadcasterId,
+        AccessTokenInterface $accessToken,
         string $userId = null,
         int $first = 20,
         string $after = null,
         string $before = null,
-        AccessTokenInterface $accessToken = null
     ): TwitchPaginatedSubPointsResponse {
         return $this->sendRequest(
             path: self::BASE_PATH,
@@ -74,11 +75,11 @@ class SubscriptionsApi extends AbstractApi
      * A Twitch extensions may use an app access token if the broadcaster has granted the user:read:subscriptions scope
      * from within the Twitch Extensions manager.
      *
-     * @param string                    $broadcasterId The ID of a partner or affiliate broadcaster.
-     * @param string                    $userId        The ID of the user that you’re checking to see whether they
+     * @param string               $broadcasterId      The ID of a partner or affiliate broadcaster.
+     * @param string               $userId             The ID of the user that you’re checking to see whether they
      *                                                 subscribe to the broadcaster in broadcaster_id. This ID must
      *                                                 match the user ID in the access Token.
-     * @param AccessTokenInterface|null $accessToken
+     * @param AccessTokenInterface $accessToken
      *
      * @return TwitchPaginatedSubPointsResponse<Subscription[]>
      * @throws JsonException
@@ -86,7 +87,7 @@ class SubscriptionsApi extends AbstractApi
     public function checkUserSubscription(
         string $broadcasterId,
         string $userId,
-        AccessTokenInterface $accessToken = null
+        AccessTokenInterface $accessToken
     ): TwitchPaginatedSubPointsResponse {
         return $this->sendRequest(
             path: self::BASE_PATH,

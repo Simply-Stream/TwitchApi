@@ -14,7 +14,6 @@ use SimplyStream\TwitchApi\Helix\Models\Streams\StreamKey;
 use SimplyStream\TwitchApi\Helix\Models\Streams\StreamMarker;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
 use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
-use Webmozart\Assert\Assert;
 
 class StreamsApi extends AbstractApi
 {
