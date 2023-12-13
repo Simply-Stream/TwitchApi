@@ -18,6 +18,8 @@ class VideosApiTest extends UserAwareFunctionalTestCase
 
     public function testDeleteVideos()
     {
+        $this->markTestSkipped('"/videos" mock-api endpoint returns false property name');
+
         $testUser = $this->users[0];
         $accessToken = new AccessToken($this->getAccessTokenForUser($testUser['id'], ['channel:manage:videos']));
         $client = new Client();
