@@ -27,12 +27,12 @@ final readonly class UpdateDropEntitlementRequest extends AbstractModel
             Assert::inArray(
                 $this->fulfillmentStatus,
                 ['CLAIMED', 'FULFILLED'],
-                'Fulfilment status got an invalid value. Allowed values are: CLAIMED, FULFILLED'
+                'Fulfilment status got an invalid value. Allowed values are: %2$s, got %s'
             );
         }
 
         Assert::allString($this->entitlementIds, 'Only strings are allowed as entitlement ID');
-        Assert::maxCount($this->entitlementIds, 100, 'You may specify a maximum of 100 entitlement IDs');
+        Assert::maxCount($this->entitlementIds, 100, 'You may specify a maximum of %2$s entitlement IDs');
     }
 
     public function getEntitlementIds(): array

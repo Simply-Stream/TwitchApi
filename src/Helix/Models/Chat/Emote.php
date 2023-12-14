@@ -33,12 +33,12 @@ readonly class Emote
      *                              - light
      */
     public function __construct(
-        private string $id,
-        private string $name,
-        private Image $images,
-        private array $format,
-        private array $scale,
-        private array $themeMode
+        protected string $id,
+        protected string $name,
+        protected Image $images,
+        protected array $format,
+        protected array $scale,
+        protected array $themeMode
     ) {
     }
 

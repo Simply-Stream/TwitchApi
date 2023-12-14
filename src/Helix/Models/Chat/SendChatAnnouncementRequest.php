@@ -26,11 +26,15 @@ final readonly class SendChatAnnouncementRequest extends AbstractModel
         private string $message,
         private string $color = 'primary'
     ) {
-        Assert::maxLength($this->message, 500, 'Messages can only be 500 characters long');
+        Assert::maxLength(
+            $this->message,
+            500,
+            sprintf('Messages can only be %2$s characters long. Got "%s" characters', strlen($this->message), 500)
+        );
         Assert::inArray(
             $this->color,
             ['blue', 'green', 'orange', 'purple', 'primary'],
-            'Color can only be one of the following values: blue, green, orange, purple, primary'
+            'Color can only be one of the following values: blue, green, orange, purple, primary. Got %s',
         );
     }
 

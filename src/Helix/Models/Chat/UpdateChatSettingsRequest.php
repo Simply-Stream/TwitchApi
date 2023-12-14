@@ -83,7 +83,7 @@ final readonly class UpdateChatSettingsRequest extends AbstractModel
             Assert::lessThanEq(
                 $this->followerModeDuration,
                 129600,
-                'Follower mode duration can\'t exceed 3 months (129600 seconds)'
+                'Follower mode duration can\'t exceed 3 months (129600 seconds). Got %s'
             );
         }
 
@@ -91,13 +91,13 @@ final readonly class UpdateChatSettingsRequest extends AbstractModel
             Assert::inArray(
                 $this->nonModeratorChatDelayDuration,
                 [2, 4, 6],
-                'Invalid non moderator chat delay duration. Allowed values: 2, 4, 6'
+                'Invalid non moderator chat delay duration. Allowed values: %2$s, got %s'
             );
         }
 
         if (null !== $this->slowMode) {
-            Assert::greaterThanEq($this->slowModeWaitTime, 3, 'Slow mode minimum value is 3 seconds');
-            Assert::lessThanEq($this->slowModeWaitTime, 120, 'Slow mode maximum value is 120 seconds');
+            Assert::greaterThanEq($this->slowModeWaitTime, 3, 'Slow mode minimum value is %2$s seconds, got %s');
+            Assert::lessThanEq($this->slowModeWaitTime, 120, 'Slow mode maximum value is %2$s seconds, got %s');
         }
     }
 
