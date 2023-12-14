@@ -11,16 +11,16 @@ use SimplyStream\TwitchApi\Helix\Models\ChannelPoints\RedemptionStatusRequest;
 final class RedemptionStatusRequestTest extends TestCase
 {
     #[DataProvider('provideValidStatus')]
-    public function testConstructWithValidStatus(string $status)
+    public function testCanBeInitialized(string $status)
     {
-        $reddemStatusRequest = new RedemptionStatusRequest($status);
+        $redeemStatusRequest = new RedemptionStatusRequest($status);
 
-        $this->assertSame($status, $reddemStatusRequest->getStatus());
+        $this->assertSame($status, $redeemStatusRequest->getStatus());
 
-        $this->assertIsArray($reddemStatusRequest->toArray());
+        $this->assertIsArray($redeemStatusRequest->toArray());
         $this->assertSame([
             'status' => $status,
-        ], $reddemStatusRequest->toArray());
+        ], $redeemStatusRequest->toArray());
     }
 
     public function testConstructWithInvalidStatus(): void
@@ -31,7 +31,7 @@ final class RedemptionStatusRequestTest extends TestCase
         new RedemptionStatusRequest('INVALID_STATUS');
     }
 
-    public function provideValidStatus(): \Generator
+    public static function provideValidStatus(): \Generator
     {
         yield 'canceled status' => ['CANCELED'];
         yield 'fulfilled status' => ['FULFILLED'];
