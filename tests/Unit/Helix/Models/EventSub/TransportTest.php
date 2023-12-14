@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApi\Tests\Helix\Models\EventSub;
+namespace SimplyStream\TwitchApi\Tests\Unit\Helix\Models\EventSub;
 
 use PHPUnit\Framework\TestCase;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Transport;

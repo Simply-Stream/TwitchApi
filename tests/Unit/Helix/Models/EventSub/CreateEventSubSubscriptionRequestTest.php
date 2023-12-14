@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApi\Tests\Helix\Models\EventSub;
+namespace SimplyStream\TwitchApi\Tests\Unit\Helix\Models\EventSub;
 
 use PHPUnit\Framework\TestCase;
+use SimplyStream\TwitchApi\Helix\Models\EventSub\Condition\ConditionInterface;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\CreateEventSubSubscriptionRequest;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Transport;
-use SimplyStream\TwitchApi\Helix\Models\EventSub\Condition\ConditionInterface;
 
 class CreateEventSubSubscriptionRequestTest extends TestCase
 {
