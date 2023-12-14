@@ -1,11 +1,8 @@
-# .github/actions/setup-job/action.yaml
 name: 'Setup Job'
 description: 'Checkout code, setup PHP and install dependencies'
 runs:
     using: "composite"
     steps:
-        - uses: actions/checkout@v3
-
         - uses: shivammathur/setup-php@v2
           with:
               php-version: '8.2'
