@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApi\Tests\Functional;
 
 use CuyZ\Valinor\MapperBuilder;
@@ -15,7 +17,6 @@ use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
 
 class TeamsApiTest extends UserAwareFunctionalTestCase
 {
-
     public function testGetTeams()
     {
         $accessToken = new AccessToken($this->appAccessToken);

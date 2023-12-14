@@ -197,8 +197,10 @@ class ScheduleApiTest extends UserAwareFunctionalTestCase
             $accessToken
         );
 
-        $this->assertSame($channelStreamScheduleSegment->getId(),
-            $updateChannelStreamScheduleSegment->getData()->getSegments()[0]->getId());
+        $this->assertSame(
+            $channelStreamScheduleSegment->getId(),
+            $updateChannelStreamScheduleSegment->getData()->getSegments()[0]->getId()
+        );
         $this->assertSame('Updated Title!', $updateChannelStreamScheduleSegment->getData()->getSegments()[0]->getTitle());
     }
 

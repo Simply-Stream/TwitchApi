@@ -18,10 +18,6 @@ final readonly class Channel
      *                                                the value is other.
      * @param string            $broadcasterLogin     The broadcaster’s login name.
      * @param string            $displayName          The broadcaster’s display name.
-     * @param string            $gameId               The ID of the game that the broadcaster is playing or last
-     *                                                played.
-     * @param string            $gameName             The name of the game that the broadcaster is playing or last
-     *                                                played.
      * @param string            $id                   An ID that uniquely identifies the channel (this is the
      *                                                broadcaster’s ID).
      * @param bool              $isLive               A Boolean value that determines whether the broadcaster is
@@ -34,19 +30,23 @@ final readonly class Channel
      * @param DateTimeImmutable $startedAt            The UTC date and time (in RFC3339 format) of when the broadcaster
      *                                                started streaming. The string is empty if the broadcaster is not
      *                                                streaming live.
+     * @param string|null       $gameId               The ID of the game that the broadcaster is playing or last
+     *                                                played.
+     * @param string|null       $gameName             The name of the game that the broadcaster is playing or last
+     *                                                played.
      */
     public function __construct(
         private string $broadcasterLanguage,
         private string $broadcasterLogin,
         private string $displayName,
-        private string $gameId,
-        private string $gameName,
         private string $id,
         private bool $isLive,
         private array $tags,
         private string $thumbnailUrl,
         private string $title,
-        private DateTimeImmutable $startedAt
+        private DateTimeImmutable $startedAt,
+        private ?string $gameId = null,
+        private ?string $gameName = null,
     ) {
     }
 
@@ -63,16 +63,6 @@ final readonly class Channel
     public function getDisplayName(): string
     {
         return $this->displayName;
-    }
-
-    public function getGameId(): string
-    {
-        return $this->gameId;
-    }
-
-    public function getGameName(): string
-    {
-        return $this->gameName;
     }
 
     public function getId(): string
@@ -103,5 +93,15 @@ final readonly class Channel
     public function getStartedAt(): DateTimeImmutable
     {
         return $this->startedAt;
+    }
+
+    public function getGameId(): ?string
+    {
+        return $this->gameId;
+    }
+
+    public function getGameName(): ?string
+    {
+        return $this->gameName;
     }
 }

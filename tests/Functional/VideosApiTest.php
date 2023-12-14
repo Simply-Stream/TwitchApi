@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApi\Tests\Functional;
 
 use CuyZ\Valinor\MapperBuilder;
@@ -15,7 +17,6 @@ use SimplyStream\TwitchApi\Helix\Models\Videos\Video;
 
 class VideosApiTest extends UserAwareFunctionalTestCase
 {
-
     public function testDeleteVideos()
     {
         $this->markTestSkipped('"/videos" mock-api endpoint returns false property name');

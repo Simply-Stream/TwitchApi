@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApi\Tests\Unit\Helix\Models\Ads;
 
 use PHPUnit\Framework\TestCase;

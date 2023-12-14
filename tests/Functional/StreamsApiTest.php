@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApi\Tests\Functional;
 
 use CuyZ\Valinor\MapperBuilder;
@@ -20,7 +22,6 @@ use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
 
 class StreamsApiTest extends UserAwareFunctionalTestCase
 {
-
     public function testGetStreams()
     {
         $accessToken = new AccessToken($this->appAccessToken);

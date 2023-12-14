@@ -18,7 +18,11 @@ final readonly class RedemptionStatusRequest extends AbstractModel
     public function __construct(
         private string $status
     ) {
-        Assert::inArray($this->status, ['CANCELED', 'FULFILLED']);
+        Assert::inArray(
+            $this->status,
+            ['CANCELED', 'FULFILLED'],
+            sprintf('Expected status to be one of: "CANCELED", "FULFILLED". Got: "%s"', $this->status)
+        );
     }
 
     public function getStatus(): string

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApi\Tests\Functional;
 
 use CuyZ\Valinor\MapperBuilder;
@@ -80,10 +82,6 @@ class SearchApiTest extends UserAwareFunctionalTestCase
             $this->assertNotEmpty($channel->getBroadcasterLogin());
             $this->assertIsString($channel->getDisplayName());
             $this->assertNotEmpty($channel->getDisplayName());
-            $this->assertIsString($channel->getGameId());
-            $this->assertNotEmpty($channel->getGameId());
-            $this->assertIsString($channel->getGameName());
-            $this->assertNotEmpty($channel->getGameName());
             $this->assertIsString($channel->getId());
             $this->assertNotEmpty($channel->getId());
             $this->assertIsBool($channel->isLive());

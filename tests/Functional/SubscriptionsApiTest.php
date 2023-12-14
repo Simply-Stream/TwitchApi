@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SimplyStream\TwitchApi\Tests\Functional;
 
 use CuyZ\Valinor\MapperBuilder;
@@ -13,7 +15,6 @@ use SimplyStream\TwitchApi\Helix\Models\Subscriptions\TwitchPaginatedSubPointsRe
 
 class SubscriptionsApiTest extends UserAwareFunctionalTestCase
 {
-
     public function testGetBroadcasterSubscriptions()
     {
         $this->markTestSkipped('"/subscriptions" mock api endpoint response is missing the points property');
