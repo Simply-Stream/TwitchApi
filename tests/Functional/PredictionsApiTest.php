@@ -16,6 +16,7 @@ use SimplyStream\TwitchApi\Helix\Models\Predictions\EndPredictionRequest;
 use SimplyStream\TwitchApi\Helix\Models\Predictions\Prediction;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
 use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
+use SimplyStream\TwitchApi\Tests\Helper\UserAwareFunctionalTestCase;
 
 class PredictionsApiTest extends UserAwareFunctionalTestCase
 {

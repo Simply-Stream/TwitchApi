@@ -24,6 +24,7 @@ use SimplyStream\TwitchApi\Helix\Models\Chat\Version;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
 use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
 use SimplyStream\TwitchApi\Helix\Models\TwitchTemplatedDataResponse;
+use SimplyStream\TwitchApi\Tests\Helper\UserAwareFunctionalTestCase;
 
 class ChatApiTest extends UserAwareFunctionalTestCase
 {

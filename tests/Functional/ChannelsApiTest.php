@@ -13,6 +13,7 @@ use SimplyStream\TwitchApi\Helix\Api\ChannelsApi;
 use SimplyStream\TwitchApi\Helix\Models\Channels\ChannelInformation;
 use SimplyStream\TwitchApi\Helix\Models\Channels\ModifyChannelInformationRequest;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
+use SimplyStream\TwitchApi\Tests\Helper\UserAwareFunctionalTestCase;
 
 class ChannelsApiTest extends UserAwareFunctionalTestCase
 {

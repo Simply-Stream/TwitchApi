@@ -14,6 +14,7 @@ use SimplyStream\TwitchApi\Helix\Api\SearchApi;
 use SimplyStream\TwitchApi\Helix\Models\Search\Category;
 use SimplyStream\TwitchApi\Helix\Models\Search\Channel;
 use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
+use SimplyStream\TwitchApi\Tests\Helper\UserAwareFunctionalTestCase;
 
 class SearchApiTest extends UserAwareFunctionalTestCase
 {

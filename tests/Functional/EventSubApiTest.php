@@ -11,6 +11,7 @@ use SimplyStream\TwitchApi\Helix\Api\ApiClient;
 use SimplyStream\TwitchApi\Helix\Api\EventSubApi;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Subscriptions\ChannelFollowSubscription;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Transport;
+use SimplyStream\TwitchApi\Tests\Helper\UserAwareFunctionalTestCase;
 
 class EventSubApiTest extends UserAwareFunctionalTestCase
 {

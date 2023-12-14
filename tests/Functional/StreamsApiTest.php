@@ -19,6 +19,7 @@ use SimplyStream\TwitchApi\Helix\Models\Streams\StreamMarker;
 use SimplyStream\TwitchApi\Helix\Models\Streams\Video;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
 use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
+use SimplyStream\TwitchApi\Tests\Helper\UserAwareFunctionalTestCase;
 
 class StreamsApiTest extends UserAwareFunctionalTestCase
 {

@@ -16,6 +16,7 @@ use SimplyStream\TwitchApi\Helix\Models\Polls\EndPollRequest;
 use SimplyStream\TwitchApi\Helix\Models\Polls\Poll;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
 use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
+use SimplyStream\TwitchApi\Tests\Helper\UserAwareFunctionalTestCase;
 
 class PollsApiTest extends UserAwareFunctionalTestCase
 {

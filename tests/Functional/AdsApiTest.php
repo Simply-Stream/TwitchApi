@@ -14,6 +14,7 @@ use SimplyStream\TwitchApi\Helix\Api\ApiClient;
 use SimplyStream\TwitchApi\Helix\Models\Ads\Commercial;
 use SimplyStream\TwitchApi\Helix\Models\Ads\StartCommercialRequest;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
+use SimplyStream\TwitchApi\Tests\Helper\UserAwareFunctionalTestCase;
 
 #[CoversClass(AdsApi::class)]
 class AdsApiTest extends UserAwareFunctionalTestCase

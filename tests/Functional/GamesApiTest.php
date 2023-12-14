@@ -13,7 +13,7 @@ use SimplyStream\TwitchApi\Helix\Api\GamesApi;
 use SimplyStream\TwitchApi\Helix\Models\Games\Game;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
 use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
-use SimplyStream\TwitchApi\Tests\Functional\UserAwareFunctionalTestCase;
+use SimplyStream\TwitchApi\Tests\Helper\UserAwareFunctionalTestCase;
 
 class GamesApiTest extends UserAwareFunctionalTestCase
 {

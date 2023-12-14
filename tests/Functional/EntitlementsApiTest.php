@@ -15,6 +15,7 @@ use SimplyStream\TwitchApi\Helix\Models\Entitlements\DropEntitlementUpdate;
 use SimplyStream\TwitchApi\Helix\Models\Entitlements\UpdateDropEntitlementRequest;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
 use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
+use SimplyStream\TwitchApi\Tests\Helper\UserAwareFunctionalTestCase;
 
 class EntitlementsApiTest extends UserAwareFunctionalTestCase
 {

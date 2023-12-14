@@ -14,6 +14,7 @@ use SimplyStream\TwitchApi\Helix\Models\Clip\Clip;
 use SimplyStream\TwitchApi\Helix\Models\Clip\ClipProcess;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
 use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
+use SimplyStream\TwitchApi\Tests\Helper\UserAwareFunctionalTestCase;
 
 class ClipsApiTest extends UserAwareFunctionalTestCase
 {

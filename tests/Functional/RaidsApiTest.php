@@ -12,6 +12,7 @@ use SimplyStream\TwitchApi\Helix\Api\ApiClient;
 use SimplyStream\TwitchApi\Helix\Api\RaidsApi;
 use SimplyStream\TwitchApi\Helix\Models\Raids\Raid;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
+use SimplyStream\TwitchApi\Tests\Helper\UserAwareFunctionalTestCase;
 
 class RaidsApiTest extends UserAwareFunctionalTestCase
 {

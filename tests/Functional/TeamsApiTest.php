@@ -14,6 +14,7 @@ use SimplyStream\TwitchApi\Helix\Models\Teams\ChannelTeam;
 use SimplyStream\TwitchApi\Helix\Models\Teams\Member;
 use SimplyStream\TwitchApi\Helix\Models\Teams\Team;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
+use SimplyStream\TwitchApi\Tests\Helper\UserAwareFunctionalTestCase;
 
 class TeamsApiTest extends UserAwareFunctionalTestCase
 {

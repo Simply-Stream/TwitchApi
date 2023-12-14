@@ -15,6 +15,7 @@ use SimplyStream\TwitchApi\Helix\Models\Charity\CharityCampaignDonation;
 use SimplyStream\TwitchApi\Helix\Models\Pagination;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
 use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
+use SimplyStream\TwitchApi\Tests\Helper\UserAwareFunctionalTestCase;
 
 class CharityApiTest extends UserAwareFunctionalTestCase
 {

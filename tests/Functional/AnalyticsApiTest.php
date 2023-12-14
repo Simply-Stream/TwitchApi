@@ -11,6 +11,7 @@ use League\OAuth2\Client\Token\AccessToken;
 use PHPUnit\Framework\Attributes\CoversClass;
 use SimplyStream\TwitchApi\Helix\Api\AnalyticsApi;
 use SimplyStream\TwitchApi\Helix\Api\ApiClient;
+use SimplyStream\TwitchApi\Tests\Helper\UserAwareFunctionalTestCase;
 
 #[CoversClass(AnalyticsApi::class)]
 class AnalyticsApiTest extends UserAwareFunctionalTestCase

@@ -23,6 +23,7 @@ use SimplyStream\TwitchApi\Helix\Models\Moderation\UserBan;
 use SimplyStream\TwitchApi\Helix\Models\Moderation\VIP;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
 use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
+use SimplyStream\TwitchApi\Tests\Helper\UserAwareFunctionalTestCase;
 
 class ModerationApiTest extends UserAwareFunctionalTestCase
 {

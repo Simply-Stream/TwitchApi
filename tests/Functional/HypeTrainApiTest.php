@@ -14,6 +14,7 @@ use SimplyStream\TwitchApi\Helix\Models\HypeTrain\Contribution;
 use SimplyStream\TwitchApi\Helix\Models\HypeTrain\EventData;
 use SimplyStream\TwitchApi\Helix\Models\HypeTrain\HypeTrainEvent;
 use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
+use SimplyStream\TwitchApi\Tests\Helper\UserAwareFunctionalTestCase;
 
 class HypeTrainApiTest extends UserAwareFunctionalTestCase
 {

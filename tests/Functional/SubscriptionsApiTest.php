@@ -12,6 +12,7 @@ use SimplyStream\TwitchApi\Helix\Api\ApiClient;
 use SimplyStream\TwitchApi\Helix\Api\SubscriptionsApi;
 use SimplyStream\TwitchApi\Helix\Models\Subscriptions\Subscription;
 use SimplyStream\TwitchApi\Helix\Models\Subscriptions\TwitchPaginatedSubPointsResponse;
+use SimplyStream\TwitchApi\Tests\Helper\UserAwareFunctionalTestCase;
 
 class SubscriptionsApiTest extends UserAwareFunctionalTestCase
 {

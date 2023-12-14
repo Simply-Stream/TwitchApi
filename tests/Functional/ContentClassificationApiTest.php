@@ -12,6 +12,7 @@ use SimplyStream\TwitchApi\Helix\Api\ApiClient;
 use SimplyStream\TwitchApi\Helix\Api\ContentClassificationApi;
 use SimplyStream\TwitchApi\Helix\Models\CCLs\ContentClassificationLabel;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
+use SimplyStream\TwitchApi\Tests\Helper\UserAwareFunctionalTestCase;
 
 class ContentClassificationApiTest extends UserAwareFunctionalTestCase
 {

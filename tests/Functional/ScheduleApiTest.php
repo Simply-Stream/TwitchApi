@@ -18,6 +18,7 @@ use SimplyStream\TwitchApi\Helix\Models\Schedule\UpdateChannelStreamScheduleSegm
 use SimplyStream\TwitchApi\Helix\Models\Schedule\Vacation;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
 use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
+use SimplyStream\TwitchApi\Tests\Helper\UserAwareFunctionalTestCase;
 
 class ScheduleApiTest extends UserAwareFunctionalTestCase
 {

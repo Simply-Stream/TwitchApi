@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApi\Tests\Functional;
+namespace SimplyStream\TwitchApi\Tests\Helper;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;

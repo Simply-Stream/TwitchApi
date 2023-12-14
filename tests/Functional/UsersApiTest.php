@@ -15,6 +15,7 @@ use SimplyStream\TwitchApi\Helix\Api\UsersApi;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
 use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
 use SimplyStream\TwitchApi\Helix\Models\Users\User;
+use SimplyStream\TwitchApi\Tests\Helper\UserAwareFunctionalTestCase;
 
 #[CoversClass(UsersApi::class)]
 class UsersApiTest extends UserAwareFunctionalTestCase

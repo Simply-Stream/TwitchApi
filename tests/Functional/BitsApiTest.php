@@ -15,6 +15,7 @@ use SimplyStream\TwitchApi\Helix\Models\Bits\BitsLeaderboard;
 use SimplyStream\TwitchApi\Helix\Models\Bits\Cheermote;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDateRangeDataResponse;
+use SimplyStream\TwitchApi\Tests\Helper\UserAwareFunctionalTestCase;
 
 #[CoversClass(BitsApi::class)]
 class BitsApiTest extends UserAwareFunctionalTestCase

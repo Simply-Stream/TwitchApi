@@ -13,6 +13,7 @@ use SimplyStream\TwitchApi\Helix\Api\ApiClient;
 use SimplyStream\TwitchApi\Helix\Api\GoalsApi;
 use SimplyStream\TwitchApi\Helix\Models\Goals\CreatorGoal;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
+use SimplyStream\TwitchApi\Tests\Helper\UserAwareFunctionalTestCase;
 
 class GoalsApiTest extends UserAwareFunctionalTestCase
 {

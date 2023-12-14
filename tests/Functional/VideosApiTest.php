@@ -14,6 +14,7 @@ use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
 use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
 use SimplyStream\TwitchApi\Helix\Models\Videos\MutedSegment;
 use SimplyStream\TwitchApi\Helix\Models\Videos\Video;
+use SimplyStream\TwitchApi\Tests\Helper\UserAwareFunctionalTestCase;
 
 class VideosApiTest extends UserAwareFunctionalTestCase
 {

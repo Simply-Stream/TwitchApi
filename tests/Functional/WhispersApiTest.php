@@ -11,6 +11,7 @@ use Nyholm\Psr7\Factory\Psr17Factory;
 use SimplyStream\TwitchApi\Helix\Api\ApiClient;
 use SimplyStream\TwitchApi\Helix\Api\WhispersApi;
 use SimplyStream\TwitchApi\Helix\Models\Whispers\SendWhisperRequest;
+use SimplyStream\TwitchApi\Tests\Helper\UserAwareFunctionalTestCase;
 
 class WhispersApiTest extends UserAwareFunctionalTestCase
 {

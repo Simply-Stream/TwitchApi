@@ -14,6 +14,7 @@ use SimplyStream\TwitchApi\Helix\Api\ChannelPointsApi;
 use SimplyStream\TwitchApi\Helix\Models\ChannelPoints\CreateCustomRewardRequest;
 use SimplyStream\TwitchApi\Helix\Models\ChannelPoints\CustomReward;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
+use SimplyStream\TwitchApi\Tests\Helper\UserAwareFunctionalTestCase;
 
 #[CoversClass(ChannelPointsApi::class)]
 class ChannelPointsApiTest extends UserAwareFunctionalTestCase
