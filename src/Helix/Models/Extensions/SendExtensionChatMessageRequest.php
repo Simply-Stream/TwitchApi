@@ -19,7 +19,11 @@ final readonly class SendExtensionChatMessageRequest extends AbstractModel
         private string $extensionId,
         private string $extensionVersion
     ) {
-        Assert::maxLength($this->text, 280, 'The message may contain a maximum of 280 characters');
+        Assert::maxLength(
+            $this->text,
+            280,
+            sprintf('The message may contain a maximum of %2$s characters, got %s', strlen($this->text), 280)
+        );
     }
 
     public function getText(): string

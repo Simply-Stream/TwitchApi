@@ -33,7 +33,7 @@ final readonly class SetExtensionConfigurationSegmentRequest extends AbstractMod
         Assert::inArray(
             $this->segment,
             ['broadcaster', 'developer', 'global'],
-            'Segment got an invalid value. Allowed values: broadcaster, developer, global'
+            'Segment got an invalid value. Allowed values: %2$s, got %s'
         );
     }
 

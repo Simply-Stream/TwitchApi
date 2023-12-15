@@ -41,8 +41,8 @@ final readonly class UpdateChannelGuestStarSettingRequest extends AbstractModel
         private ?bool $regenerateBrowserSources = null
     ) {
         if (null !== $this->slotCount) {
-            Assert::greaterThanEq($this->slotCount, 1, 'Slot count needs to be at least 1');
-            Assert::lessThanEq($this->slotCount, 6, 'Slot count should be less than or equal 6');
+            Assert::greaterThanEq($this->slotCount, 1, 'Slot count needs to be at least %2$s, got %s');
+            Assert::lessThanEq($this->slotCount, 6, 'Slot count should be less than or equal %2$s, got %s');
         }
 
         if (null !== $this->groupLayout) {
@@ -54,7 +54,7 @@ final readonly class UpdateChannelGuestStarSettingRequest extends AbstractModel
                     'HORIZONTAL_LAYOUT',
                     'VERTICAL_LAYOUT'
                 ],
-                'Group layout got an invalid value. Allowed values are: TILED_LAYOUT, SCREENSHARE_LAYOUT, HORIZONTAL_LAYOUT, VERTICAL_LAYOUT'
+                'Group layout got an invalid value. Allowed values are: %2$s, got %s'
             );
         }
     }

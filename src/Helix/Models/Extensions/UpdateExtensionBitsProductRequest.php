@@ -37,7 +37,11 @@ final readonly class UpdateExtensionBitsProductRequest extends AbstractModel
         private ?DateTimeImmutable $expiration = null,
         private bool $isBroadcast = false
     ) {
-        Assert::maxLength($this->displayName, 255, 'The maximum length of a display name is 255');
+        Assert::maxLength(
+            $this->displayName,
+            255,
+            sprintf('The maximum length of a display name is %2$s, got %s', strlen($this->displayName), 255)
+        );
     }
 
     public function getSku(): string

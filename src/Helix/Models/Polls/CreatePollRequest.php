@@ -56,7 +56,7 @@ final readonly class CreatePollRequest extends AbstractModel
 
         if ($this->channelPointsVotingEnabled) {
             Assert::greaterThanEq($this->channelPointsPerVote, 1, 'The minimum is 1 channelpoint per vote');
-            Assert::greaterThanEq($this->channelPointsPerVote, 1000000, 'The maximum is 1000000 channelpoint per vote');
+            Assert::lessThanEq($this->channelPointsPerVote, 1000000, 'The maximum is 1000000 channelpoint per vote');
         }
     }
 

@@ -18,7 +18,7 @@ final readonly class BanUser extends AbstractModel
      *                              weeks).
      *
      *                              To end a user’s timeout early, set this field to 1, or use the Unban user endpoint.
-     * @param string|null $reason   The reason the you’re banning the user or putting them in a timeout. The text is
+     * @param string|null $reason   The reason you’re banning the user or putting them in a timeout. The text is
      *                              user defined and is limited to a maximum of 500 characters.
      */
     public function __construct(
@@ -27,12 +27,16 @@ final readonly class BanUser extends AbstractModel
         private ?string $reason = null
     ) {
         if (null !== $this->duration) {
-            Assert::greaterThanEq($this->duration, 1, 'The minimum timeout is 1 second');
-            Assert::lessThanEq($this->duration, 1_209_600, 'The maximum timeout is 1_209_600 seconds');
+            Assert::greaterThanEq($this->duration, 1, 'The minimum timeout is %2$s second, got %s');
+            Assert::lessThanEq($this->duration, 1_209_600, 'The maximum timeout is %2$s seconds, got %s');
         }
 
         if (null !== $this->reason) {
-            Assert::maxLength($this->reason, 500, 'The maximum length for a reason is 500 characters');
+            Assert::maxLength(
+                $this->reason,
+                500,
+                sprintf('The maximum length for a reason is %2$s characters, got %s', strlen($this->reason), 500)
+            );
         }
     }
 

@@ -41,13 +41,13 @@ final readonly class SendExtensionPubSubMessageRequest extends AbstractModel
             Assert::allEq(
                 $this->target,
                 'global',
-                'When isGlobalBroadcast is set to true, target has to be set to "global"'
+                'When isGlobalBroadcast is set to true, target has to be set to %2$s, got %s'
             );
         } else {
             Assert::allRegex(
                 $this->target,
-                '^(broadcast|global|whisper-\d+)$',
-                'Target got an invalid value. Possible values are: broadcast, global, whisper-USER_ID.'
+                '/^(broadcast|global|whisper-\d+)$/',
+                'Target got an invalid value. Possible values are: broadcast, global, whisper-USER_ID. Got %s.'
             );
         }
     }
@@ -57,9 +57,9 @@ final readonly class SendExtensionPubSubMessageRequest extends AbstractModel
         return $this->target;
     }
 
-    public function getBroadcasterId(): string
+    public function getMessage(): string
     {
-        return $this->broadcasterId;
+        return $this->message;
     }
 
     public function isGlobalBroadcast(): bool
@@ -67,8 +67,8 @@ final readonly class SendExtensionPubSubMessageRequest extends AbstractModel
         return $this->isGlobalBroadcast;
     }
 
-    public function getMessage(): string
+    public function getBroadcasterId(): ?string
     {
-        return $this->message;
+        return $this->broadcasterId;
     }
 }

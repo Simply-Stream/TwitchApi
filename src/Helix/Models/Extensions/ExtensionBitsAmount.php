@@ -23,8 +23,8 @@ final readonly class ExtensionBitsAmount
         Assert::inArray($this->type, ['bits']);
 
         if ($this->type === 'bits') {
-            Assert::greaterThanEq($this->amount, 1, 'The minimum price is 1');
-            Assert::lessThanEq($this->amount, 10000, 'The minimum price is 10000');
+            Assert::greaterThanEq($this->amount, 1, 'The minimum price is %2$s, got %s');
+            Assert::lessThanEq($this->amount, 10000, 'The minimum price is %2$s, got %s');
         }
     }
 

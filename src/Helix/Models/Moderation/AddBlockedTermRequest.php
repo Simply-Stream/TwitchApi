@@ -21,8 +21,16 @@ final readonly class AddBlockedTermRequest extends AbstractModel
     public function __construct(
         private string $text
     ) {
-        Assert::minLength($this->text, 2, 'The term must contain a minimum of 2 characters');
-        Assert::maxLength($this->text, 500, 'The term must contain a maximum of 500 characters');
+        Assert::minLength(
+            $this->text,
+            2,
+            sprintf('The term must contain a minimum of %2$s characters, %s', strlen($this->text), 2)
+        );
+        Assert::maxLength(
+            $this->text,
+            500,
+            sprintf('The term must contain a maximum of %2$s characters, %s', strlen($this->text), 500)
+        );
     }
 
     public function getText(): string

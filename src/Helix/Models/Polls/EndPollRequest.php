@@ -31,7 +31,7 @@ final readonly class EndPollRequest extends AbstractModel
         Assert::inArray(
             $this->status,
             ['TERMINATED', 'ARCHIVED'],
-            sprintf('Status can only be one of the following values: TERMINATED, ARCHIVED. Got %s', $this->status)
+            'Status can only be one of the following values: %2$s. Got %s'
         );
     }
 
