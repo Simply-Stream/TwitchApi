@@ -10,9 +10,11 @@ use Http\Discovery\Psr17Factory;
 use League\OAuth2\Client\Token\AccessToken;
 use SimplyStream\TwitchApi\Helix\Api\ApiClient;
 use SimplyStream\TwitchApi\Helix\Api\ChannelsApi;
+use SimplyStream\TwitchApi\Helix\Models\Channels\ChannelFollow;
 use SimplyStream\TwitchApi\Helix\Models\Channels\ChannelInformation;
 use SimplyStream\TwitchApi\Helix\Models\Channels\ModifyChannelInformationRequest;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
+use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
 use SimplyStream\TwitchApi\Tests\Helper\UserAwareFunctionalTestCase;
 
 class ChannelsApiTest extends UserAwareFunctionalTestCase
@@ -110,8 +112,6 @@ class ChannelsApiTest extends UserAwareFunctionalTestCase
 
     public function testGetFollowedChannels()
     {
-        $this->markTestSkipped('FollowedChannels endpoint is currently not implemented by the twitch mock-api');
-
         $testUser = $this->users[0];
         $client = new Client();
 
@@ -128,7 +128,24 @@ class ChannelsApiTest extends UserAwareFunctionalTestCase
         $channelsApi = new ChannelsApi($apiClient);
         $channelFollowersResponse = $channelsApi->getChannelFollowers(
             $testUser['id'],
-            new AccessToken($this->getAccessTokenForUser($testUser['id'], ['user:read:follows']))
+            new AccessToken($this->getAccessTokenForUser($testUser['id'], ['moderator:read:followers']))
         );
+
+        $this->assertInstanceOf(TwitchPaginatedDataResponse::class, $channelFollowersResponse);
+        $this->assertIsArray($channelFollowersResponse->getData());
+        $this->assertGreaterThan(0, count($channelFollowersResponse->getData()));
+        $this->assertGreaterThan(0, $channelFollowersResponse->getTotal());
+        $this->assertContainsOnlyInstancesOf(ChannelFollow::class, $channelFollowersResponse->getData());
+
+        foreach ($channelFollowersResponse->getData() as $follower) {
+            $this->assertIsString($follower->getUserId());
+            $this->assertNotEmpty($follower->getUserId());
+            $this->assertIsString($follower->getUserName());
+            $this->assertNotEmpty($follower->getUserName());
+            $this->assertIsString($follower->getUserLogin());
+            $this->assertNotEmpty($follower->getUserLogin());
+
+            $this->assertInstanceOf(\DateTimeImmutable::class, $follower->getFollowedAt());
+        }
     }
 }

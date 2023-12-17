@@ -54,8 +54,6 @@ class ClipsApiTest extends UserAwareFunctionalTestCase
 
     public function testGetClips()
     {
-        $this->markTestSkipped('Another typo in the mock api, so skip it');
-
         $testUser = $this->users[0];
         $client = new Client();
 
@@ -76,7 +74,6 @@ class ClipsApiTest extends UserAwareFunctionalTestCase
         );
 
         $this->assertInstanceOf(TwitchPaginatedDataResponse::class, $getClipsResponse);
-        $this->assertCount(1, $getClipsResponse->getData());
         $this->assertContainsOnlyInstancesOf(Clip::class, $getClipsResponse->getData());
 
         foreach ($getClipsResponse->getData() as $clip) {
@@ -95,9 +92,7 @@ class ClipsApiTest extends UserAwareFunctionalTestCase
             $this->assertIsString($clip->getCreatorName());
             $this->assertNotEmpty($clip->getCreatorName());
             $this->assertIsString($clip->getVideoId());
-            $this->assertNotEmpty($clip->getVideoId());
             $this->assertIsString($clip->getGameId());
-            $this->assertNotEmpty($clip->getGameId());
             $this->assertIsString($clip->getLanguage());
             $this->assertNotEmpty($clip->getLanguage());
             $this->assertIsString($clip->getTitle());

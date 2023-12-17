@@ -130,7 +130,6 @@ class ModerationApiTest extends UserAwareFunctionalTestCase
             $testUser['id'],
             new AccessToken($this->getAccessTokenForUser($testUser['id'], ['moderator:read:automod_settings']))
         );
-
         // Change received values
     }
 
@@ -472,10 +471,10 @@ class ModerationApiTest extends UserAwareFunctionalTestCase
         $this->assertContainsOnlyInstancesOf(ShieldModeStatus::class, $getShieldModeStatus->getData());
 
         foreach ($getShieldModeStatus->getData() as $shieldModeStatus) {
-            $this->assertFalse($shieldModeStatus->isActive());
-            $this->assertEmpty($shieldModeStatus->getModeratorId());
-            $this->assertEmpty($shieldModeStatus->getModeratorLogin());
-            $this->assertEmpty($shieldModeStatus->getModeratorName());
+            $this->assertIsBool($shieldModeStatus->isActive());
+            $this->assertIsString($shieldModeStatus->getModeratorId());
+            $this->assertIsString($shieldModeStatus->getModeratorLogin());
+            $this->assertIsString($shieldModeStatus->getModeratorName());
             $this->assertInstanceOf(\DateTimeImmutable::class, $shieldModeStatus->getLastActivatedAt());
         }
 

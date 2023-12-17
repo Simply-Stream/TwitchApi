@@ -1,4 +1,4 @@
-# Twitch API (by Simply-Stream.com)
+# PHP Twitch API implementation (by Simply-Stream.com)
 
 [![QA](https://github.com/Simply-Stream/TwitchApi/actions/workflows/qa.yaml/badge.svg?branch=main)](https://github.com/Simply-Stream/TwitchApi/actions/workflows/qa.yaml) [![codecov](https://codecov.io/gh/Simply-Stream/TwitchApi/graph/badge.svg?token=HT6IUJKM97)](https://codecov.io/gh/Simply-Stream/TwitchApi)
 
@@ -38,11 +38,11 @@ composer req simplystream/twitch-api
 | AdsApi                   | ✅           | ℹ️     |
 | AnalyticsApi             | ✅           | ❗      |
 | BitsApi                  | ✅           | ℹ️     |
-| ChannelPointsApi         | ✅           | ℹ️     |
-| ChannelsApi              | ✅           | ℹ️     |
-| CharityApi               | ✅           | ℹ️     |
-| ChatApi                  | ✅           | ℹ️     |
-| ClipsApi                 | ✅           | ℹ️     |
+| ChannelPointsApi         | ✅           | ✅      |
+| ChannelsApi              | ✅           | ✅      |
+| CharityApi               | ✅           | ✅      |
+| ChatApi                  | ✅           | ✅      |
+| ClipsApi                 | ✅           | ✅      |
 | ContentClassificationApi | ✅           | ✅      |
 | EntitlementsApi          | ✅           | ✅      |
 | EventSubApi              | ✅           | ❗      |
@@ -54,15 +54,15 @@ composer req simplystream/twitch-api
 | HypeTrainApi             | ✅           | ✅      |
 | ModerationApi            | ✅           | ℹ️     |
 | PollsApi                 | ✅           | ✅      |
-| PredictionsApi           | ✅           | ℹ️     |
-| RaidsApi                 | ✅           | ❗      |
-| ScheduleApi              | ✅           | ℹ️     |
+| PredictionsApi           | ✅           | ✅      |
+| RaidsApi                 | ✅           | ✅      |
+| ScheduleApi              | ✅           | ✅      |
 | SearchApi                | ✅           | ✅      |
-| StreamsApi               | ✅           | ℹ️     |
-| SubscriptionsApi         | ✅           | ❗      |
+| StreamsApi               | ✅           | ✅      |
+| SubscriptionsApi         | ✅           | ✅      |
 | TeamsApi                 | ✅           | ✅      |
 | UsersApi                 | ✅           | ℹ️     |
-| VideosApi                | ✅           | ℹ️     |
+| VideosApi                | ✅           | ✅      |
 | WhispersApi              | ✅           | ✅      |
 
 ❗ = Tests can't be implemented due to lack of mock-api-data. Mapping should work on Twitch prod systems

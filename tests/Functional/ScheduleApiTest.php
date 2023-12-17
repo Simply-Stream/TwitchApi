@@ -24,8 +24,6 @@ class ScheduleApiTest extends UserAwareFunctionalTestCase
 {
     public function testGetChannelStreamSchedule()
     {
-        $this->markTestSkipped('"/schedule" mock api endpoint returns faulty data');
-
         $testUser = $this->users[0];
         $accessToken = new AccessToken($this->appAccessToken);
         $client = new Client();
@@ -121,8 +119,6 @@ class ScheduleApiTest extends UserAwareFunctionalTestCase
 
     public function testCreateChannelStreamScheduleSegment()
     {
-        $this->markTestSkipped('POST "/schedule/segment" mock-api endpoint returns faulty data structure');
-
         $testUser = $this->users[0];
         $accessToken = new AccessToken($this->getAccessTokenForUser($testUser['id'], ['channel:manage:schedule']));
         $client = new Client();
@@ -171,8 +167,6 @@ class ScheduleApiTest extends UserAwareFunctionalTestCase
 
     public function testUpdateChannelStreamScheduleSegment()
     {
-        $this->markTestSkipped('PATCH "/schedule/segment" mock-api endpoint returns faulty data structure');
-
         $testUser = $this->users[0];
         $accessToken = new AccessToken($this->getAccessTokenForUser($testUser['id'], ['channel:manage:schedule']));
         $client = new Client();
@@ -202,7 +196,10 @@ class ScheduleApiTest extends UserAwareFunctionalTestCase
             $channelStreamScheduleSegment->getId(),
             $updateChannelStreamScheduleSegment->getData()->getSegments()[0]->getId()
         );
-        $this->assertSame('Updated Title!', $updateChannelStreamScheduleSegment->getData()->getSegments()[0]->getTitle());
+        $this->assertSame(
+            'Updated Title!',
+            $updateChannelStreamScheduleSegment->getData()->getSegments()[0]->getTitle()
+        );
     }
 
     public function testDeleteStreamScheduleSegment()
@@ -232,6 +229,9 @@ class ScheduleApiTest extends UserAwareFunctionalTestCase
         );
 
         $channelStreamScheduleAfterDelete = $scheduleApi->getChannelStreamSchedule($testUser['id'], $accessToken);
-        $this->assertNotContains($channelStreamScheduleSegment, $channelStreamScheduleAfterDelete->getData()->getSegments());
+        $this->assertNotContains(
+            $channelStreamScheduleSegment,
+            $channelStreamScheduleAfterDelete->getData()->getSegments()
+        );
     }
 }

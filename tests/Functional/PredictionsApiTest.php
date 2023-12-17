@@ -22,8 +22,6 @@ class PredictionsApiTest extends UserAwareFunctionalTestCase
 {
     public function testGetPredictions()
     {
-        $this->markTestSkipped('"/predictions" endpoint returns a faulty property name for created_at (mock-api)');
-
         $testUser = $this->users[0];
         $client = new Client();
 
@@ -66,8 +64,6 @@ class PredictionsApiTest extends UserAwareFunctionalTestCase
 
     public function testCreatePrediction()
     {
-        $this->markTestSkipped('"/predictions" endpoint returns a faulty property name for created_at (mock-api)');
-
         $outcomes = [['title' => 'Outcome 1'], ['title' => 'Outcome 2']];
         $testUser = $this->users[0];
         $client = new Client();
@@ -121,8 +117,6 @@ class PredictionsApiTest extends UserAwareFunctionalTestCase
 
     public function testEndPrediction()
     {
-        $this->markTestSkipped('"/predictions" endpoint returns a faulty property name for created_at (mock-api)');
-
         $testUser = $this->users[0];
         $accessToken = new AccessToken($this->getAccessTokenForUser($testUser['id'], ['channel:manage:predictions']));
         $client = new Client();
@@ -156,7 +150,10 @@ class PredictionsApiTest extends UserAwareFunctionalTestCase
         $this->assertCount(1, $endPredictionResponse->getData());
         $this->assertContainsOnlyInstancesOf(Prediction::class, $endPredictionResponse->getData());
 
-        $this->assertSame($getPredictionsResponse->getData()[0]->getId(), $endPredictionResponse->getData()[0]->getId());
+        $this->assertSame(
+            $getPredictionsResponse->getData()[0]->getId(),
+            $endPredictionResponse->getData()[0]->getId()
+        );
         $this->assertSame('CANCELED', $endPredictionResponse->getData()[0]->getStatus());
     }
 }

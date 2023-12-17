@@ -18,8 +18,6 @@ class RaidsApiTest extends UserAwareFunctionalTestCase
 {
     public function testStartRaid()
     {
-        $this->markTestSkipped('"/raids" mock-api endpoint currently returns a faulty structure');
-
         $fromUser = $this->users[0];
         $toUser = $this->users[1];
         $accessToken = new AccessToken($this->getAccessTokenForUser($fromUser['id'], ['channel:manage:raids']));

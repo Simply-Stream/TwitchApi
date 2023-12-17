@@ -1,11 +1,19 @@
-FROM homebrew/brew AS download_twitch_cli
+# golang:1.21.5-alpine will break to build, we'll stay on 1.21.4 for now
+FROM golang:1.21.4-alpine AS builder
 
-RUN brew update-reset && brew install twitchdev/twitch/twitch-cli
+RUN apk update && apk add --no-cache git build-base
 
-FROM ubuntu:23.10
-ARG TWITCH_CLI_VERSION=1.1.21
+WORKDIR /app
 
-COPY --chmod=777 --chown=root:root --from=download_twitch_cli /home/linuxbrew/.linuxbrew/Cellar/twitch-cli/${TWITCH_CLI_VERSION}/bin/twitch /bin/twitch
+RUN git clone https://github.com/Simply-Stream/twitch-cli.git
 
-CMD ["/bin/twitch", "mock-api", "start"]
-EXPOSE 8080
+RUN cd twitch-cli && go get -d -v && go build
+
+FROM alpine:latest
+
+WORKDIR /app
+
+COPY --from=builder /app/twitch-cli/twitch-cli /app/twitch-cli
+
+ENTRYPOINT ["/app/twitch-cli", "mock-api", "start", "-p", "8000"]
+EXPOSE 8000

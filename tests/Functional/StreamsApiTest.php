@@ -95,8 +95,6 @@ class StreamsApiTest extends UserAwareFunctionalTestCase
 
     public function testGetFollowedStreams()
     {
-        $this->markTestSkipped('"/streams/followed" mock-api endpoint returns faulty data structure');
-
         $testUser = $this->users[0];
         $accessToken = new AccessToken($this->getAccessTokenForUser($testUser['id'], ['user:read:follows']));
         $client = new Client();

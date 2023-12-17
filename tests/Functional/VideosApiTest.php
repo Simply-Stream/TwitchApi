@@ -18,38 +18,8 @@ use SimplyStream\TwitchApi\Tests\Helper\UserAwareFunctionalTestCase;
 
 class VideosApiTest extends UserAwareFunctionalTestCase
 {
-    public function testDeleteVideos()
-    {
-        $this->markTestSkipped('"/videos" mock-api endpoint returns false property name');
-
-        $testUser = $this->users[0];
-        $accessToken = new AccessToken($this->getAccessTokenForUser($testUser['id'], ['channel:manage:videos']));
-        $client = new Client();
-
-        $requestFactory = new Psr17Factory();
-        $apiClient = new ApiClient(
-            $client,
-            $requestFactory,
-            new MapperBuilder(),
-            $requestFactory,
-            ['clientId' => $this->clients['ID'], 'webhook' => ['secret' => '1234567890']]
-        );
-        $apiClient->setBaseUrl('http://localhost:8000/mock/');
-
-        $videosApi = new VideosApi($apiClient);
-        $videosResponse = $videosApi->getVideos($accessToken, userId: $testUser['id']);
-        $deletedVideos = $videosApi->deleteVideos($videosResponse->getData()[0]->getId(), $accessToken);
-
-        $this->assertInstanceOf(TwitchDataResponse::class, $deletedVideos);
-        $this->assertIsArray($deletedVideos->getData());
-        $this->assertCount(1, $deletedVideos->getData());
-        $this->assertSame($videosResponse->getData()[0]->getId(), $deletedVideos->getData()[0]);
-    }
-
     public function testGetVideos()
     {
-        $this->markTestSkipped('"/videos" mock-api endpoint returns false property name');
-
         $testUser = $this->users[0];
         $accessToken = new AccessToken($this->getAccessTokenForUser($testUser['id'], ['channel:manage:videos']));
         $client = new Client();
@@ -102,9 +72,34 @@ class VideosApiTest extends UserAwareFunctionalTestCase
 
         foreach ($video->getMutedSegments() as $mutedSegment) {
             $this->assertIsInt($mutedSegment->getOffset());
-            $this->assertNotEmpty($mutedSegment->getOffset());
             $this->assertIsInt($mutedSegment->getDuration());
             $this->assertNotEmpty($mutedSegment->getDuration());
         }
+    }
+
+    public function testDeleteVideos()
+    {
+        $testUser = $this->users[0];
+        $accessToken = new AccessToken($this->getAccessTokenForUser($testUser['id'], ['channel:manage:videos']));
+        $client = new Client();
+
+        $requestFactory = new Psr17Factory();
+        $apiClient = new ApiClient(
+            $client,
+            $requestFactory,
+            new MapperBuilder(),
+            $requestFactory,
+            ['clientId' => $this->clients['ID'], 'webhook' => ['secret' => '1234567890']]
+        );
+        $apiClient->setBaseUrl('http://localhost:8000/mock/');
+
+        $videosApi = new VideosApi($apiClient);
+        $videosResponse = $videosApi->getVideos($accessToken, userId: $testUser['id']);
+        $deletedVideos = $videosApi->deleteVideos($videosResponse->getData()[0]->getId(), $accessToken);
+
+        $this->assertInstanceOf(TwitchDataResponse::class, $deletedVideos);
+        $this->assertIsArray($deletedVideos->getData());
+        $this->assertCount(1, $deletedVideos->getData());
+        $this->assertSame($videosResponse->getData()[0]->getId(), $deletedVideos->getData()[0]);
     }
 }

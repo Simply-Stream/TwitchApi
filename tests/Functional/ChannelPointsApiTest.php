@@ -13,6 +13,8 @@ use SimplyStream\TwitchApi\Helix\Api\ApiClient;
 use SimplyStream\TwitchApi\Helix\Api\ChannelPointsApi;
 use SimplyStream\TwitchApi\Helix\Models\ChannelPoints\CreateCustomRewardRequest;
 use SimplyStream\TwitchApi\Helix\Models\ChannelPoints\CustomReward;
+use SimplyStream\TwitchApi\Helix\Models\ChannelPoints\CustomRewardRedemption;
+use SimplyStream\TwitchApi\Helix\Models\ChannelPoints\Reward;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
 use SimplyStream\TwitchApi\Tests\Helper\UserAwareFunctionalTestCase;
 
@@ -118,10 +120,6 @@ class ChannelPointsApiTest extends UserAwareFunctionalTestCase
 
     public function testGetCustomRewardRedemption()
     {
-        $this->markTestSkipped(
-            'The mock-api response is not correct. This test will be valid, when CustomRewardRedemptionResponses are fixed'
-        );
-
         $client = new Client();
 
         $requestFactory = new Psr17Factory();
@@ -146,5 +144,33 @@ class ChannelPointsApiTest extends UserAwareFunctionalTestCase
             new AccessToken($this->getAccessTokenForUser($this->users[0]['id'], ['channel:read:redemptions'])),
             'FULFILLED'
         );
+
+        $this->assertInstanceOf(TwitchDataResponse::class, $getCustomRewardRedemptionResponse);
+        $this->assertContainsOnlyInstancesOf(
+            CustomRewardRedemption::class,
+            $getCustomRewardRedemptionResponse->getData()
+        );
+        $this->assertIsArray($getCustomRewardRedemptionResponse->getData());
+
+        foreach ($getCustomRewardRedemptionResponse->getData() as $customRewardRedemption) {
+            $this->assertInstanceOf(CustomRewardRedemption::class, $customRewardRedemption);
+            $this->assertIsString($customRewardRedemption->getBroadcasterId());
+            $this->assertIsString($customRewardRedemption->getBroadcasterLogin());
+            $this->assertIsString($customRewardRedemption->getBroadcasterName());
+            $this->assertIsString($customRewardRedemption->getId());
+            $this->assertIsString($customRewardRedemption->getUserId());
+            $this->assertIsString($customRewardRedemption->getUserLogin());
+            $this->assertIsString($customRewardRedemption->getUserName());
+            $this->assertIsString($customRewardRedemption->getStatus());
+            $this->assertInstanceOf(\DateTimeImmutable::class, $customRewardRedemption->getRedeemedAt());
+            $this->assertIsString($customRewardRedemption->getUserInput());
+
+            $reward = $customRewardRedemption->getReward();
+            $this->assertInstanceOf(Reward::class, $reward);
+            $this->assertIsString($reward->getId());
+            $this->assertIsString($reward->getTitle());
+            $this->assertIsString($reward->getPrompt());
+            $this->assertIsInt($reward->getCost());
+        }
     }
 }

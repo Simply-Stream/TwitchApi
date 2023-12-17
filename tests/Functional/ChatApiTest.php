@@ -429,8 +429,6 @@ class ChatApiTest extends UserAwareFunctionalTestCase
 
     public function testSendShoutout()
     {
-        $this->markTestSkipped('Waiting for https://github.com/twitchdev/twitch-cli/pull/301 to be approved');
-
         // Unless the request throws an exception, this test is perfectly valid
         $this->expectNotToPerformAssertions();
 
@@ -487,8 +485,6 @@ class ChatApiTest extends UserAwareFunctionalTestCase
 
     public function testUpdateUserChatColor()
     {
-        $this->markTestSkipped('Mock-Api returns wrong Statuscode');
-
         $testUser = $this->users[0];
         $client = new Client();
 
