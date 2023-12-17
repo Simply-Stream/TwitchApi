@@ -13,6 +13,7 @@ FROM alpine:latest
 
 WORKDIR /app
 
+COPY ./eventCache.db /root/.config/twitch-cli/eventCache.db
 COPY --from=builder /app/twitch-cli/twitch-cli /app/twitch-cli
 
 ENTRYPOINT ["/app/twitch-cli", "mock-api", "start"]
