@@ -5,7 +5,7 @@ RUN apk update && apk add --no-cache git build-base
 
 WORKDIR /app
 
-RUN git clone https://github.com/Simply-Stream/twitch-cli.git
+RUN git clone -b fix/mock-api https://github.com/Simply-Stream/twitch-cli.git
 
 RUN cd twitch-cli && go get -d -v && go build
 
