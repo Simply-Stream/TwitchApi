@@ -15,5 +15,5 @@ WORKDIR /app
 
 COPY --from=builder /app/twitch-cli/twitch-cli /app/twitch-cli
 
-ENTRYPOINT ["/app/twitch-cli", "mock-api", "start", "-p", "8000"]
-EXPOSE 8000
+ENTRYPOINT ["/app/twitch-cli", "mock-api", "start"]
+EXPOSE 8080
