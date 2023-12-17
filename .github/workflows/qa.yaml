@@ -30,10 +30,6 @@ jobs:
             -   name: Run Twitch Mock API
                 run: docker run --name twitch-mock-api -p 8000:8080 -d twitch-cli:latest
 
-            # This is just a dirty workaround. I'd like to have a script here, that tries every second to reach the mock api
-            -   name: Wait for container to generate mock data
-                run: sleep 10
-
             -   name: Execute tests (Unit and Functional tests) via PHPUnit
                 run: vendor/bin/phpunit
 
