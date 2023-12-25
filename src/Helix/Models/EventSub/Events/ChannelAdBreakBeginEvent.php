@@ -9,7 +9,7 @@ use DateTimeImmutable;
 final readonly class ChannelAdBreakBeginEvent extends Event
 {
     /**
-     * @param int               $lengthSeconds         Length in seconds of the mid-roll ad break requested
+     * @param int               $durationSeconds       Length in seconds of the mid-roll ad break requested
      * @param DateTimeImmutable $timestamp             The UTC timestamp of when the ad break began, in RFC3339 format.
      *                                                 Note that there is potential delay between this event, when the
      *                                                 streamer requested the ad break, and when the viewers will see
@@ -23,7 +23,7 @@ final readonly class ChannelAdBreakBeginEvent extends Event
      *                                                 run on.
      */
     public function __construct(
-        private int $lengthSeconds,
+        private int $durationSeconds,
         private DateTimeImmutable $timestamp,
         private bool $isAutomatic,
         private string $requesterUserId,
@@ -33,9 +33,9 @@ final readonly class ChannelAdBreakBeginEvent extends Event
     ) {
     }
 
-    public function getLengthSeconds(): int
+    public function getDurationSeconds(): int
     {
-        return $this->lengthSeconds;
+        return $this->durationSeconds;
     }
 
     public function getTimestamp(): DateTimeImmutable

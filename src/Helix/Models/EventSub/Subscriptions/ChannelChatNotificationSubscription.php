@@ -10,7 +10,7 @@ use SimplyStream\TwitchApi\Helix\Models\EventSub\Subscription;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Transport;
 
 /**
- * (BETA) A notification for when an event that appears in chat has occurred.
+ * A notification for when an event that appears in chat has occurred.
  */
 final readonly class ChannelChatNotificationSubscription extends Subscription
 {
@@ -32,7 +32,7 @@ final readonly class ChannelChatNotificationSubscription extends Subscription
         ?string $status = null,
         ?DateTimeImmutable $createdAt = null,
         ?string $type = self::TYPE,
-        ?string $version = "beta"
+        ?string $version = "1"
     ) {
         parent::__construct(
             $type,

@@ -10,7 +10,7 @@ use SimplyStream\TwitchApi\Helix\Models\EventSub\Subscription;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Transport;
 
 /**
- * (BETA) A midroll commercial break has started running.
+ * A midroll commercial break has started running.
  */
 final readonly class ChannelAdBreakBeginSubscription extends Subscription
 {
@@ -32,7 +32,7 @@ final readonly class ChannelAdBreakBeginSubscription extends Subscription
         ?string $status = null,
         ?DateTimeImmutable $createdAt = null,
         ?string $type = self::TYPE,
-        ?string $version = "beta"
+        ?string $version = "1"
     ) {
         parent::__construct(
             $type,

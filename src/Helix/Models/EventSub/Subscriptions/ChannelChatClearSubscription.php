@@ -10,7 +10,7 @@ use SimplyStream\TwitchApi\Helix\Models\EventSub\Subscription;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Transport;
 
 /**
- * (BETA) A moderator or bot has cleared all messages from the chat room.
+ * A moderator or bot has cleared all messages from the chat room.
  */
 final readonly class ChannelChatClearSubscription extends Subscription
 {
@@ -32,7 +32,7 @@ final readonly class ChannelChatClearSubscription extends Subscription
         ?string $status = null,
         ?DateTimeImmutable $createdAt = null,
         ?string $type = self::TYPE,
-        ?string $version = "beta"
+        ?string $version = "1"
     ) {
         parent::__construct(
             $type,

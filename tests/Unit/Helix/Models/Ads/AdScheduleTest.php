@@ -27,9 +27,9 @@ class AdScheduleTest extends TestCase
         $this->assertSame(1, $sut->getSnoozeCount());
         $this->assertSame($snoozeRefreshAt, $sut->getSnoozeRefreshAt());
         $this->assertSame($nextAdAt, $sut->getNextAdAt());
-        $this->assertSame(60, $sut->getLengthSeconds());
+        $this->assertSame(60, $sut->getDuration());
         $this->assertSame($lastAdAt, $sut->getLastAdAt());
-        $this->assertSame(0, $sut->getPrerollFreeTimeSeconds());
+        $this->assertSame(0, $sut->getPrerollFreeTime());
     }
 
     public function testCanBeSerializedToArray()
@@ -52,9 +52,9 @@ class AdScheduleTest extends TestCase
             'snooze_count' => 1,
             'snooze_refresh_at' => $snoozeRefreshAt->format(DATE_RFC3339_EXTENDED),
             'next_ad_at' => $nextAdAt->format(DATE_RFC3339_EXTENDED),
-            'length_seconds' => 60,
+            'duration' => 60,
             'last_ad_at' => $lastAdAt->format(DATE_RFC3339_EXTENDED),
-            'preroll_free_time_seconds' => 0,
+            'preroll_free_time' => 0,
         ], $sut->toArray());
     }
 }

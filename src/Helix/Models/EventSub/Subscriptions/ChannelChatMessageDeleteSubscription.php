@@ -10,7 +10,7 @@ use SimplyStream\TwitchApi\Helix\Models\EventSub\Subscription;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Transport;
 
 /**
- * (BETA) A moderator has removed a specific message.
+ * A moderator has removed a specific message.
  */
 final readonly class ChannelChatMessageDeleteSubscription extends Subscription
 {
@@ -32,7 +32,7 @@ final readonly class ChannelChatMessageDeleteSubscription extends Subscription
         ?string $status = null,
         ?DateTimeImmutable $createdAt = null,
         ?string $type = self::TYPE,
-        ?string $version = "beta"
+        ?string $version = "1"
     ) {
         parent::__construct(
             $type,
