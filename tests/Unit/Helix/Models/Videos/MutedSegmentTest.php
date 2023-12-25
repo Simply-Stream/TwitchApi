@@ -19,7 +19,7 @@ final class MutedSegmentTest extends TestCase
         $this->assertEquals($duration, $mutedSegment->getDuration());
     }
 
-    public function provideTestData()
+    public static function provideTestData()
     {
         return [
             [10, 20],

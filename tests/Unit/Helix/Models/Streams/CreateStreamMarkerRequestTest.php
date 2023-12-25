@@ -22,7 +22,7 @@ class CreateStreamMarkerRequestTest extends TestCase
         $this->assertEquals($expectedDescription, $createStreamMarkerRequest->getDescription());
     }
 
-    public function canBeInitializedProvider()
+    public static function canBeInitializedProvider()
     {
         return [
             ['user123', 'description', 'user123', 'description'],

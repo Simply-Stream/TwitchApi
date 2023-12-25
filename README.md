@@ -150,7 +150,6 @@ Currently, there is only an integration for [Symfony](https://symfony.com).
 Even though most of this library is ready to use, there's still a lot to do. Here is a brief overview of what will come
 next ordered more or less by priority:
 
-- More tests!
 - Factories/Builder to easily instantiate the APIs and maybe some DTOs, especially the TwitchApi class
 - Middleware features, to easily extend requests (e.g.: RateLimitMiddleware)
 - A guideline for contributions
