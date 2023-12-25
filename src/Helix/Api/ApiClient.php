@@ -6,12 +6,13 @@ namespace SimplyStream\TwitchApi\Helix\Api;
 
 use CuyZ\Valinor\Mapper\MappingError;
 use CuyZ\Valinor\Mapper\Object\DynamicConstructor;
+use CuyZ\Valinor\Mapper\Source\Exception\InvalidSource;
 use CuyZ\Valinor\Mapper\Source\Source;
 use CuyZ\Valinor\Mapper\Tree\Message\Messages;
 use CuyZ\Valinor\MapperBuilder;
 use DateTimeImmutable;
-use InvalidArgumentException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
+use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
@@ -19,6 +20,12 @@ use Psr\Http\Message\UriFactoryInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerTrait;
 use Psr\Log\LogLevel;
+use SimplyStream\TwitchApi\Helix\Exceptions\BadRequestResponseException;
+use SimplyStream\TwitchApi\Helix\Exceptions\ForbiddenResponseException;
+use SimplyStream\TwitchApi\Helix\Exceptions\InternalServerErrorResponseException;
+use SimplyStream\TwitchApi\Helix\Exceptions\NotFoundResponseException;
+use SimplyStream\TwitchApi\Helix\Exceptions\TooManyRequestsResponseException;
+use SimplyStream\TwitchApi\Helix\Exceptions\UnauthorizedResponseException;
 use SimplyStream\TwitchApi\Helix\Models\AbstractModel;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Subscription;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Subscriptions\Subscriptions;
@@ -65,6 +72,10 @@ class ApiClient implements ApiClientInterface
      * @param array                     $headers
      *
      * @return TwitchResponseInterface|null
+     * @throws MappingError
+     * @throws InvalidSource
+     * @throws \JsonException
+     * @throws ClientExceptionInterface
      */
     public function sendRequest(
         string $path,
@@ -103,53 +114,94 @@ class ApiClient implements ApiClientInterface
         }
 
         $response = $this->client->sendRequest($request);
-        $responseContent = $response->getBody()->getContents();
 
-        if ($response->getStatusCode() >= 400) {
-            // @TODO: Change into ErrorResponse
-            $error = json_decode($responseContent, false, 512, JSON_THROW_ON_ERROR);
-            $this->error($error->message, ['response' => $responseContent]);
-            throw new InvalidArgumentException(sprintf('Error from API: "(%s): %s"', $error->error, $error->message));
-        }
+        // @TODO: Not sure if this will stay like this, but for now it's ok
+        // @TODO: Also think about using match instead of switch
+        switch ($response->getStatusCode()) {
+            case 200:
+                $responseContent = $response->getBody()->getContents();
 
-        if ($response->getStatusCode() === 204) {
-            return null;
-        }
+                // @TODO: For now, this is ok, but might be changed in the future. Or maybe completely discarded
+                if ($response->getHeader('Content-Type')[0] === 'text/calendar') {
+                    return new TwitchDataResponse($responseContent);
+                }
 
-        // @TODO: For now, this is ok, but might be changed in the future. Or maybe completely discarded
-        if ($response->getHeader('Content-Type')[0] === 'text/calendar') {
-            return new TwitchDataResponse($responseContent);
-        }
+                try {
+                    $source = Source::json($responseContent);
 
-        try {
-            $source = Source::json($responseContent);
+                    return $this->mapperBuilder
+                        ->registerConstructor(fn (string $time): DateTimeImmutable => new DateTimeImmutable($time))
+                        ->registerConstructor(
+                            #[DynamicConstructor]
+                            function (string $className, array $value): Subscription {
+                                $type = Subscriptions::MAP[$value['type']];
 
-            return $this->mapperBuilder
-                ->registerConstructor(fn (string $time): DateTimeImmutable => new DateTimeImmutable($time))
-                ->registerConstructor(
-                    #[DynamicConstructor]
-                    function (string $className, array $value): Subscription {
-                        $type = Subscriptions::MAP[$value['type']];
-
-                        return new $type(
-                            $value['condition'],
-                            new Transport(...$value['transport']),
-                            $value['id'],
-                            $value['status'],
-                            new DateTimeImmutable($value['createdAt']),
-                        );
+                                return new $type(
+                                    $value['condition'],
+                                    new Transport(...$value['transport']),
+                                    $value['id'],
+                                    $value['status'],
+                                    new DateTimeImmutable($value['createdAt']),
+                                );
+                            }
+                        )
+                        ->allowPermissiveTypes()
+                        ->allowSuperfluousKeys()
+                        ->mapper()->map($type, $source->camelCaseKeys());
+                } catch (MappingError $mappingError) {
+                    $messages = Messages::flattenFromNode($mappingError->node())->errors();
+                    foreach ($messages as $message) {
+                        $this->log($message, LogLevel::ERROR);
                     }
-                )
-                ->allowPermissiveTypes()
-                ->allowSuperfluousKeys()
-                ->mapper()->map($type, $source->camelCaseKeys());
-        } catch (MappingError $mappingError) {
-            $messages = Messages::flattenFromNode($mappingError->node())->errors();
-            foreach ($messages as $message) {
-                $this->log($message, LogLevel::ERROR);
-            }
 
-            throw $mappingError;
+                    throw $mappingError;
+                }
+            case 204:
+                return null;
+            case 400:
+                $responseContent = json_decode((string)$response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+                throw new BadRequestResponseException(
+                    $request,
+                    $responseContent['data'],
+                    $responseContent['data'][0]['message']
+                );
+            case 401:
+                $responseContent = json_decode((string)$response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+                throw new UnauthorizedResponseException(
+                    $request,
+                    $responseContent['data'],
+                    $responseContent['data'][0]['message']
+                );
+            case 403:
+                $responseContent = json_decode((string)$response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+                throw new ForbiddenResponseException(
+                    $request,
+                    $responseContent['data'],
+                    $responseContent['data'][0]['message']
+                );
+            case 404:
+                $responseContent = json_decode((string)$response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+                throw new NotFoundResponseException(
+                    $request,
+                    $responseContent['data'],
+                    $responseContent['data'][0]['message']
+                );
+            case 429:
+                $responseContent = json_decode((string)$response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+                throw new TooManyRequestsResponseException(
+                    $request,
+                    $responseContent['data'],
+                    $responseContent['data'][0]['message']
+                );
+            case 500:
+                $responseContent = json_decode((string)$response->getBody(), true, 512, JSON_THROW_ON_ERROR);
+                throw new InternalServerErrorResponseException(
+                    $request,
+                    $responseContent['data'],
+                    $responseContent['data'][0]['message']
+                );
+            default:
+                throw new \RuntimeException('Unknown status returned from Twitch');
         }
     }
 

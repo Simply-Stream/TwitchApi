@@ -5,7 +5,7 @@ RUN apk add --no-cache git build-base
 
 WORKDIR /app
 
-RUN git clone -b fix/mock-api https://github.com/Simply-Stream/twitch-cli.git
+RUN git clone -b fix/mock-api-error-responses https://github.com/Simply-Stream/twitch-cli.git
 
 RUN cd twitch-cli && go get -d -v && CGO_CFLAGS="-D_LARGEFILE64_SOURCE" go build
 

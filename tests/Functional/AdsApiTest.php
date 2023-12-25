@@ -11,6 +11,7 @@ use League\OAuth2\Client\Token\AccessToken;
 use PHPUnit\Framework\Attributes\CoversClass;
 use SimplyStream\TwitchApi\Helix\Api\AdsApi;
 use SimplyStream\TwitchApi\Helix\Api\ApiClient;
+use SimplyStream\TwitchApi\Helix\Exceptions\BadRequestResponseException;
 use SimplyStream\TwitchApi\Helix\Models\Ads\Commercial;
 use SimplyStream\TwitchApi\Helix\Models\Ads\StartCommercialRequest;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
@@ -48,6 +49,40 @@ class AdsApiTest extends UserAwareFunctionalTestCase
             $this->assertSame("", $commercial->getMessage());
             $this->assertSame(30, $commercial->getLength());
             $this->assertSame(480, $commercial->getRetryAfter());
+        }
+    }
+
+    public function testStartCommercialThrows400()
+    {
+        $this->expectException(BadRequestResponseException::class);
+        $this->expectExceptionMessage("Please try again later");
+
+        $client = new Client();
+
+        $requestFactory = new Psr17Factory();
+        $apiClient = new ApiClient(
+            $client,
+            $requestFactory,
+            new MapperBuilder(),
+            $requestFactory,
+            ['clientId' => $this->clients['ID'], 'webhook' => ['secret' => '1234567890']]
+        );
+        $apiClient->setBaseUrl('http://localhost:8000/mock/');
+
+        $adsApi = new AdsApi($apiClient);
+        try {
+            $adsApi->startCommercial(
+                new StartCommercialRequest($this->users[0]['id'], 30),
+                new AccessToken($this->getAccessTokenForUser($this->users[0]['id'], ['channel:edit:commercial']))
+            );
+        } catch (BadRequestResponseException $e) {
+            $this->assertIsArray($e->getContext());
+            $this->assertIsInt($e->getContext()[0]['retry_after']);
+            $this->assertGreaterThan(0, $e->getContext()[0]['retry_after']);
+            $this->assertSame("Please try again later", $e->getMessage());
+            $this->assertSame(400, $e->getCode());
+
+            throw $e;
         }
     }
 
