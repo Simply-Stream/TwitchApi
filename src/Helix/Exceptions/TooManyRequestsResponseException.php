@@ -13,7 +13,7 @@ class TooManyRequestsResponseException extends \RuntimeException
         private RequestInterface $request,
         private array $context,
         string $message = "",
-        int $code = 401,
+        int $code = 429,
         ?Throwable $previous = null
     ) {
         $this->request->getBody()->rewind();
