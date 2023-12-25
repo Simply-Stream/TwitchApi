@@ -116,7 +116,7 @@ class ApiClient implements ApiClientInterface
         $response = $this->client->sendRequest($request);
 
         // @TODO: Not sure if this will stay like this, but for now it's ok
-        // @TODO: Also think about using match instead of switch
+        // @TODO: Also think about using match instead of switch, maybe even throw this into the mapper and THEN throw an exception
         switch ($response->getStatusCode()) {
             case 200:
                 $responseContent = $response->getBody()->getContents();
@@ -162,43 +162,43 @@ class ApiClient implements ApiClientInterface
                 $responseContent = json_decode((string)$response->getBody(), true, 512, JSON_THROW_ON_ERROR);
                 throw new BadRequestResponseException(
                     $request,
-                    $responseContent['data'],
-                    $responseContent['data'][0]['message']
+                    $responseContent['data'] ?? [],
+                    isset($responseContent['data']) ? $responseContent['data'][0]['message'] : $responseContent['message']
                 );
             case 401:
                 $responseContent = json_decode((string)$response->getBody(), true, 512, JSON_THROW_ON_ERROR);
                 throw new UnauthorizedResponseException(
                     $request,
-                    $responseContent['data'],
-                    $responseContent['data'][0]['message']
+                    $responseContent['data'] ?? [],
+                    isset($responseContent['data']) ? $responseContent['data'][0]['message'] : $responseContent['message']
                 );
             case 403:
                 $responseContent = json_decode((string)$response->getBody(), true, 512, JSON_THROW_ON_ERROR);
                 throw new ForbiddenResponseException(
                     $request,
-                    $responseContent['data'],
-                    $responseContent['data'][0]['message']
+                    $responseContent['data'] ?? [],
+                    isset($responseContent['data']) ? $responseContent['data'][0]['message'] : $responseContent['message']
                 );
             case 404:
                 $responseContent = json_decode((string)$response->getBody(), true, 512, JSON_THROW_ON_ERROR);
                 throw new NotFoundResponseException(
                     $request,
-                    $responseContent['data'],
-                    $responseContent['data'][0]['message']
+                    $responseContent['data'] ?? [],
+                    isset($responseContent['data']) ? $responseContent['data'][0]['message'] : $responseContent['message']
                 );
             case 429:
                 $responseContent = json_decode((string)$response->getBody(), true, 512, JSON_THROW_ON_ERROR);
                 throw new TooManyRequestsResponseException(
                     $request,
-                    $responseContent['data'],
-                    $responseContent['data'][0]['message']
+                    $responseContent['data'] ?? [],
+                    isset($responseContent['data']) ? $responseContent['data'][0]['message'] : $responseContent['message']
                 );
             case 500:
                 $responseContent = json_decode((string)$response->getBody(), true, 512, JSON_THROW_ON_ERROR);
                 throw new InternalServerErrorResponseException(
                     $request,
-                    $responseContent['data'],
-                    $responseContent['data'][0]['message']
+                    $responseContent['data'] ?? [],
+                    isset($responseContent['data']) ? $responseContent['data'][0]['message'] : $responseContent['message']
                 );
             default:
                 throw new \RuntimeException('Unknown status returned from Twitch');

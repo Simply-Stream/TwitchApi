@@ -430,7 +430,7 @@ class ModerationApiTest extends UserAwareFunctionalTestCase
             // The mock data is mostly random, so to be sure, we'll remove the user as a moderator. Twitch doesn't allow
             // a moderator to also be a VIP
             $moderationApi->removeChannelModerator($testUser['id'], $vipUser['id'], $accessToken);
-        } catch (\Exception $exception) {
+        } catch (\RuntimeException $exception) {
         }
 
         $this->assertInstanceOf(TwitchPaginatedDataResponse::class, $getVipsResponse);
