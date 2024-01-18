@@ -46,6 +46,7 @@ class ChannelPointsApi extends AbstractApi
                 'broadcaster_id' => $broadcasterId,
             ],
             type: sprintf('%s<%s[]>', TwitchDataResponse::class, CustomReward::class),
+            method: 'POST',
             body: $body,
             accessToken: $accessToken,
         );
@@ -283,6 +284,7 @@ class ChannelPointsApi extends AbstractApi
                 'reward_id' => $rewardId,
             ],
             type: sprintf('%s<%s[]>', TwitchDataResponse::class, CustomRewardRedemption::class),
+            method: 'PATCH',
             body: $body,
             accessToken: $accessToken
         );
