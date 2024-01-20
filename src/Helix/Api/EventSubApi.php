@@ -45,15 +45,15 @@ class EventSubApi extends AbstractApi
      *                                          channel:read:subscriptions scope, which adds the required permission to
      *                                          your app access token’s client ID.
      *
-     * @return EventSubResponse<T[]>
+     * @return PaginatedEventSubResponse<T[]>
      */
     public function createEventSubSubscription(
         Subscription $subscription,
         AccessTokenInterface $accessToken
-    ): EventSubResponse {
+    ): PaginatedEventSubResponse {
         return $this->sendRequest(
             path: self::BASE_PATH . '/subscriptions',
-            type: sprintf('%s[]', Subscription::class),
+            type: sprintf('%s<%s[]>', PaginatedEventSubResponse::class, Subscription::class),
             method: 'POST',
             // I don't really like this way, but better than nothing at the moment
             body: new CreateEventSubSubscriptionRequest(
