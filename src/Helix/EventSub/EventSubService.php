@@ -12,7 +12,6 @@ use CuyZ\Valinor\Mapper\Tree\Message\Messages;
 use CuyZ\Valinor\Mapper\TreeMapper;
 use CuyZ\Valinor\MapperBuilder;
 use DateTimeImmutable;
-use JsonException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use Psr\Http\Message\RequestInterface;
 use RuntimeException;
@@ -23,8 +22,8 @@ use SimplyStream\TwitchApi\Helix\EventSub\Exceptions\MissingHeaderException;
 use SimplyStream\TwitchApi\Helix\EventSub\Exceptions\UnsupportedEventException;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\EventResponse;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Events\EventInterface;
-use SimplyStream\TwitchApi\Helix\Models\EventSub\EventSubResponse;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\MultipleEventResponse;
+use SimplyStream\TwitchApi\Helix\Models\EventSub\PaginatedEventSubResponse;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Subscription;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Subscriptions\DropEntitlementGrantSubscription;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Subscriptions\Subscriptions;
@@ -88,10 +87,9 @@ class EventSubService
      * @param T                    $subscription
      * @param AccessTokenInterface $accessToken
      *
-     * @return EventSubResponse<T[]>
-     * @throws JsonException
+     * @return PaginatedEventSubResponse<T[]>
      */
-    public function subscribe(Subscription $subscription, AccessTokenInterface $accessToken): EventSubResponse
+    public function subscribe(Subscription $subscription, AccessTokenInterface $accessToken): PaginatedEventSubResponse
     {
         try {
             $response = $this->eventSubApi->createEventSubSubscription($subscription, $accessToken);
