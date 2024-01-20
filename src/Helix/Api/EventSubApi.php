@@ -53,7 +53,7 @@ class EventSubApi extends AbstractApi
     ): EventSubResponse {
         return $this->sendRequest(
             path: self::BASE_PATH . '/subscriptions',
-            type: sprintf('%s<%s[]>', EventSubResponse::class, Subscription::class),
+            type: sprintf('%s[]', Subscription::class),
             method: 'POST',
             // I don't really like this way, but better than nothing at the moment
             body: new CreateEventSubSubscriptionRequest(

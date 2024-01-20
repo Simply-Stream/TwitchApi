@@ -119,11 +119,17 @@ class ApiClient implements ApiClientInterface
         // @TODO: Also think about using match instead of switch, maybe even throw this into the mapper and THEN throw an exception
         switch ($response->getStatusCode()) {
             case 200:
+            case 202:
                 $responseContent = $response->getBody()->getContents();
 
                 // @TODO: For now, this is ok, but might be changed in the future. Or maybe completely discarded
                 if ($response->getHeader('Content-Type')[0] === 'text/calendar') {
                     return new TwitchDataResponse($responseContent);
+                }
+
+                // This could be possible, if the response code is 202. We can than skip the mapping process
+                if ($responseContent === '') {
+                    return null;
                 }
 
                 try {
