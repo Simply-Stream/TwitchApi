@@ -51,7 +51,7 @@ class ChannelPointsApiTest extends UserAwareFunctionalTestCase
         $this->assertSame($this->users[0]['id'], $customReward->getBroadcasterId());
         $this->assertSame($this->users[0]['login'], $customReward->getBroadcasterLogin());
         $this->assertSame($this->users[0]['display_name'], $customReward->getBroadcasterName());
-        $this->assertSame(sprintf('Fake reward for %s', $this->users[0]['id']), $customReward->getTitle());
+        $this->assertSame('Custom reward', $customReward->getTitle());
 
         $channelPointsApi->deleteCustomRewards(
             $this->users[0]['id'],
