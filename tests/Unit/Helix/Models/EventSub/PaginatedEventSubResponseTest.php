@@ -20,10 +20,10 @@ class PaginatedEventSubResponseTest extends TestCase
 
         $instance = new PaginatedEventSubResponse(
             $data,
-            $pagination,
-            $total,
             $totalCost,
-            $maxTotalCost
+            $maxTotalCost,
+            $total,
+            $pagination,
         );
 
         $this->assertEquals($total, $instance->getTotal());

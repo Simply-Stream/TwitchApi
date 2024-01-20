@@ -17,8 +17,9 @@ final readonly class EventResponse
 
     /**
      * @param Tsubscription $subscription  Metadata about the subscription.
-     * @param Tevent        $event         Returns the user ID, user name, title, language, category ID, category name,
-     *                                     and content classification labels for the given broadcaster.
+     * @param Tevent|null   $event         Returns the user ID, user name, title, language, category ID, category name,
+     *                                     and content classification labels for the given broadcaster. Can be null,
+     *                                     when the subscription is created and checks for challenge.
      * @param string|null   $challenge     Your response must return a 200 status code, the response body must contain
      *                                     the raw challenge value, and you must set the Content-Type response header
      *                                     to the length of the challenge value
@@ -27,7 +28,7 @@ final readonly class EventResponse
      */
     public function __construct(
         private Subscription $subscription,
-        private ?EventInterface $event,
+        private ?EventInterface $event = null,
         private ?string $challenge = null
     ) {
     }
