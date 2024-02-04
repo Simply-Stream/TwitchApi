@@ -12,6 +12,7 @@ use SimplyStream\TwitchApi\Helix\Api\ApiClient;
 use SimplyStream\TwitchApi\Helix\Api\SubscriptionsApi;
 use SimplyStream\TwitchApi\Helix\Models\Subscriptions\Subscription;
 use SimplyStream\TwitchApi\Helix\Models\Subscriptions\TwitchPaginatedSubPointsResponse;
+use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
 use SimplyStream\TwitchApi\Tests\Helper\UserAwareFunctionalTestCase;
 
 class SubscriptionsApiTest extends UserAwareFunctionalTestCase
@@ -38,7 +39,7 @@ class SubscriptionsApiTest extends UserAwareFunctionalTestCase
             $accessToken
         );
 
-        $this->assertInstanceOf(TwitchPaginatedSubPointsResponse::class, $getBroadcasterSubscriptionsResponse);
+        $this->assertInstanceOf(TwitchPaginatedDataResponse::class, $getBroadcasterSubscriptionsResponse);
         $subscriptions = $getBroadcasterSubscriptionsResponse->getData();
         $this->assertIsArray($subscriptions);
         // Total could be bigger than the default limit of 20 items
@@ -102,7 +103,7 @@ class SubscriptionsApiTest extends UserAwareFunctionalTestCase
             $accessToken
         );
 
-        $this->assertInstanceOf(TwitchPaginatedSubPointsResponse::class, $checkUserSubscription);
+        $this->assertInstanceOf(TwitchPaginatedDataResponse::class, $checkUserSubscription);
         $this->assertIsArray($checkUserSubscription->getData());
         $this->assertCount(1, $checkUserSubscription->getData());
         $this->assertEquals($getBroadcasterSubscriptionsResponse->getData()[0], $checkUserSubscription->getData()[0]);
