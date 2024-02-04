@@ -10,6 +10,7 @@ interface EventInterface
 {
     public const AVAILABLE_EVENTS = [
         Subscriptions\ChannelBanSubscription::TYPE => ChannelBanEvent::class,
+        Subscriptions\ChannelChatSettingsUpdateSubscription::TYPE => ChannelChatSettingsUpdateEvent::class,
         Subscriptions\ChannelPointsCustomRewardAddSubscription::TYPE => ChannelPointsCustomRewardAddEvent::class,
         Subscriptions\ChannelPointsCustomRewardRemoveSubscription::TYPE => ChannelPointsCustomRewardRemoveEvent::class,
         Subscriptions\ChannelPointsCustomRewardUpdateSubscription::TYPE => ChannelPointsCustomRewardUpdateEvent::class,
