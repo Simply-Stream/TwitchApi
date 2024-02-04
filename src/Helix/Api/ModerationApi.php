@@ -818,4 +818,44 @@ class ModerationApi extends AbstractApi
             accessToken: $accessToken
         );
     }
+
+    /**
+     * Gets a list of channels that the specified user has moderator privileges in.
+     *
+     * Authorization
+     * - Query parameter user_id must match the user ID in the User-Access token
+     * - Requires OAuth Scope: user:read:moderated_channels
+     *
+     * URL
+     * GET https://api.twitch.tv/helix/moderation/channels
+     *
+     * @param string               $userId      A user’s ID. Returns the list of channels that this user has moderator
+     *                                          privileges in. This ID must match the user ID in the user OAuth token
+     * @param AccessTokenInterface $accessToken Requires OAuth Scope: user:read:moderated_channels
+     * @param string|null          $after       The cursor used to get the next page of results. The Pagination object
+     *                                          in the response contains the cursor’s value.
+     * @param int                  $first       The maximum number of items to return per page in the response.
+     *
+     *                                          Minimum page size is 1 item per page and the maximum is 100. The
+     *                                          default is 20.
+     *
+     * @return TwitchPaginatedDataResponse<ModeratedChannel[]>
+     */
+    public function getModeratedChannels(
+        string $userId,
+        AccessTokenInterface $accessToken,
+        string $after = null,
+        int $first = 20
+    ): TwitchPaginatedDataResponse {
+        return $this->sendRequest(
+            path: self::BASE_PATH . '/channels',
+            query: [
+                'user_id' => $userId,
+                'after' => $after,
+                'first' => $first,
+            ],
+            type: sprintf('%s<%s[]>', TwitchPaginatedDataResponse::class, ModeratedChannel::class),
+            accessToken: $accessToken
+        );
+    }
 }
