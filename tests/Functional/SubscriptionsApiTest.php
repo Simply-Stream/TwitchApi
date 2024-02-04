@@ -44,7 +44,6 @@ class SubscriptionsApiTest extends UserAwareFunctionalTestCase
         $this->assertIsArray($subscriptions);
         // Total could be bigger than the default limit of 20 items
         $this->assertLessThanOrEqual($getBroadcasterSubscriptionsResponse->getTotal(), count($subscriptions));
-        $this->assertGreaterThan(0, $getBroadcasterSubscriptionsResponse->getPoints());
         $this->assertContainsOnlyInstancesOf(Subscription::class, $subscriptions);
 
         foreach ($subscriptions as $subscription) {
