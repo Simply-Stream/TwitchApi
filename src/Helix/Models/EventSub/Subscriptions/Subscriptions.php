@@ -12,6 +12,7 @@ interface Subscriptions
         ChannelChatClearSubscription::TYPE => ChannelChatClearSubscription::class,
         ChannelChatClearUserMessagesSubscription::TYPE => ChannelChatClearUserMessagesSubscription::class,
         ChannelChatMessageDeleteSubscription::TYPE => ChannelChatMessageDeleteSubscription::class,
+        ChannelChatMessageSubscription::TYPE => ChannelChatMessageSubscription::class,
         ChannelChatNotificationSubscription::TYPE => ChannelChatNotificationSubscription::class,
         ChannelChatSettingsUpdateSubscription::TYPE => ChannelChatSettingsUpdateSubscription::class,
         ChannelCheerSubscription::TYPE => ChannelCheerSubscription::class,

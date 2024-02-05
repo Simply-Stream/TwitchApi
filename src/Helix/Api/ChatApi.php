@@ -13,7 +13,9 @@ use SimplyStream\TwitchApi\Helix\Models\Chat\ChatSettings;
 use SimplyStream\TwitchApi\Helix\Models\Chat\Chatter;
 use SimplyStream\TwitchApi\Helix\Models\Chat\EmoteSet;
 use SimplyStream\TwitchApi\Helix\Models\Chat\GlobalEmote;
+use SimplyStream\TwitchApi\Helix\Models\Chat\Message;
 use SimplyStream\TwitchApi\Helix\Models\Chat\SendChatAnnouncementRequest;
+use SimplyStream\TwitchApi\Helix\Models\Chat\SendChatMessageRequest;
 use SimplyStream\TwitchApi\Helix\Models\Chat\UpdateChatSettingsRequest;
 use SimplyStream\TwitchApi\Helix\Models\Chat\UserChatColor;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
@@ -478,6 +480,52 @@ class ChatApi extends AbstractApi
             ],
             method: 'PUT',
             accessToken: $accessToken
+        );
+    }
+
+    /**
+     * Sends a message to the broadcaster’s chat room.
+     *
+     * Authorization
+     * Requires an app access token or user access token that includes the user:write:chat scope. If app access token
+     * used, then additionally requires user:bot scope from chatting user, and either channel:bot scope from
+     * broadcaster or moderator status.
+     *
+     * URL
+     * POST https://api.twitch.tv/helix/chat/messages
+     *
+     * @param string               $broadcasterId           The ID of the broadcaster whose chat room the message will
+     *                                                      be sent to.
+     * @param string               $senderId                The ID of the user sending the message. This ID must match
+     *                                                      the user ID in the user access token.
+     * @param string               $message                 The message to send. The message is limited to a maximum of
+     *                                                      500 characters. Chat messages can also include emoticons.
+     *                                                      To include emoticons, use the name of the emote. The names
+     *                                                      are case sensitive. Don’t include colons around the name
+     *                                                      (e.g., :bleedPurple:). If Twitch recognizes the name,
+     *                                                      Twitch converts the name to the emote before writing the
+     *                                                      chat message to the chat room
+     * @param AccessTokenInterface $accessToken
+     * @param string|null          $replyParentMessageId    The ID of the chat message being replied to.
+     *
+     * @return TwitchDataResponse<Message[]>
+     */
+    public function sendChatMessage(
+        string $broadcasterId,
+        string $senderId,
+        string $message,
+        AccessTokenInterface $accessToken,
+        ?string $replyParentMessageId = null
+    ): TwitchDataResponse {
+        return $this->sendRequest(
+            path: self::BASE_PATH . '/messages',
+            body: new SendChatMessageRequest(
+                $broadcasterId,
+                $senderId,
+                $message,
+                $replyParentMessageId
+            ),
+            accessToken: $accessToken,
         );
     }
 }
