@@ -256,16 +256,16 @@ class ChannelPointsApi extends AbstractApi
      * URL
      * PATCH https://api.twitch.tv/helix/channel_points/custom_rewards/redemptions
      *
-     * @param string                  $broadcasterId A list of IDs that identify the redemptions to update. To specify
-     *                                               more than one ID, include this parameter for each redemption you
-     *                                               want to update. For example, id=1234&id=5678. You may specify a
-     *                                               maximum of 50 IDs.
-     * @param string                  $id            The ID of the broadcaster that’s updating the redemption. This ID
-     *                                               must match the user ID associated with the user OAuth token.
-     * @param string                  $rewardId      The ID that identifies the reward that’s been redeemed.
+     * @param string                  $broadcasterId  The ID of the broadcaster that’s updating the redemption. This ID
+     *                                                must match the user ID associated with the user OAuth token.
+     * @param string                  $id             A list of IDs that identify the redemptions to update. To specify
+     *                                                more than one ID, include this parameter for each redemption you
+     *                                                want to update. For example, id=1234&id=5678. You may specify a
+     *                                                maximum of 50 IDs.
+     * @param string                  $rewardId       The ID that identifies the reward that’s been redeemed.
      * @param RedemptionStatusRequest $body
-     * @param AccessTokenInterface    $accessToken   Requires a user access token that includes the
-     *                                               channel:manage:redemptions scope.
+     * @param AccessTokenInterface    $accessToken    Requires a user access token that includes the
+     *                                                channel:manage:redemptions scope.
      *
      * @return TwitchDataResponse<CustomRewardRedemption[]>
      */
