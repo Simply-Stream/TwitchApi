@@ -519,6 +519,7 @@ class ChatApi extends AbstractApi
     ): TwitchDataResponse {
         return $this->sendRequest(
             path: self::BASE_PATH . '/messages',
+            type: sprintf('%s<%s[]>', TwitchDataResponse::class, Message::class),
             method: 'POST',
             body: new SendChatMessageRequest(
                 $broadcasterId,
