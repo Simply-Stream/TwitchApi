@@ -189,7 +189,7 @@ class ModerationApiTest extends UserAwareFunctionalTestCase
             $this->assertSame($bannedUser['id'], $banUser->getUserId());
             $this->assertSame($testUser['id'], $banUser->getBroadcasterId());
             $this->assertSame($testUser['id'], $banUser->getModeratorId());
-            $this->assertInstanceOf(\DateTimeImmutable::class, $banUser->getCreatedAt());
+            $this->assertInstanceOf(\DateTimeInterface::class, $banUser->getCreatedAt());
             $this->assertNull($banUser->getEndTime());
         }
 
@@ -475,7 +475,7 @@ class ModerationApiTest extends UserAwareFunctionalTestCase
             $this->assertIsString($shieldModeStatus->getModeratorId());
             $this->assertIsString($shieldModeStatus->getModeratorLogin());
             $this->assertIsString($shieldModeStatus->getModeratorName());
-            $this->assertInstanceOf(\DateTimeImmutable::class, $shieldModeStatus->getLastActivatedAt());
+            $this->assertInstanceOf(\DateTimeInterface::class, $shieldModeStatus->getLastActivatedAt());
         }
 
         $updateShieldModeStatusResponse = $moderationApi->updateShieldModeStatus(
@@ -494,7 +494,7 @@ class ModerationApiTest extends UserAwareFunctionalTestCase
             $this->assertSame($testUser['id'], $shieldModeStatus->getModeratorId());
             $this->assertSame($testUser['login'], $shieldModeStatus->getModeratorLogin());
             $this->assertSame($testUser['display_name'], $shieldModeStatus->getModeratorName());
-            $this->assertInstanceOf(\DateTimeImmutable::class, $shieldModeStatus->getLastActivatedAt());
+            $this->assertInstanceOf(\DateTimeInterface::class, $shieldModeStatus->getLastActivatedAt());
         }
     }
 }

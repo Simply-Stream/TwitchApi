@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Events;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use SimplyStream\TwitchApi\Helix\Models\ChannelPoints\Reward;
 
 final readonly class ChannelPointsCustomRewardRedemptionAddEvent extends Event
@@ -22,7 +22,7 @@ final readonly class ChannelPointsCustomRewardRedemptionAddEvent extends Event
      *                                                 unfulfilled, fulfilled, and canceled.
      * @param Reward            $reward                Basic information about the reward that was redeemed, at the
      *                                                 time it was redeemed.
-     * @param DateTimeImmutable $redeemedAt            RFC3339 timestamp of when the reward was redeemed.
+     * @param DateTimeInterface $redeemedAt            RFC3339 timestamp of when the reward was redeemed.
      */
     public function __construct(
         private string $id,
@@ -35,7 +35,7 @@ final readonly class ChannelPointsCustomRewardRedemptionAddEvent extends Event
         private string $userInput,
         private string $status,
         private Reward $reward,
-        private DateTimeImmutable $redeemedAt
+        private DateTimeInterface $redeemedAt
     ) {
     }
 
@@ -89,7 +89,7 @@ final readonly class ChannelPointsCustomRewardRedemptionAddEvent extends Event
         return $this->reward;
     }
 
-    public function getRedeemedAt(): DateTimeImmutable
+    public function getRedeemedAt(): DateTimeInterface
     {
         return $this->redeemedAt;
     }

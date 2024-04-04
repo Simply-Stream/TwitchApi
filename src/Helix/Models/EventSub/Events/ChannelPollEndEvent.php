@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Events;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 
 final readonly class ChannelPollEndEvent extends Event
 {
@@ -19,8 +19,8 @@ final readonly class ChannelPollEndEvent extends Event
      * @param ChannelPointsVoting $channelPointsVoting  The Channel Points voting settings for the poll.
      * @param string              $status               The status of the poll. Valid values are completed, archived,
      *                                                  and terminated.
-     * @param DateTimeImmutable   $startedAt            The time the poll started.
-     * @param DateTimeImmutable   $endedAt              The time the poll ended.
+     * @param DateTimeInterface   $startedAt            The time the poll started.
+     * @param DateTimeInterface   $endedAt              The time the poll ended.
      */
     public function __construct(
         private string $id,
@@ -32,8 +32,8 @@ final readonly class ChannelPollEndEvent extends Event
         private BitsVoting $bitsVoting,
         private ChannelPointsVoting $channelPointsVoting,
         private string $status,
-        private DateTimeImmutable $startedAt,
-        private DateTimeImmutable $endedAt
+        private DateTimeInterface $startedAt,
+        private DateTimeInterface $endedAt
     ) {
     }
 
@@ -82,12 +82,12 @@ final readonly class ChannelPollEndEvent extends Event
         return $this->status;
     }
 
-    public function getStartedAt(): DateTimeImmutable
+    public function getStartedAt(): DateTimeInterface
     {
         return $this->startedAt;
     }
 
-    public function getEndedAt(): DateTimeImmutable
+    public function getEndedAt(): DateTimeInterface
     {
         return $this->endedAt;
     }

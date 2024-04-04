@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use ReflectionClass;
 use ReflectionException;
 
@@ -56,7 +56,7 @@ trait SerializesModels
                 }
                 $array[self::toSnakeCase($property->getName())] = $arrayOfObjects;
             } else {
-                if ($value instanceof DateTimeImmutable) {
+                if ($value instanceof DateTimeInterface) {
                     $array[self::toSnakeCase($property->getName())] = $value->format(DATE_RFC3339_EXTENDED);
                 } else {
                     $array[self::toSnakeCase($property->getName())] = $value;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Events;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class DropEntitlementGrantData
@@ -23,7 +23,7 @@ final readonly class DropEntitlementGrantData
      * @param string            $entitlementId   Unique identifier of the entitlement. Use this to de-duplicate
      *                                           entitlements.
      * @param string            $benefitId       Identifier of the Benefit.
-     * @param DateTimeImmutable $createdAt       UTC timestamp in ISO format when this entitlement was granted on
+     * @param DateTimeInterface $createdAt       UTC timestamp in ISO format when this entitlement was granted on
      *                                           Twitch.
      */
     public function __construct(
@@ -36,7 +36,7 @@ final readonly class DropEntitlementGrantData
         private string $userLogin,
         private string $entitlementId,
         private string $benefitId,
-        private DateTimeImmutable $createdAt
+        private DateTimeInterface $createdAt
     ) {
     }
 
@@ -85,7 +85,7 @@ final readonly class DropEntitlementGrantData
         return $this->benefitId;
     }
 
-    public function getCreatedAt(): DateTimeImmutable
+    public function getCreatedAt(): DateTimeInterface
     {
         return $this->createdAt;
     }

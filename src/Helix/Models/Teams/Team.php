@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Teams;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class Team
@@ -13,9 +13,9 @@ final readonly class Team
 
     /**
      * @param Member[]          $users               The list of team members.
-     * @param DateTimeImmutable $createdAt           The UTC date and time (in RFC3339 format) of when the team was
+     * @param DateTimeInterface $createdAt           The UTC date and time (in RFC3339 format) of when the team was
      *                                               created.
-     * @param DateTimeImmutable $updatedAt           The UTC date and time (in RFC3339 format) of the last time the
+     * @param DateTimeInterface $updatedAt           The UTC date and time (in RFC3339 format) of the last time the
      *                                               team was updated.
      * @param string            $info                The team’s description. The description may contain formatting
      *                                               such as Markdown, HTML, newline (\n) characters, etc.
@@ -28,8 +28,8 @@ final readonly class Team
      */
     public function __construct(
         private array $users,
-        private DateTimeImmutable $createdAt,
-        private DateTimeImmutable $updatedAt,
+        private DateTimeInterface $createdAt,
+        private DateTimeInterface $updatedAt,
         private string $info,
         private string $thumbnailUrl,
         private string $teamName,
@@ -45,12 +45,12 @@ final readonly class Team
         return $this->users;
     }
 
-    public function getCreatedAt(): DateTimeImmutable
+    public function getCreatedAt(): DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function getUpdatedAt(): DateTimeImmutable
+    public function getUpdatedAt(): DateTimeInterface
     {
         return $this->updatedAt;
     }

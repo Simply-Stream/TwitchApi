@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Clip;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class Clip
@@ -28,7 +28,7 @@ final readonly class Clip
      *                                            broadcaster uses a language that Twitch doesn’t support.
      * @param string            $title            The title of the clip.
      * @param int               $viewCount        The number of times the clip has been viewed.
-     * @param DateTimeImmutable $createdAt        The date and time of when the clip was created. The date and time is
+     * @param DateTimeInterface $createdAt        The date and time of when the clip was created. The date and time is
      *                                            in RFC3339 format.
      * @param string            $thumbnailUrl     A URL to a thumbnail image of the clip.
      * @param float             $duration         The length of the clip, in seconds. Precision is 0.1.
@@ -55,7 +55,7 @@ final readonly class Clip
         private string $language,
         private string $title,
         private int $viewCount,
-        private DateTimeImmutable $createdAt,
+        private DateTimeInterface $createdAt,
         private string $thumbnailUrl,
         private float $duration,
         private bool $isFeatured,
@@ -123,7 +123,7 @@ final readonly class Clip
         return $this->viewCount;
     }
 
-    public function getCreatedAt(): DateTimeImmutable
+    public function getCreatedAt(): DateTimeInterface
     {
         return $this->createdAt;
     }

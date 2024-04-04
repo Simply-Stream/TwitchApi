@@ -135,6 +135,8 @@ class ApiClient implements ApiClientInterface
                 try {
                     $source = Source::json($responseContent);
 
+                    // @TODO: Refactor to make MapperBuilder::registerConstructor accessible from outside - or at least
+                    //        make it possible to adjust/extend it
                     return $this->mapperBuilder
                         ->registerConstructor(fn (string $time): DateTimeImmutable => new DateTimeImmutable($time))
                         ->registerConstructor(

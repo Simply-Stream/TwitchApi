@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Schedule;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class ScheduleSegment
@@ -13,9 +13,9 @@ final readonly class ScheduleSegment
 
     /**
      * @param string                 $id                     An ID that identifies this broadcast segment.
-     * @param DateTimeImmutable      $startTime              The UTC date and time (in RFC3339 format) of when the
+     * @param DateTimeInterface      $startTime              The UTC date and time (in RFC3339 format) of when the
      *                                                       broadcast starts.
-     * @param DateTimeImmutable      $endTime                The UTC date and time (in RFC3339 format) of when the
+     * @param DateTimeInterface      $endTime                The UTC date and time (in RFC3339 format) of when the
      *                                                       broadcast ends.
      * @param string                 $title                  The broadcast segment’s title.
      *                                                       broadcast. If the broadcaster canceled this segment, this
@@ -28,17 +28,17 @@ final readonly class ScheduleSegment
      * @param Category|null          $category               The type of content that the broadcaster plans to stream
      *                                                       or null if not specified.The type of content that the
      *                                                       broadcaster plans to stream or null if not specified.
-     * @param DateTimeImmutable|null $canceledUntil          Indicates whether the broadcaster canceled this segment of
+     * @param DateTimeInterface|null $canceledUntil          Indicates whether the broadcaster canceled this segment of
      *                                                       a recurring
      */
     public function __construct(
         private string $id,
-        private DateTimeImmutable $startTime,
-        private DateTimeImmutable $endTime,
+        private DateTimeInterface $startTime,
+        private DateTimeInterface $endTime,
         private string $title,
         private bool $isRecurring,
         private ?Category $category = null,
-        private ?DateTimeImmutable $canceledUntil = null
+        private ?DateTimeInterface $canceledUntil = null
     ) {
     }
 
@@ -47,12 +47,12 @@ final readonly class ScheduleSegment
         return $this->id;
     }
 
-    public function getStartTime(): DateTimeImmutable
+    public function getStartTime(): DateTimeInterface
     {
         return $this->startTime;
     }
 
-    public function getEndTime(): DateTimeImmutable
+    public function getEndTime(): DateTimeInterface
     {
         return $this->endTime;
     }
@@ -72,7 +72,7 @@ final readonly class ScheduleSegment
         return $this->category;
     }
 
-    public function getCanceledUntil(): ?DateTimeImmutable
+    public function getCanceledUntil(): ?DateTimeInterface
     {
         return $this->canceledUntil;
     }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Events;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Contribution;
 
 final readonly class HypeTrainProgressEvent extends Event
@@ -21,8 +21,8 @@ final readonly class HypeTrainProgressEvent extends Event
      * @param Contribution[]    $topContributions      The contributors with the most points contributed.
      * @param Contribution      $lastContribution      The most recent contribution.
      * @param int               $level                 The current level of the Hype Train.
-     * @param DateTimeImmutable $startedAt             The time when the Hype Train started.
-     * @param DateTimeImmutable $expiresAt             The time when the Hype Train expires. The expiration is extended
+     * @param DateTimeInterface $startedAt             The time when the Hype Train started.
+     * @param DateTimeInterface $expiresAt             The time when the Hype Train expires. The expiration is extended
      *                                                 when the Hype Train reaches a new level.
      */
     public function __construct(
@@ -36,8 +36,8 @@ final readonly class HypeTrainProgressEvent extends Event
         private array $topContributions,
         private Contribution $lastContribution,
         private int $level,
-        private DateTimeImmutable $startedAt,
-        private DateTimeImmutable $expiresAt
+        private DateTimeInterface $startedAt,
+        private DateTimeInterface $expiresAt
     ) {
     }
 
@@ -91,12 +91,12 @@ final readonly class HypeTrainProgressEvent extends Event
         return $this->level;
     }
 
-    public function getStartedAt(): DateTimeImmutable
+    public function getStartedAt(): DateTimeInterface
     {
         return $this->startedAt;
     }
 
-    public function getExpiresAt(): DateTimeImmutable
+    public function getExpiresAt(): DateTimeInterface
     {
         return $this->expiresAt;
     }

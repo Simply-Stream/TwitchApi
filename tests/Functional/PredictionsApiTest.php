@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Tests\Functional;
 
 use CuyZ\Valinor\MapperBuilder;
-use DateTimeImmutable;
+use DateTimeInterface;
 use GuzzleHttp\Client;
 use Http\Discovery\Psr17Factory;
 use League\OAuth2\Client\Token\AccessToken;
@@ -55,7 +55,7 @@ class PredictionsApiTest extends UserAwareFunctionalTestCase
             $this->assertIsArray($prediction->getOutcomes());
             $this->assertIsInt($prediction->getPredictionWindow());
             $this->assertSame('ACTIVE', $prediction->getStatus());
-            $this->assertInstanceOf(DateTimeImmutable::class, $prediction->getCreatedAt());
+            $this->assertInstanceOf(DateTimeInterface::class, $prediction->getCreatedAt());
             $this->assertNull($prediction->getWinningOutcomeId());
             $this->assertNull($prediction->getEndedAt());
             $this->assertNull($prediction->getLockedAt());
@@ -108,7 +108,7 @@ class PredictionsApiTest extends UserAwareFunctionalTestCase
 
             $this->assertIsInt($prediction->getPredictionWindow());
             $this->assertSame('ACTIVE', $prediction->getStatus());
-            $this->assertInstanceOf(DateTimeImmutable::class, $prediction->getCreatedAt());
+            $this->assertInstanceOf(DateTimeInterface::class, $prediction->getCreatedAt());
             $this->assertNull($prediction->getWinningOutcomeId());
             $this->assertNull($prediction->getEndedAt());
             $this->assertNull($prediction->getLockedAt());

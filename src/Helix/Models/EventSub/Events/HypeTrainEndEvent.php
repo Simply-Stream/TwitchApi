@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Events;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Contribution;
 
 final readonly class HypeTrainEndEvent extends Event
@@ -17,9 +17,9 @@ final readonly class HypeTrainEndEvent extends Event
      * @param int               $total                Total points contributed to the Hype Train.
      * @param Contribution[]    $topContributions     The contributors with the most points contributed.
      * @param int               $level                The final level of the Hype Train.
-     * @param DateTimeImmutable $startedAt            The time when the Hype Train started.
-     * @param DateTimeImmutable $endedAt              The time when the Hype Train ended.
-     * @param DateTimeImmutable $cooldownEndsAt       The time when the Hype Train cooldown ends so that the next Hype
+     * @param DateTimeInterface $startedAt            The time when the Hype Train started.
+     * @param DateTimeInterface $endedAt              The time when the Hype Train ended.
+     * @param DateTimeInterface $cooldownEndsAt       The time when the Hype Train cooldown ends so that the next Hype
      *                                                Train can start.
      */
     public function __construct(
@@ -30,9 +30,9 @@ final readonly class HypeTrainEndEvent extends Event
         private int $total,
         private array $topContributions,
         private int $level,
-        private DateTimeImmutable $startedAt,
-        private DateTimeImmutable $endedAt,
-        private DateTimeImmutable $cooldownEndsAt
+        private DateTimeInterface $startedAt,
+        private DateTimeInterface $endedAt,
+        private DateTimeInterface $cooldownEndsAt
     ) {
     }
 
@@ -71,17 +71,17 @@ final readonly class HypeTrainEndEvent extends Event
         return $this->level;
     }
 
-    public function getStartedAt(): DateTimeImmutable
+    public function getStartedAt(): DateTimeInterface
     {
         return $this->startedAt;
     }
 
-    public function getEndedAt(): DateTimeImmutable
+    public function getEndedAt(): DateTimeInterface
     {
         return $this->endedAt;
     }
 
-    public function getCooldownEndsAt(): DateTimeImmutable
+    public function getCooldownEndsAt(): DateTimeInterface
     {
         return $this->cooldownEndsAt;
     }

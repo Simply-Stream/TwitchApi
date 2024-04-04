@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Tests\Functional;
 
 use CuyZ\Valinor\MapperBuilder;
-use DateTimeImmutable;
+use DateTimeInterface;
 use GuzzleHttp\Client;
 use League\OAuth2\Client\Token\AccessToken;
 use Nyholm\Psr7\Factory\Psr17Factory;
@@ -59,7 +59,7 @@ class StreamsApiTest extends UserAwareFunctionalTestCase
             $this->assertIsString($stream->getTitle());
             $this->assertIsArray($stream->getTags());
             $this->assertIsInt($stream->getViewerCount());
-            $this->assertInstanceOf(DateTimeImmutable::class, $stream->getStartedAt());
+            $this->assertInstanceOf(DateTimeInterface::class, $stream->getStartedAt());
             $this->assertIsString($stream->getLanguage());
             $this->assertIsString($stream->getThumbnailUrl());
             $this->assertIsBool($stream->isMature());
@@ -128,7 +128,7 @@ class StreamsApiTest extends UserAwareFunctionalTestCase
             $this->assertIsString($stream->getTitle());
             $this->assertIsArray($stream->getTags());
             $this->assertIsInt($stream->getViewerCount());
-            $this->assertInstanceOf(DateTimeImmutable::class, $stream->getStartedAt());
+            $this->assertInstanceOf(DateTimeInterface::class, $stream->getStartedAt());
             $this->assertIsString($stream->getLanguage());
             $this->assertIsString($stream->getThumbnailUrl());
             $this->assertIsBool($stream->isMature());
@@ -206,7 +206,7 @@ class StreamsApiTest extends UserAwareFunctionalTestCase
             $this->assertInstanceOf(Marker::class, $streamMarker);
             $this->assertIsString($streamMarker->getId());
             $this->assertIsString($streamMarker->getDescription());
-            $this->assertInstanceOf(DateTimeImmutable::class, $streamMarker->getCreatedAt());
+            $this->assertInstanceOf(DateTimeInterface::class, $streamMarker->getCreatedAt());
             $this->assertNull($streamMarker->getUrl());
             $this->assertIsInt($streamMarker->getPositionSeconds());
         }

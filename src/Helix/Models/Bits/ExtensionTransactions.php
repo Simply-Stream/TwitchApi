@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Bits;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class ExtensionTransactions
@@ -13,7 +13,7 @@ final readonly class ExtensionTransactions
 
     /**
      * @param string            $id                An ID that identifies the transaction.
-     * @param DateTimeImmutable $timestamp         The UTC date and time (in RFC3339 format) of the transaction.
+     * @param DateTimeInterface $timestamp         The UTC date and time (in RFC3339 format) of the transaction.
      * @param string            $broadcasterId     The ID of the broadcaster that owns the channel where the
      *                                             transaction occurred.
      * @param string            $broadcasterLogin  The broadcaster’s login name.
@@ -27,7 +27,7 @@ final readonly class ExtensionTransactions
      */
     public function __construct(
         private string $id,
-        private DateTimeImmutable $timestamp,
+        private DateTimeInterface $timestamp,
         private string $broadcasterId,
         private string $broadcasterLogin,
         private string $broadcasterName,
@@ -44,7 +44,7 @@ final readonly class ExtensionTransactions
         return $this->id;
     }
 
-    public function getTimestamp(): DateTimeImmutable
+    public function getTimestamp(): DateTimeInterface
     {
         return $this->timestamp;
     }

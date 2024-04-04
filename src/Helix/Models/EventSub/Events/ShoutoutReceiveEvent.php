@@ -17,7 +17,7 @@ final readonly class ShoutoutReceiveEvent extends Event
      * @param string             $fromBroadcasterUserName  The broadcaster’s display name.
      * @param int                $viewerCount              The number of users that were watching the
      *                                                     from-broadcaster’s stream at the time of the Shoutout.
-     * @param \DateTimeImmutable $startedAt                The UTC timestamp (in RFC3339 format) of when the moderator
+     * @param \DateTimeInterface $startedAt                The UTC timestamp (in RFC3339 format) of when the moderator
      *                                                     sent the Shoutout.
      */
     public function __construct(
@@ -28,7 +28,7 @@ final readonly class ShoutoutReceiveEvent extends Event
         private string $fromBroadcasterUserLogin,
         private string $fromBroadcasterUserName,
         private int $viewerCount,
-        private \DateTimeImmutable $startedAt
+        private \DateTimeInterface $startedAt
     ) {
     }
 
@@ -67,7 +67,7 @@ final readonly class ShoutoutReceiveEvent extends Event
         return $this->viewerCount;
     }
 
-    public function getStartedAt(): \DateTimeImmutable
+    public function getStartedAt(): \DateTimeInterface
     {
         return $this->startedAt;
     }

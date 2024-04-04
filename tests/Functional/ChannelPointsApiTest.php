@@ -162,7 +162,7 @@ class ChannelPointsApiTest extends UserAwareFunctionalTestCase
             $this->assertIsString($customRewardRedemption->getUserLogin());
             $this->assertIsString($customRewardRedemption->getUserName());
             $this->assertIsString($customRewardRedemption->getStatus());
-            $this->assertInstanceOf(\DateTimeImmutable::class, $customRewardRedemption->getRedeemedAt());
+            $this->assertInstanceOf(\DateTimeInterface::class, $customRewardRedemption->getRedeemedAt());
             $this->assertIsString($customRewardRedemption->getUserInput());
 
             $reward = $customRewardRedemption->getReward();

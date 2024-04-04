@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\HypeTrain;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class HypeTrainEvent
@@ -16,7 +16,7 @@ final readonly class HypeTrainEvent
      * @param string            $eventType       The type of event. The string is in the form, hypetrain.{event_name}.
      *                                           The request returns only progress event types (i.e.,
      *                                           hypetrain.progression).
-     * @param DateTimeImmutable $eventTimestamp  The UTC date and time (in RFC3339 format) that the event occurred.
+     * @param DateTimeInterface $eventTimestamp  The UTC date and time (in RFC3339 format) that the event occurred.
      * @param string            $version         The version number of the definition of the event’s data. For example,
      *                                           the value is 1 if the data in event_data uses the first definition of
      *                                           the event’s data.
@@ -25,7 +25,7 @@ final readonly class HypeTrainEvent
     public function __construct(
         private string $id,
         private string $eventType,
-        private DateTimeImmutable $eventTimestamp,
+        private DateTimeInterface $eventTimestamp,
         private string $version,
         private EventData $eventData
     ) {
@@ -41,7 +41,7 @@ final readonly class HypeTrainEvent
         return $this->eventType;
     }
 
-    public function getEventTimestamp(): DateTimeImmutable
+    public function getEventTimestamp(): DateTimeInterface
     {
         return $this->eventTimestamp;
     }

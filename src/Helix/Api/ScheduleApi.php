@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
-use DateTime;
+use DateTimeInterface;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApi\Helix\Models\Schedule\ChannelStreamSchedule;
 use SimplyStream\TwitchApi\Helix\Models\Schedule\CreateChannelStreamScheduleSegmentRequest;
@@ -34,7 +34,7 @@ class ScheduleApi extends AbstractApi
      * @param string|null          $id                 The ID of the scheduled segment to return. To specify more than
      *                                                 one segment, include the ID of each segment you want to get. For
      *                                                 example, id=1234&id=5678. You may specify a maximum of 100 IDs.
-     * @param DateTime|null        $starTime           The UTC date and time that identifies when in the broadcaster’s
+     * @param DateTimeInterface|null        $starTime           The UTC date and time that identifies when in the broadcaster’s
      *                                                 schedule to start returning segments. If not specified, the
      *                                                 request returns segments starting after the current UTC date and
      *                                                 time. Specify the date and time in RFC3339 format (for example,
@@ -52,7 +52,7 @@ class ScheduleApi extends AbstractApi
         string $broadcasterId,
         AccessTokenInterface $accessToken,
         string $id = null,
-        DateTime $starTime = null,
+        DateTimeInterface $starTime = null,
         string $utcOffset = null,
         int $first = 20,
         string $after = null,
@@ -116,10 +116,10 @@ class ScheduleApi extends AbstractApi
      *                                                scheduled a vacation. Set to true to enable Vacation Mode and add
      *                                                vacation dates, or false to cancel a previously scheduled
      *                                                vacation.
-     * @param DateTime|null        $vacationStartTime The UTC date and time of when the broadcaster’s vacation starts.
+     * @param DateTimeInterface|null        $vacationStartTime The UTC date and time of when the broadcaster’s vacation starts.
      *                                                Specify the date and time in RFC3339 format (for example,
      *                                                2021-05-16T00:00:00Z). Required if is_vacation_enabled is true.
-     * @param DateTime|null        $vacationEndTime   The UTC date and time of when the broadcaster’s vacation ends.
+     * @param DateTimeInterface|null        $vacationEndTime   The UTC date and time of when the broadcaster’s vacation ends.
      *                                                Specify the date and time in RFC3339 format (for example,
      *                                                2021-05-30T23:59:59Z). Required if is_vacation_enabled is true.
      * @param string|null          $timezone          The time zone that the broadcaster broadcasts from. Specify the
@@ -132,8 +132,8 @@ class ScheduleApi extends AbstractApi
         string $broadcasterId,
         AccessTokenInterface $accessToken,
         bool $isVacationEnabled = false,
-        DateTime $vacationStartTime = null,
-        DateTime $vacationEndTime = null,
+        DateTimeInterface $vacationStartTime = null,
+        DateTimeInterface $vacationEndTime = null,
         string $timezone = null,
     ): void {
         $this->sendRequest(

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Extensions;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class Secret
@@ -13,15 +13,15 @@ final readonly class Secret
 
     /**
      * @param string            $content    The raw secret that you use with JWT encoding.
-     * @param DateTimeImmutable $activeAt   The UTC date and time (in RFC3339 format) that you may begin using this
+     * @param DateTimeInterface $activeAt   The UTC date and time (in RFC3339 format) that you may begin using this
      *                                      secret to sign a JWT.
-     * @param DateTimeImmutable $expiresAt  The UTC date and time (in RFC3339 format) that you must stop using this
+     * @param DateTimeInterface $expiresAt  The UTC date and time (in RFC3339 format) that you must stop using this
      *                                      secret to decode a JWT.
      */
     public function __construct(
         private string $content,
-        private DateTimeImmutable $activeAt,
-        private DateTimeImmutable $expiresAt
+        private DateTimeInterface $activeAt,
+        private DateTimeInterface $expiresAt
     ) {
     }
 
@@ -30,12 +30,12 @@ final readonly class Secret
         return $this->content;
     }
 
-    public function getActiveAt(): DateTimeImmutable
+    public function getActiveAt(): DateTimeInterface
     {
         return $this->activeAt;
     }
 
-    public function getExpiresAt(): DateTimeImmutable
+    public function getExpiresAt(): DateTimeInterface
     {
         return $this->expiresAt;
     }

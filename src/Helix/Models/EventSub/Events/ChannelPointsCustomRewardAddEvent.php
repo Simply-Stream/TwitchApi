@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Events;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use SimplyStream\TwitchApi\Helix\Models\Chat\Image;
 
 final readonly class ChannelPointsCustomRewardAddEvent extends Event
@@ -42,7 +42,7 @@ final readonly class ChannelPointsCustomRewardAddEvent extends Event
      *                                                                   for the reward.
      * @param GlobalCooldown         $globalCooldown                     Whether a cooldown is enabled and what the
      *                                                                   cooldown is in seconds.
-     * @param DateTimeImmutable|null $cooldownExpiresAt                  Timestamp of the cooldown expiration. null if
+     * @param DateTimeInterface|null $cooldownExpiresAt                  Timestamp of the cooldown expiration. null if
      *                                                                   the reward isn’t on cooldown.
      * @param int|null               $redemptionsRedeemedCurrentStream   The number of redemptions redeemed during the
      *                                                                   current live stream. Counts against the
@@ -69,7 +69,7 @@ final readonly class ChannelPointsCustomRewardAddEvent extends Event
         private Image $image,
         private Image $defaultImage,
         private GlobalCooldown $globalCooldown,
-        private ?DateTimeImmutable $cooldownExpiresAt = null,
+        private ?DateTimeInterface $cooldownExpiresAt = null,
         private ?int $redemptionsRedeemedCurrentStream = null
     ) {
     }
@@ -164,7 +164,7 @@ final readonly class ChannelPointsCustomRewardAddEvent extends Event
         return $this->globalCooldown;
     }
 
-    public function getCooldownExpiresAt(): ?DateTimeImmutable
+    public function getCooldownExpiresAt(): ?DateTimeInterface
     {
         return $this->cooldownExpiresAt;
     }

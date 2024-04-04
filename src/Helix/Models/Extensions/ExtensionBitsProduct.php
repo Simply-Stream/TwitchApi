@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Extensions;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class ExtensionBitsProduct
@@ -17,7 +17,7 @@ final readonly class ExtensionBitsProduct
      * @param bool                $inDevelopment A Boolean value that indicates whether the product is in development.
      *                                           If true, the product is not available for public use.
      * @param string              $displayName   The product’s name as displayed in the extension.
-     * @param DateTimeImmutable   $expiration    The date and time, in RFC3339 format, when the product expires.
+     * @param DateTimeInterface   $expiration    The date and time, in RFC3339 format, when the product expires.
      * @param bool                $isBroadcast   A Boolean value that determines whether Bits product purchase events
      *                                           are broadcast to all instances of an extension on a channel. The
      *                                           events are broadcast via the onTransactionComplete helper callback. Is
@@ -28,7 +28,7 @@ final readonly class ExtensionBitsProduct
         private ExtensionBitsAmount $cost,
         private bool $inDevelopment,
         private string $displayName,
-        private DateTimeImmutable $expiration,
+        private DateTimeInterface $expiration,
         private bool $isBroadcast
     ) {
     }
@@ -53,7 +53,7 @@ final readonly class ExtensionBitsProduct
         return $this->displayName;
     }
 
-    public function getExpiration(): DateTimeImmutable
+    public function getExpiration(): DateTimeInterface
     {
         return $this->expiration;
     }

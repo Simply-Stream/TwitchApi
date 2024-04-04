@@ -57,10 +57,8 @@ class UsersApiTest extends UserAwareFunctionalTestCase
 
         $usersApi = new UsersApi($apiClient);
         $usersResponse = $usersApi->getUsers(
-            logins: [$mockUser['login']],
-            accessToken: new AccessToken(
-                $this->appAccessToken
-            )
+            accessToken: new AccessToken($this->appAccessToken),
+            logins: [$mockUser['login']]
         );
 
         $this->assertInstanceOf(TwitchDataResponse::class, $usersResponse);
@@ -81,7 +79,7 @@ class UsersApiTest extends UserAwareFunctionalTestCase
             $this->assertIsString($user->getOfflineImageUrl());
             $this->assertNotEmpty($user->getOfflineImageUrl());
 
-            $this->assertInstanceOf(\DateTimeImmutable::class, $user->getCreatedAt());
+            $this->assertInstanceOf(\DateTimeInterface::class, $user->getCreatedAt());
             $this->assertEquals(new \DateTimeImmutable($mockUser['created_at']), $user->getCreatedAt());
         }
     }
@@ -176,7 +174,7 @@ class UsersApiTest extends UserAwareFunctionalTestCase
             $this->assertNotEmpty($user->getOfflineImageUrl());
 
             $this->assertSame($mockUser['view_count'], $user->getViewCount());
-            $this->assertInstanceOf(\DateTimeImmutable::class, $user->getCreatedAt());
+            $this->assertInstanceOf(\DateTimeInterface::class, $user->getCreatedAt());
             $this->assertEquals(new \DateTimeImmutable($mockUser['created_at']), $user->getCreatedAt());
         }
     }

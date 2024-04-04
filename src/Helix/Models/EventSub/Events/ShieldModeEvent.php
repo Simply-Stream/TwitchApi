@@ -13,8 +13,8 @@ final readonly class ShieldModeEvent extends Event
         private string $moderatorUserId,
         private string $moderatorUserLogin,
         private string $moderatorUserName,
-        private ?\DateTimeImmutable $startedAt = null,
-        private ?\DateTimeImmutable $endedAt = null
+        private ?\DateTimeInterface $startedAt = null,
+        private ?\DateTimeInterface $endedAt = null
     ) {
     }
 
@@ -48,12 +48,12 @@ final readonly class ShieldModeEvent extends Event
         return $this->moderatorUserName;
     }
 
-    public function getStartedAt(): ?\DateTimeImmutable
+    public function getStartedAt(): ?\DateTimeInterface
     {
         return $this->startedAt;
     }
 
-    public function getEndedAt(): ?\DateTimeImmutable
+    public function getEndedAt(): ?\DateTimeInterface
     {
         return $this->endedAt;
     }

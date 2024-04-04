@@ -40,7 +40,7 @@ class RaidsApiTest extends UserAwareFunctionalTestCase
         $this->assertCount(1, $startRaidResponse->getData());
         $this->assertContainsOnlyInstancesOf(Raid::class, $startRaidResponse->getData());
 
-        $this->assertInstanceOf(\DateTimeImmutable::class, $startRaidResponse->getData()[0]->getCreatedAt());
+        $this->assertInstanceOf(\DateTimeInterface::class, $startRaidResponse->getData()[0]->getCreatedAt());
         $this->assertIsBool($startRaidResponse->getData()[0]->isMature());
     }
 

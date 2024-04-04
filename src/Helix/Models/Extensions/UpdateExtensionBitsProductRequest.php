@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Extensions;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use SimplyStream\TwitchApi\Helix\Models\AbstractModel;
 use Webmozart\Assert\Assert;
 
@@ -21,7 +21,7 @@ final readonly class UpdateExtensionBitsProductRequest extends AbstractModel
      * @param bool                   $inDevelopment  A Boolean value that indicates whether the product is in
      *                                               development. Set to true if the product is in development and not
      *                                               available for public use. The default is false.
-     * @param DateTimeImmutable|null $expiration     The date and time, in RFC3339 format, when the product expires. If
+     * @param DateTimeInterface|null $expiration     The date and time, in RFC3339 format, when the product expires. If
      *                                               not set, the product does not expire. To disable the product, set
      *                                               the expiration date to a date in the past.
      * @param bool                   $isBroadcast    A Boolean value that determines whether Bits product purchase
@@ -34,7 +34,7 @@ final readonly class UpdateExtensionBitsProductRequest extends AbstractModel
         private ExtensionBitsAmount $cost,
         private string $displayName,
         private bool $inDevelopment = false,
-        private ?DateTimeImmutable $expiration = null,
+        private ?DateTimeInterface $expiration = null,
         private bool $isBroadcast = false
     ) {
         Assert::maxLength(
@@ -64,7 +64,7 @@ final readonly class UpdateExtensionBitsProductRequest extends AbstractModel
         return $this->inDevelopment;
     }
 
-    public function getExpiration(): ?DateTimeImmutable
+    public function getExpiration(): ?DateTimeInterface
     {
         return $this->expiration;
     }

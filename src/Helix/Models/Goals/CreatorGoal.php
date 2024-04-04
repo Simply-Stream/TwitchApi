@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Goals;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class CreatorGoal
@@ -55,7 +55,7 @@ final readonly class CreatorGoal
      * @param int               $targetAmount      The goal’s target value. For example, if the broadcaster has 200
      *                                             followers before creating the goal, and their goal is to double that
      *                                             number, this field is set to 400.
-     * @param DateTimeImmutable $createdAt         The UTC date and time (in RFC3339 format) that the broadcaster
+     * @param DateTimeInterface $createdAt         The UTC date and time (in RFC3339 format) that the broadcaster
      *                                             created the goal.
      */
     public function __construct(
@@ -67,7 +67,7 @@ final readonly class CreatorGoal
         private string $description,
         private int $currentAmount,
         private int $targetAmount,
-        private DateTimeImmutable $createdAt
+        private DateTimeInterface $createdAt
     ) {
     }
 
@@ -111,7 +111,7 @@ final readonly class CreatorGoal
         return $this->targetAmount;
     }
 
-    public function getCreatedAt(): DateTimeImmutable
+    public function getCreatedAt(): DateTimeInterface
     {
         return $this->createdAt;
     }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Bits;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class Cheermote
@@ -37,7 +37,7 @@ final readonly class Cheermote
      *                                         13. The order numbers are unique within a Cheermote type (for example,
      *                                         global_first_party) but may not be unique amongst all Cheermotes in the
      *                                         response.
-     * @param DateTimeImmutable $lastUpdated   The date and time, in RFC3339 format, when this Cheermote was last
+     * @param DateTimeInterface $lastUpdated   The date and time, in RFC3339 format, when this Cheermote was last
      *                                         updated.
      * @param bool              $isCharitable  A Boolean value that indicates whether this Cheermote provides a
      *                                         charitable contribution match during charity campaigns.
@@ -47,7 +47,7 @@ final readonly class Cheermote
         private array $tiers,
         private string $type,
         private int $order,
-        private DateTimeImmutable $lastUpdated,
+        private DateTimeInterface $lastUpdated,
         private bool $isCharitable
     ) {
     }
@@ -72,7 +72,7 @@ final readonly class Cheermote
         return $this->order;
     }
 
-    public function getLastUpdated(): DateTimeImmutable
+    public function getLastUpdated(): DateTimeInterface
     {
         return $this->lastUpdated;
     }

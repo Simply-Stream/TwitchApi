@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Tests\Unit\Helix\Models\Polls;
 
 use DateTimeImmutable;
+use DateTimeInterface;
 use PHPUnit\Framework\TestCase;
 use SimplyStream\TwitchApi\Helix\Models\Polls\Choice;
 use SimplyStream\TwitchApi\Helix\Models\Polls\Poll;
@@ -47,7 +48,7 @@ final class PollTest extends TestCase
         $this->assertSame(1, $poll->getChannelPointsPerVote());
         $this->assertSame('ACTIVE', $poll->getStatus());
         $this->assertSame(10, $poll->getDuration());
-        $this->assertInstanceOf(DateTimeImmutable::class, $poll->getStartedAt());
+        $this->assertInstanceOf(DateTimeInterface::class, $poll->getStartedAt());
         $this->assertNull($poll->getEndedAt());
     }
 }

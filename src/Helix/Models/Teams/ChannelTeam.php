@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Teams;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class ChannelTeam
@@ -15,9 +15,9 @@ final readonly class ChannelTeam
      * @param string            $broadcasterId       An ID that identifies the broadcaster.
      * @param string            $broadcasterName     The broadcaster’s login name.
      * @param string            $broadcasterLogin    The broadcaster’s display name.
-     * @param DateTimeImmutable $createdAt           The UTC date and time (in RFC3339 format) of when the team was
+     * @param DateTimeInterface $createdAt           The UTC date and time (in RFC3339 format) of when the team was
      *                                               created.
-     * @param DateTimeImmutable $updatedAt           The UTC date and time (in RFC3339 format) of the last time the
+     * @param DateTimeInterface $updatedAt           The UTC date and time (in RFC3339 format) of the last time the
      *                                               team was updated.
      * @param string            $info                The team’s description. The description may contain formatting
      *                                               such as Markdown, HTML, newline (\n) characters, etc.
@@ -32,8 +32,8 @@ final readonly class ChannelTeam
         private string $broadcasterId,
         private string $broadcasterName,
         private string $broadcasterLogin,
-        private DateTimeImmutable $createdAt,
-        private DateTimeImmutable $updatedAt,
+        private DateTimeInterface $createdAt,
+        private DateTimeInterface $updatedAt,
         private string $info,
         private string $thumbnailUrl,
         private string $teamName,
@@ -59,12 +59,12 @@ final readonly class ChannelTeam
         return $this->broadcasterLogin;
     }
 
-    public function getCreatedAt(): DateTimeImmutable
+    public function getCreatedAt(): DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function getUpdatedAt(): DateTimeImmutable
+    public function getUpdatedAt(): DateTimeInterface
     {
         return $this->updatedAt;
     }

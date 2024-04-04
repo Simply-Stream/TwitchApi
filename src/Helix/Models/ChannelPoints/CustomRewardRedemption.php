@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\ChannelPoints;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class CustomRewardRedemption
@@ -25,7 +25,7 @@ final readonly class CustomRewardRedemption
      *                                             - CANCELED
      *                                             - FULFILLED
      *                                             - UNFULFILLED
-     * @param DateTimeImmutable $redeemedAt        The date and time of when the reward was redeemed, in RFC3339
+     * @param DateTimeInterface $redeemedAt        The date and time of when the reward was redeemed, in RFC3339
      *                                             format.
      * @param Reward            $reward            The reward that the user redeemed.
      */
@@ -38,7 +38,7 @@ final readonly class CustomRewardRedemption
         private string $userLogin,
         private string $userName,
         private string $status,
-        private DateTimeImmutable $redeemedAt,
+        private DateTimeInterface $redeemedAt,
         private Reward $reward,
         private ?string $userInput = null
     ) {
@@ -84,7 +84,7 @@ final readonly class CustomRewardRedemption
         return $this->status;
     }
 
-    public function getRedeemedAt(): DateTimeImmutable
+    public function getRedeemedAt(): DateTimeInterface
     {
         return $this->redeemedAt;
     }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Channels;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class FollowedChannel
@@ -16,13 +16,13 @@ final readonly class FollowedChannel
      *                                             following.
      * @param string            $broadcasterLogin  The broadcaster’s login name.
      * @param string            $broadcasterName   The broadcaster’s display name.
-     * @param DateTimeImmutable $followedAt        The UTC timestamp when the user started following the broadcaster.
+     * @param DateTimeInterface $followedAt        The UTC timestamp when the user started following the broadcaster.
      */
     public function __construct(
         private string $broadcasterId,
         private string $broadcasterLogin,
         private string $broadcasterName,
-        private DateTimeImmutable $followedAt
+        private DateTimeInterface $followedAt
     ) {
     }
 
@@ -41,7 +41,7 @@ final readonly class FollowedChannel
         return $this->broadcasterName;
     }
 
-    public function getFollowedAt(): DateTimeImmutable
+    public function getFollowedAt(): DateTimeInterface
     {
         return $this->followedAt;
     }

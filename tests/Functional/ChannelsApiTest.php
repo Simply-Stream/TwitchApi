@@ -145,7 +145,7 @@ class ChannelsApiTest extends UserAwareFunctionalTestCase
             $this->assertIsString($follower->getUserLogin());
             $this->assertNotEmpty($follower->getUserLogin());
 
-            $this->assertInstanceOf(\DateTimeImmutable::class, $follower->getFollowedAt());
+            $this->assertInstanceOf(\DateTimeInterface::class, $follower->getFollowedAt());
         }
     }
 }

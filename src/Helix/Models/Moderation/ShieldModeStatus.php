@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Moderation;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class ShieldModeStatus
@@ -17,7 +17,7 @@ final readonly class ShieldModeStatus
      * @param string            $moderatorId      An ID that identifies the moderator that last activated Shield Mode.
      * @param string            $moderatorLogin   The moderator’s login name.
      * @param string            $moderatorName    The moderator’s display name.
-     * @param DateTimeImmutable $lastActivatedAt  The UTC timestamp (in RFC3339 format) of when Shield Mode was last
+     * @param DateTimeInterface $lastActivatedAt  The UTC timestamp (in RFC3339 format) of when Shield Mode was last
      *                                            activated.
      */
     public function __construct(
@@ -25,7 +25,7 @@ final readonly class ShieldModeStatus
         private string $moderatorId,
         private string $moderatorLogin,
         private string $moderatorName,
-        private DateTimeImmutable $lastActivatedAt
+        private DateTimeInterface $lastActivatedAt
     ) {
     }
 
@@ -49,7 +49,7 @@ final readonly class ShieldModeStatus
         return $this->moderatorName;
     }
 
-    public function getLastActivatedAt(): DateTimeImmutable
+    public function getLastActivatedAt(): DateTimeInterface
     {
         return $this->lastActivatedAt;
     }

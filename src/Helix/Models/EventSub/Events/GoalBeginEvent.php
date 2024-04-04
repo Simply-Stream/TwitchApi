@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Events;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 
 final readonly class GoalBeginEvent extends Event
 {
@@ -55,7 +55,7 @@ final readonly class GoalBeginEvent extends Event
      * @param int               $targetAmount               The goal’s target value. For example, if the broadcaster has
      *                                                      200 followers before creating the goal, and their goal is to
      *                                                      double that number, this field is set to 400.
-     * @param DateTimeImmutable $startedAt                  The UTC timestamp in RFC 3339 format, which indicates when
+     * @param DateTimeInterface $startedAt                  The UTC timestamp in RFC 3339 format, which indicates when
      *                                                      the broadcaster created the goal.
      */
     public function __construct(
@@ -67,7 +67,7 @@ final readonly class GoalBeginEvent extends Event
         private string $description,
         private int $currentAmount,
         private int $targetAmount,
-        private DateTimeImmutable $startedAt
+        private DateTimeInterface $startedAt
     ) {
     }
 
@@ -111,7 +111,7 @@ final readonly class GoalBeginEvent extends Event
         return $this->targetAmount;
     }
 
-    public function getStartedAt(): DateTimeImmutable
+    public function getStartedAt(): DateTimeInterface
     {
         return $this->startedAt;
     }

@@ -44,8 +44,8 @@ class TeamsApiTest extends UserAwareFunctionalTestCase
         $team = $getTeamsResponse->getData()[0];
         $this->assertSame('clidev', $team->getTeamName());
         $this->assertSame('CLI Developers', $team->getTeamDisplayName());
-        $this->assertInstanceOf(\DateTimeImmutable::class, $team->getCreatedAt());
-        $this->assertInstanceOf(\DateTimeImmutable::class, $team->getUpdatedAt());
+        $this->assertInstanceOf(\DateTimeInterface::class, $team->getCreatedAt());
+        $this->assertInstanceOf(\DateTimeInterface::class, $team->getUpdatedAt());
         $this->assertIsArray($team->getUsers());
         $this->assertContainsOnlyInstancesOf(Member::class, $team->getUsers());
 
@@ -99,8 +99,8 @@ class TeamsApiTest extends UserAwareFunctionalTestCase
         $this->assertNotEmpty($team->getBroadcasterLogin());
         $this->assertSame('clidev', $team->getTeamName());
         $this->assertSame('CLI Developers', $team->getTeamDisplayName());
-        $this->assertInstanceOf(\DateTimeImmutable::class, $team->getCreatedAt());
-        $this->assertInstanceOf(\DateTimeImmutable::class, $team->getUpdatedAt());
+        $this->assertInstanceOf(\DateTimeInterface::class, $team->getCreatedAt());
+        $this->assertInstanceOf(\DateTimeInterface::class, $team->getUpdatedAt());
         $this->assertIsString($team->getInfo());
         $this->assertIsString($team->getThumbnailUrl());
         $this->assertIsString($team->getId());

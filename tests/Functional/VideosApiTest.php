@@ -52,8 +52,8 @@ class VideosApiTest extends UserAwareFunctionalTestCase
         $this->assertNotEmpty($video->getStreamId());
         $this->assertSame('Sample stream!', $video->getTitle());
         $this->assertSame('Such an interesting stream today...', $video->getDescription());
-        $this->assertInstanceOf(\DateTimeImmutable::class, $video->getCreatedAt());
-        $this->assertInstanceOf(\DateTimeImmutable::class, $video->getPublishedAt());
+        $this->assertInstanceOf(\DateTimeInterface::class, $video->getCreatedAt());
+        $this->assertInstanceOf(\DateTimeInterface::class, $video->getPublishedAt());
         $this->assertIsString($video->getUrl());
         $this->assertNotEmpty($video->getUrl());
         $this->assertIsString($video->getThumbnailUrl());

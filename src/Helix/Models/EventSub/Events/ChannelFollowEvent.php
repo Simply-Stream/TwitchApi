@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Events;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 
 final readonly class ChannelFollowEvent extends Event
 {
@@ -16,7 +16,7 @@ final readonly class ChannelFollowEvent extends Event
      * @param string            $broadcasterUserId     The requested broadcaster ID.
      * @param string            $broadcasterUserLogin  The requested broadcaster login.
      * @param string            $broadcasterUserName   The requested broadcaster display name.
-     * @param DateTimeImmutable $followedAt            RFC3339 timestamp of when the follow occurred.
+     * @param DateTimeInterface $followedAt            RFC3339 timestamp of when the follow occurred.
      */
     public function __construct(
         private string $userId,
@@ -25,7 +25,7 @@ final readonly class ChannelFollowEvent extends Event
         private string $broadcasterUserId,
         private string $broadcasterUserLogin,
         private string $broadcasterUserName,
-        private DateTimeImmutable $followedAt
+        private DateTimeInterface $followedAt
     ) {
     }
 
@@ -59,7 +59,7 @@ final readonly class ChannelFollowEvent extends Event
         return $this->broadcasterUserName;
     }
 
-    public function getFollowedAt(): DateTimeImmutable
+    public function getFollowedAt(): DateTimeInterface
     {
         return $this->followedAt;
     }

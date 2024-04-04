@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Search;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class Channel
@@ -27,7 +27,7 @@ final readonly class Channel
      * @param string            $thumbnailUrl         A URL to a thumbnail of the broadcaster’s profile image.
      * @param string            $title                The stream’s title. Is an empty string if the broadcaster didn’t
      *                                                set it.
-     * @param DateTimeImmutable $startedAt            The UTC date and time (in RFC3339 format) of when the broadcaster
+     * @param DateTimeInterface $startedAt            The UTC date and time (in RFC3339 format) of when the broadcaster
      *                                                started streaming. The string is empty if the broadcaster is not
      *                                                streaming live.
      * @param string|null       $gameId               The ID of the game that the broadcaster is playing or last
@@ -44,7 +44,7 @@ final readonly class Channel
         private array $tags,
         private string $thumbnailUrl,
         private string $title,
-        private DateTimeImmutable $startedAt,
+        private DateTimeInterface $startedAt,
         private ?string $gameId = null,
         private ?string $gameName = null,
     ) {
@@ -90,7 +90,7 @@ final readonly class Channel
         return $this->title;
     }
 
-    public function getStartedAt(): DateTimeImmutable
+    public function getStartedAt(): DateTimeInterface
     {
         return $this->startedAt;
     }

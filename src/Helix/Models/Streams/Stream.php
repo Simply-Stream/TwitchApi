@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Streams;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class Stream
@@ -26,7 +26,7 @@ final readonly class Stream
      * @param string            $title         The stream’s title. Is an empty string if not set.
      * @param array             $tags          The tags applied to the stream.
      * @param int               $viewerCount   The number of users watching the stream.
-     * @param DateTimeImmutable $startedAt     The UTC date and time (in RFC3339 format) of when the broadcast began.
+     * @param DateTimeInterface $startedAt     The UTC date and time (in RFC3339 format) of when the broadcast began.
      * @param string            $language      The language that the stream uses. This is an ISO 639-1 two-letter
      *                                         language code or other if the stream uses a language not in the list of
      *                                         supported stream languages.
@@ -47,7 +47,7 @@ final readonly class Stream
         private string $title,
         private array $tags,
         private int $viewerCount,
-        private DateTimeImmutable $startedAt,
+        private DateTimeInterface $startedAt,
         private string $language,
         private string $thumbnailUrl,
         private bool $isMature
@@ -104,7 +104,7 @@ final readonly class Stream
         return $this->viewerCount;
     }
 
-    public function getStartedAt(): DateTimeImmutable
+    public function getStartedAt(): DateTimeInterface
     {
         return $this->startedAt;
     }

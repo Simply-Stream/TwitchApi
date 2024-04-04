@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Entitlements;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class DropEntitlement
@@ -14,7 +14,7 @@ final readonly class DropEntitlement
     /**
      * @param string            $id                An ID that identifies the entitlement.
      * @param string            $benefitId         An ID that identifies the benefit (reward).
-     * @param DateTimeImmutable $timestamp         The UTC date and time (in RFC3339 format) of when the entitlement
+     * @param DateTimeInterface $timestamp         The UTC date and time (in RFC3339 format) of when the entitlement
      *                                             was granted.
      * @param string            $userId            An ID that identifies the user who was granted the entitlement.
      * @param string            $gameId            An ID that identifies the game the user was playing when the reward
@@ -22,17 +22,17 @@ final readonly class DropEntitlement
      * @param string            $fulfillmentStatus The entitlement’s fulfillment status. Possible values are:
      *                                             - CLAIMED
      *                                             - FULFILLED
-     * @param DateTimeImmutable $lastUpdated       The UTC date and time (in RFC3339 format) of when the entitlement
+     * @param DateTimeInterface $lastUpdated       The UTC date and time (in RFC3339 format) of when the entitlement
      *                                             was last updated.
      */
     public function __construct(
         private string $id,
         private string $benefitId,
-        private DateTimeImmutable $timestamp,
+        private DateTimeInterface $timestamp,
         private string $userId,
         private string $gameId,
         private string $fulfillmentStatus,
-        private DateTimeImmutable $lastUpdated
+        private DateTimeInterface $lastUpdated
     ) {
     }
 
@@ -46,7 +46,7 @@ final readonly class DropEntitlement
         return $this->benefitId;
     }
 
-    public function getTimestamp(): DateTimeImmutable
+    public function getTimestamp(): DateTimeInterface
     {
         return $this->timestamp;
     }
@@ -66,7 +66,7 @@ final readonly class DropEntitlement
         return $this->fulfillmentStatus;
     }
 
-    public function getLastUpdated(): DateTimeImmutable
+    public function getLastUpdated(): DateTimeInterface
     {
         return $this->lastUpdated;
     }

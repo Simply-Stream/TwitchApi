@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Tests\Functional;
 
 use CuyZ\Valinor\MapperBuilder;
-use DateTimeImmutable;
+use DateTimeInterface;
 use GuzzleHttp\Client;
 use League\OAuth2\Client\Token\AccessToken;
 use Nyholm\Psr7\Factory\Psr17Factory;
@@ -92,7 +92,7 @@ class SearchApiTest extends UserAwareFunctionalTestCase
             $this->assertNotEmpty($channel->getThumbnailUrl());
             $this->assertIsString($channel->getTitle());
             $this->assertNotEmpty($channel->getTitle());
-            $this->assertInstanceOf(DateTimeImmutable::class, $channel->getStartedAt());
+            $this->assertInstanceOf(DateTimeInterface::class, $channel->getStartedAt());
         }
     }
 }

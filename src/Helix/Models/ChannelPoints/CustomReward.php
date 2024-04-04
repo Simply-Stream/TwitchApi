@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\ChannelPoints;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class CustomReward
@@ -68,7 +68,7 @@ final readonly class CustomReward
      * @param array|null                 $image                             A set of custom images for the reward. This
      *                                                                      field is set to null if the broadcaster
      *                                                                      didn’t upload images.
-     * @param DateTimeImmutable|null     $cooldownExpiresAt                 The timestamp of when the cooldown period
+     * @param DateTimeInterface|null     $cooldownExpiresAt                 The timestamp of when the cooldown period
      *                                                                      expires. Is null if the reward isn’t in a
      *                                                                      cooldown state (see the
      *                                                                      global_cooldown_setting field).
@@ -93,7 +93,7 @@ final readonly class CustomReward
         private bool $shouldRedemptionsSkipRequestQueue,
         private ?int $redemptionsRedeemedCurrentStream = null,
         private ?array $image = null,
-        private ?DateTimeImmutable $cooldownExpiresAt = null
+        private ?DateTimeInterface $cooldownExpiresAt = null
     ) {
     }
 
@@ -192,7 +192,7 @@ final readonly class CustomReward
         return $this->image;
     }
 
-    public function getCooldownExpiresAt(): ?DateTimeImmutable
+    public function getCooldownExpiresAt(): ?DateTimeInterface
     {
         return $this->cooldownExpiresAt;
     }

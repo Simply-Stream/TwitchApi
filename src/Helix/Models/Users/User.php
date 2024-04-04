@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Users;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class User
@@ -32,7 +32,7 @@ final readonly class User
      *                                            NOTE: This field has been deprecated (see Get Users API endpoint –
      *                                            “view_count” deprecation). Any data in this field is not valid and
      *                                            should not be used.
-     * @param DateTimeImmutable $createdAt        The UTC date and time that the user’s account was created. The
+     * @param DateTimeInterface $createdAt        The UTC date and time that the user’s account was created. The
      *                                            timestamp is in RFC3339 format.
      * @param string|null       $email            The user’s verified email address. The object includes this field
      *                                            only if the user access token includes the user:read:email scope.
@@ -51,7 +51,7 @@ final readonly class User
         private string $profileImageUrl,
         private string $offlineImageUrl,
         private int $viewCount,
-        private DateTimeImmutable $createdAt,
+        private DateTimeInterface $createdAt,
         private ?string $email = null
     ) {
     }
@@ -106,7 +106,7 @@ final readonly class User
         return $this->email;
     }
 
-    public function getCreatedAt(): DateTimeImmutable
+    public function getCreatedAt(): DateTimeInterface
     {
         return $this->createdAt;
     }

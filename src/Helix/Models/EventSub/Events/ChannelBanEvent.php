@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Events;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 
 final readonly class ChannelBanEvent extends Event
 {
@@ -22,11 +22,11 @@ final readonly class ChannelBanEvent extends Event
      * @param string                 $moderatorUserLogin    The user login of the issuer of the ban.
      * @param string                 $moderatorUserName     The user name of the issuer of the ban.
      * @param string                 $reason                The reason behind the ban.
-     * @param DateTimeImmutable      $bannedAt              The UTC date and time (in RFC3339 format) of when the user
+     * @param DateTimeInterface      $bannedAt              The UTC date and time (in RFC3339 format) of when the user
      *                                                      was banned or put in a timeout.
      * @param bool                   $isPermanent           Indicates whether the ban is permanent (true) or a timeout
      *                                                      (false). If true, ends_at will be null.
-     * @param DateTimeImmutable|null $endsAt                The UTC date and time (in RFC3339 format) of when the
+     * @param DateTimeInterface|null $endsAt                The UTC date and time (in RFC3339 format) of when the
      *                                                      timeout ends. Is null if the user was banned instead of put
      *                                                      in a timeout.
      */
@@ -41,9 +41,9 @@ final readonly class ChannelBanEvent extends Event
         private string $moderatorUserLogin,
         private string $moderatorUserName,
         private string $reason,
-        private DateTimeImmutable $bannedAt,
+        private DateTimeInterface $bannedAt,
         private bool $isPermanent,
-        private ?DateTimeImmutable $endsAt = null
+        private ?DateTimeInterface $endsAt = null
     ) {
     }
 
@@ -97,7 +97,7 @@ final readonly class ChannelBanEvent extends Event
         return $this->reason;
     }
 
-    public function getBannedAt(): DateTimeImmutable
+    public function getBannedAt(): DateTimeInterface
     {
         return $this->bannedAt;
     }
@@ -107,7 +107,7 @@ final readonly class ChannelBanEvent extends Event
         return $this->isPermanent;
     }
 
-    public function getEndsAt(): ?DateTimeImmutable
+    public function getEndsAt(): ?DateTimeInterface
     {
         return $this->endsAt;
     }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Events;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 
 final readonly class GoalEndEvent extends Event
 {
@@ -59,9 +59,9 @@ final readonly class GoalEndEvent extends Event
      * @param int               $targetAmount               The goal’s target value. For example, if the broadcaster has
      *                                                      200 followers before creating the goal, and their goal is to
      *                                                      double that number, this field is set to 400.
-     * @param DateTimeImmutable $startedAt                  The UTC timestamp in RFC 3339 format, which indicates when
+     * @param DateTimeInterface $startedAt                  The UTC timestamp in RFC 3339 format, which indicates when
      *                                                      the broadcaster created the goal.
-     * @param DateTimeImmutable $endedAt                    The UTC timestamp in RFC 3339 format, which indicates when
+     * @param DateTimeInterface $endedAt                    The UTC timestamp in RFC 3339 format, which indicates when
      *                                                      the broadcaster ended the goal. Only the channel.goal.end
      *                                                      event includes this field.
      */
@@ -75,8 +75,8 @@ final readonly class GoalEndEvent extends Event
         private bool $isAchieved,
         private int $currentAmount,
         private int $targetAmount,
-        private DateTimeImmutable $startedAt,
-        private DateTimeImmutable $endedAt
+        private DateTimeInterface $startedAt,
+        private DateTimeInterface $endedAt
     ) {
     }
 
@@ -125,12 +125,12 @@ final readonly class GoalEndEvent extends Event
         return $this->targetAmount;
     }
 
-    public function getStartedAt(): DateTimeImmutable
+    public function getStartedAt(): DateTimeInterface
     {
         return $this->startedAt;
     }
 
-    public function getEndedAt(): DateTimeImmutable
+    public function getEndedAt(): DateTimeInterface
     {
         return $this->endedAt;
     }

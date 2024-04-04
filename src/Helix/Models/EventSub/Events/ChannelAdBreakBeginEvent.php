@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Events;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 
 final readonly class ChannelAdBreakBeginEvent extends Event
 {
     /**
      * @param int               $durationSeconds       Length in seconds of the mid-roll ad break requested
-     * @param DateTimeImmutable $timestamp             The UTC timestamp of when the ad break began, in RFC3339 format.
+     * @param DateTimeInterface $timestamp             The UTC timestamp of when the ad break began, in RFC3339 format.
      *                                                 Note that there is potential delay between this event, when the
      *                                                 streamer requested the ad break, and when the viewers will see
      *                                                 ads.
@@ -24,7 +24,7 @@ final readonly class ChannelAdBreakBeginEvent extends Event
      */
     public function __construct(
         private int $durationSeconds,
-        private DateTimeImmutable $timestamp,
+        private DateTimeInterface $timestamp,
         private bool $isAutomatic,
         private string $requesterUserId,
         private string $broadcasterUserId,
@@ -38,7 +38,7 @@ final readonly class ChannelAdBreakBeginEvent extends Event
         return $this->durationSeconds;
     }
 
-    public function getTimestamp(): DateTimeImmutable
+    public function getTimestamp(): DateTimeInterface
     {
         return $this->timestamp;
     }

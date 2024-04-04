@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Tests\Functional;
 
 use CuyZ\Valinor\MapperBuilder;
-use DateTimeImmutable;
+use DateTimeInterface;
 use GuzzleHttp\Client;
 use League\OAuth2\Client\Token\AccessToken;
 use Nyholm\Psr7\Factory\Psr17Factory;
@@ -52,8 +52,8 @@ class ScheduleApiTest extends UserAwareFunctionalTestCase
         foreach ($channelStreamScheduleData->getSegments() as $segment) {
             $this->assertIsString($segment->getId());
             $this->assertNotEmpty($segment->getId());
-            $this->assertInstanceOf(DateTimeImmutable::class, $segment->getStartTime());
-            $this->assertInstanceOf(DateTimeImmutable::class, $segment->getEndTime());
+            $this->assertInstanceOf(DateTimeInterface::class, $segment->getStartTime());
+            $this->assertInstanceOf(DateTimeInterface::class, $segment->getEndTime());
             $this->assertSame('Test Title', $segment->getTitle());
             $this->assertInstanceOf(Category::class, $segment->getCategory());
             $this->assertIsBool($segment->isRecurring());
@@ -152,8 +152,8 @@ class ScheduleApiTest extends UserAwareFunctionalTestCase
             $this->assertInstanceOf(ScheduleSegment::class, $segment);
             $this->assertIsString($segment->getId());
             $this->assertNotEmpty($segment->getId());
-            $this->assertInstanceOf(DateTimeImmutable::class, $segment->getStartTime());
-            $this->assertInstanceOf(DateTimeImmutable::class, $segment->getEndTime());
+            $this->assertInstanceOf(DateTimeInterface::class, $segment->getStartTime());
+            $this->assertInstanceOf(DateTimeInterface::class, $segment->getEndTime());
             $this->assertNull($segment->getCategory());
             $this->assertIsBool($segment->isRecurring());
             $this->assertNull($segment->getCanceledUntil());

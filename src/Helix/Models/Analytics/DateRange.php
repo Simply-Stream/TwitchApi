@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Analytics;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class DateRange
@@ -12,21 +12,21 @@ final readonly class DateRange
     use SerializesModels;
 
     /**
-     * @param DateTimeImmutable $startedAt The reporting window’s start date.
-     * @param DateTimeImmutable $endedAt   The reporting window’s end date.
+     * @param DateTimeInterface $startedAt The reporting window’s start date.
+     * @param DateTimeInterface $endedAt   The reporting window’s end date.
      */
     public function __construct(
-        private DateTimeImmutable $startedAt,
-        private DateTimeImmutable $endedAt
+        private DateTimeInterface $startedAt,
+        private DateTimeInterface $endedAt
     ) {
     }
 
-    public function getStartedAt(): DateTimeImmutable
+    public function getStartedAt(): DateTimeInterface
     {
         return $this->startedAt;
     }
 
-    public function getEndedAt(): DateTimeImmutable
+    public function getEndedAt(): DateTimeInterface
     {
         return $this->endedAt;
     }

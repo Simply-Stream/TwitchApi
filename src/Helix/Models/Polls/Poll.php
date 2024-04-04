@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Polls;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class Poll
@@ -43,9 +43,9 @@ final readonly class Poll
      *                                                           state.
      * @param int                    $duration                   The length of time (in seconds) that the poll will run
      *                                                           for.
-     * @param DateTimeImmutable      $startedAt                  The UTC date and time (in RFC3339 format) of when the
+     * @param DateTimeInterface      $startedAt                  The UTC date and time (in RFC3339 format) of when the
      *                                                           poll began.
-     * @param DateTimeImmutable|null $endedAt                    The UTC date and time (in RFC3339 format) of when the
+     * @param DateTimeInterface|null $endedAt                    The UTC date and time (in RFC3339 format) of when the
      *                                                           poll ended. If status is ACTIVE, this field is set to
      *                                                           null.
      */
@@ -62,8 +62,8 @@ final readonly class Poll
         private int $channelPointsPerVote,
         private string $status,
         private int $duration,
-        private DateTimeImmutable $startedAt,
-        private ?DateTimeImmutable $endedAt = null,
+        private DateTimeInterface $startedAt,
+        private ?DateTimeInterface $endedAt = null,
     ) {
     }
 
@@ -127,12 +127,12 @@ final readonly class Poll
         return $this->duration;
     }
 
-    public function getStartedAt(): DateTimeImmutable
+    public function getStartedAt(): DateTimeInterface
     {
         return $this->startedAt;
     }
 
-    public function getEndedAt(): ?DateTimeImmutable
+    public function getEndedAt(): ?DateTimeInterface
     {
         return $this->endedAt;
     }

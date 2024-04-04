@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Events;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 
 final readonly class StreamOnlineEvent extends Event
 {
@@ -15,7 +15,7 @@ final readonly class StreamOnlineEvent extends Event
      * @param string            $broadcasterUserName   The broadcaster’s user display name.
      * @param string            $type                  The stream type. Valid values are: live, playlist, watch_party,
      *                                                 premiere, rerun.
-     * @param DateTimeImmutable $startedAt             The timestamp at which the stream went online at.
+     * @param DateTimeInterface $startedAt             The timestamp at which the stream went online at.
      */
     public function __construct(
         private string $id,
@@ -23,7 +23,7 @@ final readonly class StreamOnlineEvent extends Event
         private string $broadcasterUserLogin,
         private string $broadcasterUserName,
         private string $type,
-        private DateTimeImmutable $startedAt
+        private DateTimeInterface $startedAt
     ) {
     }
 
@@ -52,7 +52,7 @@ final readonly class StreamOnlineEvent extends Event
         return $this->type;
     }
 
-    public function getStartedAt(): DateTimeImmutable
+    public function getStartedAt(): DateTimeInterface
     {
         return $this->startedAt;
     }

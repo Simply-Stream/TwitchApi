@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Events;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use SimplyStream\TwitchApi\Helix\Models\Predictions\Outcome;
 
 final readonly class ChannelPredictionLockEvent extends Event
@@ -17,8 +17,8 @@ final readonly class ChannelPredictionLockEvent extends Event
      * @param string            $title                 Title for the Channel Points Prediction.
      * @param Outcome[]         $outcomes              An array of outcomes for the Channel Points Prediction. Includes
      *                                                 top_predictors.
-     * @param DateTimeImmutable $startedAt             The time the Channel Points Prediction started.
-     * @param DateTimeImmutable $lockedAt              The time the Channel Points Prediction was locked.
+     * @param DateTimeInterface $startedAt             The time the Channel Points Prediction started.
+     * @param DateTimeInterface $lockedAt              The time the Channel Points Prediction was locked.
      */
     public function __construct(
         private string $id,
@@ -27,8 +27,8 @@ final readonly class ChannelPredictionLockEvent extends Event
         private string $broadcasterUserName,
         private string $title,
         private array $outcomes,
-        private DateTimeImmutable $startedAt,
-        private DateTimeImmutable $lockedAt
+        private DateTimeInterface $startedAt,
+        private DateTimeInterface $lockedAt
     ) {
     }
 
@@ -62,12 +62,12 @@ final readonly class ChannelPredictionLockEvent extends Event
         return $this->outcomes;
     }
 
-    public function getStartedAt(): DateTimeImmutable
+    public function getStartedAt(): DateTimeInterface
     {
         return $this->startedAt;
     }
 
-    public function getLockedAt(): DateTimeImmutable
+    public function getLockedAt(): DateTimeInterface
     {
         return $this->lockedAt;
     }

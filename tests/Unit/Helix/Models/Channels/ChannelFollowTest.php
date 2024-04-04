@@ -34,7 +34,7 @@ final class ChannelFollowTest extends TestCase
                 'followed_at' => $followDateTime->format(DATE_RFC3339_EXTENDED),
                 'user_id' => $userId,
                 'user_login' => $userLogin,
-                'user_name' => $userName
+                'user_name' => $userName,
             ],
             $channelFollow->toArray()
         );

@@ -59,6 +59,8 @@ class EventSubService
         MapperBuilder $mapperBuilder,
         protected array $options
     ) {
+        // @TODO: Refactor to make MapperBuilder::registerConstructor accessible from outside - or at least
+        //        make it possible to adjust/extend it
         $this->mapper = $mapperBuilder
             ->registerConstructor(fn (string $time): DateTimeImmutable => new DateTimeImmutable($time))
             ->registerConstructor(

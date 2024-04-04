@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApi\Helix\Models\Bits\BitsLeaderboard;
 use SimplyStream\TwitchApi\Helix\Models\Bits\Cheermote;
@@ -45,7 +45,7 @@ class BitsApi extends AbstractApi
      *                                             specified in started_at and runs through 00:00:00 of the first day
      *                                             of the next year.
      *                                             - all — Default. The lifetime of the broadcaster's channel.
-     * @param DateTimeImmutable|null $startedAt    The start date, in RFC3339 format, used for determining the
+     * @param DateTimeInterface|null $startedAt    The start date, in RFC3339 format, used for determining the
      *                                             aggregation period. Specify this parameter only if you specify the
      *                                             period query parameter. The start date is ignored if period is all.
      *
@@ -70,7 +70,7 @@ class BitsApi extends AbstractApi
         AccessTokenInterface $accessToken,
         int $count = 10,
         string $period = 'all',
-        DateTimeImmutable $startedAt = null,
+        DateTimeInterface $startedAt = null,
         string $userId = null
     ): TwitchDateRangeDataResponse {
         return $this->sendRequest(

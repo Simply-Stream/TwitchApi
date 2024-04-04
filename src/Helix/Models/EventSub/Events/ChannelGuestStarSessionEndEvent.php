@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Events;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 
 final readonly class ChannelGuestStarSessionEndEvent extends Event
 {
@@ -13,16 +13,16 @@ final readonly class ChannelGuestStarSessionEndEvent extends Event
      * @param string            $broadcasterUserName  The broadcaster display name
      * @param string            $broadcasterUserLogin The broadcaster login
      * @param string            $sessionId            ID representing the unique session that was started.
-     * @param DateTimeImmutable $startedAt            RFC3339 timestamp indicating the time the session began.
-     * @param DateTimeImmutable $endedAt              RFC3339 timestamp indicating the time the session ended.
+     * @param DateTimeInterface $startedAt            RFC3339 timestamp indicating the time the session began.
+     * @param DateTimeInterface $endedAt              RFC3339 timestamp indicating the time the session ended.
      */
     public function __construct(
         private string $broadcasterUserId,
         private string $broadcasterUserName,
         private string $broadcasterUserLogin,
         private string $sessionId,
-        private DateTimeImmutable $startedAt,
-        private DateTimeImmutable $endedAt
+        private DateTimeInterface $startedAt,
+        private DateTimeInterface $endedAt
     ) {
     }
 
@@ -46,12 +46,12 @@ final readonly class ChannelGuestStarSessionEndEvent extends Event
         return $this->sessionId;
     }
 
-    public function getStartedAt(): DateTimeImmutable
+    public function getStartedAt(): DateTimeInterface
     {
         return $this->startedAt;
     }
 
-    public function getEndedAt(): DateTimeImmutable
+    public function getEndedAt(): DateTimeInterface
     {
         return $this->endedAt;
     }

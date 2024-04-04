@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\GuestStar;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class GuestStarSession
@@ -30,7 +30,7 @@ final readonly class GuestStarSession
      * @param string            $userLogin        Login of the guest assigned to this slot.
      * @param int               $volume           Value from 0 to 100 representing the host’s volume setting for this
      *                                            guest.
-     * @param DateTimeImmutable $assignedAt       Timestamp when this guest was assigned a slot in the session.
+     * @param DateTimeInterface $assignedAt       Timestamp when this guest was assigned a slot in the session.
      * @param MediaSettings     $audioSettings    Information about the guest’s audio settings
      * @param MediaSettings     $videoSettings    Information about the guest’s video settings
      */
@@ -43,7 +43,7 @@ final readonly class GuestStarSession
         private string $userDisplayName,
         private string $userLogin,
         private int $volume,
-        private DateTimeImmutable $assignedAt,
+        private DateTimeInterface $assignedAt,
         private MediaSettings $audioSettings,
         private MediaSettings $videoSettings
     ) {
@@ -89,7 +89,7 @@ final readonly class GuestStarSession
         return $this->volume;
     }
 
-    public function getAssignedAt(): DateTimeImmutable
+    public function getAssignedAt(): DateTimeInterface
     {
         return $this->assignedAt;
     }

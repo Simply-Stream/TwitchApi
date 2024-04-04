@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Tests\Unit\Helix\Models\EventSub;
 
 use DateTimeImmutable;
+use DateTimeInterface;
 use PHPUnit\Framework\TestCase;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Condition\ConditionInterface;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\EventResponse;

@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Schedule;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use SimplyStream\TwitchApi\Helix\Models\AbstractModel;
 use Webmozart\Assert\Assert;
 
 final readonly class UpdateChannelStreamScheduleSegmentRequest extends AbstractModel
 {
     /**
-     * @param DateTimeImmutable|null $startTime   The date and time that the broadcast segment starts. Specify the date
+     * @param DateTimeInterface|null $startTime   The date and time that the broadcast segment starts. Specify the date
      *                                            and time in RFC3339 format (for example, 2022-08-02T06:00:00Z).
      *
      *                                            NOTE: Only partners and affiliates may update a broadcast’s start
@@ -33,7 +33,7 @@ final readonly class UpdateChannelStreamScheduleSegmentRequest extends AbstractM
      *                                            using IANA time zone database format (for example, America/New_York).
      */
     public function __construct(
-        private ?DateTimeImmutable $startTime = null,
+        private ?DateTimeInterface $startTime = null,
         private ?string $duration = null,
         private ?string $categoryId = null,
         private ?string $title = null,
@@ -63,7 +63,7 @@ final readonly class UpdateChannelStreamScheduleSegmentRequest extends AbstractM
         }
     }
 
-    public function getStartTime(): ?DateTimeImmutable
+    public function getStartTime(): ?DateTimeInterface
     {
         return $this->startTime;
     }

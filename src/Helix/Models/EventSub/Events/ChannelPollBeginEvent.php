@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Events;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use SimplyStream\TwitchApi\Helix\Models\Polls\Choice;
 
 final readonly class ChannelPollBeginEvent extends Event
@@ -18,8 +18,8 @@ final readonly class ChannelPollBeginEvent extends Event
      * @param Choice[]            $choices              An array of choices for the poll.
      * @param BitsVoting          $bitsVoting           Not supported.
      * @param ChannelPointsVoting $channelPointsVoting  The Channel Points voting settings for the poll.
-     * @param DateTimeImmutable   $startedAt            The time the poll started.
-     * @param DateTimeImmutable   $endsAt               The time the poll will end.
+     * @param DateTimeInterface   $startedAt            The time the poll started.
+     * @param DateTimeInterface   $endsAt               The time the poll will end.
      */
     public function __construct(
         private string $id,
@@ -30,8 +30,8 @@ final readonly class ChannelPollBeginEvent extends Event
         private array $choices,
         private BitsVoting $bitsVoting,
         private ChannelPointsVoting $channelPointsVoting,
-        private DateTimeImmutable $startedAt,
-        private DateTimeImmutable $endsAt
+        private DateTimeInterface $startedAt,
+        private DateTimeInterface $endsAt
     ) {
     }
 
@@ -75,12 +75,12 @@ final readonly class ChannelPollBeginEvent extends Event
         return $this->channelPointsVoting;
     }
 
-    public function getStartedAt(): DateTimeImmutable
+    public function getStartedAt(): DateTimeInterface
     {
         return $this->startedAt;
     }
 
-    public function getEndsAt(): DateTimeImmutable
+    public function getEndsAt(): DateTimeInterface
     {
         return $this->endsAt;
     }

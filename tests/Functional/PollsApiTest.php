@@ -78,12 +78,12 @@ class PollsApiTest extends UserAwareFunctionalTestCase
             $this->assertContains($poll->getStatus(), ['ACTIVE', 'COMPLETED', 'TERMINATED', 'ARCHIVED', 'MODERATED', 'INVALID']);
             $this->assertGreaterThanOrEqual(15, $poll->getDuration());
 
-            $this->assertInstanceOf(\DateTimeImmutable::class, $poll->getStartedAt());
+            $this->assertInstanceOf(\DateTimeInterface::class, $poll->getStartedAt());
 
             if ($poll->getStatus() === 'ACTIVE') {
                 $this->assertNull($poll->getEndedAt());
             } else {
-                $this->assertInstanceOf(\DateTimeImmutable::class, $poll->getEndedAt());
+                $this->assertInstanceOf(\DateTimeInterface::class, $poll->getEndedAt());
             }
         }
     }
@@ -144,7 +144,7 @@ class PollsApiTest extends UserAwareFunctionalTestCase
             $this->assertSame(0, $poll->getChannelPointsPerVote());
             $this->assertSame('ACTIVE', $poll->getStatus());
             $this->assertGreaterThanOrEqual(300, $poll->getDuration());
-            $this->assertInstanceOf(\DateTimeImmutable::class, $poll->getStartedAt());
+            $this->assertInstanceOf(\DateTimeInterface::class, $poll->getStartedAt());
             $this->assertNull($poll->getEndedAt());
         }
     }
@@ -209,8 +209,8 @@ class PollsApiTest extends UserAwareFunctionalTestCase
             $this->assertSame(0, $poll->getChannelPointsPerVote());
             $this->assertSame('ARCHIVED', $poll->getStatus());
             $this->assertGreaterThanOrEqual(300, $poll->getDuration());
-            $this->assertInstanceOf(\DateTimeImmutable::class, $poll->getStartedAt());
-            $this->assertInstanceOf(\DateTimeImmutable::class, $poll->getEndedAt());
+            $this->assertInstanceOf(\DateTimeInterface::class, $poll->getStartedAt());
+            $this->assertInstanceOf(\DateTimeInterface::class, $poll->getEndedAt());
         }
     }
 }

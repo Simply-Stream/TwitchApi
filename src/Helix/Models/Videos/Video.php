@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Videos;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class Video
@@ -20,9 +20,9 @@ final readonly class Video
      * @param string              $userName      The broadcaster’s display name.
      * @param string              $title         The video’s title.
      * @param string              $description   The video’s description.
-     * @param DateTimeImmutable   $createdAt     The date and time, in UTC, of when the video was created. The timestamp
+     * @param DateTimeInterface   $createdAt     The date and time, in UTC, of when the video was created. The timestamp
      *                                           is in RFC3339 format.
-     * @param DateTimeImmutable   $publishedAt   The date and time, in UTC, of when the video was published. The
+     * @param DateTimeInterface   $publishedAt   The date and time, in UTC, of when the video was published. The
      *                                           timestamp is in RFC3339 format.
      * @param string              $url           The video’s URL.
      * @param string              $thumbnailUrl  A URL to a thumbnail image of the video. Before using the URL, you must
@@ -58,8 +58,8 @@ final readonly class Video
         private string $userName,
         private string $title,
         private string $description,
-        private DateTimeImmutable $createdAt,
-        private DateTimeImmutable $publishedAt,
+        private DateTimeInterface $createdAt,
+        private DateTimeInterface $publishedAt,
         private string $url,
         private string $thumbnailUrl,
         private string $viewable,
@@ -106,12 +106,12 @@ final readonly class Video
         return $this->description;
     }
 
-    public function getCreatedAt(): DateTimeImmutable
+    public function getCreatedAt(): DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function getPublishedAt(): DateTimeImmutable
+    public function getPublishedAt(): DateTimeInterface
     {
         return $this->publishedAt;
     }

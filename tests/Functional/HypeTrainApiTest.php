@@ -49,15 +49,15 @@ class HypeTrainApiTest extends UserAwareFunctionalTestCase
             $this->assertNotEmpty($hypeTrainEvent->getId());
             $this->assertIsString($hypeTrainEvent->getEventType());
             $this->assertNotEmpty($hypeTrainEvent->getEventType());
-            $this->assertInstanceOf(\DateTimeImmutable::class, $hypeTrainEvent->getEventTimestamp());
+            $this->assertInstanceOf(\DateTimeInterface::class, $hypeTrainEvent->getEventTimestamp());
             $this->assertIsString($hypeTrainEvent->getVersion());
             $this->assertNotEmpty($hypeTrainEvent->getVersion());
             $this->assertInstanceOf(EventData::class, $eventData);
 
             // EventData
             $this->assertSame($testUser['id'], $eventData->getBroadcasterId());
-            $this->assertInstanceOf(\DateTimeImmutable::class, $eventData->getCooldownEndTime());
-            $this->assertInstanceOf(\DateTimeImmutable::class, $eventData->getExpiresAt());
+            $this->assertInstanceOf(\DateTimeInterface::class, $eventData->getCooldownEndTime());
+            $this->assertInstanceOf(\DateTimeInterface::class, $eventData->getExpiresAt());
             $this->assertGreaterThan(0, $eventData->getGoal());
             $this->assertIsString($eventData->getId());
 
@@ -70,7 +70,7 @@ class HypeTrainApiTest extends UserAwareFunctionalTestCase
             //
 
             $this->assertGreaterThan(0, $eventData->getLevel());
-            $this->assertInstanceOf(\DateTimeImmutable::class, $eventData->getStartedAt());
+            $this->assertInstanceOf(\DateTimeInterface::class, $eventData->getStartedAt());
 
             // TopContributions
             $this->assertIsArray($eventData->getTopContributions());

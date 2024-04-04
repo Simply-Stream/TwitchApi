@@ -21,11 +21,11 @@ final readonly class ShoutoutCreateEvent extends Event
      * @param string             $moderatorUserName      The moderator’s display name.
      * @param int                $viewerCount            The number of users that were watching the broadcaster’s
      *                                                   stream at the time of the Shoutout.
-     * @param \DateTimeImmutable $startedAt              The UTC timestamp (in RFC3339 format) of when the moderator
+     * @param \DateTimeInterface $startedAt              The UTC timestamp (in RFC3339 format) of when the moderator
      *                                                   sent the Shoutout.
-     * @param \DateTimeImmutable $cooldownEndsAt         The UTC timestamp (in RFC3339 format) of when the broadcaster
+     * @param \DateTimeInterface $cooldownEndsAt         The UTC timestamp (in RFC3339 format) of when the broadcaster
      *                                                   may send a Shoutout to a different broadcaster.
-     * @param \DateTimeImmutable $targetCooldownEndsAt   The UTC timestamp (in RFC3339 format) of when the broadcaster
+     * @param \DateTimeInterface $targetCooldownEndsAt   The UTC timestamp (in RFC3339 format) of when the broadcaster
      *                                                   may send another Shoutout to the broadcaster in
      *                                                   to_broadcaster_user_id.
      */
@@ -40,9 +40,9 @@ final readonly class ShoutoutCreateEvent extends Event
         private string $moderatorUserLogin,
         private string $moderatorUserName,
         private int $viewerCount,
-        private \DateTimeImmutable $startedAt,
-        private \DateTimeImmutable $cooldownEndsAt,
-        private \DateTimeImmutable $targetCooldownEndsAt,
+        private \DateTimeInterface $startedAt,
+        private \DateTimeInterface $cooldownEndsAt,
+        private \DateTimeInterface $targetCooldownEndsAt,
     ) {
     }
 
@@ -96,17 +96,17 @@ final readonly class ShoutoutCreateEvent extends Event
         return $this->viewerCount;
     }
 
-    public function getStartedAt(): \DateTimeImmutable
+    public function getStartedAt(): \DateTimeInterface
     {
         return $this->startedAt;
     }
 
-    public function getCooldownEndsAt(): \DateTimeImmutable
+    public function getCooldownEndsAt(): \DateTimeInterface
     {
         return $this->cooldownEndsAt;
     }
 
-    public function getTargetCooldownEndsAt(): \DateTimeImmutable
+    public function getTargetCooldownEndsAt(): \DateTimeInterface
     {
         return $this->targetCooldownEndsAt;
     }

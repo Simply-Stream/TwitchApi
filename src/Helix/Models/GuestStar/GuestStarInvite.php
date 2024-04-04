@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\GuestStar;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class GuestStarInvite
@@ -13,7 +13,7 @@ final readonly class GuestStarInvite
 
     /**
      * @param string            $userId            Twitch User ID corresponding to the invited guest
-     * @param DateTimeImmutable $invitedAt         Timestamp when this user was invited to the session.
+     * @param DateTimeInterface $invitedAt         Timestamp when this user was invited to the session.
      * @param string            $status            Status representing the invited user’s join state. Can be one of the
      *                                             following:
      *                                             - INVITED: The user has been invited to the session but has not
@@ -36,7 +36,7 @@ final readonly class GuestStarInvite
      */
     public function __construct(
         private string $userId,
-        private DateTimeImmutable $invitedAt,
+        private DateTimeInterface $invitedAt,
         private string $status,
         private bool $isVideoEnabled,
         private bool $isAudioEnabled,
@@ -50,7 +50,7 @@ final readonly class GuestStarInvite
         return $this->userId;
     }
 
-    public function getInvitedAt(): DateTimeImmutable
+    public function getInvitedAt(): DateTimeInterface
     {
         return $this->invitedAt;
     }

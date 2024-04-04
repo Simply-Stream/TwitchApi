@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\EventSub;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Condition\ConditionInterface;
 use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
@@ -26,7 +26,7 @@ readonly class Subscription
      *                                           - webhook_callback_verification_pending — The subscription is pending
      *                                           verification of the specified callback URL (see Responding to a
      *                                           challenge request).
-     * @param DateTimeImmutable|null $createdAt  The date and time (in RFC3339 format) of when the subscription was
+     * @param DateTimeInterface|null $createdAt  The date and time (in RFC3339 format) of when the subscription was
      *                                           created.
      */
     public function __construct(
@@ -36,7 +36,7 @@ readonly class Subscription
         protected Transport $transport,
         protected ?string $id = null,
         protected ?string $status = null,
-        protected ?DateTimeImmutable $createdAt = null
+        protected ?DateTimeInterface $createdAt = null
     ) {
     }
 
@@ -70,7 +70,7 @@ readonly class Subscription
         return $this->status;
     }
 
-    public function getCreatedAt(): ?DateTimeImmutable
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Streams;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class Marker
@@ -13,7 +13,7 @@ final readonly class Marker
 
     /**
      * @param string            $id               An ID that identifies this marker.
-     * @param DateTimeImmutable $createdAt        The UTC date and time (in RFC3339 format) of when the user created
+     * @param DateTimeInterface $createdAt        The UTC date and time (in RFC3339 format) of when the user created
      *                                            the marker.
      * @param int               $positionSeconds  The relative offset (in seconds) of the marker from the beginning of
      *                                            the stream.
@@ -23,7 +23,7 @@ final readonly class Marker
      */
     public function __construct(
         private string $id,
-        private DateTimeImmutable $createdAt,
+        private DateTimeInterface $createdAt,
         private int $positionSeconds,
         private string $description,
         private ?string $url = null
@@ -35,7 +35,7 @@ final readonly class Marker
         return $this->id;
     }
 
-    public function getCreatedAt(): DateTimeImmutable
+    public function getCreatedAt(): DateTimeInterface
     {
         return $this->createdAt;
     }

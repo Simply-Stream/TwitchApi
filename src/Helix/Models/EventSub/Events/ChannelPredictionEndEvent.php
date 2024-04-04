@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Events;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use SimplyStream\TwitchApi\Helix\Models\Predictions\Outcome;
 
 final readonly class ChannelPredictionEndEvent extends Event
@@ -20,8 +20,8 @@ final readonly class ChannelPredictionEndEvent extends Event
      *                                                 top_predictors.
      * @param string            $status                The status of the Channel Points Prediction. Valid values are
      *                                                 resolved and canceled.
-     * @param DateTimeImmutable $startedAt             The time the Channel Points Prediction started.
-     * @param DateTimeImmutable $endedAt               The time the Channel Points Prediction ended.
+     * @param DateTimeInterface $startedAt             The time the Channel Points Prediction started.
+     * @param DateTimeInterface $endedAt               The time the Channel Points Prediction ended.
      */
     public function __construct(
         private string $id,
@@ -32,8 +32,8 @@ final readonly class ChannelPredictionEndEvent extends Event
         private string $winningOutcomeId,
         private array $outcomes,
         private string $status,
-        private DateTimeImmutable $startedAt,
-        private DateTimeImmutable $endedAt
+        private DateTimeInterface $startedAt,
+        private DateTimeInterface $endedAt
     ) {
     }
 
@@ -77,12 +77,12 @@ final readonly class ChannelPredictionEndEvent extends Event
         return $this->status;
     }
 
-    public function getStartedAt(): DateTimeImmutable
+    public function getStartedAt(): DateTimeInterface
     {
         return $this->startedAt;
     }
 
-    public function getEndedAt(): DateTimeImmutable
+    public function getEndedAt(): DateTimeInterface
     {
         return $this->endedAt;
     }

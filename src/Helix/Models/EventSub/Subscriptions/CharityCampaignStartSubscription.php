@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Subscriptions;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Condition\CharityCampaignStartCondition;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Subscription;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Transport;
@@ -18,7 +18,7 @@ final readonly class CharityCampaignStartSubscription extends Subscription
      * @param Transport                                  $transport
      * @param string|null                                $id
      * @param string|null                                $status
-     * @param DateTimeImmutable|null                     $createdAt
+     * @param DateTimeInterface|null                     $createdAt
      * @param string|null                                $type
      * @param string|null                                $version
      */
@@ -27,7 +27,7 @@ final readonly class CharityCampaignStartSubscription extends Subscription
         Transport $transport,
         ?string $id = null,
         ?string $status = null,
-        ?DateTimeImmutable $createdAt = null,
+        ?DateTimeInterface $createdAt = null,
         ?string $type = self::TYPE,
         ?string $version = "1"
     ) {

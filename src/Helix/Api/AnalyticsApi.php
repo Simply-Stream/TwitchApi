@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use SimplyStream\TwitchApi\Helix\Models\Analytics\ExtensionAnalytics;
 use SimplyStream\TwitchApi\Helix\Models\Analytics\GameAnalytics;
@@ -34,7 +34,7 @@ class AnalyticsApi extends AbstractApi
      *                                               owns.
      * @param string|null            $type           The type of analytics report to get. Possible values are:
      *                                               - overview_v2
-     * @param DateTimeImmutable|null $startedAt      The reporting window’s start date, in RFC3339 format. Set the time
+     * @param DateTimeInterface|null $startedAt      The reporting window’s start date, in RFC3339 format. Set the time
      *                                               portion to zeroes
      *                                               (for example, 2021-10-22T00:00:00Z).
      *
@@ -46,7 +46,7 @@ class AnalyticsApi extends AbstractApi
      *
      *                                               The report contains one row of data for each day in the reporting
      *                                               window.
-     * @param DateTimeImmutable|null $endedAt        The reporting window’s end date, in RFC3339 format. Set the time
+     * @param DateTimeInterface|null $endedAt        The reporting window’s end date, in RFC3339 format. Set the time
      *                                               portion to zeroes
      *                                               (for example, 2021-10-27T00:00:00Z). The report is inclusive of
      *                                               the end date.
@@ -73,8 +73,8 @@ class AnalyticsApi extends AbstractApi
         AccessTokenInterface $accessToken,
         string $extensionId = null,
         string $type = null,
-        DateTimeImmutable $startedAt = null,
-        DateTimeImmutable $endedAt = null,
+        DateTimeInterface $startedAt = null,
+        DateTimeInterface $endedAt = null,
         int $first = 20,
         string $after = null
     ): TwitchPaginatedDataResponse {
@@ -112,7 +112,7 @@ class AnalyticsApi extends AbstractApi
      *                                             report for each of the authenticated user’s games.
      * @param string|null            $type         The type of analytics report to get. Possible values are:
      *                                             overview_v2
-     * @param DateTimeImmutable|null $startedAt    The reporting window’s start date, in RFC3339 format. Set the time
+     * @param DateTimeInterface|null $startedAt    The reporting window’s start date, in RFC3339 format. Set the time
      *                                             portion to zeroes
      *                                             (for example,
      *                                             2021-10-22T00:00:00Z). If you specify a start date, you must specify
@@ -126,7 +126,7 @@ class AnalyticsApi extends AbstractApi
      *
      *                                             The report contains one row of data for each day in the reporting
      *                                             window.
-     * @param DateTimeImmutable|null $endedAt      The reporting window’s end date, in RFC3339 format. Set the time
+     * @param DateTimeInterface|null $endedAt      The reporting window’s end date, in RFC3339 format. Set the time
      *                                             portion to zeroes (for example,
      *                                             2021-10-22T00:00:00Z). The report is inclusive of the end date.
      *
@@ -152,8 +152,8 @@ class AnalyticsApi extends AbstractApi
         AccessTokenInterface $accessToken,
         string $gameId = null,
         string $type = null,
-        DateTimeImmutable $startedAt = null,
-        DateTimeImmutable $endedAt = null,
+        DateTimeInterface $startedAt = null,
+        DateTimeInterface $endedAt = null,
         int $first = 20,
         string $after = null
     ): TwitchPaginatedDataResponse {

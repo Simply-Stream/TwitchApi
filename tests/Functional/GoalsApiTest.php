@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Tests\Functional;
 
 use CuyZ\Valinor\MapperBuilder;
-use DateTimeImmutable;
+use DateTimeInterface;
 use GuzzleHttp\Client;
 use Http\Discovery\Psr17Factory;
 use League\OAuth2\Client\Token\AccessToken;
@@ -58,7 +58,7 @@ class GoalsApiTest extends UserAwareFunctionalTestCase
             $this->assertGreaterThan(0, $creatorGoal->getCurrentAmount());
             $this->assertIsInt($creatorGoal->getTargetAmount());
             $this->assertGreaterThan(0, $creatorGoal->getTargetAmount());
-            $this->assertInstanceOf(DateTimeImmutable::class, $creatorGoal->getCreatedAt());
+            $this->assertInstanceOf(DateTimeInterface::class, $creatorGoal->getCreatedAt());
         }
     }
 }

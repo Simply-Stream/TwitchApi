@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Predictions;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class Prediction
@@ -30,11 +30,11 @@ final readonly class Prediction
      *                                                 - RESOLVED — The winning outcome was determined and the Channel
      *                                                 Points were distributed to the viewers who predicted the correct
      *                                                 outcome.
-     * @param DateTimeImmutable      $createdAt        The UTC date and time of when the Prediction began.
+     * @param DateTimeInterface      $createdAt        The UTC date and time of when the Prediction began.
      * @param string|null            $winningOutcomeId The ID of the winning outcome. Is null unless status is RESOLVED.
-     * @param DateTimeImmutable|null $endedAt          The UTC date and time of when the Prediction ended. If status is
+     * @param DateTimeInterface|null $endedAt          The UTC date and time of when the Prediction ended. If status is
      *                                                 ACTIVE, this is set to null.
-     * @param DateTimeImmutable|null $lockedAt         The UTC date and time of when the Prediction was locked. If status
+     * @param DateTimeInterface|null $lockedAt         The UTC date and time of when the Prediction was locked. If status
      *                                                 is not LOCKED, this is set to null.
      */
     public function __construct(
@@ -46,10 +46,10 @@ final readonly class Prediction
         private array $outcomes,
         private int $predictionWindow,
         private string $status,
-        private DateTimeImmutable $createdAt,
+        private DateTimeInterface $createdAt,
         private ?string $winningOutcomeId = null,
-        private ?DateTimeImmutable $endedAt = null,
-        private ?DateTimeImmutable $lockedAt = null,
+        private ?DateTimeInterface $endedAt = null,
+        private ?DateTimeInterface $lockedAt = null,
     ) {
     }
 
@@ -93,7 +93,7 @@ final readonly class Prediction
         return $this->status;
     }
 
-    public function getCreatedAt(): DateTimeImmutable
+    public function getCreatedAt(): DateTimeInterface
     {
         return $this->createdAt;
     }
@@ -103,12 +103,12 @@ final readonly class Prediction
         return $this->winningOutcomeId;
     }
 
-    public function getEndedAt(): ?DateTimeImmutable
+    public function getEndedAt(): ?DateTimeInterface
     {
         return $this->endedAt;
     }
 
-    public function getLockedAt(): ?DateTimeImmutable
+    public function getLockedAt(): ?DateTimeInterface
     {
         return $this->lockedAt;
     }

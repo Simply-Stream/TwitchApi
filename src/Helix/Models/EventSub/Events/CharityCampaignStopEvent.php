@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Events;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 use SimplyStream\TwitchApi\Helix\Models\Charity\CharityAmount;
 
 final readonly class CharityCampaignStopEvent extends Event
@@ -22,7 +22,7 @@ final readonly class CharityCampaignStopEvent extends Event
      * @param CharityAmount     $currentAmount        An object that contains the current amount of donations that the
      *                                                campaign has received.
      * @param CharityAmount     $targetAmount         An object that contains the campaign’s target fundraising goal.
-     * @param DateTimeImmutable $stoppedAt            The UTC timestamp (in RFC3339 format) of when the broadcaster stopped the campaign.
+     * @param DateTimeInterface $stoppedAt            The UTC timestamp (in RFC3339 format) of when the broadcaster stopped the campaign.
      */
     public function __construct(
         private string $id,
@@ -35,7 +35,7 @@ final readonly class CharityCampaignStopEvent extends Event
         private string $charityWebsite,
         private CharityAmount $currentAmount,
         private CharityAmount $targetAmount,
-        private DateTimeImmutable $stoppedAt
+        private DateTimeInterface $stoppedAt
     ) {
     }
 
@@ -89,7 +89,7 @@ final readonly class CharityCampaignStopEvent extends Event
         return $this->targetAmount;
     }
 
-    public function getStoppedAt(): DateTimeImmutable
+    public function getStoppedAt(): DateTimeInterface
     {
         return $this->stoppedAt;
     }
