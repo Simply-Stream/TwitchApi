@@ -33,6 +33,37 @@ final readonly class ChannelChatMessageEvent extends Event
      * @param Reply|null  $reply                       Optional. Metadata if this message is a reply.
      * @param string|null $channelPointsCustomRewardId Optional. The ID of a channel points custom reward that was
      *                                                 redeemed.
+     *
+     * @param string|null $sourceBroadcasterUserId     Optional. The
+     *                                                 broadcaster user ID of the channel the message was sent from. Is
+     *                                                 null when the message happens in the same channel as the
+     *                                                 broadcaster. Is not null when in a shared chat session, and the
+     *                                                 action happens in the channel of a participant other than the
+     *                                                 broadcaster.
+     * @param string|null $sourceBroadcasterUserName   Optional. The user
+     *                                                 name of the broadcaster of the channel the message was sent
+     *                                                 from. Is null when the message happens in the same channel as
+     *                                                 the broadcaster. Is not null when in a shared chat session, and
+     *                                                 the action happens in the channel of a participant other than
+     *                                                 the broadcaster.
+     * @param string|null $sourceBroadcasterUserLogin  Optional. The
+     *                                                 login of the broadcaster of the channel the message was sent
+     *                                                 from. Is null when the message happens in the same channel as
+     *                                                 the broadcaster. Is not null when in a shared chat session, and
+     *                                                 the action happens in the channel of a participant other than
+     *                                                 the broadcaster.
+     * @param string|null $sourceMessageId             Optional. The UUID that
+     *                                                 identifies the source message from the channel the message was
+     *                                                 sent from. Is null when the message happens in the same channel
+     *                                                 as the broadcaster. Is not null when in a shared chat session,
+     *                                                 and the action happens in the channel of a participant other
+     *                                                 than the broadcaster.
+     * @param array|null  $sourceBadges                Optional. The list of chat badges
+     *                                                 for the chatter in the channel the message was sent from. Is
+     *                                                 null when the message happens in the same channel as the
+     *                                                 broadcaster. Is not null when in a shared chat session, and the
+     *                                                 action happens in the channel of a participant other than the
+     *                                                 broadcaster.
      */
     public function __construct(
         private string $broadcasterUserId,
@@ -48,7 +79,12 @@ final readonly class ChannelChatMessageEvent extends Event
         private string $color,
         private ?Cheer $cheer,
         private ?Reply $reply,
-        private ?string $channelPointsCustomRewardId
+        private ?string $channelPointsCustomRewardId,
+        private ?string $sourceBroadcasterUserId,
+        private ?string $sourceBroadcasterUserLogin,
+        private ?string $sourceBroadcasterUserName,
+        private ?string $sourceMessageId,
+        private ?array $sourceBadges,
     ) {
     }
 
@@ -120,5 +156,30 @@ final readonly class ChannelChatMessageEvent extends Event
     public function getChannelPointsCustomRewardId(): ?string
     {
         return $this->channelPointsCustomRewardId;
+    }
+
+    public function getSourceBroadcasterUserId(): ?string
+    {
+        return $this->sourceBroadcasterUserId;
+    }
+
+    public function getSourceBroadcasterUserLogin(): ?string
+    {
+        return $this->sourceBroadcasterUserLogin;
+    }
+
+    public function getSourceBroadcasterUserName(): ?string
+    {
+        return $this->sourceBroadcasterUserName;
+    }
+
+    public function getSourceMessageId(): ?string
+    {
+        return $this->sourceMessageId;
+    }
+
+    public function getSourceBadges(): ?array
+    {
+        return $this->sourceBadges;
     }
 }

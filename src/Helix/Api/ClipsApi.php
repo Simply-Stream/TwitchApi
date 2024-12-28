@@ -105,7 +105,7 @@ class ClipsApi extends AbstractApi
      *                                                 object in the response contains the cursor’s value.
      * @param bool|null              $isFeatured
      *
-     * @return TwitchDataResponse<Clip[]>
+     * @return TwitchPaginatedDataResponse<Clip[]>
      */
     public function getClips(
         AccessTokenInterface $accessToken,
@@ -118,7 +118,7 @@ class ClipsApi extends AbstractApi
         string $before = null,
         string $after = null,
         bool $isFeatured = null
-    ): TwitchDataResponse {
+    ): TwitchPaginatedDataResponse {
         if (!$broadcasterId && !$gameId && !$id) {
             throw new RuntimeException('You need to specify at least one kind of ID');
         }
