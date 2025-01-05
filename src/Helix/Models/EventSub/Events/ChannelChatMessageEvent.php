@@ -33,6 +33,7 @@ final readonly class ChannelChatMessageEvent extends Event
      * @param Reply|null  $reply                       Optional. Metadata if this message is a reply.
      * @param string|null $channelPointsCustomRewardId Optional. The ID of a channel points custom reward that was
      *                                                 redeemed.
+     * @param string|null $channelPointsAnimationId    Optional. Not documented by Twitch, but present in request
      *
      * @param string|null $sourceBroadcasterUserId     Optional. The
      *                                                 broadcaster user ID of the channel the message was sent from. Is
@@ -80,6 +81,7 @@ final readonly class ChannelChatMessageEvent extends Event
         private ?Cheer $cheer,
         private ?Reply $reply,
         private ?string $channelPointsCustomRewardId,
+        private ?string $channelPointsAnimationId,
         private ?string $sourceBroadcasterUserId,
         private ?string $sourceBroadcasterUserLogin,
         private ?string $sourceBroadcasterUserName,
@@ -156,6 +158,11 @@ final readonly class ChannelChatMessageEvent extends Event
     public function getChannelPointsCustomRewardId(): ?string
     {
         return $this->channelPointsCustomRewardId;
+    }
+
+    public function getChannelPointsAnimationId(): ?string
+    {
+        return $this->channelPointsAnimationId;
     }
 
     public function getSourceBroadcasterUserId(): ?string
