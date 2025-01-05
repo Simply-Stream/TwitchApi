@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Condition;
 
+use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
+
 final readonly class ChannelChatMessageCondition implements ConditionInterface
 {
+    use SerializesModels;
+
     /**
      * @param string $broadcasterUserId User ID of the channel to receive chat message events for.
      * @param string $userId            The user ID to read chat as.
