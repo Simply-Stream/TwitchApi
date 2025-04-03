@@ -65,6 +65,7 @@ final readonly class ChannelChatMessageEvent extends Event
      *                                                 broadcaster. Is not null when in a shared chat session, and the
      *                                                 action happens in the channel of a participant other than the
      *                                                 broadcaster.
+     * @param bool|null  $isSourceOnly                 Not yet documented by Twitch
      */
     public function __construct(
         private string $broadcasterUserId,
@@ -87,6 +88,7 @@ final readonly class ChannelChatMessageEvent extends Event
         private ?string $sourceBroadcasterUserName,
         private ?string $sourceMessageId,
         private ?array $sourceBadges,
+        private ?bool $isSourceOnly,
     ) {
     }
 
@@ -188,5 +190,10 @@ final readonly class ChannelChatMessageEvent extends Event
     public function getSourceBadges(): ?array
     {
         return $this->sourceBadges;
+    }
+
+    public function getIsSourceOnly(): ?bool
+    {
+        return $this->isSourceOnly;
     }
 }
