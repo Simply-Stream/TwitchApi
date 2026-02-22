@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
-use DateTimeInterface;
 use League\OAuth2\Client\Token\AccessTokenInterface;
-use RuntimeException;
 use SimplyStream\TwitchApi\Helix\Models\Clip\Clip;
 use SimplyStream\TwitchApi\Helix\Models\Clip\ClipProcess;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
@@ -41,9 +39,9 @@ class ClipsApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/clips
      *
-     * @param string               $broadcasterId The ID of the broadcaster whose stream you want to create a clip
-     *                                            from.
-     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the clips:edit scope.
+     * @param string               $broadcasterId the ID of the broadcaster whose stream you want to create a clip
+     *                                            from
+     * @param AccessTokenInterface $accessToken   requires a user access token that includes the clips:edit scope
      * @param bool                 $hasDelay      A Boolean value that determines whether the API captures the clip at
      *                                            the moment the viewer requests it or after a delay. If false
      *                                            (default), Twitch captures the clip at the moment the viewer requests
@@ -56,7 +54,7 @@ class ClipsApi extends AbstractApi
     public function createClip(
         string $broadcasterId,
         AccessTokenInterface $accessToken,
-        bool $hasDelay = false
+        bool $hasDelay = false,
     ): TwitchDataResponse {
         return $this->sendRequest(
             path: self::BASE_PATH,
@@ -79,48 +77,48 @@ class ClipsApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/clips
      *
-     * @param AccessTokenInterface   $accessToken      Requires an app access token or user access token.
-     * @param string|null            $broadcasterId    An ID that identifies the broadcaster whose video clips you want
-     *                                                 to get. Use this parameter to get clips that were captured from
-     *                                                 the broadcaster’s streams.
-     * @param string|null            $gameId           An ID that identifies the game whose clips you want to get. Use
-     *                                                 this parameter to get clips that were captured from streams that
-     *                                                 were playing this game.
-     * @param string|null            $id               An ID that identifies the clip to get. To specify more than one
-     *                                                 ID, include this parameter for each clip you want to get. For
-     *                                                 example, id=foo&id=bar. You may specify a maximum of 100 IDs.
-     *                                                 The API ignores duplicate IDs and IDs that aren’t found.
-     * @param DateTimeInterface|null $startedAt        The start date used to filter clips. The API returns only clips
-     *                                                 within the start and end date window. Specify the date and time
-     *                                                 in RFC3339 format.
-     * @param DateTimeInterface|null $endedAt          The end date used to filter clips. If not specified, the time
-     *                                                 window is the start date plus one week. Specify the date and
-     *                                                 time in RFC3339 format.
-     * @param int                    $first            The maximum number of clips to return per page in the response.
-     *                                                 The minimum page size is 1 clip per page and the maximum is 100.
-     *                                                 The default is 20.
-     * @param string|null            $before           The cursor used to get the previous page of results. The
-     *                                                 Pagination object in the response contains the cursor’s value.
-     * @param string|null            $after            The cursor used to get the next page of results. The Pagination
-     *                                                 object in the response contains the cursor’s value.
-     * @param bool|null              $isFeatured
+     * @param AccessTokenInterface    $accessToken   requires an app access token or user access token
+     * @param string|null             $broadcasterId An ID that identifies the broadcaster whose video clips you want
+     *                                               to get. Use this parameter to get clips that were captured from
+     *                                               the broadcaster’s streams.
+     * @param string|null             $gameId        An ID that identifies the game whose clips you want to get. Use
+     *                                               this parameter to get clips that were captured from streams that
+     *                                               were playing this game.
+     * @param string|array|null       $id            An ID that identifies the clip to get. To specify more than
+     *                                               one
+     *                                               ID, include this parameter for each clip you want to get. For
+     *                                               example, id=foo&id=bar. You may specify a maximum of 100 IDs.
+     *                                               The API ignores duplicate IDs and IDs that aren’t found.
+     * @param \DateTimeInterface|null $startedAt     The start date used to filter clips. The API returns only clips
+     *                                               within the start and end date window. Specify the date and time
+     *                                               in RFC3339 format.
+     * @param \DateTimeInterface|null $endedAt       The end date used to filter clips. If not specified, the time
+     *                                               window is the start date plus one week. Specify the date and
+     *                                               time in RFC3339 format.
+     * @param int                     $first         The maximum number of clips to return per page in the response.
+     *                                               The minimum page size is 1 clip per page and the maximum is 100.
+     *                                               The default is 20.
+     * @param string|null             $before        The cursor used to get the previous page of results. The
+     *                                               Pagination object in the response contains the cursor’s value.
+     * @param string|null             $after         The cursor used to get the next page of results. The Pagination
+     *                                               object in the response contains the cursor’s value.
      *
      * @return TwitchPaginatedDataResponse<Clip[]>
      */
     public function getClips(
         AccessTokenInterface $accessToken,
-        string $broadcasterId = null,
-        string $gameId = null,
-        string $id = null,
-        DateTimeInterface $startedAt = null,
-        DateTimeInterface $endedAt = null,
+        ?string $broadcasterId = null,
+        ?string $gameId = null,
+        string|array|null $id = null,
+        ?\DateTimeInterface $startedAt = null,
+        ?\DateTimeInterface $endedAt = null,
         int $first = 20,
-        string $before = null,
-        string $after = null,
-        bool $isFeatured = null
+        ?string $before = null,
+        ?string $after = null,
+        ?bool $isFeatured = null,
     ): TwitchPaginatedDataResponse {
         if (!$broadcasterId && !$gameId && !$id) {
-            throw new RuntimeException('You need to specify at least one kind of ID');
+            throw new \RuntimeException('You need to specify at least one kind of ID');
         }
 
         return $this->sendRequest(
