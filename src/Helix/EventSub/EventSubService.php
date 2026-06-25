@@ -161,10 +161,11 @@ class EventSubService
                 Source::json((string)$request->getBody())->camelCaseKeys()
             );
         } catch (MappingError $mappingError) {
-            $messages = Messages::flattenFromNode($mappingError->node())->errors();
-            foreach ($messages as $message) {
-                echo $message . PHP_EOL;
-            }
+            // TODO: Fix this as soon as I'm home or replace accordingly
+            // $messages = Messages::flattenFromNode($mappingError->node())->errors();
+            // foreach ($messages as $message) {
+            //     echo $message . PHP_EOL;
+            // }
 
             throw $mappingError;
         }
