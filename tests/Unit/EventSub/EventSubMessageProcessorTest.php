@@ -183,6 +183,7 @@ final class EventSubMessageProcessorTest extends TestCase
                 return match ($type) {
                     ChannelFollowCondition::class => new ChannelFollowCondition(
                         broadcasterUserId: $data['broadcaster_user_id'],
+                        moderatorUserId: $data['broadcaster_user_id'],
                     ),
                     ChannelFollowEvent::class => new ChannelFollowEvent(
                         userId: $data['user_id'],

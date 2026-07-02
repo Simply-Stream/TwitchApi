@@ -8,7 +8,7 @@ use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\ChannelFollowCondition;
 use SimplyStream\TwitchApi\EventSub\EventInterface;
 
-#[EventSubSubscription(type: 'channel.follow', version: '1', condition: ChannelFollowCondition::class)]
+#[EventSubSubscription(type: 'channel.follow', version: '2', condition: ChannelFollowCondition::class)]
 final readonly class ChannelFollowEvent implements EventInterface
 {
     /**
