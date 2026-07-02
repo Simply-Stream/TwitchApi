@@ -7,9 +7,10 @@ namespace SimplyStream\TwitchApi\EventSub\Events;
 use DateTimeInterface;
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\GoalsEndCondition;
+use SimplyStream\TwitchApi\EventSub\EventInterface;
 
 #[EventSubSubscription(type: 'channel.goal.end', version: '1', condition: GoalsEndCondition::class)]
-final readonly class GoalEndEvent
+final readonly class GoalEndEvent implements EventInterface
 {
     /**
      * @param string            $id                         An ID that identifies this event.

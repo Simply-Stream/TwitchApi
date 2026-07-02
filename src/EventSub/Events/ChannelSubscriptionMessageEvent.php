@@ -6,9 +6,10 @@ namespace SimplyStream\TwitchApi\EventSub\Events;
 
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\ChannelSubscriptionMessageCondition;
+use SimplyStream\TwitchApi\EventSub\EventInterface;
 
 #[EventSubSubscription(type: 'channel.subscription.message', version: '1', condition: ChannelSubscriptionMessageCondition::class)]
-final readonly class ChannelSubscriptionMessageEvent
+final readonly class ChannelSubscriptionMessageEvent implements EventInterface
 {
     /**
      * @param string   $userId               The user ID of the user who sent a resubscription chat message.

@@ -7,9 +7,10 @@ namespace SimplyStream\TwitchApi\EventSub\Events;
 use DateTimeInterface;
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\ChannelBanCondition;
+use SimplyStream\TwitchApi\EventSub\EventInterface;
 
 #[EventSubSubscription(type: 'channel.ban', version: '1', condition: ChannelBanCondition::class)]
-final readonly class ChannelBanEvent
+final readonly class ChannelBanEvent implements EventInterface
 {
     /**
      * @param string                 $userId                The user ID for the user who was banned on the specified

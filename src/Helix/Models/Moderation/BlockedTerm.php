@@ -5,12 +5,9 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Models\Moderation;
 
 use DateTimeInterface;
-use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class BlockedTerm
 {
-    use SerializesModels;
-
     /**
      * @param string            $broadcasterId  The broadcaster that owns the list of blocked terms.
      * @param string            $moderatorId    The moderator that blocked the word or phrase from being used in the
@@ -30,48 +27,13 @@ final readonly class BlockedTerm
      *                                          blocked by AutoMod.
      */
     public function __construct(
-        private string $broadcasterId,
-        private string $moderatorId,
-        private string $id,
-        private string $text,
-        private DateTimeInterface $createdAt,
-        private DateTimeInterface $updatedAt,
-        private DateTimeInterface $expiresAt,
+        public string $broadcasterId,
+        public string $moderatorId,
+        public string $id,
+        public string $text,
+        public DateTimeInterface $createdAt,
+        public DateTimeInterface $updatedAt,
+        public DateTimeInterface $expiresAt,
     ) {
-    }
-
-    public function getBroadcasterId(): string
-    {
-        return $this->broadcasterId;
-    }
-
-    public function getModeratorId(): string
-    {
-        return $this->moderatorId;
-    }
-
-    public function getId(): string
-    {
-        return $this->id;
-    }
-
-    public function getText(): string
-    {
-        return $this->text;
-    }
-
-    public function getCreatedAt(): DateTimeInterface
-    {
-        return $this->createdAt;
-    }
-
-    public function getUpdatedAt(): DateTimeInterface
-    {
-        return $this->updatedAt;
-    }
-
-    public function getExpiresAt(): DateTimeInterface
-    {
-        return $this->expiresAt;
     }
 }

@@ -6,9 +6,10 @@ namespace SimplyStream\TwitchApi\EventSub\Events;
 
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\ChannelUpdateCondition;
+use SimplyStream\TwitchApi\EventSub\EventInterface;
 
-#[EventSubSubscription(type: 'channel.update', version: '1', condition: ChannelUpdateCondition::class)]
-final readonly class ChannelUpdateEvent
+#[EventSubSubscription(type: 'channel.update', version: '2', condition: ChannelUpdateCondition::class)]
+final readonly class ChannelUpdateEvent implements EventInterface
 {
     /**
      * @param string $broadcasterUserId           The broadcaster’s user ID.

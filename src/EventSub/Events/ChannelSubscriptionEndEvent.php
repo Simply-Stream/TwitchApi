@@ -6,9 +6,10 @@ namespace SimplyStream\TwitchApi\EventSub\Events;
 
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\ChannelSubscriptionEndCondition;
+use SimplyStream\TwitchApi\EventSub\EventInterface;
 
 #[EventSubSubscription(type: 'channel.subscription.end', version: '1', condition: ChannelSubscriptionEndCondition::class)]
-final readonly class ChannelSubscriptionEndEvent
+final readonly class ChannelSubscriptionEndEvent implements EventInterface
 {
     /**
      * @param string $userId               The user ID for the user whose subscription ended.

@@ -6,9 +6,10 @@ namespace SimplyStream\TwitchApi\EventSub\Events;
 
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\ChannelSubscriptionGiftCondition;
+use SimplyStream\TwitchApi\EventSub\EventInterface;
 
 #[EventSubSubscription(type: 'channel.subscription.gift', version: '1', condition: ChannelSubscriptionGiftCondition::class)]
-final readonly class ChannelSubscriptionGiftEvent
+final readonly class ChannelSubscriptionGiftEvent implements EventInterface
 {
     /**
      * @param string      $broadcasterUserId    The broadcaster user ID.

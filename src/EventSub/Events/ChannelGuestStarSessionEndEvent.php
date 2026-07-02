@@ -7,9 +7,10 @@ namespace SimplyStream\TwitchApi\EventSub\Events;
 use DateTimeInterface;
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\ChannelGuestStarSessionEndCondition;
+use SimplyStream\TwitchApi\EventSub\EventInterface;
 
-#[EventSubSubscription(type: 'channel.guest_star_session.end', version: '1', condition: ChannelGuestStarSessionEndCondition::class)]
-final readonly class ChannelGuestStarSessionEndEvent
+#[EventSubSubscription(type: 'channel.guest_star_session.end', version: 'beta', condition: ChannelGuestStarSessionEndCondition::class)]
+final readonly class ChannelGuestStarSessionEndEvent implements EventInterface
 {
     /**
      * @param string            $broadcasterUserId    The broadcaster user ID

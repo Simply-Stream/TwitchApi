@@ -6,9 +6,10 @@ namespace SimplyStream\TwitchApi\EventSub\Events;
 
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\ShoutoutReceiveCondition;
+use SimplyStream\TwitchApi\EventSub\EventInterface;
 
 #[EventSubSubscription(type: 'channel.shoutout.receive', version: '1', condition: ShoutoutReceiveCondition::class)]
-final readonly class ShoutoutReceiveEvent
+final readonly class ShoutoutReceiveEvent implements EventInterface
 {
     /**
      * @param string             $broadcasterUserId        An ID that identifies the broadcaster that received the

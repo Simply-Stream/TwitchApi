@@ -6,9 +6,10 @@ namespace SimplyStream\TwitchApi\EventSub\Events;
 
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\StreamOnlineCondition;
+use SimplyStream\TwitchApi\EventSub\EventInterface;
 
-#[EventSubSubscription(type: 'stream.online', version: '1', condition: StreamOnlineCondition::class)]
-final readonly class StreamOfflineEvent
+#[EventSubSubscription(type: 'stream.offline', version: '1', condition: StreamOnlineCondition::class)]
+final readonly class StreamOfflineEvent implements EventInterface
 {
     /**
      * @param string $id The id of the stream - a Parameter that Twitch, yet again, just changed without documentation.

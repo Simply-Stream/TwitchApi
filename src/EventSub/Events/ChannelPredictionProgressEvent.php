@@ -7,10 +7,11 @@ namespace SimplyStream\TwitchApi\EventSub\Events;
 use DateTimeInterface;
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\ChannelPredictionProgressCondition;
+use SimplyStream\TwitchApi\EventSub\EventInterface;
 use SimplyStream\TwitchApi\Helix\Models\Predictions\Outcome;
 
 #[EventSubSubscription(type: 'channel.prediction.progress', version: '1', condition: ChannelPredictionProgressCondition::class)]
-final readonly class ChannelPredictionProgressEvent
+final readonly class ChannelPredictionProgressEvent implements EventInterface
 {
     /**
      * @param string            $id                    Channel Points Prediction ID.

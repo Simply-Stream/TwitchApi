@@ -6,9 +6,10 @@ namespace SimplyStream\TwitchApi\EventSub\Events;
 
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\ChannelRaidCondition;
+use SimplyStream\TwitchApi\EventSub\EventInterface;
 
 #[EventSubSubscription(type: 'channel.raid', version: '1', condition: ChannelRaidCondition::class)]
-final readonly class ChannelRaidEvent
+final readonly class ChannelRaidEvent implements EventInterface
 {
     /**
      * @param string $fromBroadcasterUserId    The broadcaster ID that created the raid.

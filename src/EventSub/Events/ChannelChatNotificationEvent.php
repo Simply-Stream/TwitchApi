@@ -6,6 +6,7 @@ namespace SimplyStream\TwitchApi\EventSub\Events;
 
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\ChannelChatNotificationCondition;
+use SimplyStream\TwitchApi\EventSub\EventInterface;
 use SimplyStream\TwitchApi\EventSub\Events\ChannelChatNotification\Announcement;
 use SimplyStream\TwitchApi\EventSub\Events\ChannelChatNotification\Badge;
 use SimplyStream\TwitchApi\EventSub\Events\ChannelChatNotification\BitsBadgeTier;
@@ -21,7 +22,7 @@ use SimplyStream\TwitchApi\EventSub\Events\ChannelChatNotification\Subscription;
 use SimplyStream\TwitchApi\EventSub\Shared\Message;
 
 #[EventSubSubscription(type: 'channel.chat.notification', version: '1', condition: ChannelChatNotificationCondition::class)]
-final readonly class ChannelChatNotificationEvent
+final readonly class ChannelChatNotificationEvent implements EventInterface
 {
     /**
      * @param string                         $broadcasterUserId                  The broadcaster user ID.

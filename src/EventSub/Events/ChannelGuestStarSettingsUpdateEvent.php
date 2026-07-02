@@ -6,9 +6,10 @@ namespace SimplyStream\TwitchApi\EventSub\Events;
 
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\ChannelGuestStarSettingsUpdateCondition;
+use SimplyStream\TwitchApi\EventSub\EventInterface;
 
-#[EventSubSubscription(type: 'channel.guest_star_settings.update', version: '1', condition: ChannelGuestStarSettingsUpdateCondition::class)]
-final readonly class ChannelGuestStarSettingsUpdateEvent
+#[EventSubSubscription(type: 'channel.guest_star_settings.update', version: 'beta', condition: ChannelGuestStarSettingsUpdateCondition::class)]
+final readonly class ChannelGuestStarSettingsUpdateEvent implements EventInterface
 {
     /**
      * @param string $broadcasterUserId           User ID of the host channel

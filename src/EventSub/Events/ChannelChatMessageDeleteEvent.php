@@ -6,9 +6,10 @@ namespace SimplyStream\TwitchApi\EventSub\Events;
 
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\ChannelChatMessageDeleteCondition;
+use SimplyStream\TwitchApi\EventSub\EventInterface;
 
 #[EventSubSubscription(type: 'channel.chat.message_delete', version: '1', condition: ChannelChatMessageDeleteCondition::class)]
-final readonly class ChannelChatMessageDeleteEvent
+final readonly class ChannelChatMessageDeleteEvent implements EventInterface
 {
     /**
      * @param string $broadcasterUserId    The broadcaster user ID.

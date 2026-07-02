@@ -6,9 +6,10 @@ namespace SimplyStream\TwitchApi\EventSub\Events;
 
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\UserAuthorizationRevokeCondition;
+use SimplyStream\TwitchApi\EventSub\EventInterface;
 
 #[EventSubSubscription(type: 'user.authorization.revoke', version: '1', condition: UserAuthorizationRevokeCondition::class)]
-final readonly class UserAuthorizationRevokeEvent
+final readonly class UserAuthorizationRevokeEvent implements EventInterface
 {
     /**
      * @param string      $clientId  The client_id of the application with revoked user access.

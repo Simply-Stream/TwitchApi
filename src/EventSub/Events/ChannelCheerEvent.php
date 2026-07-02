@@ -6,9 +6,10 @@ namespace SimplyStream\TwitchApi\EventSub\Events;
 
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\ChannelCheerCondition;
+use SimplyStream\TwitchApi\EventSub\EventInterface;
 
 #[EventSubSubscription(type: 'channel.cheer', version: '1', condition: ChannelCheerCondition::class)]
-final readonly class ChannelCheerEvent
+final readonly class ChannelCheerEvent implements EventInterface
 {
     /**
      * @param bool        $isAnonymous          Whether the user cheered anonymously or not.

@@ -7,9 +7,10 @@ namespace SimplyStream\TwitchApi\EventSub\Events;
 use DateTimeInterface;
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\GoalsProgressCondition;
+use SimplyStream\TwitchApi\EventSub\EventInterface;
 
 #[EventSubSubscription(type: 'channel.goal.progress', version: '1', condition: GoalsProgressCondition::class)]
-final readonly class GoalProgressEvent
+final readonly class GoalProgressEvent implements EventInterface
 {
     /**
      * @param string            $id                         An ID that identifies this event.

@@ -7,10 +7,11 @@ namespace SimplyStream\TwitchApi\EventSub\Events;
 use DateTimeInterface;
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\ChannelPollBeginCondition;
+use SimplyStream\TwitchApi\EventSub\EventInterface;
 use SimplyStream\TwitchApi\Helix\Models\Polls\Choice;
 
 #[EventSubSubscription(type: 'channel.poll.begin', version: '1', condition: ChannelPollBeginCondition::class)]
-final readonly class ChannelPollBeginEvent
+final readonly class ChannelPollBeginEvent implements EventInterface
 {
     /**
      * @param string              $id                   ID of the poll.

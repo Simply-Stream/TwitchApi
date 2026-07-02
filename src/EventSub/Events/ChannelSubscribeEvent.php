@@ -6,9 +6,10 @@ namespace SimplyStream\TwitchApi\EventSub\Events;
 
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\ChannelSubscribeCondition;
+use SimplyStream\TwitchApi\EventSub\EventInterface;
 
 #[EventSubSubscription(type: 'channel.subscribe', version: '1', condition: ChannelSubscribeCondition::class)]
-final readonly class ChannelSubscribeEvent
+final readonly class ChannelSubscribeEvent implements EventInterface
 {
     /**
      * @param string $userId               The user ID for the user who subscribed to the specified channel.

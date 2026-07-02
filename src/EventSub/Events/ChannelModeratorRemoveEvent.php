@@ -6,9 +6,10 @@ namespace SimplyStream\TwitchApi\EventSub\Events;
 
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\ChannelModeratorRemoveCondition;
+use SimplyStream\TwitchApi\EventSub\EventInterface;
 
 #[EventSubSubscription(type: 'channel.moderator.remove', version: '1', condition: ChannelModeratorRemoveCondition::class)]
-final readonly class ChannelModeratorRemoveEvent
+final readonly class ChannelModeratorRemoveEvent implements EventInterface
 {
     /**
      * @param string $broadcasterUserId    The requested broadcaster ID.

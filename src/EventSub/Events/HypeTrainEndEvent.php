@@ -7,10 +7,11 @@ namespace SimplyStream\TwitchApi\EventSub\Events;
 use DateTimeInterface;
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\HypeTrainEndCondition;
+use SimplyStream\TwitchApi\EventSub\EventInterface;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Contribution;
 
-#[EventSubSubscription(type: 'channel.hype_train.end', version: '1', condition: HypeTrainEndCondition::class)]
-final readonly class HypeTrainEndEvent
+#[EventSubSubscription(type: 'channel.hype_train.end', version: '2', condition: HypeTrainEndCondition::class)]
+final readonly class HypeTrainEndEvent implements EventInterface
 {
     /**
      * @param string            $id                   The Hype Train ID.

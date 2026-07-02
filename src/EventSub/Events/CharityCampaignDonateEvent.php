@@ -6,10 +6,11 @@ namespace SimplyStream\TwitchApi\EventSub\Events;
 
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\CharityCampaignDonateCondition;
+use SimplyStream\TwitchApi\EventSub\EventInterface;
 use SimplyStream\TwitchApi\Helix\Models\Charity\CharityAmount;
 
 #[EventSubSubscription(type: 'channel.charity_campaign.donate', version: '1', condition: CharityCampaignDonateCondition::class)]
-final readonly class CharityCampaignDonateEvent
+final readonly class CharityCampaignDonateEvent implements EventInterface
 {
     /**
      * @param string        $id                   An ID that identifies the donation. The ID is unique across campaigns.

@@ -6,9 +6,10 @@ namespace SimplyStream\TwitchApi\EventSub\Events;
 
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\ChannelChatClearCondition;
+use SimplyStream\TwitchApi\EventSub\EventInterface;
 
 #[EventSubSubscription(type: 'channel.chat.clear', version: '1', condition: ChannelChatClearCondition::class)]
-final readonly class ChannelChatClearEvent
+final readonly class ChannelChatClearEvent implements EventInterface
 {
     /**
      * @param string $broadcasterUserId    The broadcaster user ID.

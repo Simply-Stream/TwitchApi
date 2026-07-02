@@ -6,9 +6,10 @@ namespace SimplyStream\TwitchApi\EventSub\Events;
 
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\UserAuthorizationGrantCondition;
+use SimplyStream\TwitchApi\EventSub\EventInterface;
 
 #[EventSubSubscription(type: 'user.authorization.grant', version: '1', condition: UserAuthorizationGrantCondition::class)]
-final readonly class UserAuthorizationGrantEvent
+final readonly class UserAuthorizationGrantEvent implements EventInterface
 {
     /**
      * @param string $clientId  The client_id of the application that was granted user access.

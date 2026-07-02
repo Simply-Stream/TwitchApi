@@ -7,9 +7,10 @@ namespace SimplyStream\TwitchApi\EventSub\Events;
 use DateTimeInterface;
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\ChannelPollEndCondition;
+use SimplyStream\TwitchApi\EventSub\EventInterface;
 
 #[EventSubSubscription(type: 'channel.poll.end', version: '1', condition: ChannelPollEndCondition::class)]
-final readonly class ChannelPollEndEvent
+final readonly class ChannelPollEndEvent implements EventInterface
 {
     /**
      * @param string              $id                   ID of the poll.

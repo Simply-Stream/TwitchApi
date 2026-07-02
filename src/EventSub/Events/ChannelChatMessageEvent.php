@@ -6,10 +6,11 @@ namespace SimplyStream\TwitchApi\EventSub\Events;
 
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\ChannelChatMessageCondition;
+use SimplyStream\TwitchApi\EventSub\EventInterface;
 use SimplyStream\TwitchApi\EventSub\Shared\Message as ChatMessage;
 
 #[EventSubSubscription(type: 'channel.chat.message', version: '1', condition: ChannelChatMessageCondition::class)]
-final readonly class ChannelChatMessageEvent
+final readonly class ChannelChatMessageEvent implements EventInterface
 {
     /**
      * @param string      $broadcasterUserId           The broadcaster user ID.

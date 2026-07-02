@@ -7,13 +7,14 @@ namespace SimplyStream\TwitchApi\EventSub\Events;
 use DateTimeInterface;
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\ChannelAdBreakBeginCondition;
+use SimplyStream\TwitchApi\EventSub\EventInterface;
 
 #[EventSubSubscription(type: 'channel.ad_break.begin', version: '1', condition: ChannelAdBreakBeginCondition::class)]
-final readonly class ChannelAdBreakBeginEvent
+final readonly class ChannelAdBreakBeginEvent implements EventInterface
 {
     /**
      * @param int               $durationSeconds       Length in seconds of the mid-roll ad break requested
-     * @param DateTimeInterface $timestamp             The UTC timestamp of when the ad break began, in RFC3339 format.
+     * @param DateTimeInterface $started_at            The UTC timestamp of when the ad break began, in RFC3339 format.
      *                                                 Note that there is potential delay between this event, when the
      *                                                 streamer requested the ad break, and when the viewers will see
      *                                                 ads.
@@ -27,7 +28,7 @@ final readonly class ChannelAdBreakBeginEvent
      */
     public function __construct(
         public int $durationSeconds,
-        public DateTimeInterface $timestamp,
+        public DateTimeInterface $started_at,
         public bool $isAutomatic,
         public string $requesterUserId,
         public string $broadcasterUserId,

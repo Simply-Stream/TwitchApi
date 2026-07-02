@@ -7,9 +7,10 @@ namespace SimplyStream\TwitchApi\EventSub\Events;
 use DateTimeInterface;
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\ChannelPollProgressCondition;
+use SimplyStream\TwitchApi\EventSub\EventInterface;
 
 #[EventSubSubscription(type: 'channel.poll.progress', version: '1', condition: ChannelPollProgressCondition::class)]
-final readonly class ChannelPollProgressEvent
+final readonly class ChannelPollProgressEvent implements EventInterface
 {
     /**
      * @param string              $id                   ID of the poll.

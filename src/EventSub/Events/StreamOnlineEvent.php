@@ -7,9 +7,10 @@ namespace SimplyStream\TwitchApi\EventSub\Events;
 use DateTimeInterface;
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\StreamOfflineCondition;
+use SimplyStream\TwitchApi\EventSub\EventInterface;
 
-#[EventSubSubscription(type: 'stream.offline', version: '1', condition: StreamOfflineCondition::class)]
-final readonly class StreamOnlineEvent
+#[EventSubSubscription(type: 'stream.online', version: '1', condition: StreamOfflineCondition::class)]
+final readonly class StreamOnlineEvent implements EventInterface
 {
     /**
      * @param string            $id                    The id of the stream.

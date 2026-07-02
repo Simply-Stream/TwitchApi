@@ -6,9 +6,10 @@ namespace SimplyStream\TwitchApi\EventSub\Events;
 
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\ChannelModeratorAddCondition;
+use SimplyStream\TwitchApi\EventSub\EventInterface;
 
 #[EventSubSubscription(type: 'channel.moderator.add', version: '1', condition: ChannelModeratorAddCondition::class)]
-final readonly class ChannelModeratorAddEvent
+final readonly class ChannelModeratorAddEvent implements EventInterface
 {
     /**
      * @param string $broadcasterUserId    The requested broadcaster ID.

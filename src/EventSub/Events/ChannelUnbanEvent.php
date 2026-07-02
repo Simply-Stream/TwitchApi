@@ -6,9 +6,10 @@ namespace SimplyStream\TwitchApi\EventSub\Events;
 
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\ChannelUnbanCondition;
+use SimplyStream\TwitchApi\EventSub\EventInterface;
 
 #[EventSubSubscription(type: 'channel.unban', version: '1', condition: ChannelUnbanCondition::class)]
-final readonly class ChannelUnbanEvent
+final readonly class ChannelUnbanEvent implements EventInterface
 {
     /**
      * @param string $userId               The user id for the user who was unbanned on the specified channel.

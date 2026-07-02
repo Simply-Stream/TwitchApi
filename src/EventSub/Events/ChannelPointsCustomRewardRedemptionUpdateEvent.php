@@ -7,10 +7,11 @@ namespace SimplyStream\TwitchApi\EventSub\Events;
 use DateTimeInterface;
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\ChannelPointsCustomRewardRedemptionUpdateCondition;
+use SimplyStream\TwitchApi\EventSub\EventInterface;
 use SimplyStream\TwitchApi\Helix\Models\ChannelPoints\Reward;
 
 #[EventSubSubscription(type: 'channel.channel_points_custom_reward_redemption.update', version: '1', condition: ChannelPointsCustomRewardRedemptionUpdateCondition::class)]
-final readonly class ChannelPointsCustomRewardRedemptionUpdateEvent
+final readonly class ChannelPointsCustomRewardRedemptionUpdateEvent implements EventInterface
 {
     /**
      * @param string            $id                    The redemption identifier.

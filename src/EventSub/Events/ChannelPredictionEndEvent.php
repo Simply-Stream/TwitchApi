@@ -7,10 +7,11 @@ namespace SimplyStream\TwitchApi\EventSub\Events;
 use DateTimeInterface;
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\ChannelPredictionEndCondition;
+use SimplyStream\TwitchApi\EventSub\EventInterface;
 use SimplyStream\TwitchApi\Helix\Models\Predictions\Outcome;
 
 #[EventSubSubscription(type: 'channel.prediction.end', version: '1', condition: ChannelPredictionEndCondition::class)]
-final readonly class ChannelPredictionEndEvent
+final readonly class ChannelPredictionEndEvent implements EventInterface
 {
     /**
      * @param string            $id                    Channel Points Prediction ID.
