@@ -20,4 +20,9 @@ final readonly class EventSubNotification implements EventSubMessageInterface
     {
         return $this->metadata;
     }
+
+    public function subscription(): Subscription
+    {
+        return $this->subscription;
+    }
 }

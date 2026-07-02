@@ -7,6 +7,8 @@ namespace SimplyStream\TwitchApi\EventSub;
 use SimplyStream\TwitchApi\EventSub\Dedup\ProcessedMessageStore;
 use SimplyStream\TwitchApi\EventSub\Http\EventSubHeaders;
 use SimplyStream\TwitchApi\EventSub\Http\RawEventSubMessage;
+use SimplyStream\TwitchApi\EventSub\Messages\BatchedEvent;
+use SimplyStream\TwitchApi\EventSub\Messages\EventSubBatchNotification;
 use SimplyStream\TwitchApi\EventSub\Messages\EventSubChallenge;
 use SimplyStream\TwitchApi\EventSub\Messages\EventSubMessageInterface;
 use SimplyStream\TwitchApi\EventSub\Messages\EventSubMessageType;
@@ -84,10 +86,19 @@ final readonly class EventSubMessageProcessor
 
     /**
      * @param array<string, mixed> $body
+     *
+     * @throws \DateMalformedStringException
      */
     private function buildChallenge(EventSubMetadata $metadata, array $body): EventSubChallenge
     {
-        return new EventSubChallenge($metadata, $body['challenge']);
+        $classes = $this->registry->resolve(
+            $metadata->subscriptionType,
+            $metadata->subscriptionVersion,
+        );
+
+        $subscription = $this->buildSubscription($body['subscription'], $classes['condition']);
+
+        return new EventSubChallenge($metadata, $subscription, $body['challenge']);
     }
 
     /**
@@ -97,26 +108,49 @@ final readonly class EventSubMessageProcessor
      * @return EventSubNotification
      * @throws \DateMalformedStringException
      */
-    private function buildNotification(EventSubMetadata $metadata, array $body): EventSubNotification
+    private function buildNotification(EventSubMetadata $metadata, array $body): EventSubMessageInterface
     {
         $classes = $this->registry->resolve(
             $metadata->subscriptionType,
             $metadata->subscriptionVersion,
         );
 
-        $rawSubscription = $body['subscription'];
+        $subscription = $this->buildSubscription($body['subscription'], $classes['condition']);
 
-        $condition = $this->denormalizer->denormalize($rawSubscription['condition'], $classes['condition']);
+        if (array_key_exists('events', $body)) {
+            $events = [];
+            foreach ($body['events'] as $rawEvent) {
+                $event = $this->denormalizer->denormalize($rawEvent['data'], $classes['event']);
+                assert($event instanceof EventInterface);
+                $events[] = new BatchedEvent(id: $rawEvent['id'], event: $event);
+            }
+
+            return new EventSubBatchNotification($metadata, $subscription, $events);
+        }
+
         $event = $this->denormalizer->denormalize($body['event'], $classes['event']);
+        assert($event instanceof EventInterface);
+
+        return new EventSubNotification($metadata, $subscription, $event);
+    }
+
+    /**
+     * @param array<string, mixed>             $rawSubscription
+     * @param class-string<ConditionInterface> $conditionClass
+     *
+     * @throws \DateMalformedStringException
+     */
+    private function buildSubscription(array $rawSubscription, string $conditionClass): Subscription
+    {
+        $condition = $this->denormalizer->denormalize($rawSubscription['condition'], $conditionClass);
+        assert($condition instanceof ConditionInterface);
+
         $transport = new Transport(
             method: $rawSubscription['transport']['method'],
             callback: $rawSubscription['transport']['callback'] ?? null,
         );
 
-        assert($condition instanceof ConditionInterface);
-        assert($event instanceof EventInterface);
-
-        $subscription = new Subscription(
+        return new Subscription(
             id: $rawSubscription['id'],
             status: $rawSubscription['status'],
             type: $rawSubscription['type'],
@@ -126,7 +160,5 @@ final readonly class EventSubMessageProcessor
             transport: $transport,
             createdAt: new \DateTimeImmutable($rawSubscription['created_at']),
         );
-
-        return new EventSubNotification($metadata, $subscription, $event);
     }
 }
