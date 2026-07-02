@@ -2,14 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Events\Notifications;
-
-use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
+namespace SimplyStream\TwitchApi\EventSub\Events\ChannelChatNotification;
 
 final readonly class GiftPaidUpgrade
 {
-    use SerializesModels;
-
     /**
      * @param bool        $gifterIsAnonymous Whether the gift was given anonymously.
      * @param string|null $gifterUserId      Optional. The user ID of the user who gifted the subscription. Null if
@@ -20,30 +16,10 @@ final readonly class GiftPaidUpgrade
      *                                       anonymous.
      */
     public function __construct(
-        private bool $gifterIsAnonymous,
-        private ?string $gifterUserId = null,
-        private ?string $gifterUserName = null,
-        private ?string $gifterUserLogin = null
+        public bool $gifterIsAnonymous,
+        public ?string $gifterUserId = null,
+        public ?string $gifterUserName = null,
+        public ?string $gifterUserLogin = null
     ) {
-    }
-
-    public function isGifterIsAnonymous(): bool
-    {
-        return $this->gifterIsAnonymous;
-    }
-
-    public function getGifterUserId(): string
-    {
-        return $this->gifterUserId;
-    }
-
-    public function getGifterUserName(): string
-    {
-        return $this->gifterUserName;
-    }
-
-    public function getGifterUserLogin(): string
-    {
-        return $this->gifterUserLogin;
     }
 }

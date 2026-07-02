@@ -2,14 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Events\Notifications;
-
-use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
+namespace SimplyStream\TwitchApi\EventSub\Events\ChannelChatNotification;
 
 final readonly class Badge
 {
-    use SerializesModels;
-
     /**
      * @param string $setId An ID that identifies this set of chat badges. For example, Bits or Subscriber.
      * @param string $id    An ID that identifies this version of the badge. The ID can be any value. For example, for
@@ -20,24 +16,9 @@ final readonly class Badge
      *                      been a subscriber.
      */
     public function __construct(
-        private string $setId,
-        private string $id,
-        private string $info
+        public string $setId,
+        public string $id,
+        public string $info
     ) {
-    }
-
-    public function getSetId(): string
-    {
-        return $this->setId;
-    }
-
-    public function getId(): string
-    {
-        return $this->id;
-    }
-
-    public function getInfo(): string
-    {
-        return $this->info;
     }
 }

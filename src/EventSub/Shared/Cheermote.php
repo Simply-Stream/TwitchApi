@@ -2,14 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Events\Notifications;
-
-use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
+namespace SimplyStream\TwitchApi\EventSub\Shared;
 
 final readonly class Cheermote
 {
-    use SerializesModels;
-
     /**
      * @param string $prefix The name portion of the Cheermote string that you use in chat to cheer Bits. The full
      *                       Cheermote string is the concatenation of {prefix} + {number of Bits}. For example, if the
@@ -20,24 +16,9 @@ final readonly class Cheermote
      * @param int    $tier   The tier level of the cheermote.
      */
     public function __construct(
-        private string $prefix,
-        private int $bits,
-        private int $tier
+        public string $prefix,
+        public int $bits,
+        public int $tier
     ) {
-    }
-
-    public function getPrefix(): string
-    {
-        return $this->prefix;
-    }
-
-    public function getBits(): int
-    {
-        return $this->bits;
-    }
-
-    public function getTier(): int
-    {
-        return $this->tier;
     }
 }

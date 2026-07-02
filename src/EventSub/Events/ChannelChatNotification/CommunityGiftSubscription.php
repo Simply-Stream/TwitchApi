@@ -2,14 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Events\Notifications;
-
-use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
+namespace SimplyStream\TwitchApi\EventSub\Events\ChannelChatNotification;
 
 final readonly class CommunityGiftSubscription
 {
-    use SerializesModels;
-
     /**
      * @param string   $id              The ID of the associated community gift.
      * @param int      $total           Number of subscriptions being gifted.
@@ -21,30 +17,10 @@ final readonly class CommunityGiftSubscription
      *                                  anonymous.
      */
     public function __construct(
-        private string $id,
-        private int $total,
-        private string $subTier,
-        private ?int $cumulativeTotal = null
+        public string $id,
+        public int $total,
+        public string $subTier,
+        public ?int $cumulativeTotal = null
     ) {
-    }
-
-    public function getId(): string
-    {
-        return $this->id;
-    }
-
-    public function getTotal(): int
-    {
-        return $this->total;
-    }
-
-    public function getSubTier(): string
-    {
-        return $this->subTier;
-    }
-
-    public function getCumulativeTotal(): ?int
-    {
-        return $this->cumulativeTotal;
     }
 }

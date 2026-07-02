@@ -2,14 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Events\Notifications;
-
-use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
+namespace SimplyStream\TwitchApi\EventSub\Events\ChannelChatNotification;
 
 final readonly class PrimePaidUpgrade
 {
-    use SerializesModels;
-
     /**
      * @param string $subTier The type of subscription plan being used. Possible values are:
      *                        - 1000 — First level of paid subscription
@@ -17,12 +13,7 @@ final readonly class PrimePaidUpgrade
      *                        - 3000 — Third level of paid subscription
      */
     public function __construct(
-        private string $subTier
+        public string $subTier
     ) {
-    }
-
-    public function getSubTier(): string
-    {
-        return $this->subTier;
     }
 }

@@ -6,7 +6,7 @@ namespace SimplyStream\TwitchApi\EventSub\Events;
 
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\ChannelChatMessageCondition;
-use SimplyStream\TwitchApi\Helix\Models\EventSub\Events\Notifications\Message as ChatMessage;
+use SimplyStream\TwitchApi\EventSub\Shared\Message as ChatMessage;
 
 #[EventSubSubscription(type: 'channel.chat.message', version: '1', condition: ChannelChatMessageCondition::class)]
 final readonly class ChannelChatMessageEvent

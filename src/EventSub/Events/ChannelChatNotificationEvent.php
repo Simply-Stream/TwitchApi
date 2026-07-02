@@ -6,20 +6,19 @@ namespace SimplyStream\TwitchApi\EventSub\Events;
 
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\ChannelChatNotificationCondition;
-use SimplyStream\TwitchApi\Helix\Models\EventSub\Events\Notifications;
-use SimplyStream\TwitchApi\Helix\Models\EventSub\Events\Notifications\Announcement;
-use SimplyStream\TwitchApi\Helix\Models\EventSub\Events\Notifications\Badge;
-use SimplyStream\TwitchApi\Helix\Models\EventSub\Events\Notifications\BitsBadgeTier;
-use SimplyStream\TwitchApi\Helix\Models\EventSub\Events\Notifications\CharityDonation;
-use SimplyStream\TwitchApi\Helix\Models\EventSub\Events\Notifications\CommunityGiftSubscription;
-use SimplyStream\TwitchApi\Helix\Models\EventSub\Events\Notifications\GiftPaidUpgrade;
-use SimplyStream\TwitchApi\Helix\Models\EventSub\Events\Notifications\GiftSubscription;
-use SimplyStream\TwitchApi\Helix\Models\EventSub\Events\Notifications\Message;
-use SimplyStream\TwitchApi\Helix\Models\EventSub\Events\Notifications\PayItForward;
-use SimplyStream\TwitchApi\Helix\Models\EventSub\Events\Notifications\PrimePaidUpgrade;
-use SimplyStream\TwitchApi\Helix\Models\EventSub\Events\Notifications\Raid;
-use SimplyStream\TwitchApi\Helix\Models\EventSub\Events\Notifications\Resubscription;
-use SimplyStream\TwitchApi\Helix\Models\EventSub\Events\Notifications\Subscription;
+use SimplyStream\TwitchApi\EventSub\Events\ChannelChatNotification\Announcement;
+use SimplyStream\TwitchApi\EventSub\Events\ChannelChatNotification\Badge;
+use SimplyStream\TwitchApi\EventSub\Events\ChannelChatNotification\BitsBadgeTier;
+use SimplyStream\TwitchApi\EventSub\Events\ChannelChatNotification\CharityDonation;
+use SimplyStream\TwitchApi\EventSub\Events\ChannelChatNotification\CommunityGiftSubscription;
+use SimplyStream\TwitchApi\EventSub\Events\ChannelChatNotification\GiftPaidUpgrade;
+use SimplyStream\TwitchApi\EventSub\Events\ChannelChatNotification\GiftSubscription;
+use SimplyStream\TwitchApi\EventSub\Events\ChannelChatNotification\PayItForward;
+use SimplyStream\TwitchApi\EventSub\Events\ChannelChatNotification\PrimePaidUpgrade;
+use SimplyStream\TwitchApi\EventSub\Events\ChannelChatNotification\Raid;
+use SimplyStream\TwitchApi\EventSub\Events\ChannelChatNotification\Resubscription;
+use SimplyStream\TwitchApi\EventSub\Events\ChannelChatNotification\Subscription;
+use SimplyStream\TwitchApi\EventSub\Shared\Message;
 
 #[EventSubSubscription(type: 'channel.chat.notification', version: '1', condition: ChannelChatNotificationCondition::class)]
 final readonly class ChannelChatNotificationEvent
@@ -104,18 +103,18 @@ final readonly class ChannelChatNotificationEvent
         public string $messageId,
         public Message $message,
         public string $noticeType,
-        public ?Notifications\Subscription $sub = null,
-        public ?Notifications\Resubscription $resub = null,
-        public ?Notifications\GiftSubscription $subGift = null,
-        public ?Notifications\CommunityGiftSubscription $communitySubGift = null,
-        public ?Notifications\GiftPaidUpgrade $giftPaidUpgrade = null,
-        public ?Notifications\PrimePaidUpgrade $primePaidUpgrade = null,
-        public ?Notifications\Raid $raid = null,
+        public ?ChannelChatNotification\Subscription $sub = null,
+        public ?ChannelChatNotification\Resubscription $resub = null,
+        public ?ChannelChatNotification\GiftSubscription $subGift = null,
+        public ?ChannelChatNotification\CommunityGiftSubscription $communitySubGift = null,
+        public ?ChannelChatNotification\GiftPaidUpgrade $giftPaidUpgrade = null,
+        public ?ChannelChatNotification\PrimePaidUpgrade $primePaidUpgrade = null,
+        public ?ChannelChatNotification\Raid $raid = null,
         public ?array $unraid = null,
-        public ?Notifications\PayItForward $payItForward = null,
-        public ?Notifications\Announcement $announcement = null,
-        public ?Notifications\CharityDonation $charityDonation = null,
-        public ?Notifications\BitsBadgeTier $bitsBadgeTier = null,
+        public ?ChannelChatNotification\PayItForward $payItForward = null,
+        public ?ChannelChatNotification\Announcement $announcement = null,
+        public ?ChannelChatNotification\CharityDonation $charityDonation = null,
+        public ?ChannelChatNotification\BitsBadgeTier $bitsBadgeTier = null,
     ) {
     }
 }

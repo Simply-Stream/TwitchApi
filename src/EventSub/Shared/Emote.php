@@ -2,14 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Events\Notifications;
-
-use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
+namespace SimplyStream\TwitchApi\EventSub\Shared;
 
 final readonly class Emote
 {
-    use SerializesModels;
-
     /**
      * @param string   $id         An ID that uniquely identifies this emote.
      * @param string   $emoteSetId An ID that identifies the emote set that the emote belongs to.
@@ -22,30 +18,10 @@ final readonly class Emote
      *                             - static — A static PNG file is available for this emote.
      */
     public function __construct(
-        private string $id,
-        private string $emoteSetId,
-        private string $ownerId,
-        private array $format
+        public string $id,
+        public string $emoteSetId,
+        public string $ownerId,
+        public array $format
     ) {
-    }
-
-    public function getId(): string
-    {
-        return $this->id;
-    }
-
-    public function getEmoteSetId(): string
-    {
-        return $this->emoteSetId;
-    }
-
-    public function getOwnerId(): string
-    {
-        return $this->ownerId;
-    }
-
-    public function getFormat(): array
-    {
-        return $this->format;
     }
 }
