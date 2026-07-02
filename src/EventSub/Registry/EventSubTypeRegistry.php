@@ -4,14 +4,17 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\EventSub\Registry;
 
+use SimplyStream\TwitchApi\EventSub\ConditionInterface;
+use SimplyStream\TwitchApi\EventSub\EventInterface;
+
 final class EventSubTypeRegistry
 {
-    /** @var array<string, array{condition: class-string, event: class-string}> */
+    /** @var array<string, array{condition: class-string<ConditionInterface>, event: class-string<EventInterface>}> */
     private array $map = [];
 
     /**
-     * @param class-string $conditionClass
-     * @param class-string $eventClass
+     * @param class-string<ConditionInterface> $conditionClass
+     * @param class-string<EventInterface> $eventClass
      */
     public function register(string $type, string $version, string $conditionClass, string $eventClass): void
     {
@@ -22,7 +25,7 @@ final class EventSubTypeRegistry
     }
 
     /**
-     * @return array{condition: class-string, event: class-string}
+     * @return array{condition: class-string<ConditionInterface>, event: class-string<EventInterface>}
      */
     public function resolve(string $type, string $version): array
     {
