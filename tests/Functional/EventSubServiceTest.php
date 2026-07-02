@@ -72,10 +72,10 @@ JSON,
                 'type' => 'channel.ban',
                 'signature' => 'sha256=db8eb70ae42f34b14268ba9454a682e7d02f12efd725b4168edd25e4a7c499a5',
                 'assertions' => function (EventResponse $eventResponse) {
-                    /** @var Events\ChannelBanEvent $event */
+                    /** @var \SimplyStream\TwitchApi\EventSub\Events\ChannelBanEvent $event */
                     $event = $eventResponse->getEvent();
                     $subscription = $eventResponse->getSubscription();
-                    self::assertInstanceOf(Events\ChannelBanEvent::class, $event);
+                    self::assertInstanceOf(\SimplyStream\TwitchApi\EventSub\Events\ChannelBanEvent::class, $event);
                     self::assertInstanceOf(Subscriptions\ChannelBanSubscription::class, $subscription);
 
                     self::assertSame("enabled", $subscription->getStatus());
@@ -165,7 +165,7 @@ JSON,
                     $subscription = $eventResponse->getSubscription();
                     $event = $eventResponse->getEvent();
 
-                    self::assertInstanceOf(Events\ChannelPointsCustomRewardAddEvent::class, $event);
+                    self::assertInstanceOf(\SimplyStream\TwitchApi\EventSub\Events\ChannelPointsCustomRewardAddEvent::class, $event);
                     self::assertInstanceOf(
                         Subscriptions\ChannelPointsCustomRewardAddSubscription::class,
                         $subscription
@@ -257,7 +257,7 @@ JSON,
                 'signature' => 'sha256=b542c5796636f79fd3753680519675246df3a7aee4be2206ed0e678c089e1b91',
                 'assertions' => function (EventResponse $eventResponse) {
                     self::assertInstanceOf(
-                        Events\ChannelPointsCustomRewardRemoveEvent::class,
+                        \SimplyStream\TwitchApi\EventSub\Events\ChannelPointsCustomRewardRemoveEvent::class,
                         $eventResponse->getEvent()
                     );
                     self::assertInstanceOf(
@@ -329,7 +329,7 @@ JSON,
                 'signature' => 'sha256=b7bb4335f1973652d4f93ff0880560c3ef13f281b71a078381cbea4197593fcb',
                 'assertions' => function (EventResponse $eventResponse) {
                     self::assertInstanceOf(
-                        Events\ChannelPointsCustomRewardUpdateEvent::class,
+                        \SimplyStream\TwitchApi\EventSub\Events\ChannelPointsCustomRewardUpdateEvent::class,
                         $eventResponse->getEvent()
                     );
                     self::assertInstanceOf(
@@ -380,7 +380,7 @@ JSON,
                 'signature' => 'sha256=2a9569ab5422e5c2d31f2110f0a30ca02d04fba6e696d4cc7ca4fce0d57680a8',
                 'assertions' => function (EventResponse $eventResponse) {
                     self::assertInstanceOf(
-                        Events\ChannelPointsCustomRewardRedemptionAddEvent::class,
+                        \SimplyStream\TwitchApi\EventSub\Events\ChannelPointsCustomRewardRedemptionAddEvent::class,
                         $eventResponse->getEvent()
                     );
                     self::assertInstanceOf(
@@ -431,7 +431,7 @@ JSON,
                 'signature' => 'sha256=ed3e7b4014e58acea984247f6a756cd17b5b8ac862311abb6b66f9a084919cde',
                 'assertions' => function (EventResponse $eventResponse) {
                     self::assertInstanceOf(
-                        Events\ChannelPointsCustomRewardRedemptionUpdateEvent::class,
+                        \SimplyStream\TwitchApi\EventSub\Events\ChannelPointsCustomRewardRedemptionUpdateEvent::class,
                         $eventResponse->getEvent()
                     );
                     self::assertInstanceOf(
@@ -482,7 +482,7 @@ JSON,
                 'type' => 'channel.charity_campaign.donate',
                 'signature' => 'sha256=b5e77cf3dbbc2d538c064828a4ad229f69c32721734202145bdcae13994d06eb',
                 'assertions' => function (EventResponse $eventResponse) {
-                    self::assertInstanceOf(Events\CharityDonationEvent::class, $eventResponse->getEvent());
+                    self::assertInstanceOf(\SimplyStream\TwitchApi\EventSub\Events\CharityCampaignDonateEvent::class, $eventResponse->getEvent());
                     self::assertInstanceOf(
                         Subscriptions\CharityDonationSubscription::class,
                         $eventResponse->getSubscription()
@@ -532,7 +532,7 @@ JSON,
                 'type' => 'channel.charity_campaign.progress',
                 'signature' => 'sha256=b8e41b3982b4b85e385f67330c1bcd868d1cb2dff19fc973aaf5e24e160ea550',
                 'assertions' => function (EventResponse $eventResponse) {
-                    self::assertInstanceOf(Events\CharityCampaignProgressEvent::class, $eventResponse->getEvent());
+                    self::assertInstanceOf(\SimplyStream\TwitchApi\EventSub\Events\CharityCampaignProgressEvent::class, $eventResponse->getEvent());
                     self::assertInstanceOf(
                         Subscriptions\CharityCampaignProgressSubscription::class,
                         $eventResponse->getSubscription()
@@ -583,7 +583,7 @@ JSON,
                 'type' => 'channel.charity_campaign.start',
                 'signature' => 'sha256=7789eb61cf8d690546992aaf0001d386e63e553631a6f6c9731756edfa84482b',
                 'assertions' => function (EventResponse $eventResponse) {
-                    self::assertInstanceOf(Events\CharityCampaignStartEvent::class, $eventResponse->getEvent());
+                    self::assertInstanceOf(\SimplyStream\TwitchApi\EventSub\Events\CharityCampaignStartEvent::class, $eventResponse->getEvent());
                     self::assertInstanceOf(
                         Subscriptions\CharityCampaignStartSubscription::class,
                         $eventResponse->getSubscription()
@@ -634,7 +634,7 @@ JSON,
                 'type' => 'channel.charity_campaign.stop',
                 'signature' => 'sha256=e2d2c38b60ce0ac97c7582b97661f88406e48b889e8253a116ca7c08e9ed3df7',
                 'assertions' => function (EventResponse $eventResponse) {
-                    self::assertInstanceOf(Events\CharityCampaignStopEvent::class, $eventResponse->getEvent());
+                    self::assertInstanceOf(\SimplyStream\TwitchApi\EventSub\Events\CharityCampaignStopEvent::class, $eventResponse->getEvent());
                     self::assertInstanceOf(
                         Subscriptions\CharityCampaignStopSubscription::class,
                         $eventResponse->getSubscription()
@@ -675,7 +675,7 @@ JSON,
                 'type' => 'channel.cheer',
                 'signature' => 'sha256=26e26230dd18960ab27ae377c87d3e6e987e85c84b99b6cfb56574a5b323a540',
                 'assertions' => function (EventResponse $eventResponse) {
-                    self::assertInstanceOf(Events\ChannelCheerEvent::class, $eventResponse->getEvent());
+                    self::assertInstanceOf(\SimplyStream\TwitchApi\EventSub\Events\ChannelCheerEvent::class, $eventResponse->getEvent());
                     self::assertInstanceOf(
                         Subscriptions\ChannelCheerSubscription::class,
                         $eventResponse->getSubscription()
@@ -756,7 +756,7 @@ JSON,
                 'type' => 'channel.goal.begin',
                 'signature' => 'sha256=94af83cda03291b02fdcdfcdbef442f32e57c8d281dff41f325bbe9ea2f1399e',
                 'assertions' => function (EventResponse $eventResponse) {
-                    self::assertInstanceOf(Events\GoalBeginEvent::class, $eventResponse->getEvent());
+                    self::assertInstanceOf(\SimplyStream\TwitchApi\EventSub\Events\GoalBeginEvent::class, $eventResponse->getEvent());
                     self::assertInstanceOf(
                         Subscriptions\GoalBeginSubscription::class,
                         $eventResponse->getSubscription()
@@ -797,7 +797,7 @@ JSON,
                 'type' => 'channel.goal.progress',
                 'signature' => 'sha256=c621d6cbd68da820ff64021c020c265293710d69c81409842ea7301c936896a7',
                 'assertions' => function (EventResponse $eventResponse) {
-                    self::assertInstanceOf(Events\GoalProgressEvent::class, $eventResponse->getEvent());
+                    self::assertInstanceOf(\SimplyStream\TwitchApi\EventSub\Events\GoalProgressEvent::class, $eventResponse->getEvent());
                     self::assertInstanceOf(
                         Subscriptions\GoalProgressSubscription::class,
                         $eventResponse->getSubscription()
@@ -840,7 +840,7 @@ JSON,
                 'type' => 'channel.goal.end',
                 'signature' => 'sha256=65e8a764da24f1418fce764f7f2eb8da634bd68b8eb2d8a4d034e313e94c4e44',
                 'assertions' => function (EventResponse $eventResponse) {
-                    self::assertInstanceOf(Events\GoalEndEvent::class, $eventResponse->getEvent());
+                    self::assertInstanceOf(\SimplyStream\TwitchApi\EventSub\Events\GoalEndEvent::class, $eventResponse->getEvent());
                     self::assertInstanceOf(Subscriptions\GoalEndSubscription::class, $eventResponse->getSubscription());
                 },
             ],
@@ -902,7 +902,7 @@ JSON,
                 'type' => 'channel.hype_train.begin',
                 'signature' => 'sha256=5f5850b5493d44ea4f3f7f6eedd4e36f64d268956a0438376368a9a5e84ce88d',
                 'assertions' => function (EventResponse $eventResponse) {
-                    self::assertInstanceOf(Events\HypeTrainBeginEvent::class, $eventResponse->getEvent());
+                    self::assertInstanceOf(\SimplyStream\TwitchApi\EventSub\Events\HypeTrainBeginEvent::class, $eventResponse->getEvent());
                     self::assertInstanceOf(
                         Subscriptions\HypeTrainBeginSubscription::class,
                         $eventResponse->getSubscription()
@@ -967,7 +967,7 @@ JSON,
                 'type' => 'channel.hype_train.progress',
                 'signature' => 'sha256=911130339074f77f3f9b5c5aa86b2417c70c41cf8dd2244d26d3fe65a673974c',
                 'assertions' => function (EventResponse $eventResponse) {
-                    self::assertInstanceOf(Events\HypeTrainProgressEvent::class, $eventResponse->getEvent());
+                    self::assertInstanceOf(\SimplyStream\TwitchApi\EventSub\Events\HypeTrainProgressEvent::class, $eventResponse->getEvent());
                     self::assertInstanceOf(
                         Subscriptions\HypeTrainProgressSubscription::class,
                         $eventResponse->getSubscription()
@@ -1026,7 +1026,7 @@ JSON,
                 'type' => 'channel.hype_train.end',
                 'signature' => 'sha256=4e63bd51ee52a1190f23f28ff947de13158fcd02254defea62287e5bbeb75eab',
                 'assertions' => function (EventResponse $eventResponse) {
-                    self::assertInstanceOf(Events\HypeTrainEndEvent::class, $eventResponse->getEvent());
+                    self::assertInstanceOf(\SimplyStream\TwitchApi\EventSub\Events\HypeTrainEndEvent::class, $eventResponse->getEvent());
                     self::assertInstanceOf(
                         Subscriptions\HypeTrainEndSubscription::class,
                         $eventResponse->getSubscription()
@@ -1064,7 +1064,7 @@ JSON,
                 'type' => 'channel.moderator.add',
                 'signature' => 'sha256=056be47c61cab3f08ebe8754c1e8f8958383677815aa7ae0e03c94825722fb16',
                 'assertions' => function (EventResponse $eventResponse) {
-                    self::assertInstanceOf(Events\ChannelModeratorAddEvent::class, $eventResponse->getEvent());
+                    self::assertInstanceOf(\SimplyStream\TwitchApi\EventSub\Events\ChannelModeratorAddEvent::class, $eventResponse->getEvent());
                     self::assertInstanceOf(
                         Subscriptions\ChannelModeratorAddSubscription::class,
                         $eventResponse->getSubscription()
@@ -1102,7 +1102,7 @@ JSON,
                 'type' => 'channel.moderator.remove',
                 'signature' => 'sha256=b4a8f4464120f0535a50ac953decd3922b4c7d837488767c7dfd2436453a8742',
                 'assertions' => function (EventResponse $eventResponse) {
-                    self::assertInstanceOf(Events\ChannelModeratorRemoveEvent::class, $eventResponse->getEvent());
+                    self::assertInstanceOf(\SimplyStream\TwitchApi\EventSub\Events\ChannelModeratorRemoveEvent::class, $eventResponse->getEvent());
                     self::assertInstanceOf(
                         Subscriptions\ChannelModeratorRemoveSubscription::class,
                         $eventResponse->getSubscription()
@@ -1167,7 +1167,7 @@ JSON,
                 'type' => 'channel.poll.begin',
                 'signature' => 'sha256=9ff39b8362cd7d7f10b958c78571d2a14ce444ecc111b24d5d8eb42ead3930ce',
                 'assertions' => function (EventResponse $eventResponse) {
-                    self::assertInstanceOf(Events\ChannelPollBeginEvent::class, $eventResponse->getEvent());
+                    self::assertInstanceOf(\SimplyStream\TwitchApi\EventSub\Events\ChannelPollBeginEvent::class, $eventResponse->getEvent());
                     self::assertInstanceOf(
                         Subscriptions\ChannelPollBeginSubscription::class,
                         $eventResponse->getSubscription()
@@ -1244,7 +1244,7 @@ JSON,
                 'type' => 'channel.poll.progress',
                 'signature' => 'sha256=0f7c40800b25a28bf429a8b031377d0439c8da55aa7c41780231cd2694008287',
                 'assertions' => function (EventResponse $eventResponse) {
-                    self::assertInstanceOf(Events\ChannelPollProgressEvent::class, $eventResponse->getEvent());
+                    self::assertInstanceOf(\SimplyStream\TwitchApi\EventSub\Events\ChannelPollProgressEvent::class, $eventResponse->getEvent());
                     self::assertInstanceOf(
                         Subscriptions\ChannelPollProgressSubscription::class,
                         $eventResponse->getSubscription()
@@ -1322,7 +1322,7 @@ JSON,
                 'type' => 'channel.poll.end',
                 'signature' => 'sha256=b99901a45a53a30e0f683a28cbb883b5c9f91579e929d55b0476fd7262afc668',
                 'assertions' => function (EventResponse $eventResponse) {
-                    self::assertInstanceOf(Events\ChannelPollEndEvent::class, $eventResponse->getEvent());
+                    self::assertInstanceOf(\SimplyStream\TwitchApi\EventSub\Events\ChannelPollEndEvent::class, $eventResponse->getEvent());
                     self::assertInstanceOf(
                         Subscriptions\ChannelPollEndSubscription::class,
                         $eventResponse->getSubscription()
@@ -1373,7 +1373,7 @@ JSON,
                 'type' => 'channel.prediction.begin',
                 'signature' => 'sha256=bc70b96bf243f3d01aae2d9d7e53320f06ff47befdae17caf0da40f023c4140c',
                 'assertions' => function (EventResponse $eventResponse) {
-                    self::assertInstanceOf(Events\ChannelPredictionBeginEvent::class, $eventResponse->getEvent());
+                    self::assertInstanceOf(\SimplyStream\TwitchApi\EventSub\Events\ChannelPredictionBeginEvent::class, $eventResponse->getEvent());
                     self::assertInstanceOf(
                         Subscriptions\ChannelPredictionBeginSubscription::class,
                         $eventResponse->getSubscription()
@@ -1495,7 +1495,7 @@ JSON,
                 'type' => 'channel.prediction.progress',
                 'signature' => 'sha256=262cd99aaeb7ad87e5f1b9d8bdcf81e73577eddfb62a4acc3066682b6b5cf9ce',
                 'assertions' => function (EventResponse $eventResponse) {
-                    self::assertInstanceOf(Events\ChannelPredictionProgressEvent::class, $eventResponse->getEvent());
+                    self::assertInstanceOf(\SimplyStream\TwitchApi\EventSub\Events\ChannelPredictionProgressEvent::class, $eventResponse->getEvent());
                     self::assertInstanceOf(
                         Subscriptions\ChannelPredictionProgressSubscription::class,
                         $eventResponse->getSubscription()
@@ -1631,7 +1631,7 @@ JSON,
                 'type' => 'channel.prediction.lock',
                 'signature' => 'sha256=2c3568b49d6e7113f8e20ccf96f6b5b528f13b166a25dd29207399048e453165',
                 'assertions' => function (EventResponse $eventResponse) {
-                    self::assertInstanceOf(Events\ChannelPredictionLockEvent::class, $eventResponse->getEvent());
+                    self::assertInstanceOf(\SimplyStream\TwitchApi\EventSub\Events\ChannelPredictionLockEvent::class, $eventResponse->getEvent());
                     self::assertInstanceOf(
                         Subscriptions\ChannelPredictionLockSubscription::class,
                         $eventResponse->getSubscription()
@@ -1734,7 +1734,7 @@ JSON,
                 'type' => 'channel.prediction.end',
                 'signature' => 'sha256=c156e8c3c61bd9bbf0d216a185e719a43aa743abfb8fb9438e397acd79d2c557',
                 'assertions' => function (EventResponse $eventResponse) {
-                    self::assertInstanceOf(Events\ChannelPredictionEndEvent::class, $eventResponse->getEvent());
+                    self::assertInstanceOf(\SimplyStream\TwitchApi\EventSub\Events\ChannelPredictionEndEvent::class, $eventResponse->getEvent());
                     self::assertInstanceOf(
                         Subscriptions\ChannelPredictionEndSubscription::class,
                         $eventResponse->getSubscription()
@@ -1773,7 +1773,7 @@ JSON,
                 'type' => 'channel.raid',
                 'signature' => 'sha256=28221ac1370d6bbbb2e57ec1fc513b7b086b79653543c27b4b7dcdd0a847ad93',
                 'assertions' => function (EventResponse $eventResponse) {
-                    self::assertInstanceOf(Events\ChannelRaidEvent::class, $eventResponse->getEvent());
+                    self::assertInstanceOf(\SimplyStream\TwitchApi\EventSub\Events\ChannelRaidEvent::class, $eventResponse->getEvent());
                     self::assertInstanceOf(
                         Subscriptions\ChannelRaidSubscription::class,
                         $eventResponse->getSubscription()
@@ -1813,7 +1813,7 @@ JSON,
                 'type' => 'channel.shield_mode.begin',
                 'signature' => 'sha256=75f642ba1ffbdead40757eab449a9561709afd99a662580b365769e4a18b94c4',
                 'assertions' => function (EventResponse $eventResponse) {
-                    self::assertInstanceOf(Events\ShieldModeEvent::class, $eventResponse->getEvent());
+                    self::assertInstanceOf(\SimplyStream\TwitchApi\EventSub\Events\ShieldModeEvent::class, $eventResponse->getEvent());
                     self::assertInstanceOf(
                         Subscriptions\ShieldModeBeginSubscription::class,
                         $eventResponse->getSubscription()
@@ -1853,7 +1853,7 @@ JSON,
                 'type' => 'channel.shield_mode.end',
                 'signature' => 'sha256=8059b23c7c638d77efa83eedb8940febfe7b189afe7fbcf700c033aafb8a029e',
                 'assertions' => function (EventResponse $eventResponse) {
-                    self::assertInstanceOf(Events\ShieldModeEvent::class, $eventResponse->getEvent());
+                    self::assertInstanceOf(\SimplyStream\TwitchApi\EventSub\Events\ShieldModeEvent::class, $eventResponse->getEvent());
                     self::assertInstanceOf(
                         Subscriptions\ShieldModeEndSubscription::class,
                         $eventResponse->getSubscription()
@@ -1899,7 +1899,7 @@ JSON,
                 'type' => 'channel.shoutout.create',
                 'signature' => 'sha256=c375fe65fddf04c2e8c24b9b2dfd37794ca7a277839a2f6aa17fafe6b1d1440b',
                 'assertions' => function (EventResponse $eventResponse) {
-                    self::assertInstanceOf(Events\ShoutoutCreateEvent::class, $eventResponse->getEvent());
+                    self::assertInstanceOf(\SimplyStream\TwitchApi\EventSub\Events\ShoutoutCreateEvent::class, $eventResponse->getEvent());
                     self::assertInstanceOf(
                         Subscriptions\ShoutoutCreateSubscription::class,
                         $eventResponse->getSubscription()
@@ -1940,7 +1940,7 @@ JSON,
                 'type' => 'channel.shoutout.receive',
                 'signature' => 'sha256=bdce28caeb20a404f8f50226442924f1ff62b9f521c960ad87647d7ab38620b3',
                 'assertions' => function (EventResponse $eventResponse) {
-                    self::assertInstanceOf(Events\ShoutoutReceiveEvent::class, $eventResponse->getEvent());
+                    self::assertInstanceOf(\SimplyStream\TwitchApi\EventSub\Events\ShoutoutReceiveEvent::class, $eventResponse->getEvent());
                     self::assertInstanceOf(
                         Subscriptions\ShoutoutReceiveSubscription::class,
                         $eventResponse->getSubscription()
@@ -1980,7 +1980,7 @@ JSON,
                 'type' => 'channel.subscribe',
                 'signature' => 'sha256=536225714d2c1f5e2d87666f731c25aa7300e1571972727b7906d18d48f666d4',
                 'assertions' => function (EventResponse $eventResponse) {
-                    self::assertInstanceOf(Events\ChannelSubscribeEvent::class, $eventResponse->getEvent());
+                    self::assertInstanceOf(\SimplyStream\TwitchApi\EventSub\Events\ChannelSubscribeEvent::class, $eventResponse->getEvent());
                     self::assertInstanceOf(
                         Subscriptions\ChannelSubscribeSubscription::class,
                         $eventResponse->getSubscription()
@@ -2020,7 +2020,7 @@ JSON,
                 'type' => 'channel.subscription.end',
                 'signature' => 'sha256=339d9621e91cbd867b3f61cff1e1ef9b63c4dcfc845fc38125b4cde7cb088a82',
                 'assertions' => function (EventResponse $eventResponse) {
-                    self::assertInstanceOf(Events\ChannelSubscriptionEndEvent::class, $eventResponse->getEvent());
+                    self::assertInstanceOf(\SimplyStream\TwitchApi\EventSub\Events\ChannelSubscriptionEndEvent::class, $eventResponse->getEvent());
                     self::assertInstanceOf(
                         Subscriptions\ChannelSubscriptionEndSubscription::class,
                         $eventResponse->getSubscription()
@@ -2062,7 +2062,7 @@ JSON,
                 'type' => 'channel.subscription.gift',
                 'signature' => 'sha256=d1646d48690cf421f7aba50814dbbe2db46a5e0166a6e1ad8e8265f5e36107fb',
                 'assertions' => function (EventResponse $eventResponse) {
-                    self::assertInstanceOf(Events\ChannelSubscriptionGiftEvent::class, $eventResponse->getEvent());
+                    self::assertInstanceOf(\SimplyStream\TwitchApi\EventSub\Events\ChannelSubscriptionGiftEvent::class, $eventResponse->getEvent());
                     self::assertInstanceOf(
                         Subscriptions\ChannelSubscriptionGiftSubscription::class,
                         $eventResponse->getSubscription()
@@ -2114,7 +2114,7 @@ JSON,
                 'type' => 'channel.subscription.message',
                 'signature' => 'sha256=0012f58f2c57dfb51a38c3b55a380753db2f8d94f04c92652b863e31e495d424',
                 'assertions' => function (EventResponse $eventResponse) {
-                    self::assertInstanceOf(Events\ChannelSubscriptionMessageEvent::class, $eventResponse->getEvent());
+                    self::assertInstanceOf(\SimplyStream\TwitchApi\EventSub\Events\ChannelSubscriptionMessageEvent::class, $eventResponse->getEvent());
                     self::assertInstanceOf(
                         Subscriptions\ChannelSubscriptionMessageSubscription::class,
                         $eventResponse->getSubscription()
@@ -2155,7 +2155,7 @@ JSON,
                 'type' => 'channel.unban',
                 'signature' => 'sha256=7fb48a96b0de5c2b44763edfdfe01b0d02e3897ec4b4c42f9dfb167f607f4ea7',
                 'assertions' => function (EventResponse $eventResponse) {
-                    self::assertInstanceOf(Events\ChannelUnbanEvent::class, $eventResponse->getEvent());
+                    self::assertInstanceOf(\SimplyStream\TwitchApi\EventSub\Events\ChannelUnbanEvent::class, $eventResponse->getEvent());
                     self::assertInstanceOf(
                         Subscriptions\ChannelUnbanSubscription::class,
                         $eventResponse->getSubscription()
@@ -2198,7 +2198,7 @@ JSON,
                 'type' => 'channel.update',
                 'signature' => 'sha256=4c52cb88dd9c750bd0ab7838dc14048d8863b77feafc8d54c4b264efbdcdb76f',
                 'assertions' => function (EventResponse $eventResponse) {
-                    self::assertInstanceOf(Events\ChannelUpdateEvent::class, $eventResponse->getEvent());
+                    self::assertInstanceOf(\SimplyStream\TwitchApi\EventSub\Events\ChannelUpdateEvent::class, $eventResponse->getEvent());
                     self::assertInstanceOf(
                         Subscriptions\ChannelUpdateSubscription::class,
                         $eventResponse->getSubscription()
@@ -2248,7 +2248,7 @@ JSON,
                 'signature' => 'sha256=0e7b2c613f58db8dca60be687ec7b2dc0b9005abd0bbd3b1738959674eba6f25',
                 'assertions' => function (MultipleEventResponse $eventResponse) {
                     self::assertContainsOnlyInstancesOf(
-                        Events\DropEntitlementGrantEvent::class,
+                        \SimplyStream\TwitchApi\EventSub\Events\DropEntitlementGrantEvent::class,
                         $eventResponse->getEvents()
                     );
                     self::assertInstanceOf(
@@ -2297,7 +2297,7 @@ JSON,
                 'signature' => 'sha256=6e437f345532534fe62bcccabe00bf02f3d0ebd712112d0593dacd4ea7a36f0c',
                 'assertions' => function (EventResponse $eventResponse) {
                     self::assertInstanceOf(
-                        Events\ExtensionBitsTransactionCreateEvent::class,
+                        \SimplyStream\TwitchApi\EventSub\Events\ExtensionBitsTransactionCreateEvent::class,
                         $eventResponse->getEvent()
                     );
                     self::assertInstanceOf(
@@ -2334,7 +2334,7 @@ JSON,
                 'type' => 'stream.offline',
                 'signature' => 'sha256=674076d5e1532c1938211ef70981e139adc34c658c6bdfc8c6c76ea7026fe279',
                 'assertions' => function (EventResponse $eventResponse) {
-                    self::assertInstanceOf(Events\StreamOfflineEvent::class, $eventResponse->getEvent());
+                    self::assertInstanceOf(\SimplyStream\TwitchApi\EventSub\Events\StreamOfflineEvent::class, $eventResponse->getEvent());
                     self::assertInstanceOf(
                         Subscriptions\StreamOfflineSubscription::class,
                         $eventResponse->getSubscription()
@@ -2372,7 +2372,7 @@ JSON,
                 'type' => 'stream.online',
                 'signature' => 'sha256=25fa3566dbce4a718b9121a80255ed0da36030bf27508ebc3793d597cf4ed9a6',
                 'assertions' => function (EventResponse $eventResponse) {
-                    self::assertInstanceOf(Events\StreamOnlineEvent::class, $eventResponse->getEvent());
+                    self::assertInstanceOf(\SimplyStream\TwitchApi\EventSub\Events\StreamOnlineEvent::class, $eventResponse->getEvent());
                     self::assertInstanceOf(
                         Subscriptions\StreamOnlineSubscription::class,
                         $eventResponse->getSubscription()
@@ -2408,7 +2408,7 @@ JSON,
                 'type' => 'user.authorization.grant',
                 'signature' => 'sha256=ef45918f15006102770382a3e84f41ab41c3a899ebfefd6319c0be3390d84c51',
                 'assertions' => function (EventResponse $eventResponse) {
-                    self::assertInstanceOf(Events\UserAuthorizationGrantEvent::class, $eventResponse->getEvent());
+                    self::assertInstanceOf(\SimplyStream\TwitchApi\EventSub\Events\UserAuthorizationGrantEvent::class, $eventResponse->getEvent());
                     self::assertInstanceOf(
                         Subscriptions\UserAuthorizationGrantSubscription::class,
                         $eventResponse->getSubscription()
@@ -2444,7 +2444,7 @@ JSON,
                 'type' => 'user.authorization.revoke',
                 'signature' => 'sha256=35ef56e24302595a5166bf82c3125a6ec04a46a522b61665cc269bc53625661a',
                 'assertions' => function (EventResponse $eventResponse) {
-                    self::assertInstanceOf(Events\UserAuthorizationRevokeEvent::class, $eventResponse->getEvent());
+                    self::assertInstanceOf(\SimplyStream\TwitchApi\EventSub\Events\UserAuthorizationRevokeEvent::class, $eventResponse->getEvent());
                     self::assertInstanceOf(
                         Subscriptions\UserAuthorizationRevokeSubscription::class,
                         $eventResponse->getSubscription()
@@ -2482,7 +2482,7 @@ JSON,
                 'type' => 'user.update',
                 'signature' => 'sha256=aba431acadd95e4cc58a947a8c14f2998f194dd3d839f818e59e259f597349b6',
                 'assertions' => function (EventResponse $eventResponse) {
-                    self::assertInstanceOf(Events\UserUpdateEvent::class, $eventResponse->getEvent());
+                    self::assertInstanceOf(\SimplyStream\TwitchApi\EventSub\Events\UserUpdateEvent::class, $eventResponse->getEvent());
                     self::assertInstanceOf(
                         Subscriptions\UserUpdateSubscription::class,
                         $eventResponse->getSubscription()

@@ -6,11 +6,10 @@ namespace SimplyStream\TwitchApi\EventSub\Conditions;
 
 use SimplyStream\TwitchApi\EventSub\ConditionInterface;
 
-final readonly class ChannelFollowCondition implements ConditionInterface
+final readonly class CharityCampaignDonateCondition implements ConditionInterface
 {
     public function __construct(
-        public string $broadcasterUserId,
-        public string $moderatorUserId
+        public string $broadcasterUserId
     ) {
     }
 }

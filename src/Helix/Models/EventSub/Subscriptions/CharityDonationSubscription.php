@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Subscriptions;
 
 use DateTimeInterface;
-use SimplyStream\TwitchApi\EventSub\Conditions\CharityDonationCondition;
+use SimplyStream\TwitchApi\EventSub\Conditions\CharityCampaignDonateCondition;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Subscription;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Transport;
 
@@ -37,7 +37,7 @@ final readonly class CharityDonationSubscription extends Subscription
         parent::__construct(
             $type,
             $version,
-            new CharityDonationCondition($condition['broadcasterUserId']),
+            new CharityCampaignDonateCondition($condition['broadcasterUserId']),
             $transport,
             $id,
             $status,
