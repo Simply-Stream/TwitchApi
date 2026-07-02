@@ -15,7 +15,7 @@ use SimplyStream\TwitchApi\EventSub\Messages\EventSubNotification;
 use SimplyStream\TwitchApi\EventSub\Registry\EventSubTypeRegistry;
 use SimplyStream\TwitchApi\EventSub\Security\MessageFreshnessValidator;
 use SimplyStream\TwitchApi\EventSub\Security\MessageSignatureVerifier;
-use SimplyStream\TwitchApi\Serialization\DenormalizerInterface;
+use SimplyStream\TwitchApi\EventSub\Serialization\DenormalizerInterface;
 
 final readonly class EventSubMessageProcessor
 {

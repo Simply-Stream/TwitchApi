@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApi\Serialization;
+namespace SimplyStream\TwitchApi\EventSub\Serialization;
 
 interface DenormalizerInterface
 {
