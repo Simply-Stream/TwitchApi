@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Models\EventSub\Subscriptions;
 
 use DateTimeInterface;
-use SimplyStream\TwitchApi\Helix\Models\EventSub\Condition\StreamOfflineCondition;
+use SimplyStream\TwitchApi\EventSub\Conditions\StreamOfflineCondition;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Subscription;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Transport;
 
