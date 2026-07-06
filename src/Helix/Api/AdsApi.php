@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
-use League\OAuth2\Client\Token\AccessTokenInterface;
-use SimplyStream\TwitchApi\Helix\Models\Ads\AdSchedule;
-use SimplyStream\TwitchApi\Helix\Models\Ads\Commercial;
-use SimplyStream\TwitchApi\Helix\Models\Ads\SnoozeNextAd;
-use SimplyStream\TwitchApi\Helix\Models\Ads\StartCommercialRequest;
-use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
+use SimplyStream\TwitchApi\Helix\Api\Ads\Request\GetAdScheduleRequest;
+use SimplyStream\TwitchApi\Helix\Api\Ads\Request\SnoozeNextAdRequest;
+use SimplyStream\TwitchApi\Helix\Api\Ads\Request\StartCommercialRequest;
+use SimplyStream\TwitchApi\Helix\Api\Ads\Response\AdScheduleResponse;
+use SimplyStream\TwitchApi\Helix\Api\Ads\Response\SnoozeNextAdResponse;
+use SimplyStream\TwitchApi\Helix\Api\Ads\Response\StartCommercialResponse;
+use SimplyStream\TwitchApi\Helix\Authentication\AccessTokenInterface;
 
-class AdsApi extends AbstractApi
+final class AdsApi extends AbstractApi
 {
-    protected const BASE_PATH = 'channels';
+    private const string BASE_PATH = 'channels';
 
     /**
      * Starts a commercial on the specified channel.
@@ -29,22 +30,24 @@ class AdsApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/channels/commercial
      *
-     * @param StartCommercialRequest $body
+     * @param StartCommercialRequest $request
      * @param AccessTokenInterface   $accessToken Requires a user access token that includes the
      *                                            channel:edit:commercial scope.
      *
-     * @return TwitchDataResponse<Commercial[]>
+     * @return StartCommercialResponse
      */
     public function startCommercial(
-        StartCommercialRequest $body,
-        AccessTokenInterface $accessToken
-    ): TwitchDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/commercial',
-            type: sprintf('%s<%s[]>', TwitchDataResponse::class, Commercial::class),
-            method: 'POST',
-            body: $body,
-            accessToken: $accessToken
+        StartCommercialRequest $request,
+        AccessTokenInterface $accessToken,
+    ): StartCommercialResponse {
+        return $this->post(
+            self::BASE_PATH . '/commercial',
+            StartCommercialResponse::class,
+            $accessToken,
+            [
+                'broadcaster_id' => $request->broadcasterId,
+                'length'         => $request->length,
+            ],
         );
     }
 
@@ -60,24 +63,24 @@ class AdsApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/channels/ads
      *
-     * @param string               $broadcasterId Provided broadcaster_id must match the user_id in the auth token.
-     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the channel:read:ads
-     *                                            scope. The user_id in the user access token must match the
-     *                                            broadcaster_id.
+     * @param GetAdScheduleRequest $request
+     * @param AccessTokenInterface $accessToken Requires a user access token that includes the channel:read:ads
+     *                                          scope. The user_id in the user access token must match the
+     *                                          broadcaster_id.
      *
-     * @return TwitchDataResponse<AdSchedule[]>
+     * @return AdScheduleResponse
      */
     public function getAdSchedule(
-        string $broadcasterId,
-        AccessTokenInterface $accessToken
-    ): TwitchDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/ads',
-            query: [
-                'broadcaster_id' => $broadcasterId,
+        GetAdScheduleRequest $request,
+        AccessTokenInterface $accessToken,
+    ): AdScheduleResponse {
+        return $this->get(
+            self::BASE_PATH . '/ads',
+            AdScheduleResponse::class,
+            $accessToken,
+            [
+                'broadcaster_id' => $request->broadcasterId,
             ],
-            type: sprintf('%s<%s[]>', TwitchDataResponse::class, AdSchedule::class),
-            accessToken: $accessToken
         );
     }
 
@@ -92,24 +95,24 @@ class AdsApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/channels/ads/schedule/snooze
      *
-     * @param string               $broadcasterId Provided broadcaster_id must match the user_id in the auth token.
-     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the channel:manage:ads
-     *                                            scope. The user_id in the user access token must match the
-     *                                            broadcaster_id.
+     * @param SnoozeNextAdRequest  $request
+     * @param AccessTokenInterface $accessToken Requires a user access token that includes the channel:manage:ads
+     *                                          scope. The user_id in the user access token must match the
+     *                                          broadcaster_id.
      *
-     * @return TwitchDataResponse<SnoozeNextAd[]>
+     * @return SnoozeNextAdResponse
      */
     public function snoozeNextAd(
-        string $broadcasterId,
-        AccessTokenInterface $accessToken
-    ): TwitchDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/ads/schedule/snooze',
+        SnoozeNextAdRequest $request,
+        AccessTokenInterface $accessToken,
+    ): SnoozeNextAdResponse {
+        return $this->post(
+            self::BASE_PATH . '/ads/schedule/snooze',
+            SnoozeNextAdResponse::class,
+            $accessToken,
             query: [
-                'broadcaster_id' => $broadcasterId,
+                'broadcaster_id' => $request->broadcasterId,
             ],
-            type: sprintf('%s<%s[]>', TwitchDataResponse::class, SnoozeNextAd::class),
-            accessToken: $accessToken
         );
     }
 }

@@ -4,19 +4,22 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
-use League\OAuth2\Client\Token\AccessTokenInterface;
-use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
-use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
-use SimplyStream\TwitchApi\Helix\Models\Users\UpdateUserExtension;
-use SimplyStream\TwitchApi\Helix\Models\Users\User;
-use SimplyStream\TwitchApi\Helix\Models\Users\UserActiveExtension;
-use SimplyStream\TwitchApi\Helix\Models\Users\UserBlock;
-use SimplyStream\TwitchApi\Helix\Models\Users\UserExtension;
-use Webmozart\Assert\Assert;
+use SimplyStream\TwitchApi\Helix\Api\Users\Request\BlockUserRequest;
+use SimplyStream\TwitchApi\Helix\Api\Users\Request\GetUserActiveExtensionsRequest;
+use SimplyStream\TwitchApi\Helix\Api\Users\Request\GetUserBlockListRequest;
+use SimplyStream\TwitchApi\Helix\Api\Users\Request\GetUsersRequest;
+use SimplyStream\TwitchApi\Helix\Api\Users\Request\UnblockUserRequest;
+use SimplyStream\TwitchApi\Helix\Api\Users\Request\UpdateUserExtensionsRequest;
+use SimplyStream\TwitchApi\Helix\Api\Users\Request\UpdateUserRequest;
+use SimplyStream\TwitchApi\Helix\Api\Users\Response\UserActiveExtensionsResponse;
+use SimplyStream\TwitchApi\Helix\Api\Users\Response\UserBlockListResponse;
+use SimplyStream\TwitchApi\Helix\Api\Users\Response\UserExtensionsResponse;
+use SimplyStream\TwitchApi\Helix\Api\Users\Response\UsersResponse;
+use SimplyStream\TwitchApi\Helix\Authentication\AccessTokenInterface;
 
-class UsersApi extends AbstractApi
+final class UsersApi extends AbstractApi
 {
-    public const BASE_PATH = 'users';
+    private const string BASE_PATH = 'users';
 
     /**
      * Gets information about one or more users.
@@ -37,39 +40,24 @@ class UsersApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/users
      *
+     * @param GetUsersRequest      $request
      * @param AccessTokenInterface $accessToken Requires an app access token or user access token.
-     * @param array                $ids         The ID of the user to get. To specify more than one user, include the
-     *                                          id parameter for each user to get. For example, id=1234&id=5678. The
-     *                                          maximum number of IDs you may specify is
-     *                                          100.
-     * @param array                $logins      The login name of the user to get. To specify more than one user,
-     *                                          include the login parameter for each user to get. For example,
-     *                                          login=foo&login=bar. The maximum number of login names you may specify
-     *                                          is 100.
      *
-     * @return TwitchDataResponse<User[]>
+     * @return UsersResponse
      */
     public function getUsers(
+        GetUsersRequest $request,
         AccessTokenInterface $accessToken,
-        array $ids = [],
-        array $logins = [],
-    ): TwitchDataResponse {
-        Assert::greaterThan(count($ids) + count($logins), 0, 'You need to specify at least one "id" or "login"');
-        Assert::lessThanEq(
-            count($ids) + count($logins),
-            100,
-            'You can only request a total amount of 100 users at once'
+    ): UsersResponse {
+        $query = array_filter(
+            [
+                'id'    => $request->ids,
+                'login' => $request->logins,
+            ],
+            static fn (mixed $v): bool => $v !== [],
         );
 
-        return $this->sendRequest(
-            path: self::BASE_PATH,
-            query: [
-                'id' => $ids,
-                'login' => $logins,
-            ],
-            type: sprintf('%s<%s[]>', TwitchDataResponse::class, User::class),
-            accessToken: $accessToken
-        );
+        return $this->get(self::BASE_PATH, UsersResponse::class, $accessToken, $query);
     }
 
     /**
@@ -85,31 +73,19 @@ class UsersApi extends AbstractApi
      * URL
      * PUT https://api.twitch.tv/helix/users
      *
+     * @param UpdateUserRequest    $request
      * @param AccessTokenInterface $accessToken Requires a user access token that includes the user:edit scope.
-     * @param string|null          $description The string to update the channel’s description to. The description is
-     *                                          limited to a maximum of 300 characters.
      *
-     *                                          To remove the description, specify this parameter but don’t set it’s
-     *                                          value (for example,
-     *                                          ?description=).
-     *
-     * @return TwitchDataResponse<User[]>
+     * @return UsersResponse
      */
     public function updateUser(
+        UpdateUserRequest $request,
         AccessTokenInterface $accessToken,
-        string $description = null
-    ): TwitchDataResponse {
-        Assert::maxLength($description, 300, "A description can not be longer than 300 characters");
+    ): UsersResponse {
+        // description is kept even when an empty string: "?description=" clears the description.
+        $query = $request->description !== null ? ['description' => $request->description] : [];
 
-        return $this->sendRequest(
-            path: self::BASE_PATH,
-            query: [
-                'description' => $description,
-            ],
-            type: sprintf('%s<%s[]>', TwitchDataResponse::class, User::class),
-            method: 'PUT',
-            accessToken: $accessToken
-        );
+        return $this->put(self::BASE_PATH, UsersResponse::class, $accessToken, query: $query);
     }
 
     /**
@@ -121,34 +97,26 @@ class UsersApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/users/blocks
      *
-     * @param string               $broadcasterId The ID of the broadcaster whose list of blocked users you want to
-     *                                            get.
-     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the
-     *                                            user:read:blocked_users scope.
-     * @param int                  $first         The maximum number of items to return per page in the response. The
-     *                                            minimum page size is
-     *                                            1 item per page and the maximum is 100. The default is 20.
-     * @param string|null          $after         The cursor used to get the next page of results. The Pagination
-     *                                            object in the response contains the cursor’s value.
+     * @param GetUserBlockListRequest $request
+     * @param AccessTokenInterface    $accessToken Requires a user access token that includes the user:read:blocked_users
+     *                                             scope.
      *
-     * @return TwitchDataResponse<UserBlock[]>
+     * @return UserBlockListResponse
      */
     public function getUserBlockList(
-        string $broadcasterId,
+        GetUserBlockListRequest $request,
         AccessTokenInterface $accessToken,
-        int $first = 20,
-        string $after = null
-    ): TwitchDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/blocks',
-            query: [
-                'broadcaster_id' => $broadcasterId,
-                'first' => $first,
-                'after' => $after,
+    ): UserBlockListResponse {
+        $query = array_filter(
+            [
+                'broadcaster_id' => $request->broadcasterId,
+                'first'          => $request->first,
+                'after'          => $request->after,
             ],
-            type: sprintf('%s<%s[]>', TwitchPaginatedDataResponse::class, UserBlock::class),
-            accessToken: $accessToken
+            static fn (mixed $v): bool => $v !== null,
         );
+
+        return $this->get(self::BASE_PATH . '/blocks', UserBlockListResponse::class, $accessToken, $query);
     }
 
     /**
@@ -163,38 +131,26 @@ class UsersApi extends AbstractApi
      * URL
      * PUT https://api.twitch.tv/helix/users/blocks
      *
-     * @param string               $targetUserId  The ID of the user to block. The API ignores the request if the
-     *                                            broadcaster has already blocked the user.
-     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the
-     *                                            user:manage:blocked_users scope.
-     * @param string|null          $sourceContext The location where the harassment took place that is causing the
-     *                                            brodcaster to block the user. Possible values are:
-     *                                            - chat
-     *                                            - whisper
-     * @param string|null          $reason        The reason that the broadcaster is blocking the user. Possible values
-     *                                            are:
-     *                                            - harassment
-     *                                            - spam
-     *                                            - other
+     * @param BlockUserRequest     $request
+     * @param AccessTokenInterface $accessToken Requires a user access token that includes the user:manage:blocked_users
+     *                                          scope.
      *
      * @return void
      */
     public function blockUser(
-        string $targetUserId,
+        BlockUserRequest $request,
         AccessTokenInterface $accessToken,
-        string $sourceContext = null,
-        string $reason = null
     ): void {
-        $this->sendRequest(
-            path: self::BASE_PATH . '/blocks',
-            query: [
-                'target_user_id' => $targetUserId,
-                'source_context' => $sourceContext,
-                'reason' => $reason,
+        $query = array_filter(
+            [
+                'target_user_id' => $request->targetUserId,
+                'source_context' => $request->sourceContext?->value,
+                'reason'         => $request->reason?->value,
             ],
-            method: 'PUT',
-            accessToken: $accessToken
+            static fn (mixed $v): bool => $v !== null,
         );
+
+        $this->putWithoutResponse(self::BASE_PATH . '/blocks', $accessToken, query: $query);
     }
 
     /**
@@ -207,25 +163,22 @@ class UsersApi extends AbstractApi
      * URL
      * DELETE https://api.twitch.tv/helix/users/blocks
      *
-     * @param string               $targetUserId The ID of the user to remove from the broadcaster’s list of blocked
-     *                                           users. The API ignores the request if the broadcaster hasn’t blocked
-     *                                           the user.
-     * @param AccessTokenInterface $accessToken  Requires a user access token that includes the
-     *                                           user:manage:blocked_users scope.
+     * @param UnblockUserRequest   $request
+     * @param AccessTokenInterface $accessToken Requires a user access token that includes the user:manage:blocked_users
+     *                                          scope.
      *
      * @return void
      */
     public function unblockUser(
-        string $targetUserId,
-        AccessTokenInterface $accessToken
+        UnblockUserRequest $request,
+        AccessTokenInterface $accessToken,
     ): void {
-        $this->sendRequest(
-            path: self::BASE_PATH . '/blocks',
-            query: [
-                'target_user_id' => $targetUserId,
+        $this->delete(
+            self::BASE_PATH . '/blocks',
+            $accessToken,
+            [
+                'target_user_id' => $request->targetUserId,
             ],
-            method: 'DELETE',
-            accessToken: $accessToken
         );
     }
 
@@ -244,16 +197,12 @@ class UsersApi extends AbstractApi
      *                                          user:edit:broadcast scope. To include inactive extensions, you must
      *                                          include the user:edit:broadcast scope.
      *
-     * @return TwitchDataResponse<UserExtension[]>
+     * @return UserExtensionsResponse
      */
     public function getUserExtensions(
-        AccessTokenInterface $accessToken
-    ): TwitchDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/extensions/list',
-            type: sprintf('%s<%s[]>', TwitchDataResponse::class, UserExtension::class),
-            accessToken: $accessToken
-        );
+        AccessTokenInterface $accessToken,
+    ): UserExtensionsResponse {
+        return $this->get(self::BASE_PATH . '/extensions/list', UserExtensionsResponse::class, $accessToken);
     }
 
     /**
@@ -268,28 +217,23 @@ class UsersApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/users/extensions
      *
-     * @param AccessTokenInterface $accessToken Requires an app access token or user access token.
-     * @param string|null          $userId      The ID of the broadcaster whose active extensions you want to get.
+     * @param GetUserActiveExtensionsRequest $request
+     * @param AccessTokenInterface           $accessToken Requires an app access token or user access token.
      *
-     *                                          This parameter is required if you specify an app access token and
-     *                                          is optional if you specify a user access token. If you specify a
-     *                                          user access token and don’t specify this parameter, the API uses
-     *                                          the user ID from the access token.
-     *
-     * @return TwitchDataResponse<UserActiveExtension[]>
+     * @return UserActiveExtensionsResponse
      */
     public function getUserActiveExtensions(
+        GetUserActiveExtensionsRequest $request,
         AccessTokenInterface $accessToken,
-        string $userId = null,
-    ): TwitchDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/extensions',
-            query: [
-                'user_id' => $userId,
+    ): UserActiveExtensionsResponse {
+        $query = array_filter(
+            [
+                'user_id' => $request->userId,
             ],
-            type: sprintf('%s<%s>', TwitchDataResponse::class, UserActiveExtension::class),
-            accessToken: $accessToken
+            static fn (mixed $v): bool => $v !== null,
         );
+
+        return $this->get(self::BASE_PATH . '/extensions', UserActiveExtensionsResponse::class, $accessToken, $query);
     }
 
     /**
@@ -305,22 +249,21 @@ class UsersApi extends AbstractApi
      * URL
      * PUT https://api.twitch.tv/helix/users/extensions
      *
-     * @param UpdateUserExtension  $body
-     * @param AccessTokenInterface $accessToken Requires a user access token that includes the user:edit:broadcast
-     *                                          scope.
+     * @param UpdateUserExtensionsRequest $request
+     * @param AccessTokenInterface        $accessToken Requires a user access token that includes the
+     *                                                 user:edit:broadcast scope.
      *
-     * @return TwitchDataResponse<UserActiveExtension>
+     * @return UserActiveExtensionsResponse
      */
     public function updateUserExtensions(
-        UpdateUserExtension $body,
-        AccessTokenInterface $accessToken
-    ): TwitchDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/extensions',
-            type: sprintf('%s<%s>', TwitchDataResponse::class, UserActiveExtension::class),
-            method: 'PUT',
-            body: $body,
-            accessToken: $accessToken
+        UpdateUserExtensionsRequest $request,
+        AccessTokenInterface $accessToken,
+    ): UserActiveExtensionsResponse {
+        return $this->put(
+            self::BASE_PATH . '/extensions',
+            UserActiveExtensionsResponse::class,
+            $accessToken,
+            $this->normalizer->normalize($request->extensions),
         );
     }
 }

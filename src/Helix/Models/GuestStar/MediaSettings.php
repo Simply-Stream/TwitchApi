@@ -4,12 +4,8 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\GuestStar;
 
-use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
-
 final readonly class MediaSettings
 {
-    use SerializesModels;
-
     /**
      * @param bool $isHostEnabled  Flag determining whether the host is allowing the guest’s audio to be seen or heard
      *                             within the session.
@@ -19,24 +15,9 @@ final readonly class MediaSettings
      *                             transmitted to the session.
      */
     public function __construct(
-        private bool $isHostEnabled,
-        private bool $isGuestEnabled,
-        private bool $isAvailable
+        public bool $isHostEnabled,
+        public bool $isGuestEnabled,
+        public bool $isAvailable,
     ) {
-    }
-
-    public function isHostEnabled(): bool
-    {
-        return $this->isHostEnabled;
-    }
-
-    public function isGuestEnabled(): bool
-    {
-        return $this->isGuestEnabled;
-    }
-
-    public function isAvailable(): bool
-    {
-        return $this->isAvailable;
     }
 }

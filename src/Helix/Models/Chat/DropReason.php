@@ -11,18 +11,8 @@ final readonly class DropReason
      * @param string $message Message for why the message was dropped.
      */
     public function __construct(
-        private string $code,
-        private string $message
+        public string $code,
+        public string $message,
     ) {
-    }
-
-    public function getCode(): string
-    {
-        return $this->code;
-    }
-
-    public function getMessage(): string
-    {
-        return $this->message;
     }
 }

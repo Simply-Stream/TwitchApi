@@ -4,19 +4,20 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
-use JsonException;
-use League\OAuth2\Client\Token\AccessTokenInterface;
-use SimplyStream\TwitchApi\Helix\Models\Channels\ChannelEditor;
-use SimplyStream\TwitchApi\Helix\Models\Channels\ChannelFollow;
-use SimplyStream\TwitchApi\Helix\Models\Channels\ChannelInformation;
-use SimplyStream\TwitchApi\Helix\Models\Channels\FollowedChannel;
-use SimplyStream\TwitchApi\Helix\Models\Channels\ModifyChannelInformationRequest;
-use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
-use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
+use SimplyStream\TwitchApi\Helix\Api\Channels\Request\GetChannelEditorsRequest;
+use SimplyStream\TwitchApi\Helix\Api\Channels\Request\GetChannelFollowersRequest;
+use SimplyStream\TwitchApi\Helix\Api\Channels\Request\GetChannelInformationRequest;
+use SimplyStream\TwitchApi\Helix\Api\Channels\Request\GetFollowedChannelsRequest;
+use SimplyStream\TwitchApi\Helix\Api\Channels\Request\ModifyChannelInformationRequest;
+use SimplyStream\TwitchApi\Helix\Api\Channels\Response\ChannelEditorsResponse;
+use SimplyStream\TwitchApi\Helix\Api\Channels\Response\ChannelFollowersResponse;
+use SimplyStream\TwitchApi\Helix\Api\Channels\Response\ChannelInformationResponse;
+use SimplyStream\TwitchApi\Helix\Api\Channels\Response\FollowedChannelsResponse;
+use SimplyStream\TwitchApi\Helix\Authentication\AccessTokenInterface;
 
-class ChannelsApi extends AbstractApi
+final class ChannelsApi extends AbstractApi
 {
-    protected const BASE_PATH = 'channels';
+    private const string BASE_PATH = 'channels';
 
     /**
      * Gets information about one or more channels.
@@ -27,27 +28,22 @@ class ChannelsApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/channels
      *
-     * @param array                $broadcasterId      The ID of the broadcaster whose channel you want to get. To
-     *                                                 specify more than one ID, include this parameter for each
-     *                                                 broadcaster you want to get. For example,
-     *                                                 broadcaster_id=1234&broadcaster_id=5678. You may specify a
-     *                                                 maximum of 100 IDs. The API ignores duplicate IDs and IDs that
-     *                                                 are not found.
-     * @param AccessTokenInterface $accessToken        Requires an app access token or user access token.
+     * @param GetChannelInformationRequest $request
+     * @param AccessTokenInterface         $accessToken Requires an app access token or user access token.
      *
-     * @return TwitchDataResponse<ChannelInformation[]>
+     * @return ChannelInformationResponse
      */
     public function getChannelInformation(
-        array $broadcasterId,
-        AccessTokenInterface $accessToken
-    ): TwitchDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH,
-            query: [
-                'broadcaster_id' => $broadcasterId,
+        GetChannelInformationRequest $request,
+        AccessTokenInterface $accessToken,
+    ): ChannelInformationResponse {
+        return $this->get(
+            self::BASE_PATH,
+            ChannelInformationResponse::class,
+            $accessToken,
+            [
+                'broadcaster_id' => $request->broadcasterIds,
             ],
-            type: sprintf('%s<%s[]>', TwitchDataResponse::class, ChannelInformation::class),
-            accessToken: $accessToken
         );
     }
 
@@ -60,28 +56,23 @@ class ChannelsApi extends AbstractApi
      * URL
      * PATCH https://api.twitch.tv/helix/channels
      *
-     * @param string                          $broadcasterId The ID of the broadcaster whose channel you want to
-     *                                                       update. This ID must match the user ID associated with the
-     *                                                       user access token.
-     * @param ModifyChannelInformationRequest $body          See ModifyChannelInformationRequest::class for properties
-     * @param AccessTokenInterface            $accessToken   Requires a user access token that includes the
-     *                                                       channel:manage:broadcast scope.
+     * @param ModifyChannelInformationRequest $request
+     * @param AccessTokenInterface            $accessToken Requires a user access token that includes the
+     *                                                     channel:manage:broadcast scope.
      *
      * @return void
      */
     public function modifyChannelInformation(
-        string $broadcasterId,
-        ModifyChannelInformationRequest $body,
-        AccessTokenInterface $accessToken
+        ModifyChannelInformationRequest $request,
+        AccessTokenInterface $accessToken,
     ): void {
-        $this->sendRequest(
-            path: self::BASE_PATH,
-            query: [
-                'broadcaster_id' => $broadcasterId,
+        $this->patchWithoutResponse(
+            self::BASE_PATH,
+            $accessToken,
+            $this->normalizer->normalize($request->information),
+            [
+                'broadcaster_id' => $request->broadcasterId,
             ],
-            method: 'PATCH',
-            body: $body,
-            accessToken: $accessToken,
         );
     }
 
@@ -94,24 +85,23 @@ class ChannelsApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/channels/editors
      *
-     * @param string               $broadcasterId      The ID of the broadcaster that owns the channel. This ID must
-     *                                                 match the user ID in the access token.
-     * @param AccessTokenInterface $accessToken        Requires a user access token that includes the
-     *                                                 channel:read:editors scope.
+     * @param GetChannelEditorsRequest $request
+     * @param AccessTokenInterface     $accessToken Requires a user access token that includes the channel:read:editors
+     *                                              scope.
      *
-     * @return TwitchDataResponse<ChannelEditor[]>
+     * @return ChannelEditorsResponse
      */
     public function getChannelEditors(
-        string $broadcasterId,
-        AccessTokenInterface $accessToken
-    ): TwitchDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/editors',
-            query: [
-                'broadcaster_id' => $broadcasterId,
+        GetChannelEditorsRequest $request,
+        AccessTokenInterface $accessToken,
+    ): ChannelEditorsResponse {
+        return $this->get(
+            self::BASE_PATH . '/editors',
+            ChannelEditorsResponse::class,
+            $accessToken,
+            [
+                'broadcaster_id' => $request->broadcasterId,
             ],
-            type: sprintf('%s<%s[]>', TwitchDataResponse::class, ChannelEditor::class),
-            accessToken: $accessToken
         );
     }
 
@@ -125,39 +115,31 @@ class ChannelsApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/channels/followed
      *
-     * @param string               $userId        A user’s ID. Returns the list of broadcasters that this user follows.
-     *                                            This ID must match the user ID in the user OAuth token.
-     * @param string|null          $broadcasterId A broadcaster’s ID. Use this parameter to see whether the user
-     *                                            follows this broadcaster. If specified, the response contains this
-     *                                            broadcaster if the user follows them. If not specified, the response
-     *                                            contains all broadcasters that the user follows.
-     * @param int                  $first         The maximum number of items to return per page in the response. The
-     *                                            minimum page size is
-     *                                            1 item per page and the maximum is 100. The default is 20.
-     * @param string|null          $after         The cursor used to get the next page of results. The Pagination
-     *                                            object in the response contains the cursor’s value.
-     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the user:read:follows
-     *                                            scope.
+     * @param GetFollowedChannelsRequest $request
+     * @param AccessTokenInterface       $accessToken Requires a user access token that includes the user:read:follows
+     *                                                scope.
      *
-     * @return TwitchPaginatedDataResponse<FollowedChannel[]>
+     * @return FollowedChannelsResponse
      */
     public function getFollowedChannels(
-        string $userId,
+        GetFollowedChannelsRequest $request,
         AccessTokenInterface $accessToken,
-        ?string $broadcasterId = null,
-        int $first = 20,
-        ?string $after = null
-    ): TwitchPaginatedDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/followed',
-            query: [
-                'user_id' => $userId,
-                'broadcaster_id' => $broadcasterId,
-                'first' => $first,
-                'after' => $after,
+    ): FollowedChannelsResponse {
+        $query = array_filter(
+            [
+                'user_id'        => $request->userId,
+                'broadcaster_id' => $request->broadcasterId,
+                'first'          => $request->first,
+                'after'          => $request->after,
             ],
-            type: sprintf('%s<%s[]>', TwitchPaginatedDataResponse::class, FollowedChannel::class),
-            accessToken: $accessToken
+            static fn (mixed $v): bool => $v !== null,
+        );
+
+        return $this->get(
+            self::BASE_PATH . '/followed',
+            FollowedChannelsResponse::class,
+            $accessToken,
+            $query,
         );
     }
 
@@ -177,42 +159,33 @@ class ChannelsApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/channels/followers
      *
-     * @param string               $broadcasterId The broadcaster’s ID. Returns the list of users that follow this
-     *                                            broadcaster.
-     * @param string|null          $userId        A user’s ID. Use this parameter to see whether the user follows this
-     *                                            broadcaster. If specified, the response contains this user if they
-     *                                            follow the broadcaster. If not specified, the response contains all
-     *                                            users that follow the broadcaster.
-     * @param int                  $first         The maximum number of items to return per page in the response. The
-     *                                            minimum page size is
-     *                                            1 item per page and the maximum is 100. The default is 20.
-     * @param string|null          $after         The cursor used to get the next page of results. The Pagination
-     *                                            object in the response contains the cursor’s value.
-     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the
-     *                                            moderator:read:followers scope.
+     * @param GetChannelFollowersRequest $request
+     * @param AccessTokenInterface       $accessToken Requires a user access token that includes the
+     *                                                moderator:read:followers scope.
      *
-     * @return TwitchPaginatedDataResponse<ChannelFollow[]>
-     * @throws JsonException
+     * @return ChannelFollowersResponse
      *
      * @see https://dev.twitch.tv/docs/api/guide#pagination Pagination
      */
     public function getChannelFollowers(
-        string $broadcasterId,
+        GetChannelFollowersRequest $request,
         AccessTokenInterface $accessToken,
-        ?string $userId = null,
-        int $first = 20,
-        ?string $after = null
-    ): TwitchPaginatedDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/followers',
-            query: [
-                'user_id' => $userId,
-                'broadcaster_id' => $broadcasterId,
-                'first' => $first,
-                'after' => $after,
+    ): ChannelFollowersResponse {
+        $query = array_filter(
+            [
+                'user_id'        => $request->userId,
+                'broadcaster_id' => $request->broadcasterId,
+                'first'          => $request->first,
+                'after'          => $request->after,
             ],
-            type: sprintf('%s<%s[]>', TwitchPaginatedDataResponse::class, ChannelFollow::class),
-            accessToken: $accessToken
+            static fn (mixed $v): bool => $v !== null,
+        );
+
+        return $this->get(
+            self::BASE_PATH . '/followers',
+            ChannelFollowersResponse::class,
+            $accessToken,
+            $query,
         );
     }
 }

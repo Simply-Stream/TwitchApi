@@ -8,9 +8,9 @@ use CuyZ\Valinor\MapperBuilder;
 use GuzzleHttp\Client;
 use League\OAuth2\Client\Token\AccessToken;
 use Nyholm\Psr7\Factory\Psr17Factory;
-use SimplyStream\TwitchApi\Helix\Api\ApiClient;
-use SimplyStream\TwitchApi\Helix\Api\WhispersApi;
-use SimplyStream\TwitchApi\Helix\Models\Whispers\SendWhisperRequest;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\ApiClient;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\WhispersApi;
+use SimplyStream\TwitchApi\Helix\Models\Whispers\SendWhisper;
 use SimplyStream\TwitchApi\Tests\Helper\UserAwareFunctionalTestCase;
 
 class WhispersApiTest extends UserAwareFunctionalTestCase
@@ -37,7 +37,7 @@ class WhispersApiTest extends UserAwareFunctionalTestCase
         $whispersApi->sendWhisper(
             $testUser['id'],
             $this->users[1]['id'],
-            new SendWhisperRequest('Whisper message!'),
+            new SendWhisper('Whisper message!'),
             $accessToken
         );
     }

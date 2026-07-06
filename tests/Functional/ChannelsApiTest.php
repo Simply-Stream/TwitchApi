@@ -8,11 +8,11 @@ use CuyZ\Valinor\MapperBuilder;
 use GuzzleHttp\Client;
 use Http\Discovery\Psr17Factory;
 use League\OAuth2\Client\Token\AccessToken;
-use SimplyStream\TwitchApi\Helix\Api\ApiClient;
-use SimplyStream\TwitchApi\Helix\Api\ChannelsApi;
 use SimplyStream\TwitchApi\Helix\Models\Channels\ChannelFollow;
 use SimplyStream\TwitchApi\Helix\Models\Channels\ChannelInformation;
-use SimplyStream\TwitchApi\Helix\Models\Channels\ModifyChannelInformationRequest;
+use SimplyStream\TwitchApi\Helix\Models\Channels\ModifyChannelInformation;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\ApiClient;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\ChannelsApi;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
 use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
 use SimplyStream\TwitchApi\Tests\Helper\UserAwareFunctionalTestCase;
@@ -85,7 +85,7 @@ class ChannelsApiTest extends UserAwareFunctionalTestCase
 
         $channelsApi->modifyChannelInformation(
             $this->users[0]['id'],
-            new ModifyChannelInformationRequest(broadcasterLanguage: 'de'),
+            new ModifyChannelInformation(broadcasterLanguage: 'de'),
             new AccessToken($this->getAccessTokenForUser($testUser['id'], ['channel:manage:broadcast']))
         );
 
@@ -98,7 +98,7 @@ class ChannelsApiTest extends UserAwareFunctionalTestCase
 
         $channelsApi->modifyChannelInformation(
             $this->users[0]['id'],
-            new ModifyChannelInformationRequest(broadcasterLanguage: 'en'),
+            new ModifyChannelInformation(broadcasterLanguage: 'en'),
             new AccessToken($this->getAccessTokenForUser($testUser['id'], ['channel:manage:broadcast']))
         );
 

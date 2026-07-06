@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
-use DateTimeInterface;
-use League\OAuth2\Client\Token\AccessTokenInterface;
-use SimplyStream\TwitchApi\Helix\Models\Analytics\ExtensionAnalytics;
-use SimplyStream\TwitchApi\Helix\Models\Analytics\GameAnalytics;
-use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
+use SimplyStream\TwitchApi\Helix\Api\Analytics\Request\GetExtensionAnalyticsRequest;
+use SimplyStream\TwitchApi\Helix\Api\Analytics\Request\GetGameAnalyticsRequest;
+use SimplyStream\TwitchApi\Helix\Api\Analytics\Response\ExtensionAnalyticsResponse;
+use SimplyStream\TwitchApi\Helix\Api\Analytics\Response\GameAnalyticsResponse;
+use SimplyStream\TwitchApi\Helix\Authentication\AccessTokenInterface;
 
-class AnalyticsApi extends AbstractApi
+final class AnalyticsApi extends AbstractApi
 {
-    protected const BASE_PATH = 'analytics';
+    private const string BASE_PATH = 'analytics';
 
     /**
      * Gets an analytics report for one or more extensions. The response contains the URLs used to download the reports
@@ -26,70 +26,33 @@ class AnalyticsApi extends AbstractApi
      *
      * @see https://dev.twitch.tv/docs/insights Insights & Analytics
      *
-     * @param AccessTokenInterface   $accessToken    Requires a user access token that includes the
-     *                                               analytics:read:extensions scope.
-     * @param string|null            $extensionId    The extension’s client ID. If specified, the response contains a
-     *                                               report for the specified extension. If not specified, the response
-     *                                               includes a report for each extension that the authenticated user
-     *                                               owns.
-     * @param string|null            $type           The type of analytics report to get. Possible values are:
-     *                                               - overview_v2
-     * @param DateTimeInterface|null $startedAt      The reporting window’s start date, in RFC3339 format. Set the time
-     *                                               portion to zeroes
-     *                                               (for example, 2021-10-22T00:00:00Z).
+     * @param GetExtensionAnalyticsRequest $request
+     * @param AccessTokenInterface         $accessToken Requires a user access token that includes the
+     *                                                  analytics:read:extensions scope.
      *
-     *                                               The start date must be on or after January 31, 2018. If you
-     *                                               specify an earlier date, the API ignores it and uses January 31,
-     *                                               2018. If you specify a start date, you must specify an end date.
-     *                                               If you don’t specify a start and end date, the report includes all
-     *                                               available data since January 31, 2018.
-     *
-     *                                               The report contains one row of data for each day in the reporting
-     *                                               window.
-     * @param DateTimeInterface|null $endedAt        The reporting window’s end date, in RFC3339 format. Set the time
-     *                                               portion to zeroes
-     *                                               (for example, 2021-10-27T00:00:00Z). The report is inclusive of
-     *                                               the end date.
-     *
-     *                                               Specify an end date only if you provide a start date. Because it
-     *                                               can take up to two days for the data to be available, you must
-     *                                               specify an end date that’s earlier than today minus one to two
-     *                                               days. If not, the API ignores your end date and uses an end date
-     *                                               that is today minus one to two days.
-     * @param int                    $first          The maximum number of report URLs to return per page in the
-     *                                               response. The minimum page size is 1 URL per page and the maximum
-     *                                               is 100 URLs per page. The default is 20.
-     *
-     *                                               NOTE: While you may specify a maximum value of 100, the response
-     *                                               will contain at most 20 URLs per page.
-     * @param string|null            $after          The cursor used to get the next page of results. The Pagination
-     *                                               object in the response contains the cursor’s value.
-     *
-     *                                               This parameter is ignored if the extension_id parameter is set.
-     *
-     * @return TwitchPaginatedDataResponse<ExtensionAnalytics[]>
+     * @return ExtensionAnalyticsResponse
      */
     public function getExtensionAnalytics(
+        GetExtensionAnalyticsRequest $request,
         AccessTokenInterface $accessToken,
-        string $extensionId = null,
-        string $type = null,
-        DateTimeInterface $startedAt = null,
-        DateTimeInterface $endedAt = null,
-        int $first = 20,
-        string $after = null
-    ): TwitchPaginatedDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/extensions',
-            query: [
-                'extension_id' => $extensionId,
-                'type' => $type,
-                'started_at' => $startedAt?->format(DATE_RFC3339_EXTENDED),
-                'ended_at' => $endedAt?->format(DATE_RFC3339_EXTENDED),
-                'first' => $first,
-                'after' => $after,
+    ): ExtensionAnalyticsResponse {
+        $query = array_filter(
+            [
+                'extension_id' => $request->extensionId,
+                'type'         => $request->type,
+                'started_at'   => $request->startedAt?->format(DATE_RFC3339_EXTENDED),
+                'ended_at'     => $request->endedAt?->format(DATE_RFC3339_EXTENDED),
+                'first'        => $request->first,
+                'after'        => $request->after,
             ],
-            type: sprintf('%s<%s[]>', TwitchPaginatedDataResponse::class, ExtensionAnalytics::class),
-            accessToken: $accessToken
+            static fn (mixed $v): bool => $v !== null,
+        );
+
+        return $this->get(
+            self::BASE_PATH . '/extensions',
+            ExtensionAnalyticsResponse::class,
+            $accessToken,
+            $query,
         );
     }
 
@@ -105,70 +68,33 @@ class AnalyticsApi extends AbstractApi
      *
      * @see https://dev.twitch.tv/docs/insights Insights & Analytics
      *
-     * @param AccessTokenInterface   $accessToken  Requires a user access token that includes the analytics:read:games
+     * @param GetGameAnalyticsRequest $request
+     * @param AccessTokenInterface    $accessToken Requires a user access token that includes the analytics:read:games
      *                                             scope.
-     * @param string|null            $gameId       The game’s client ID. If specified, the response contains a report
-     *                                             for the specified game. If not specified, the response includes a
-     *                                             report for each of the authenticated user’s games.
-     * @param string|null            $type         The type of analytics report to get. Possible values are:
-     *                                             overview_v2
-     * @param DateTimeInterface|null $startedAt    The reporting window’s start date, in RFC3339 format. Set the time
-     *                                             portion to zeroes
-     *                                             (for example,
-     *                                             2021-10-22T00:00:00Z). If you specify a start date, you must specify
-     *                                             an end date.
      *
-     *                                             The start date must be within one year of today’s date. If you
-     *                                             specify an earlier date, the API ignores it and uses a date that’s
-     *                                             one year prior to today’s date. If you don’t specify a start and end
-     *                                             date, the report includes all available data for the last 365 days
-     *                                             from today.
-     *
-     *                                             The report contains one row of data for each day in the reporting
-     *                                             window.
-     * @param DateTimeInterface|null $endedAt      The reporting window’s end date, in RFC3339 format. Set the time
-     *                                             portion to zeroes (for example,
-     *                                             2021-10-22T00:00:00Z). The report is inclusive of the end date.
-     *
-     *                                             Specify an end date only if you provide a start date. Because it can
-     *                                             take up to two days for the data to be available, you must specify
-     *                                             an end date that’s earlier than today minus one to two days. If not,
-     *                                             the API ignores your end date and uses an end date that is today
-     *                                             minus one to two days.
-     * @param int                    $first        The maximum number of report URLs to return per page in the
-     *                                             response. The minimum page size is 1 URL per page and the maximum is
-     *                                             100 URLs per page. The default is 20.
-     *
-     *                                             NOTE: While you may specify a maximum value of 100, the response
-     *                                             will contain at most 20 URLs per page.
-     * @param string|null            $after        The cursor used to get the next page of results. The Pagination
-     *                                             object in the response contains the cursor’s value.
-     *
-     *                                             This parameter is ignored if game_id parameter is set.
-     *
-     * @return TwitchPaginatedDataResponse<GameAnalytics[]>
+     * @return GameAnalyticsResponse
      */
     public function getGameAnalytics(
+        GetGameAnalyticsRequest $request,
         AccessTokenInterface $accessToken,
-        string $gameId = null,
-        string $type = null,
-        DateTimeInterface $startedAt = null,
-        DateTimeInterface $endedAt = null,
-        int $first = 20,
-        string $after = null
-    ): TwitchPaginatedDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/games',
-            query: [
-                'game_id' => $gameId,
-                'type' => $type,
-                'started_at' => $startedAt?->format(DATE_RFC3339),
-                'ended_at' => $endedAt?->format(DATE_RFC3339),
-                'first' => $first,
-                'after' => $after,
+    ): GameAnalyticsResponse {
+        $query = array_filter(
+            [
+                'game_id'    => $request->gameId,
+                'type'       => $request->type,
+                'started_at' => $request->startedAt?->format(DATE_RFC3339),
+                'ended_at'   => $request->endedAt?->format(DATE_RFC3339),
+                'first'      => $request->first,
+                'after'      => $request->after,
             ],
-            type: sprintf('%s<%s[]>', TwitchPaginatedDataResponse::class, GameAnalytics::class),
-            accessToken: $accessToken
+            static fn (mixed $v): bool => $v !== null,
+        );
+
+        return $this->get(
+            self::BASE_PATH . '/games',
+            GameAnalyticsResponse::class,
+            $accessToken,
+            $query,
         );
     }
 }

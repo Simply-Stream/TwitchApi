@@ -8,11 +8,11 @@ use CuyZ\Valinor\MapperBuilder;
 use GuzzleHttp\Client;
 use Http\Discovery\Psr17Factory;
 use League\OAuth2\Client\Token\AccessToken;
-use SimplyStream\TwitchApi\Helix\Api\ApiClient;
-use SimplyStream\TwitchApi\Helix\Api\PollsApi;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\ApiClient;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\PollsApi;
 use SimplyStream\TwitchApi\Helix\Models\Polls\Choice;
-use SimplyStream\TwitchApi\Helix\Models\Polls\CreatePollRequest;
-use SimplyStream\TwitchApi\Helix\Models\Polls\EndPollRequest;
+use SimplyStream\TwitchApi\Helix\Models\Polls\CreatePoll;
+use SimplyStream\TwitchApi\Helix\Models\Polls\EndPoll;
 use SimplyStream\TwitchApi\Helix\Models\Polls\Poll;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
 use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
@@ -105,7 +105,7 @@ class PollsApiTest extends UserAwareFunctionalTestCase
 
         $pollsApi = new PollsApi($apiClient);
         $createPollResponse = $pollsApi->createPoll(
-            new CreatePollRequest(
+            new CreatePoll(
                 $testUser['id'],
                 'New Poll',
                 [['title' => 'Choice 1'], ['title' => 'Choice 2']],
@@ -170,7 +170,7 @@ class PollsApiTest extends UserAwareFunctionalTestCase
         $getPollsResponse = $pollsApi->getPolls($testUser['id'], $accessToken);
 
         $endPollResponse = $pollsApi->endPoll(
-            new EndPollRequest(
+            new EndPoll(
                 $testUser['id'],
                 $getPollsResponse->getData()[0]->getId(),
                 'ARCHIVED'

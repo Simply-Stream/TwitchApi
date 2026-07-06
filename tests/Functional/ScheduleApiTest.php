@@ -9,12 +9,12 @@ use DateTimeInterface;
 use GuzzleHttp\Client;
 use League\OAuth2\Client\Token\AccessToken;
 use Nyholm\Psr7\Factory\Psr17Factory;
-use SimplyStream\TwitchApi\Helix\Api\ApiClient;
-use SimplyStream\TwitchApi\Helix\Api\ScheduleApi;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\ApiClient;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\ScheduleApi;
 use SimplyStream\TwitchApi\Helix\Models\Schedule\Category;
-use SimplyStream\TwitchApi\Helix\Models\Schedule\CreateChannelStreamScheduleSegmentRequest;
+use SimplyStream\TwitchApi\Helix\Models\Schedule\CreateChannelStreamScheduleSegment;
 use SimplyStream\TwitchApi\Helix\Models\Schedule\ScheduleSegment;
-use SimplyStream\TwitchApi\Helix\Models\Schedule\UpdateChannelStreamScheduleSegmentRequest;
+use SimplyStream\TwitchApi\Helix\Models\Schedule\UpdateChannelStreamScheduleSegment;
 use SimplyStream\TwitchApi\Helix\Models\Schedule\Vacation;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
 use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
@@ -136,7 +136,7 @@ class ScheduleApiTest extends UserAwareFunctionalTestCase
         $scheduleApi = new ScheduleApi($apiClient);
         $createChannelStreamScheduleSegment = $scheduleApi->createChannelStreamScheduleSegment(
             $testUser['id'],
-            new CreateChannelStreamScheduleSegmentRequest(
+            new CreateChannelStreamScheduleSegment(
                 new \DateTimeImmutable(),
                 'Europe/Berlin',
                 "100"
@@ -188,7 +188,7 @@ class ScheduleApiTest extends UserAwareFunctionalTestCase
         $updateChannelStreamScheduleSegment = $scheduleApi->updateChannelStreamScheduleSegment(
             $testUser['id'],
             $channelStreamScheduleSegment->getId(),
-            new UpdateChannelStreamScheduleSegmentRequest(title: 'Updated Title!'),
+            new UpdateChannelStreamScheduleSegment(title: 'Updated Title!'),
             $accessToken
         );
 

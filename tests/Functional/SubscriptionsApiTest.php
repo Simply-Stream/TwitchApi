@@ -8,10 +8,9 @@ use CuyZ\Valinor\MapperBuilder;
 use GuzzleHttp\Client;
 use League\OAuth2\Client\Token\AccessToken;
 use Nyholm\Psr7\Factory\Psr17Factory;
-use SimplyStream\TwitchApi\Helix\Api\ApiClient;
-use SimplyStream\TwitchApi\Helix\Api\SubscriptionsApi;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\ApiClient;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\SubscriptionsApi;
 use SimplyStream\TwitchApi\Helix\Models\Subscriptions\Subscription;
-use SimplyStream\TwitchApi\Helix\Models\Subscriptions\TwitchPaginatedSubPointsResponse;
 use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
 use SimplyStream\TwitchApi\Tests\Helper\UserAwareFunctionalTestCase;
 

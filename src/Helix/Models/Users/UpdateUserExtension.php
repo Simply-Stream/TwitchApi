@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Users;
 
-use SimplyStream\TwitchApi\Helix\Models\AbstractModel;
-
-final readonly class UpdateUserExtension extends AbstractModel
+final readonly class UpdateUserExtension
 {
     /**
      * @param array $data The extensions to update. The data field is a dictionary of extension types. The dictionary’s
@@ -21,12 +19,7 @@ final readonly class UpdateUserExtension extends AbstractModel
      *                    which identify the coordinate where the extension is placed.
      */
     public function __construct(
-        private array $data
+        public array $data
     ) {
-    }
-
-    public function getData(): array
-    {
-        return $this->data;
     }
 }

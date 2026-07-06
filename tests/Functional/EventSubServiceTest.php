@@ -14,8 +14,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use SimplyStream\TwitchApi\EventSub\Conditions\ChannelBanCondition;
 use SimplyStream\TwitchApi\EventSub\Conditions\ChannelPointsCustomRewardAddCondition;
-use SimplyStream\TwitchApi\Helix\Api\ApiClient;
-use SimplyStream\TwitchApi\Helix\Api\EventSubApi;
 use SimplyStream\TwitchApi\Helix\EventSub\EventSubService;
 use SimplyStream\TwitchApi\Helix\EventSub\Exceptions\ChallengeMissingException;
 use SimplyStream\TwitchApi\Helix\EventSub\Exceptions\InvalidSignatureException;
@@ -24,6 +22,8 @@ use SimplyStream\TwitchApi\Helix\Models\EventSub\EventResponse;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Events;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\MultipleEventResponse;
 use SimplyStream\TwitchApi\Helix\Models\EventSub\Subscriptions;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\ApiClient;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\EventSubApi;
 
 #[CoversClass(EventSubService::class)]
 class EventSubServiceTest extends TestCase

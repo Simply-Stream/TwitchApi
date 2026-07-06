@@ -8,11 +8,11 @@ use CuyZ\Valinor\MapperBuilder;
 use GuzzleHttp\Client;
 use Http\Discovery\Psr17Factory;
 use League\OAuth2\Client\Token\AccessToken;
-use SimplyStream\TwitchApi\Helix\Api\ApiClient;
-use SimplyStream\TwitchApi\Helix\Api\HypeTrainApi;
 use SimplyStream\TwitchApi\Helix\Models\HypeTrain\Contribution;
 use SimplyStream\TwitchApi\Helix\Models\HypeTrain\EventData;
 use SimplyStream\TwitchApi\Helix\Models\HypeTrain\HypeTrainEvent;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\ApiClient;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\HypeTrainApi;
 use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
 use SimplyStream\TwitchApi\Tests\Helper\UserAwareFunctionalTestCase;
 

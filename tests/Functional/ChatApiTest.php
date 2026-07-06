@@ -8,8 +8,6 @@ use CuyZ\Valinor\MapperBuilder;
 use GuzzleHttp\Client;
 use Http\Discovery\Psr17Factory;
 use League\OAuth2\Client\Token\AccessToken;
-use SimplyStream\TwitchApi\Helix\Api\ApiClient;
-use SimplyStream\TwitchApi\Helix\Api\ChatApi;
 use SimplyStream\TwitchApi\Helix\Models\Chat\ChannelEmote;
 use SimplyStream\TwitchApi\Helix\Models\Chat\ChatBadge;
 use SimplyStream\TwitchApi\Helix\Models\Chat\ChatColorEnum;
@@ -18,9 +16,11 @@ use SimplyStream\TwitchApi\Helix\Models\Chat\Chatter;
 use SimplyStream\TwitchApi\Helix\Models\Chat\EmoteSet;
 use SimplyStream\TwitchApi\Helix\Models\Chat\GlobalEmote;
 use SimplyStream\TwitchApi\Helix\Models\Chat\Image;
-use SimplyStream\TwitchApi\Helix\Models\Chat\SendChatAnnouncementRequest;
-use SimplyStream\TwitchApi\Helix\Models\Chat\UpdateChatSettingsRequest;
+use SimplyStream\TwitchApi\Helix\Models\Chat\SendChatAnnouncement;
+use SimplyStream\TwitchApi\Helix\Models\Chat\UpdateChatSettings;
 use SimplyStream\TwitchApi\Helix\Models\Chat\Version;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\ApiClient;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\ChatApi;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
 use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
 use SimplyStream\TwitchApi\Helix\Models\TwitchTemplatedDataResponse;
@@ -384,7 +384,7 @@ class ChatApiTest extends UserAwareFunctionalTestCase
         $chatApi->updateChatSettings(
             $testUser['id'],
             $testUser['id'],
-            new UpdateChatSettingsRequest(followerMode: true),
+            new UpdateChatSettings(followerMode: true),
             new AccessToken($this->getAccessTokenForUser($testUser['id'], ['moderator:manage:chat_settings']))
         );
 
@@ -395,7 +395,7 @@ class ChatApiTest extends UserAwareFunctionalTestCase
         $chatApi->updateChatSettings(
             $testUser['id'],
             $testUser['id'],
-            new UpdateChatSettingsRequest(followerMode: false),
+            new UpdateChatSettings(followerMode: false),
             new AccessToken($this->getAccessTokenForUser($testUser['id'], ['moderator:manage:chat_settings']))
         );
     }
@@ -422,7 +422,7 @@ class ChatApiTest extends UserAwareFunctionalTestCase
         $chatApi->sendChatAnnouncement(
             $testUser['id'],
             $testUser['id'],
-            new SendChatAnnouncementRequest('Test message'),
+            new SendChatAnnouncement('Test message'),
             new AccessToken($this->getAccessTokenForUser($testUser['id'], ['moderator:manage:announcements']))
         );
     }

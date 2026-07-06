@@ -8,19 +8,19 @@ use CuyZ\Valinor\MapperBuilder;
 use GuzzleHttp\Client;
 use League\OAuth2\Client\Token\AccessToken;
 use Nyholm\Psr7\Factory\Psr17Factory;
-use SimplyStream\TwitchApi\Helix\Api\ApiClient;
-use SimplyStream\TwitchApi\Helix\Api\ModerationApi;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\ApiClient;
 use SimplyStream\TwitchApi\Helix\Models\Moderation\AutoModStatus;
 use SimplyStream\TwitchApi\Helix\Models\Moderation\BanUser;
 use SimplyStream\TwitchApi\Helix\Models\Moderation\BanUserRequest;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\AutoModMessage;
 use SimplyStream\TwitchApi\Helix\Models\Moderation\CheckAutoModStatus;
-use SimplyStream\TwitchApi\Helix\Models\Moderation\CheckAutoModStatusRequest;
-use SimplyStream\TwitchApi\Helix\Models\Moderation\ManageHeldAutoModMessageRequest;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\ManageHeldAutoModMessage;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\ModerationApi;
 use SimplyStream\TwitchApi\Helix\Models\Moderation\Moderator;
 use SimplyStream\TwitchApi\Helix\Models\Moderation\ShieldModeStatus;
-use SimplyStream\TwitchApi\Helix\Models\Moderation\UpdateShieldModeStatusRequest;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\UpdateShieldModeStatus;
 use SimplyStream\TwitchApi\Helix\Models\Moderation\UserBan;
-use SimplyStream\TwitchApi\Helix\Models\Moderation\VIP;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\Vip;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
 use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
 use SimplyStream\TwitchApi\Tests\Helper\UserAwareFunctionalTestCase;
@@ -45,7 +45,7 @@ class ModerationApiTest extends UserAwareFunctionalTestCase
         $moderationApi = new ModerationApi($apiClient);
         $checkAutoModStatusResponse = $moderationApi->checkAutoModStatus(
             $testUser['id'],
-            new CheckAutoModStatusRequest([new CheckAutoModStatus('123', 'Hello')]),
+            new CheckAutoModStatus([new AutoModMessage('123', 'Hello')]),
             new AccessToken($this->getAccessTokenForUser($testUser['id'], ['moderation:read']))
         );
 
@@ -77,7 +77,7 @@ class ModerationApiTest extends UserAwareFunctionalTestCase
 
         $moderationApi = new ModerationApi($apiClient);
         $moderationApi->manageHeldAutoModMessages(
-            new ManageHeldAutoModMessageRequest($testUser['id'], '123', 'ALLOW'),
+            new ManageHeldAutoModMessage($testUser['id'], '123', 'ALLOW'),
             new AccessToken($this->getAccessTokenForUser($testUser['id'], ['moderator:manage:automod']))
         );
     }
@@ -401,7 +401,7 @@ class ModerationApiTest extends UserAwareFunctionalTestCase
         );
 
         $this->assertInstanceOf(TwitchPaginatedDataResponse::class, $getVipsResponse);
-        $this->assertContainsOnlyInstancesOf(VIP::class, $getVipsResponse->getData());
+        $this->assertContainsOnlyInstancesOf(Vip::class, $getVipsResponse->getData());
     }
 
     public function testAddRemoveVips(): void
@@ -434,7 +434,7 @@ class ModerationApiTest extends UserAwareFunctionalTestCase
         }
 
         $this->assertInstanceOf(TwitchPaginatedDataResponse::class, $getVipsResponse);
-        $this->assertContainsOnlyInstancesOf(VIP::class, $getVipsResponse->getData());
+        $this->assertContainsOnlyInstancesOf(Vip::class, $getVipsResponse->getData());
 
         foreach ($getVipsResponse->getData() as $vip) {
             if ($vip->getUserId() === $vipUser['id']) {
@@ -481,7 +481,7 @@ class ModerationApiTest extends UserAwareFunctionalTestCase
         $updateShieldModeStatusResponse = $moderationApi->updateShieldModeStatus(
             $testUser['id'],
             $testUser['id'],
-            new UpdateShieldModeStatusRequest(true),
+            new UpdateShieldModeStatus(true),
             $accessToken
         );
 

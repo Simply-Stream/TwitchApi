@@ -9,9 +9,9 @@ use DateTimeInterface;
 use GuzzleHttp\Client;
 use League\OAuth2\Client\Token\AccessToken;
 use Nyholm\Psr7\Factory\Psr17Factory;
-use SimplyStream\TwitchApi\Helix\Api\ApiClient;
-use SimplyStream\TwitchApi\Helix\Api\StreamsApi;
-use SimplyStream\TwitchApi\Helix\Models\Streams\CreateStreamMarkerRequest;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\ApiClient;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\StreamsApi;
+use SimplyStream\TwitchApi\Helix\Models\Streams\CreateStreamMarker;
 use SimplyStream\TwitchApi\Helix\Models\Streams\Marker;
 use SimplyStream\TwitchApi\Helix\Models\Streams\Stream;
 use SimplyStream\TwitchApi\Helix\Models\Streams\StreamKey;
@@ -193,7 +193,7 @@ class StreamsApiTest extends UserAwareFunctionalTestCase
 
         $streamsApi = new StreamsApi($apiClient);
         $createStreamMarkerResponse = $streamsApi->createStreamMarker(
-            new CreateStreamMarkerRequest($testUser['id'], 'Some marker'),
+            new CreateStreamMarker($testUser['id'], 'Some marker'),
             $accessToken
         );
 

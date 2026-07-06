@@ -7,29 +7,14 @@ namespace SimplyStream\TwitchApi\Helix\Models\Chat;
 final readonly class Message
 {
     /**
-     * @param string            $messageId  The message id for the message that was sent.
-     * @param bool              $isSent     If the message passed all checks and was sent.
-     * @param DropReason[]|null $dropReason The reason the message was dropped, if any.
+     * @param string          $messageId  The message id for the message that was sent.
+     * @param bool            $isSent     If the message passed all checks and was sent.
+     * @param DropReason|null $dropReason The reason the message was dropped, if any. Null if the message was sent.
      */
     public function __construct(
-        private string $messageId,
-        private bool $isSent,
-        private ?array $dropReason
+        public string $messageId,
+        public bool $isSent,
+        public ?DropReason $dropReason = null,
     ) {
-    }
-
-    public function getMessageId(): string
-    {
-        return $this->messageId;
-    }
-
-    public function isSent(): bool
-    {
-        return $this->isSent;
-    }
-
-    public function getDropReason(): ?array
-    {
-        return $this->dropReason;
     }
 }

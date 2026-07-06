@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Moderation;
 
-use SimplyStream\TwitchApi\Helix\Models\AbstractModel;
 use Webmozart\Assert\Assert;
 
-final readonly class BanUser extends AbstractModel
+final readonly class BanUser
 {
     /**
      * @param string      $userId   The ID of the user to ban or put in a timeout.
@@ -22,9 +21,9 @@ final readonly class BanUser extends AbstractModel
      *                              user defined and is limited to a maximum of 500 characters.
      */
     public function __construct(
-        private string $userId,
-        private ?int $duration = null,
-        private ?string $reason = null
+        public string $userId,
+        public ?int $duration = null,
+        public ?string $reason = null,
     ) {
         if (null !== $this->duration) {
             Assert::greaterThanEq($this->duration, 1, 'The minimum timeout is %2$s second, got %s');
@@ -35,23 +34,8 @@ final readonly class BanUser extends AbstractModel
             Assert::maxLength(
                 $this->reason,
                 500,
-                sprintf('The maximum length for a reason is %2$s characters, got %s', strlen($this->reason), 500)
+                sprintf('The maximum length for a reason is 500 characters, got %s', strlen($this->reason)),
             );
         }
-    }
-
-    public function getUserId(): string
-    {
-        return $this->userId;
-    }
-
-    public function getDuration(): ?int
-    {
-        return $this->duration;
-    }
-
-    public function getReason(): ?string
-    {
-        return $this->reason;
     }
 }

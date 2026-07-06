@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
-use League\OAuth2\Client\Token\AccessTokenInterface;
-use SimplyStream\TwitchApi\Helix\Models\Goals\CreatorGoal;
-use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
+use SimplyStream\TwitchApi\Helix\Api\Goals\Request\GetCreatorGoalsRequest;
+use SimplyStream\TwitchApi\Helix\Api\Goals\Response\CreatorGoalsResponse;
+use SimplyStream\TwitchApi\Helix\Authentication\AccessTokenInterface;
 
-class GoalsApi extends AbstractApi
+final class GoalsApi extends AbstractApi
 {
-    protected const BASE_PATH = 'goals';
+    private const string BASE_PATH = 'goals';
 
     /**
      * Gets the broadcaster’s list of active goals. Use this endpoint to get the current progress of each goal.
@@ -24,24 +24,23 @@ class GoalsApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/goals
      *
-     * @param string               $broadcasterId      The ID of the broadcaster that created the goals. This ID must
-     *                                                 match the user ID in the user access token.
-     * @param AccessTokenInterface $accessToken        Requires a user access token that includes the
-     *                                                 channel:read:goals scope.
+     * @param GetCreatorGoalsRequest $request
+     * @param AccessTokenInterface   $accessToken Requires a user access token that includes the channel:read:goals
+     *                                            scope.
      *
-     * @return TwitchDataResponse<CreatorGoal[]>
+     * @return CreatorGoalsResponse
      */
     public function getCreatorGoals(
-        string $broadcasterId,
-        AccessTokenInterface $accessToken
-    ): TwitchDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH,
-            query: [
-                'broadcaster_id' => $broadcasterId,
+        GetCreatorGoalsRequest $request,
+        AccessTokenInterface $accessToken,
+    ): CreatorGoalsResponse {
+        return $this->get(
+            self::BASE_PATH,
+            CreatorGoalsResponse::class,
+            $accessToken,
+            [
+                'broadcaster_id' => $request->broadcasterId,
             ],
-            type: sprintf('%s<%s[]>', TwitchDataResponse::class, CreatorGoal::class),
-            accessToken: $accessToken
         );
     }
 }

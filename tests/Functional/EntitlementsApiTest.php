@@ -8,11 +8,11 @@ use CuyZ\Valinor\MapperBuilder;
 use GuzzleHttp\Client;
 use Http\Discovery\Psr17Factory;
 use League\OAuth2\Client\Token\AccessToken;
-use SimplyStream\TwitchApi\Helix\Api\ApiClient;
-use SimplyStream\TwitchApi\Helix\Api\EntitlementsApi;
 use SimplyStream\TwitchApi\Helix\Models\Entitlements\DropEntitlement;
 use SimplyStream\TwitchApi\Helix\Models\Entitlements\DropEntitlementUpdate;
-use SimplyStream\TwitchApi\Helix\Models\Entitlements\UpdateDropEntitlementRequest;
+use SimplyStream\TwitchApi\Helix\Models\Entitlements\UpdateDropEntitlement;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\ApiClient;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\EntitlementsApi;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
 use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
 use SimplyStream\TwitchApi\Tests\Helper\UserAwareFunctionalTestCase;
@@ -80,7 +80,7 @@ class EntitlementsApiTest extends UserAwareFunctionalTestCase
         $dropEntitlement = $getDropsEntitlementsResponse->getData()[0];
 
         $updateDropEntitlementsResponse = $entitlementsApi->updateDropsEntitlements(
-            new UpdateDropEntitlementRequest([$dropEntitlement->getId()], 'FULFILLED'),
+            new UpdateDropEntitlement([$dropEntitlement->getId()], 'FULFILLED'),
             new AccessToken($this->getAccessTokenForUser($testUser['id']))
         );
 

@@ -4,15 +4,13 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
-use CuyZ\Valinor\Mapper\MappingError;
-use JsonException;
-use League\OAuth2\Client\Token\AccessTokenInterface;
-use RuntimeException;
-use SimplyStream\TwitchApi\Helix\Models\Games\Game;
-use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
-use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
+use SimplyStream\TwitchApi\Helix\Api\Games\Request\GetGamesRequest;
+use SimplyStream\TwitchApi\Helix\Api\Games\Request\GetTopGamesRequest;
+use SimplyStream\TwitchApi\Helix\Api\Games\Response\GamesResponse;
+use SimplyStream\TwitchApi\Helix\Api\Games\Response\TopGamesResponse;
+use SimplyStream\TwitchApi\Helix\Authentication\AccessTokenInterface;
 
-class GamesApi extends AbstractApi
+final class GamesApi extends AbstractApi
 {
     /**
      * Gets information about all broadcasts on Twitch.
@@ -23,33 +21,25 @@ class GamesApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/games/top
      *
+     * @param GetTopGamesRequest   $request
      * @param AccessTokenInterface $accessToken Requires an app access token or user access token.
-     * @param string|null          $after       The cursor used to get the next page of results. The Pagination object
-     *                                          in the response contains the cursor’s value.
-     * @param string|null          $before      The cursor used to get the previous page of results. The Pagination
-     *                                          object in the response contains the cursor’s value.
-     * @param int                  $first       The maximum number of items to return per page in the response. The
-     *                                          minimum page size is 1 item per page and the maximum is 100 items per
-     *                                          page. The default is 20.
      *
-     * @return TwitchPaginatedDataResponse<Game[]>
+     * @return TopGamesResponse
      */
     public function getTopGames(
+        GetTopGamesRequest $request,
         AccessTokenInterface $accessToken,
-        string $after = null,
-        string $before = null,
-        int $first = 20,
-    ): TwitchPaginatedDataResponse {
-        return $this->sendRequest(
-            path: 'games/top',
-            query: [
-                'after' => $after,
-                'before' => $before,
-                'first' => $first,
+    ): TopGamesResponse {
+        $query = array_filter(
+            [
+                'after'  => $request->after,
+                'before' => $request->before,
+                'first'  => $request->first,
             ],
-            type: sprintf('%s<%s[]>', TwitchPaginatedDataResponse::class, Game::class),
-            accessToken: $accessToken
+            static fn (mixed $v): bool => $v !== null,
         );
+
+        return $this->get('games/top', TopGamesResponse::class, $accessToken, $query);
     }
 
     /**
@@ -65,46 +55,24 @@ class GamesApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/games
      *
-     * @param AccessTokenInterface $accessToken  Requires an app access token or user access token.
-     * @param array<string>        $id           The ID of the category or game to get. Include this parameter for each
-     *                                           category or game you want to get. For example, &id=1234&id=5678. You
-     *                                           may specify a maximum of 100 IDs. The endpoint ignores duplicate and
-     *                                           invalid IDs or IDs that weren’t found.
-     * @param array<string>        $name         The name of the category or game to get. The name must exactly match
-     *                                           the category’s or game’s title. Include this parameter for each
-     *                                           category or game you want to get. For example, &name=foo&name=bar. You
-     *                                           may specify a maximum of 100 names. The endpoint ignores duplicate
-     *                                           names and names that weren’t found.
-     * @param array<string>        $igdbId       The IGDB ID of the game to get. Include this parameter for each game
-     *                                           you want to get. For example, &igdb_id=1234&igdb_id=5678. You may
-     *                                           specify a maximum of 100 IDs. The endpoint ignores duplicate and
-     *                                           invalid IDs or IDs that weren’t found.
+     * @param GetGamesRequest      $request
+     * @param AccessTokenInterface $accessToken Requires an app access token or user access token.
      *
-     * @return TwitchDataResponse<Game[]>
+     * @return GamesResponse
      */
     public function getGames(
+        GetGamesRequest $request,
         AccessTokenInterface $accessToken,
-        array $id = [],
-        array $name = [],
-        array $igdbId = [],
-    ): TwitchDataResponse {
-        if ((count($id) + count($name) + count($igdbId)) > 100) {
-            throw new RuntimeException('You cannot search for more than 100 ids or games');
-        }
-
-        if (empty($id) && empty($name) && empty($igdbId)) {
-            throw new RuntimeException('You need at least one id, game or IGDB ID to request');
-        }
-
-        return $this->sendRequest(
-            path: 'games',
-            query: [
-                'id' => $id,
-                'name' => $name,
-                'igdb_id' => $igdbId,
+    ): GamesResponse {
+        $query = array_filter(
+            [
+                'id'      => $request->ids,
+                'name'    => $request->names,
+                'igdb_id' => $request->igdbIds,
             ],
-            type: sprintf('%s<%s[]>', TwitchDataResponse::class, Game::class),
-            accessToken: $accessToken
+            static fn (mixed $v): bool => $v !== [],
         );
+
+        return $this->get('games', GamesResponse::class, $accessToken, $query);
     }
 }

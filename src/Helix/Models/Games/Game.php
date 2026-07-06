@@ -4,12 +4,8 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Games;
 
-use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
-
 final readonly class Game
 {
-    use SerializesModels;
-
     /**
      * @param string $id        An ID that identifies the category or game.
      * @param string $name      The category’s or game’s name.
@@ -19,30 +15,10 @@ final readonly class Game
      *                          this field is set to an empty string.
      */
     public function __construct(
-        private string $id,
-        private string $name,
-        private string $boxArtUrl,
-        private string $igdbId
+        public string $id,
+        public string $name,
+        public string $boxArtUrl,
+        public string $igdbId,
     ) {
-    }
-
-    public function getId(): string
-    {
-        return $this->id;
-    }
-
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    public function getBoxArtUrl(): string
-    {
-        return $this->boxArtUrl;
-    }
-
-    public function getIgdbId(): string
-    {
-        return $this->igdbId;
     }
 }

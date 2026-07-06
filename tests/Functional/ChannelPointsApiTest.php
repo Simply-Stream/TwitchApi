@@ -9,12 +9,12 @@ use GuzzleHttp\Client;
 use Http\Discovery\Psr17Factory;
 use League\OAuth2\Client\Token\AccessToken;
 use PHPUnit\Framework\Attributes\CoversClass;
-use SimplyStream\TwitchApi\Helix\Api\ApiClient;
-use SimplyStream\TwitchApi\Helix\Api\ChannelPointsApi;
-use SimplyStream\TwitchApi\Helix\Models\ChannelPoints\CreateCustomRewardRequest;
+use SimplyStream\TwitchApi\Helix\Models\ChannelPoints\CreateCustomReward;
 use SimplyStream\TwitchApi\Helix\Models\ChannelPoints\CustomReward;
 use SimplyStream\TwitchApi\Helix\Models\ChannelPoints\CustomRewardRedemption;
 use SimplyStream\TwitchApi\Helix\Models\ChannelPoints\Reward;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\ApiClient;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\ChannelPointsApi;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
 use SimplyStream\TwitchApi\Tests\Helper\UserAwareFunctionalTestCase;
 
@@ -38,7 +38,7 @@ class ChannelPointsApiTest extends UserAwareFunctionalTestCase
         $channelPointsApi = new ChannelPointsApi($apiClient);
         $createCustomRewardsResponse = $channelPointsApi->createCustomRewards(
             $this->users[0]['id'],
-            new CreateCustomRewardRequest('Custom reward', 100),
+            new CreateCustomReward('Custom reward', 100),
             new AccessToken($this->getAccessTokenForUser($this->users[0]['id'], ['channel:manage:redemptions']))
         );
 
@@ -82,7 +82,7 @@ class ChannelPointsApiTest extends UserAwareFunctionalTestCase
         // Create a custom reward to delete it
         $customReward = $channelPointsApi->createCustomRewards(
             $this->users[0]['id'],
-            new CreateCustomRewardRequest('Custom reward', 100),
+            new CreateCustomReward('Custom reward', 100),
             new AccessToken($this->getAccessTokenForUser($this->users[0]['id'], ['channel:manage:redemptions']))
         );
 

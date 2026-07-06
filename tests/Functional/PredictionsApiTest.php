@@ -9,10 +9,10 @@ use DateTimeInterface;
 use GuzzleHttp\Client;
 use Http\Discovery\Psr17Factory;
 use League\OAuth2\Client\Token\AccessToken;
-use SimplyStream\TwitchApi\Helix\Api\ApiClient;
-use SimplyStream\TwitchApi\Helix\Api\PredictionsApi;
-use SimplyStream\TwitchApi\Helix\Models\Predictions\CreatePredictionRequest;
-use SimplyStream\TwitchApi\Helix\Models\Predictions\EndPredictionRequest;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\ApiClient;
+use SimplyStream\TwitchApi\Helix\Models\Moderation\PredictionsApi;
+use SimplyStream\TwitchApi\Helix\Models\Predictions\CreatePrediction;
+use SimplyStream\TwitchApi\Helix\Models\Predictions\EndPrediction;
 use SimplyStream\TwitchApi\Helix\Models\Predictions\Prediction;
 use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
 use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
@@ -80,7 +80,7 @@ class PredictionsApiTest extends UserAwareFunctionalTestCase
 
         $predictionsApi = new PredictionsApi($apiClient);
         $createPredictionResponse = $predictionsApi->createPrediction(
-            new CreatePredictionRequest(
+            new CreatePrediction(
                 $testUser['id'],
                 'Test Prediction',
                 $outcomes,
@@ -138,7 +138,7 @@ class PredictionsApiTest extends UserAwareFunctionalTestCase
         );
 
         $endPredictionResponse = $predictionsApi->endPrediction(
-            new EndPredictionRequest(
+            new EndPrediction(
                 $testUser['id'],
                 $getPredictionsResponse->getData()[0]->getId(),
                 'CANCELED',

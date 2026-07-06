@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
-use League\OAuth2\Client\Token\AccessTokenInterface;
-use SimplyStream\TwitchApi\Helix\Models\Raids\Raid;
-use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
+use SimplyStream\TwitchApi\Helix\Api\Raids\Request\CancelRaidRequest;
+use SimplyStream\TwitchApi\Helix\Api\Raids\Request\StartRaidRequest;
+use SimplyStream\TwitchApi\Helix\Api\Raids\Response\RaidResponse;
+use SimplyStream\TwitchApi\Helix\Authentication\AccessTokenInterface;
 
-class RaidsApi extends AbstractApi
+final class RaidsApi extends AbstractApi
 {
-    protected const BASE_PATH = 'raids';
+    private const string BASE_PATH = 'raids';
 
     /**
      * Raid another channel by sending the broadcaster’s viewers to the targeted channel.
@@ -32,28 +33,24 @@ class RaidsApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/raids
      *
-     * @param string               $fromBroadcasterId The ID of the broadcaster that’s sending the raiding party. This
-     *                                                ID must match the user ID associated with the user access token.
-     * @param string               $toBroadcasterId   The ID of the broadcaster to raid.
-     * @param AccessTokenInterface $accessToken       Requires a user access token that includes the
-     *                                                channel:manage:raids scope.
+     * @param StartRaidRequest     $request
+     * @param AccessTokenInterface $accessToken Requires a user access token that includes the channel:manage:raids
+     *                                          scope.
      *
-     * @return TwitchDataResponse<Raid[]>
+     * @return RaidResponse
      */
     public function startRaid(
-        string $fromBroadcasterId,
-        string $toBroadcasterId,
-        AccessTokenInterface $accessToken
-    ): TwitchDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH,
+        StartRaidRequest $request,
+        AccessTokenInterface $accessToken,
+    ): RaidResponse {
+        return $this->post(
+            self::BASE_PATH,
+            RaidResponse::class,
+            $accessToken,
             query: [
-                'from_broadcaster_id' => $fromBroadcasterId,
-                'to_broadcaster_id' => $toBroadcasterId,
+                'from_broadcaster_id' => $request->fromBroadcasterId,
+                'to_broadcaster_id'   => $request->toBroadcasterId,
             ],
-            type: sprintf('%s<%s[]>', TwitchDataResponse::class, Raid::class),
-            method: 'POST',
-            accessToken: $accessToken
         );
     }
 
@@ -71,24 +68,22 @@ class RaidsApi extends AbstractApi
      * URL
      * DELETE https://api.twitch.tv/helix/raids
      *
-     * @param string               $broadcasterId The ID of the broadcaster that initiated the raid. This ID must match
-     *                                            the user ID associated with the user access token.
-     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the channel:manage:raids
-     *                                            scope.
+     * @param CancelRaidRequest    $request
+     * @param AccessTokenInterface $accessToken Requires a user access token that includes the channel:manage:raids
+     *                                          scope.
      *
      * @return void
      */
     public function cancelRaid(
-        string $broadcasterId,
-        AccessTokenInterface $accessToken
+        CancelRaidRequest $request,
+        AccessTokenInterface $accessToken,
     ): void {
-        $this->sendRequest(
-            path: self::BASE_PATH,
-            query: [
-                'broadcaster_id' => $broadcasterId,
+        $this->delete(
+            self::BASE_PATH,
+            $accessToken,
+            [
+                'broadcaster_id' => $request->broadcasterId,
             ],
-            method: 'DELETE',
-            accessToken: $accessToken
         );
     }
 }

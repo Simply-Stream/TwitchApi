@@ -4,18 +4,19 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
-use League\OAuth2\Client\Token\AccessTokenInterface;
-use SimplyStream\TwitchApi\Helix\Models\ChannelPoints\CreateCustomRewardRequest;
-use SimplyStream\TwitchApi\Helix\Models\ChannelPoints\CustomReward;
-use SimplyStream\TwitchApi\Helix\Models\ChannelPoints\CustomRewardRedemption;
-use SimplyStream\TwitchApi\Helix\Models\ChannelPoints\RedemptionStatusRequest;
-use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
-use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
-use Webmozart\Assert\Assert;
+use SimplyStream\TwitchApi\Helix\Api\ChannelPoints\Request\CreateCustomRewardRequest;
+use SimplyStream\TwitchApi\Helix\Api\ChannelPoints\Request\DeleteCustomRewardRequest;
+use SimplyStream\TwitchApi\Helix\Api\ChannelPoints\Request\GetCustomRewardRedemptionRequest;
+use SimplyStream\TwitchApi\Helix\Api\ChannelPoints\Request\GetCustomRewardRequest;
+use SimplyStream\TwitchApi\Helix\Api\ChannelPoints\Request\UpdateCustomRewardRequest;
+use SimplyStream\TwitchApi\Helix\Api\ChannelPoints\Request\UpdateRedemptionStatusRequest;
+use SimplyStream\TwitchApi\Helix\Api\ChannelPoints\Response\CustomRewardRedemptionResponse;
+use SimplyStream\TwitchApi\Helix\Api\ChannelPoints\Response\CustomRewardResponse;
+use SimplyStream\TwitchApi\Helix\Authentication\AccessTokenInterface;
 
-class ChannelPointsApi extends AbstractApi
+final class ChannelPointsApi extends AbstractApi
 {
-    protected const BASE_PATH = 'channel_points';
+    private const string BASE_PATH = 'channel_points';
 
     /**
      * Creates a Custom Reward in the broadcaster’s channel. The maximum number of custom rewards per channel is 50,
@@ -27,28 +28,22 @@ class ChannelPointsApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/channel_points/custom_rewards
      *
-     * @param string                    $broadcasterId The ID of the broadcaster to add the custom reward to. This ID
-     *                                                 must match the user ID found in the OAuth token.
-     * @param CreateCustomRewardRequest $body
-     * @param AccessTokenInterface      $accessToken   Requires a user access token that includes the
-     *                                                 channel:manage:redemptions scope.
+     * @param CreateCustomRewardRequest $request
+     * @param AccessTokenInterface      $accessToken Requires a user access token that includes the
+     *                                               channel:manage:redemptions scope.
      *
-     * @return TwitchDataResponse<CustomReward[]>
+     * @return CustomRewardResponse
      */
-    public function createCustomRewards(
-        string $broadcasterId,
-        CreateCustomRewardRequest $body,
-        AccessTokenInterface $accessToken
-    ): TwitchDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/custom_rewards',
-            query: [
-                'broadcaster_id' => $broadcasterId,
-            ],
-            type: sprintf('%s<%s[]>', TwitchDataResponse::class, CustomReward::class),
-            method: 'POST',
-            body: $body,
-            accessToken: $accessToken,
+    public function createCustomReward(
+        CreateCustomRewardRequest $request,
+        AccessTokenInterface $accessToken,
+    ): CustomRewardResponse {
+        return $this->post(
+            self::BASE_PATH . '/custom_rewards',
+            CustomRewardResponse::class,
+            $accessToken,
+            $this->normalizer->normalize($request->reward),
+            ['broadcaster_id' => $request->broadcasterId],
         );
     }
 
@@ -64,25 +59,21 @@ class ChannelPointsApi extends AbstractApi
      * URL
      * DELETE https://api.twitch.tv/helix/channel_points/custom_rewards
      *
-     * @param string               $broadcasterId The ID of the broadcaster that created the custom reward. This ID
-     *                                            must match the user ID found in the OAuth token.
-     * @param string               $id            The ID of the custom reward to delete.
-     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the
-     *                                            channel:manage:redemptions scope.
+     * @param DeleteCustomRewardRequest $request
+     * @param AccessTokenInterface      $accessToken Requires a user access token that includes the
+     *                                               channel:manage:redemptions scope.
      */
-    public function deleteCustomRewards(
-        string $broadcasterId,
-        string $id,
-        AccessTokenInterface $accessToken
+    public function deleteCustomReward(
+        DeleteCustomRewardRequest $request,
+        AccessTokenInterface $accessToken,
     ): void {
-        $this->sendRequest(
-            path: self::BASE_PATH . '/custom_rewards',
-            query: [
-                'broadcaster_id' => $broadcasterId,
-                'id' => $id,
+        $this->delete(
+            self::BASE_PATH . '/custom_rewards',
+            $accessToken,
+            [
+                'broadcaster_id' => $request->broadcasterId,
+                'id'             => $request->id,
             ],
-            method: 'DELETE',
-            accessToken: $accessToken
         );
     }
 
@@ -97,39 +88,30 @@ class ChannelPointsApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/channel_points/custom_rewards
      *
-     * @param string               $broadcasterId         The ID of the broadcaster whose custom rewards you want to
-     *                                                    get. This ID must match the user ID found in the OAuth token.
-     * @param AccessTokenInterface $accessToken           Requires a user access token that includes the
-     *                                                    channel:read:redemptions or channel:manage:redemptions scope.
-     * @param string|null          $id                    A list of IDs to filter the rewards by. To specify more than
-     *                                                    one ID, include this parameter for each reward you want to
-     *                                                    get. For example, id=1234&id=5678. You may specify a maximum
-     *                                                    of 50 IDs. Duplicate IDs are ignored. The response contains
-     *                                                    only the IDs that were found. If none of the IDs were found,
-     *                                                    the response is 404 Not Found.
-     * @param bool                 $onlyManageableRewards A Boolean value that determines whether the response contains
-     *                                                    only the custom rewards that the app may manage (the app is
-     *                                                    identified by the ID in the Client-Id header). Set to true to
-     *                                                    get only the custom rewards that the app may manage. The
-     *                                                    default is false.
+     * @param GetCustomRewardRequest $request
+     * @param AccessTokenInterface   $accessToken Requires a user access token that includes the channel:read:redemptions
+     *                                            or channel:manage:redemptions scope.
      *
-     * @return TwitchDataResponse<CustomReward[]>
+     * @return CustomRewardResponse
      */
     public function getCustomReward(
-        string $broadcasterId,
+        GetCustomRewardRequest $request,
         AccessTokenInterface $accessToken,
-        string $id = null,
-        bool $onlyManageableRewards = false
-    ): TwitchDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/custom_rewards',
-            query: [
-                'broadcaster_id' => $broadcasterId,
-                'id' => $id,
-                'only_manageable_rewards' => $onlyManageableRewards,
+    ): CustomRewardResponse {
+        $query = array_filter(
+            [
+                'broadcaster_id'          => $request->broadcasterId,
+                'id'                      => $request->ids,
+                'only_manageable_rewards' => $request->onlyManageableRewards,
             ],
-            type: sprintf('%s<%s[]>', TwitchDataResponse::class, CustomReward::class),
-            accessToken: $accessToken
+            static fn (mixed $v): bool => $v !== null && $v !== [],
+        );
+
+        return $this->get(
+            self::BASE_PATH . '/custom_rewards',
+            CustomRewardResponse::class,
+            $accessToken,
+            $query,
         );
     }
 
@@ -143,69 +125,34 @@ class ChannelPointsApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/channel_points/custom_rewards/redemptions
      *
-     * @param string               $broadcasterId The ID of the broadcaster that owns the custom reward. This ID must
-     *                                            match the user ID found in the user OAuth token.
-     * @param string               $rewardId      The ID that identifies the custom reward whose redemptions you want
-     *                                            to get.
-     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the
-     *                                            channel:read:redemptions or channel:manage:redemptions scope.
-     * @param string|null          $status        The status of the redemptions to return. The possible case-sensitive
-     *                                            values are:
-     *                                            - CANCELED
-     *                                            - FULFILLED
-     *                                            - UNFULFILLED
-     *                                            NOTE: This field is required only if you don’t specify the id query
-     *                                            parameter.
+     * @param GetCustomRewardRedemptionRequest $request
+     * @param AccessTokenInterface             $accessToken Requires a user access token that includes the
+     *                                                      channel:read:redemptions or channel:manage:redemptions scope.
      *
-     *                                            NOTE: Canceled and fulfilled redemptions are returned for only a few
-     *                                            days after they’re canceled or fulfilled.
-     * @param string|null          $id            A list of IDs to filter the redemptions by. To specify more than one
-     *                                            ID, include this parameter for each redemption you want to get. For
-     *                                            example, id=1234&id=5678. You may specify a maximum of 50 IDs.
-     *
-     *                                            Duplicate IDs are ignored. The response contains only the IDs that
-     *                                            were found. If none of the IDs were found, the response is 404 Not
-     *                                            Found.
-     * @param string               $sort          The order to sort redemptions by. The possible case-sensitive values
-     *                                            are:
-     *                                            - OLDEST
-     *                                            - NEWEST
-     *                                            The default is OLDEST.
-     * @param string|null          $after         The cursor used to get the next page of results. The Pagination
-     *                                            object in the response contains the cursor’s value.
-     * @param int                  $first         The maximum number of redemptions to return per page in the response.
-     *                                            The minimum page size is 1 redemption per page and the maximum is 50.
-     *                                            The default is 20.
-     *
-     * @return TwitchPaginatedDataResponse<CustomRewardRedemption[]>
+     * @return CustomRewardRedemptionResponse
      */
     public function getCustomRewardRedemption(
-        string $broadcasterId,
-        string $rewardId,
+        GetCustomRewardRedemptionRequest $request,
         AccessTokenInterface $accessToken,
-        ?string $status = null,
-        ?string $id = null,
-        string $sort = 'OLDEST',
-        ?string $after = null,
-        int $first = 20,
-    ): TwitchDataResponse {
-        if (!$id) {
-            Assert::stringNotEmpty($status);
-        }
-
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/custom_rewards/redemptions',
-            query: [
-                'broadcaster_id' => $broadcasterId,
-                'reward_id' => $rewardId,
-                'status' => $status,
-                'id' => $id,
-                'sort' => $sort,
-                'after' => $after,
-                'first' => $first,
+    ): CustomRewardRedemptionResponse {
+        $query = array_filter(
+            [
+                'broadcaster_id' => $request->broadcasterId,
+                'reward_id'      => $request->rewardId,
+                'status'         => $request->status?->value,
+                'id'             => $request->ids,
+                'sort'           => $request->sort->value,
+                'after'          => $request->after,
+                'first'          => $request->first,
             ],
-            type: sprintf('%s<%s[]>', TwitchPaginatedDataResponse::class, CustomRewardRedemption::class),
-            accessToken: $accessToken
+            static fn (mixed $v): bool => $v !== null && $v !== [],
+        );
+
+        return $this->get(
+            self::BASE_PATH . '/custom_rewards/redemptions',
+            CustomRewardRedemptionResponse::class,
+            $accessToken,
+            $query,
         );
     }
 
@@ -218,31 +165,25 @@ class ChannelPointsApi extends AbstractApi
      * URL
      * PATCH https://api.twitch.tv/helix/channel_points/custom_rewards
      *
-     * @param string                    $broadcasterId The ID of the broadcaster that’s updating the reward. This ID
-     *                                                 must match the user ID found in the OAuth token.
-     * @param string                    $id            The ID of the reward to update.
-     * @param CreateCustomRewardRequest $body
-     * @param AccessTokenInterface      $accessToken   Requires a user access token that includes the
-     *                                                 channel:manage:redemptions scope.
+     * @param UpdateCustomRewardRequest $request
+     * @param AccessTokenInterface      $accessToken Requires a user access token that includes the
+     *                                               channel:manage:redemptions scope.
      *
-     * @return TwitchDataResponse<CustomReward[]>
+     * @return CustomRewardResponse
      */
     public function updateCustomReward(
-        string $broadcasterId,
-        string $id,
-        CreateCustomRewardRequest $body,
-        AccessTokenInterface $accessToken
-    ): TwitchDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/custom_rewards',
-            query: [
-                'broadcaster_id' => $broadcasterId,
-                'id' => $id,
+        UpdateCustomRewardRequest $request,
+        AccessTokenInterface $accessToken,
+    ): CustomRewardResponse {
+        return $this->patch(
+            self::BASE_PATH . '/custom_rewards',
+            CustomRewardResponse::class,
+            $accessToken,
+            $this->normalizer->normalize($request->reward),
+            [
+                'broadcaster_id' => $request->broadcasterId,
+                'id'             => $request->id,
             ],
-            type: sprintf('%s<%s[]>', TwitchDataResponse::class, CustomReward::class),
-            method: 'PATCH',
-            body: $body,
-            accessToken: $accessToken
         );
     }
 
@@ -256,37 +197,26 @@ class ChannelPointsApi extends AbstractApi
      * URL
      * PATCH https://api.twitch.tv/helix/channel_points/custom_rewards/redemptions
      *
-     * @param string                  $broadcasterId  The ID of the broadcaster that’s updating the redemption. This ID
-     *                                                must match the user ID associated with the user OAuth token.
-     * @param string                  $id             A list of IDs that identify the redemptions to update. To specify
-     *                                                more than one ID, include this parameter for each redemption you
-     *                                                want to update. For example, id=1234&id=5678. You may specify a
-     *                                                maximum of 50 IDs.
-     * @param string                  $rewardId       The ID that identifies the reward that’s been redeemed.
-     * @param RedemptionStatusRequest $body
-     * @param AccessTokenInterface    $accessToken    Requires a user access token that includes the
-     *                                                channel:manage:redemptions scope.
+     * @param UpdateRedemptionStatusRequest $request
+     * @param AccessTokenInterface          $accessToken Requires a user access token that includes the
+     *                                                   channel:manage:redemptions scope.
      *
-     * @return TwitchDataResponse<CustomRewardRedemption[]>
+     * @return CustomRewardRedemptionResponse
      */
     public function updateRedemptionStatus(
-        string $broadcasterId,
-        string $id,
-        string $rewardId,
-        RedemptionStatusRequest $body,
-        AccessTokenInterface $accessToken
-    ): TwitchDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/custom_rewards/redemptions',
-            query: [
-                'broadcaster_id' => $broadcasterId,
-                'id' => $id,
-                'reward_id' => $rewardId,
+        UpdateRedemptionStatusRequest $request,
+        AccessTokenInterface $accessToken,
+    ): CustomRewardRedemptionResponse {
+        return $this->patch(
+            self::BASE_PATH . '/custom_rewards/redemptions',
+            CustomRewardRedemptionResponse::class,
+            $accessToken,
+            ['status' => $request->status->value],
+            [
+                'broadcaster_id' => $request->broadcasterId,
+                'id'             => $request->ids,
+                'reward_id'      => $request->rewardId,
             ],
-            type: sprintf('%s<%s[]>', TwitchDataResponse::class, CustomRewardRedemption::class),
-            method: 'PATCH',
-            body: $body,
-            accessToken: $accessToken
         );
     }
 }
