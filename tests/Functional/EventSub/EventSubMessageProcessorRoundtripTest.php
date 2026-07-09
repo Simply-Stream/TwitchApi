@@ -72,7 +72,9 @@ use SimplyStream\TwitchApi\EventSub\Messages\EventSubNotification;
 use SimplyStream\TwitchApi\EventSub\Registry\EventSubTypeRegistryBuilder;
 use SimplyStream\TwitchApi\EventSub\Security\MessageFreshnessValidator;
 use SimplyStream\TwitchApi\EventSub\Security\MessageSignatureVerifier;
-use SimplyStream\TwitchApi\EventSub\Serialization\DenormalizerInterface;
+use SimplyStream\TwitchApi\EventSub\Shared\Message;
+use SimplyStream\TwitchApi\EventSub\Shared\MessageFragment;
+use SimplyStream\TwitchApi\Serialization\DenormalizerInterface;
 use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
@@ -190,10 +192,28 @@ final class EventSubMessageProcessorRoundtripTest extends TestCase
             self::body('automod-message-hold-v1.json'),
             function (mixed $result): void {
                 self::assertInstanceOf(EventSubNotification::class, $result);
-                self::assertInstanceOf(AutomodMessageHoldV1Event::class, $result->event);
 
-                self::assertSame('automod.message.hold', $result->metadata()->subscriptionType);
-                self::assertSame('1', $result->metadata()->subscriptionVersion);
+                $event = $result->event;
+                self::assertInstanceOf(AutomodMessageHoldV1Event::class, $event);
+                self::assertSame('1337', $event->broadcasterUserId);
+                self::assertSame('blahblah', $event->broadcasterUserLogin);
+                self::assertSame('blah', $event->broadcasterUserName);
+                self::assertSame('456789012', $event->userId);
+                self::assertSame('baduserbla', $event->userLogin);
+                self::assertSame('baduser', $event->userName);
+                self::assertSame('bad-message-id', $event->messageId);
+
+                $message = $event->message;
+                self::assertInstanceOf(Message::class, $message);
+                self::assertSame('This is a bad message…', $message->text);
+                self::assertIsArray($message->fragments);
+                self::assertContainsOnlyInstancesOf(MessageFragment::class, $message->fragments);
+
+                $eventSubMetadata = $result->metadata();
+                self::assertInstanceOf(EventSubMetadata::class, $eventSubMetadata);
+                self::assertSame('automod.message.hold', $eventSubMetadata->subscriptionType);
+                self::assertSame('1', $eventSubMetadata->subscriptionVersion);
+                self::assertSame('id-automod.message.hold-notification', $eventSubMetadata->messageId);
             },
         ];
 
@@ -202,10 +222,28 @@ final class EventSubMessageProcessorRoundtripTest extends TestCase
             self::body('automod-message-hold-v2-2.json'),
             function (mixed $result): void {
                 self::assertInstanceOf(EventSubNotification::class, $result);
-                self::assertInstanceOf(AutomodMessageHoldEvent::class, $result->event);
 
-                self::assertSame('automod.message.hold', $result->metadata()->subscriptionType);
-                self::assertSame('2', $result->metadata()->subscriptionVersion);
+                $event = $result->event;
+                self::assertInstanceOf(AutomodMessageHoldEvent::class, $event);
+                self::assertSame('1337', $event->broadcasterUserId);
+                self::assertSame('blah', $event->broadcasterUserLogin);
+                self::assertSame('blahblah', $event->broadcasterUserName);
+                self::assertSame('4242', $event->userId);
+                self::assertSame('baduser', $event->userLogin);
+                self::assertSame('badbaduser', $event->userName);
+                self::assertSame('bad-message-id', $event->messageId);
+
+                $message = $event->message;
+                self::assertInstanceOf(Message::class, $message);
+                self::assertSame('This is a bad message… pogchamp', $message->text);
+                self::assertIsArray($message->fragments);
+                self::assertContainsOnlyInstancesOf(MessageFragment::class, $message->fragments);
+
+                $eventSubMetadata = $result->metadata();
+                self::assertInstanceOf(EventSubMetadata::class, $eventSubMetadata);
+                self::assertSame('id-automod.message.hold-notification', $eventSubMetadata->messageId);
+                self::assertSame('automod.message.hold', $eventSubMetadata->subscriptionType);
+                self::assertSame('2', $eventSubMetadata->subscriptionVersion);
             },
         ];
 
