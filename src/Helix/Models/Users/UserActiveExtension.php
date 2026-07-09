@@ -7,12 +7,11 @@ namespace SimplyStream\TwitchApi\Helix\Models\Users;
 final readonly class UserActiveExtension
 {
     /**
-     * @param array<string, Panel>     $panel     A dictionary that contains the data for a panel extension. The
-     *                                            dictionary’s key is a sequential number beginning with 1.
-     * @param array<string, Overlay>   $overlay   A dictionary that contains the data for a video-overlay extension.
-     *                                            The dictionary’s key is a sequential number beginning with 1.
-     * @param array<string, Component> $component A dictionary that contains the data for a video-component extension.
-     *                                            The dictionary’s key is a sequential number beginning with 1.
+     * @param array<int, Panel>     $panel     A dictionary that contains the data for a panel extension. The
+     *                                         dictionary's key is a sequential number beginning with 1. Note that JSON
+     *                                         string keys become PHP integers.
+     * @param array<int, Overlay>   $overlay   A dictionary that contains the data for a video-overlay extension.
+     * @param array<int, Component> $component A dictionary that contains the data for a video-component extension.
      */
     public function __construct(
         public array $panel,

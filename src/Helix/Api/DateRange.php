@@ -9,8 +9,8 @@ use DateTimeImmutable;
 final readonly class DateRange
 {
     public function __construct(
-        public DateTimeImmutable $startedAt,
-        public DateTimeImmutable $endedAt,
+        public ?DateTimeImmutable $startedAt,
+        public ?DateTimeImmutable $endedAt,
     ) {
     }
 }
