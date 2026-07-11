@@ -1,0 +1,12 @@
+{
+    "headers": {
+        "Twitch-Eventsub-MESSAGE-ID": "30e44af3-eca6-0248-dc86-55550db631b0",
+        "Twitch-Eventsub-MESSAGE-RETRY": "0",
+        "Twitch-Eventsub-MESSAGE-SIGNATURE": "sha256=1beaaec8f2cdbfae72b2b1de776fd7d171777d0338b9300f5f6f92465e6fcae0",
+        "Twitch-Eventsub-MESSAGE-TIMESTAMP": "2026-07-11T08:21:31.826656Z",
+        "Twitch-Eventsub-MESSAGE-TYPE": "notification",
+        "Twitch-Eventsub-SUBSCRIPTION-TYPE": "channel.hype_train.end",
+        "Twitch-Eventsub-SUBSCRIPTION-VERSION": "2"
+    },
+    "body": "{\"subscription\":{\"id\":\"1c3d5bf8-9580-48e9-ac09-7465d95e732f\",\"status\":\"enabled\",\"type\":\"channel.hype_train.end\",\"version\":\"2\",\"condition\":{\"broadcaster_user_id\":\"90542111\"},\"transport\":{\"method\":\"webhook\",\"callback\":\"null\"},\"created_at\":\"2026-07-11T08:21:31.826656Z\",\"cost\":0},\"event\":{\"id\":\"1b12b0f7-4c51-92e3-02b4-7ba5b2424bf6\",\"broadcaster_user_id\":\"90542111\",\"broadcaster_user_login\":\"testBroadcaster\",\"broadcaster_user_name\":\"testBroadcaster\",\"total\":105,\"top_contributions\":[{\"user_id\":\"4388718\",\"user_login\":\"cli_user1\",\"user_name\":\"cli_user1\",\"type\":\"other\",\"total\":933},{\"user_id\":\"41795978\",\"user_login\":\"cli_user2\",\"user_name\":\"cli_user2\",\"type\":\"subscription\",\"total\":76}],\"level\":3,\"shared_train_participants\":null,\"started_at\":\"2026-07-11T08:16:31.826656Z\",\"cooldown_ends_at\":\"2026-07-11T09:21:31.826656Z\",\"ended_at\":\"2026-07-11T08:21:31.826656Z\",\"type\":\"regular\",\"is_shared_train\":false}}"
+}

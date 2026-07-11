@@ -12,13 +12,13 @@ use SimplyStream\TwitchApi\EventSub\EventInterface;
 final readonly class StreamOfflineEvent implements EventInterface
 {
     /**
-     * @param string $id The id of the stream - a Parameter that Twitch, yet again, just changed without documentation.
-     * @param string $broadcasterUserId    The broadcaster’s user id.
-     * @param string $broadcasterUserLogin The broadcaster’s user login.
-     * @param string $broadcasterUserName  The broadcaster’s user display name.
+     * @param string|null $id                   The id of the stream - a Parameter that Twitch, yet again, just changed without documentation.
+     * @param string      $broadcasterUserId    The broadcaster’s user id.
+     * @param string      $broadcasterUserLogin The broadcaster’s user login.
+     * @param string      $broadcasterUserName  The broadcaster’s user display name.
      */
     public function __construct(
-        public string $id,
+        public ?string $id,
         public string $broadcasterUserId,
         public string $broadcasterUserLogin,
         public string $broadcasterUserName,

@@ -1,0 +1,12 @@
+{
+    "headers": {
+        "Twitch-Eventsub-MESSAGE-ID": "09906a6f-5a01-db44-48a0-55bed58f7d02",
+        "Twitch-Eventsub-MESSAGE-RETRY": "0",
+        "Twitch-Eventsub-MESSAGE-SIGNATURE": "sha256=c5aa82d65426e8a4750054d630b5592a34477fd42f9fb4472377eed4c5f1d49c",
+        "Twitch-Eventsub-MESSAGE-TIMESTAMP": "2026-07-11T08:21:43.037512Z",
+        "Twitch-Eventsub-MESSAGE-TYPE": "notification",
+        "Twitch-Eventsub-SUBSCRIPTION-TYPE": "user.update",
+        "Twitch-Eventsub-SUBSCRIPTION-VERSION": "1"
+    },
+    "body": "{\"subscription\":{\"id\":\"58868016-4c8d-0ac8-5c18-a306960e0d3c\",\"status\":\"enabled\",\"type\":\"user.update\",\"version\":\"1\",\"condition\":{\"user_id\":\"73979662\"},\"transport\":{\"method\":\"webhook\",\"callback\":\"null\"},\"created_at\":\"2026-07-11T08:21:43.037512Z\",\"cost\":0},\"event\":{\"user_id\":\"73979662\",\"user_login\":\"testBroadcaster\",\"user_name\":\"testBroadcaster\",\"email\":\"stream-lover@example.com\",\"email_verified\":true,\"description\":\"\"}}"
+}

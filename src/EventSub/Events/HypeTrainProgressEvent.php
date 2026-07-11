@@ -8,7 +8,7 @@ use DateTimeInterface;
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\HypeTrainProgressCondition;
 use SimplyStream\TwitchApi\EventSub\EventInterface;
-use SimplyStream\TwitchApi\Helix\Models\EventSub\Contribution;
+use SimplyStream\TwitchApi\EventSub\Shared\Contribution;
 
 #[EventSubSubscription(type: 'channel.hype_train.progress', version: '2', condition: HypeTrainProgressCondition::class)]
 final readonly class HypeTrainProgressEvent implements EventInterface

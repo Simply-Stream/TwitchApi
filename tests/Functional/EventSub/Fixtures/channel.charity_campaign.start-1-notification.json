@@ -1,0 +1,12 @@
+{
+    "headers": {
+        "Twitch-Eventsub-MESSAGE-ID": "ed59d479-f7a1-7e38-e098-1933b5f92878",
+        "Twitch-Eventsub-MESSAGE-RETRY": "0",
+        "Twitch-Eventsub-MESSAGE-SIGNATURE": "sha256=31aae811f82b0103b4aa5ed089f05e4823ae86d616b52cb316d51701cce83b21",
+        "Twitch-Eventsub-MESSAGE-TIMESTAMP": "2026-07-11T08:21:29.055894Z",
+        "Twitch-Eventsub-MESSAGE-TYPE": "notification",
+        "Twitch-Eventsub-SUBSCRIPTION-TYPE": "channel.charity_campaign.start",
+        "Twitch-Eventsub-SUBSCRIPTION-VERSION": "1"
+    },
+    "body": "{\"subscription\":{\"id\":\"501fbad8-8255-bedd-17a8-e2a3182d9355\",\"status\":\"enabled\",\"type\":\"channel.charity_campaign.start\",\"version\":\"1\",\"condition\":{\"broadcaster_user_id\":\"9192883\"},\"transport\":{\"method\":\"webhook\",\"callback\":\"null\"},\"created_at\":\"2026-07-11T08:21:29.055894Z\",\"cost\":0},\"event\":{\"id\":\"e537443b-3016-4088-2b56-8f2edc013d97\",\"broadcaster_id\":\"9192883\",\"broadcaster_name\":\"testBroadcaster\",\"broadcaster_login\":\"testBroadcaster\",\"charity_name\":\"Example Charity\",\"charity_description\":\"Example Description\",\"charity_logo\":\"https://abc.cloudfront.net/ppgf/1000/100.png\",\"charity_website\":\"https://www.example.com\",\"current_amount\":{\"value\":0,\"decimal_places\":2,\"currency\":\"USD\"},\"target_amount\":{\"value\":1500000,\"decimal_places\":2,\"currency\":\"USD\"},\"started_at\":\"2026-07-11T08:21:29.055894Z\"}}"
+}

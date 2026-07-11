@@ -1,0 +1,12 @@
+{
+    "headers": {
+        "Twitch-Eventsub-MESSAGE-ID": "cacdee56-7b7b-f597-461d-a880b52c7f59",
+        "Twitch-Eventsub-MESSAGE-RETRY": "0",
+        "Twitch-Eventsub-MESSAGE-SIGNATURE": "sha256=0b1f55b40253281563aa436c2e60331978b201b718c9e4d8e2902b3aa84079b2",
+        "Twitch-Eventsub-MESSAGE-TIMESTAMP": "2026-07-11T08:21:34.946772Z",
+        "Twitch-Eventsub-MESSAGE-TYPE": "notification",
+        "Twitch-Eventsub-SUBSCRIPTION-TYPE": "channel.prediction.end",
+        "Twitch-Eventsub-SUBSCRIPTION-VERSION": "1"
+    },
+    "body": "{\"subscription\":{\"id\":\"55bdb3af-89dc-629f-4919-f9bd60dfc18b\",\"status\":\"enabled\",\"type\":\"channel.prediction.end\",\"version\":\"1\",\"condition\":{\"broadcaster_user_id\":\"8603797\"},\"transport\":{\"method\":\"webhook\",\"callback\":\"null\"},\"created_at\":\"2026-07-11T08:21:34.946772Z\",\"cost\":0},\"event\":{\"id\":\"cf99ce1f-08a4-f106-3c4b-61b0bee74f9a\",\"broadcaster_user_id\":\"8603797\",\"broadcaster_user_login\":\"testBroadcaster\",\"broadcaster_user_name\":\"testBroadcaster\",\"title\":\"Will the developer finish this program?\",\"winning_outcome_id\":\"6182af35-eed7-62f9-be96-4b8decaaa675\",\"outcomes\":[{\"id\":\"6182af35-eed7-62f9-be96-4b8decaaa675\",\"title\":\"yes\",\"color\":\"blue\",\"users\":3,\"channel_points\":15289,\"top_predictors\":[{\"user_id\":\"62799837\",\"user_login\":\"testLogin\",\"user_name\":\"testLogin\",\"channel_points_won\":1736,\"channel_points_used\":868},{\"user_id\":\"42712829\",\"user_login\":\"testLogin\",\"user_name\":\"testLogin\",\"channel_points_won\":17412,\"channel_points_used\":8706},{\"user_id\":\"72715127\",\"user_login\":\"testLogin\",\"user_name\":\"testLogin\",\"channel_points_won\":11430,\"channel_points_used\":5715}]},{\"id\":\"b0e32338-3660-9132-9c5a-b8839d37fb68\",\"title\":\"no\",\"color\":\"pink\",\"users\":1,\"channel_points\":6952,\"top_predictors\":[{\"user_id\":\"23893988\",\"user_login\":\"testLogin\",\"user_name\":\"testLogin\",\"channel_points_won\":0,\"channel_points_used\":6952}]}],\"started_at\":\"2026-07-11T08:21:34.946772Z\",\"ended_at\":\"2026-07-11T08:31:34.946772Z\",\"status\":\"resolved\"}}"
+}

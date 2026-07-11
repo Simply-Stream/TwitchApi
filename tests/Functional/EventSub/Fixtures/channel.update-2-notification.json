@@ -1,0 +1,12 @@
+{
+    "headers": {
+        "Twitch-Eventsub-MESSAGE-ID": "8e205a7b-92ed-0cf7-31e1-79569051a314",
+        "Twitch-Eventsub-MESSAGE-RETRY": "0",
+        "Twitch-Eventsub-MESSAGE-SIGNATURE": "sha256=1e006a0a9564584a5cfa670e6232f5ba0d1b912192075fe2084a5daa04c70adc",
+        "Twitch-Eventsub-MESSAGE-TIMESTAMP": "2026-07-11T08:21:43.782759Z",
+        "Twitch-Eventsub-MESSAGE-TYPE": "notification",
+        "Twitch-Eventsub-SUBSCRIPTION-TYPE": "channel.update",
+        "Twitch-Eventsub-SUBSCRIPTION-VERSION": "2"
+    },
+    "body": "{\"subscription\":{\"id\":\"c54897f6-52d8-42b2-19bf-ba5d7d165fe6\",\"status\":\"enabled\",\"type\":\"channel.update\",\"version\":\"2\",\"condition\":{\"broadcaster_user_id\":\"32794609\"},\"transport\":{\"method\":\"webhook\",\"callback\":\"null\"},\"created_at\":\"2026-07-11T08:21:43.782759Z\",\"cost\":0},\"event\":{\"broadcaster_user_id\":\"32794609\",\"broadcaster_user_login\":\"testBroadcaster\",\"broadcaster_user_name\":\"testBroadcaster\",\"title\":\"Example title from the CLI!\",\"language\":\"en\",\"category_id\":\"1392\",\"category_name\":\"Just Chatting\",\"content_classification_labels\":[\"MatureGame\",\"ViolentGraphic\"]}}"
+}
