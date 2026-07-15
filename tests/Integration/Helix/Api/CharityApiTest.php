@@ -8,6 +8,7 @@ use Nyholm\Psr7\Response;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
+use SimplyStream\TwitchApi\EventSub\Shared\Amount;
 use SimplyStream\TwitchApi\Helix\Api\Charity\Request\GetCharityCampaignDonationsRequest;
 use SimplyStream\TwitchApi\Helix\Api\Charity\Request\GetCharityCampaignRequest;
 use SimplyStream\TwitchApi\Helix\Api\Charity\Response\CharityCampaignDonationsResponse;

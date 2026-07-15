@@ -64,6 +64,8 @@ use SimplyStream\TwitchApi\EventSub\Events\UserUpdateEvent;
 use SimplyStream\TwitchApi\EventSub\EventSubMessageProcessor;
 use SimplyStream\TwitchApi\EventSub\Http\EventSubHeaders;
 use SimplyStream\TwitchApi\EventSub\Http\RawEventSubMessage;
+use SimplyStream\TwitchApi\EventSub\Messages\BatchedEvent;
+use SimplyStream\TwitchApi\EventSub\Messages\EventSubBatchNotification;
 use SimplyStream\TwitchApi\EventSub\Messages\EventSubNotification;
 use SimplyStream\TwitchApi\EventSub\Registry\EventSubTypeRegistryBuilder;
 use SimplyStream\TwitchApi\EventSub\Security\MessageFreshnessValidator;
@@ -607,10 +609,13 @@ final class EventSubMessageProcessorRoundtripTest extends TestCase
         yield 'drop.entitlement.grant notification' => [
             'drop.entitlement.grant-1-notification.json',
             function (mixed $result): void {
-                self::assertInstanceOf(EventSubNotification::class, $result);
-                self::assertInstanceOf(DropEntitlementGrantEvent::class, $result->event);
+                self::assertInstanceOf(EventSubBatchNotification::class, $result);
+                self::assertContainsOnlyInstancesOf(BatchedEvent::class, $result->events);
                 self::assertSame('drop.entitlement.grant', $result->metadata()->subscriptionType);
                 self::assertSame('1', $result->metadata()->subscriptionVersion);
+
+                $event = $result->events[0];
+                self::assertInstanceOf(DropEntitlementGrantEvent::class, $event->event);
             },
         ];
 

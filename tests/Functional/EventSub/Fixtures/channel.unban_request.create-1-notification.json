@@ -2,11 +2,11 @@
     "headers": {
         "Twitch-Eventsub-MESSAGE-ID": "fa2c893f-40af-45b2-f53c-97e5288adbc4",
         "Twitch-Eventsub-MESSAGE-RETRY": "0",
-        "Twitch-Eventsub-MESSAGE-SIGNATURE": "sha256=b5787fca27f5632528e80a83a89cf5da8bc5a367c387c5d69fb24b2d25d08e90",
+        "Twitch-Eventsub-MESSAGE-SIGNATURE": "sha256=a1997f1f46b73904381065edb47c582ea87ede751ce24468867cc95ef2070d06",
         "Twitch-Eventsub-MESSAGE-TIMESTAMP": "2026-07-11T08:21:39.898245Z",
         "Twitch-Eventsub-MESSAGE-TYPE": "notification",
         "Twitch-Eventsub-SUBSCRIPTION-TYPE": "channel.unban_request.create",
         "Twitch-Eventsub-SUBSCRIPTION-VERSION": "1"
     },
-    "body": "{\"subscription\":{\"id\":\"324dfb12-c570-5f51-f353-0567033befd7\",\"status\":\"enabled\",\"type\":\"channel.unban_request.create\",\"version\":\"1\",\"condition\":{\"broadcaster_user_id\":\"63451392\",\"moderator_user_id\":\"61092079\"},\"transport\":{\"method\":\"webhook\",\"callback\":\"null\"},\"created_at\":\"2026-07-11T08:21:39.898245Z\",\"cost\":0},\"event\":{\"broadcaster_user_id\":\"63451392\",\"broadcaster_user_login\":\"testbroadcaster\",\"broadcaster_user_name\":\"testBroadcaster\",\"user_id\":\"61092079\",\"user_login\":\"testfromuser\",\"user_name\":\"testFromUser\",\"text\":\"Please unban me!\",\"created_at\":\"2026-07-11T07:51:39.898259Z\"}}"
+    "body": "{\"subscription\":{\"id\":\"324dfb12-c570-5f51-f353-0567033befd7\",\"status\":\"enabled\",\"type\":\"channel.unban_request.create\",\"version\":\"1\",\"condition\":{\"broadcaster_user_id\":\"63451392\",\"moderator_user_id\":\"61092079\"},\"transport\":{\"method\":\"webhook\",\"callback\":\"null\"},\"created_at\":\"2026-07-11T08:21:39.898245Z\",\"cost\":0},\"event\":{\"id\":\"60\",\"broadcaster_user_id\":\"63451392\",\"broadcaster_user_login\":\"testbroadcaster\",\"broadcaster_user_name\":\"testBroadcaster\",\"user_id\":\"61092079\",\"user_login\":\"testfromuser\",\"user_name\":\"testFromUser\",\"text\":\"Please unban me!\",\"created_at\":\"2026-07-11T07:51:39.898259Z\"}}"
 }
