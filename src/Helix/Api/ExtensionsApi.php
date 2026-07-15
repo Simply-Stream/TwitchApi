@@ -92,7 +92,7 @@ final class ExtensionsApi extends AbstractApi
         $this->putWithoutResponse(
             self::BASE_PATH . '/configurations',
             $accessToken,
-            $this->normalizer->normalize($request->segment),
+            $this->normalizer->normalize($request),
         );
     }
 
@@ -120,7 +120,7 @@ final class ExtensionsApi extends AbstractApi
         $this->putWithoutResponse(
             self::BASE_PATH . '/required_configuration',
             $accessToken,
-            $this->normalizer->normalize($request->configuration),
+            $this->normalizer->normalize($request),
             ['broadcaster_id' => $request->broadcasterId],
         );
     }
@@ -156,7 +156,7 @@ final class ExtensionsApi extends AbstractApi
         $this->postWithoutResponse(
             self::BASE_PATH . '/pubsub',
             $accessToken,
-            $this->normalizer->normalize($request->message),
+            $this->normalizer->normalize($request),
         );
     }
 
@@ -274,11 +274,10 @@ final class ExtensionsApi extends AbstractApi
         $this->postWithoutResponse(
             self::BASE_PATH . '/chat',
             $accessToken,
-            $this->normalizer->normalize($request->message),
+            $this->normalizer->normalize($request),
             ['broadcaster_id' => $request->broadcasterId],
         );
     }
-
     /**
      * Gets information about an extension.
      *
@@ -389,7 +388,7 @@ final class ExtensionsApi extends AbstractApi
             self::BITS_PATH,
             ExtensionBitsProductsResponse::class,
             $accessToken,
-            $this->normalizer->normalize($request->product),
+            $this->normalizer->normalize($request),
         );
     }
 }

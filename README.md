@@ -45,7 +45,7 @@ section.
 | EntitlementsApi          | ✅           | ℹ️     |
 | EventSubApi              | ✅           | ✅      |
 | EventSub system          | ✅           | ℹ️     |
-| ExtensionsApi            | ❗           | ❗      |
+| ExtensionsApi            | ✅           | ✅      |
 | GamesApi                 | ✅           | ✅      |
 | GoalsApi                 | ✅           | ✅      |
 | GuestStarApi (Beta)      | ✅           | ✅      |
