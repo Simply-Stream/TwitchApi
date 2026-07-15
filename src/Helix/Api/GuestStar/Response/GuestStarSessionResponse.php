@@ -11,5 +11,6 @@ final readonly class GuestStarSessionResponse
     /** @param list<GuestStarSession> $data */
     public function __construct(
         public array $data,
-    ) {}
+    ) {
+    }
 }

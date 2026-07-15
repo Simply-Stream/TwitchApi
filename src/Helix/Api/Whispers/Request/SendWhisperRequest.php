@@ -18,5 +18,6 @@ final readonly class SendWhisperRequest
         public string $fromUserId,
         public string $toUserId,
         public SendWhisper $whisper,
-    ) {}
+    ) {
+    }
 }

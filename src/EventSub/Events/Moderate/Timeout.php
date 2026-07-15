@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 namespace SimplyStream\TwitchApi\EventSub\Events\Moderate;
 
 use DateTimeInterface;
@@ -19,5 +21,6 @@ final readonly class Timeout
         public string $userName,
         public DateTimeInterface $expiresAt,
         public ?string $reason = null,
-    ) {}
+    ) {
+    }
 }

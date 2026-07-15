@@ -11,5 +11,6 @@ final readonly class PollResponse
     /** @param list<Poll> $data */
     public function __construct(
         public array $data,
-    ) {}
+    ) {
+    }
 }

@@ -17,5 +17,6 @@ final readonly class CreateChannelStreamScheduleSegmentRequest
     public function __construct(
         public string $broadcasterId,
         public CreateChannelStreamScheduleSegment $segment,
-    ) {}
+    ) {
+    }
 }

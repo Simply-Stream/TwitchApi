@@ -11,5 +11,6 @@ final readonly class GamesResponse
     /** @param list<Game> $data */
     public function __construct(
         public array $data,
-    ) {}
+    ) {
+    }
 }

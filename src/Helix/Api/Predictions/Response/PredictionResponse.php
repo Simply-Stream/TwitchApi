@@ -11,5 +11,6 @@ final readonly class PredictionResponse
     /** @param list<Prediction> $data */
     public function __construct(
         public array $data,
-    ) {}
+    ) {
+    }
 }

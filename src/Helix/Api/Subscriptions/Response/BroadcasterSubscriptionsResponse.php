@@ -20,5 +20,6 @@ final readonly class BroadcasterSubscriptionsResponse
         public int $total,
         public int $points,
         public ?Pagination $pagination = null,
-    ) {}
+    ) {
+    }
 }

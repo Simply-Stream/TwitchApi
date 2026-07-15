@@ -14,5 +14,6 @@ final readonly class GetContentClassificationLabelsRequest
      */
     public function __construct(
         public Locale $locale = Locale::EnUs,
-    ) {}
+    ) {
+    }
 }

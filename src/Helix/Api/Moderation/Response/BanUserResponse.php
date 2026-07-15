@@ -11,5 +11,6 @@ final readonly class BanUserResponse
     /** @param list<UserBan> $data */
     public function __construct(
         public array $data,
-    ) {}
+    ) {
+    }
 }

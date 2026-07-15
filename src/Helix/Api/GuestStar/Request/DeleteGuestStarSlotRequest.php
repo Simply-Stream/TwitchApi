@@ -24,5 +24,6 @@ final readonly class DeleteGuestStarSlotRequest
         public string $guestId,
         public string $slotId,
         public ?bool $shouldReinviteGuest = null,
-    ) {}
+    ) {
+    }
 }

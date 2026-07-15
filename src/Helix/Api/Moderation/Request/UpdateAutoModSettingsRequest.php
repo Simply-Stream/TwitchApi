@@ -19,5 +19,6 @@ final readonly class UpdateAutoModSettingsRequest
         public string $broadcasterId,
         public string $moderatorId,
         public UpdateAutoModSettings $settings,
-    ) {}
+    ) {
+    }
 }

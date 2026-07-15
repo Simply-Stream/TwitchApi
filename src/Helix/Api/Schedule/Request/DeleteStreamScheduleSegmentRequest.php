@@ -14,5 +14,6 @@ final readonly class DeleteStreamScheduleSegmentRequest
     public function __construct(
         public string $broadcasterId,
         public string $id,
-    ) {}
+    ) {
+    }
 }

@@ -11,5 +11,6 @@ final readonly class UsersResponse
     /** @param list<User> $data */
     public function __construct(
         public array $data,
-    ) {}
+    ) {
+    }
 }

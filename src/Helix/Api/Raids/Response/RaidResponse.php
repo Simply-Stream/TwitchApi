@@ -11,5 +11,6 @@ final readonly class RaidResponse
     /** @param list<Raid> $data */
     public function __construct(
         public array $data,
-    ) {}
+    ) {
+    }
 }

@@ -12,5 +12,6 @@ final readonly class UpdateShieldModeStatus
      */
     public function __construct(
         public bool $isActive,
-    ) {}
+    ) {
+    }
 }

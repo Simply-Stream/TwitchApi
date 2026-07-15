@@ -11,5 +11,6 @@ final readonly class StreamKeyResponse
     /** @param list<StreamKey> $data */
     public function __construct(
         public array $data,
-    ) {}
+    ) {
+    }
 }

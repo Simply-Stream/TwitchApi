@@ -11,5 +11,6 @@ final readonly class GetChannelTeamsRequest
      */
     public function __construct(
         public string $broadcasterId,
-    ) {}
+    ) {
+    }
 }

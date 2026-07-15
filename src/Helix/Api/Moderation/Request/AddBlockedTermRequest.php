@@ -19,5 +19,6 @@ final readonly class AddBlockedTermRequest
         public string $broadcasterId,
         public string $moderatorId,
         public AddBlockedTerm $term,
-    ) {}
+    ) {
+    }
 }

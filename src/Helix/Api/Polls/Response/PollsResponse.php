@@ -13,5 +13,6 @@ final readonly class PollsResponse
     public function __construct(
         public array $data,
         public ?Pagination $pagination = null,
-    ) {}
+    ) {
+    }
 }

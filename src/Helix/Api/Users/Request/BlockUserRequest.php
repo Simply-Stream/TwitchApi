@@ -20,5 +20,6 @@ final readonly class BlockUserRequest
         public string $targetUserId,
         public ?SourceContext $sourceContext = null,
         public ?BlockReason $reason = null,
-    ) {}
+    ) {
+    }
 }

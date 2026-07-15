@@ -11,5 +11,6 @@ final readonly class UpdateDropsEntitlementsResponse
     /** @param list<DropEntitlementUpdate> $data */
     public function __construct(
         public array $data,
-    ) {}
+    ) {
+    }
 }

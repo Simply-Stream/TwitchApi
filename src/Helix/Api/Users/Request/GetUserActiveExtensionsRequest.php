@@ -15,5 +15,6 @@ final readonly class GetUserActiveExtensionsRequest
      */
     public function __construct(
         public ?string $userId = null,
-    ) {}
+    ) {
+    }
 }

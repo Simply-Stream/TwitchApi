@@ -12,5 +12,6 @@ final readonly class GetCreatorGoalsRequest
      */
     public function __construct(
         public string $broadcasterId,
-    ) {}
+    ) {
+    }
 }

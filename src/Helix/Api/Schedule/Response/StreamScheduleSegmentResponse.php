@@ -10,5 +10,6 @@ final readonly class StreamScheduleSegmentResponse
 {
     public function __construct(
         public ChannelStreamSchedule $data,
-    ) {}
+    ) {
+    }
 }

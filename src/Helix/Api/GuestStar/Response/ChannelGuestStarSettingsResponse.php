@@ -11,5 +11,6 @@ final readonly class ChannelGuestStarSettingsResponse
     /** @param list<ChannelGuestStarSetting> $data */
     public function __construct(
         public array $data,
-    ) {}
+    ) {
+    }
 }

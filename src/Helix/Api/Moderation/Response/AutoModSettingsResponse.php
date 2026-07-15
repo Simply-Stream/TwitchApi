@@ -11,5 +11,6 @@ final readonly class AutoModSettingsResponse
     /** @param list<AutoModSettings> $data */
     public function __construct(
         public array $data,
-    ) {}
+    ) {
+    }
 }

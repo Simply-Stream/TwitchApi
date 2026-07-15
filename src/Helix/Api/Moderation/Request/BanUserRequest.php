@@ -18,5 +18,6 @@ final readonly class BanUserRequest
         public string $broadcasterId,
         public string $moderatorId,
         public BanUser $ban,
-    ) {}
+    ) {
+    }
 }

@@ -13,5 +13,6 @@ final readonly class CreatePredictionRequest
      */
     public function __construct(
         public CreatePrediction $prediction,
-    ) {}
+    ) {
+    }
 }

@@ -12,5 +12,6 @@ final readonly class ChannelStreamScheduleResponse
     public function __construct(
         public ChannelStreamSchedule $data,
         public ?Pagination $pagination = null,
-    ) {}
+    ) {
+    }
 }

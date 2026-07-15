@@ -13,5 +13,6 @@ final readonly class UpdateDropsEntitlementsRequest
      */
     public function __construct(
         public UpdateDropEntitlement $entitlement,
-    ) {}
+    ) {
+    }
 }

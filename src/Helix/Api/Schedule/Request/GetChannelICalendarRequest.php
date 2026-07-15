@@ -11,5 +11,6 @@ final readonly class GetChannelICalendarRequest
      */
     public function __construct(
         public string $broadcasterId,
-    ) {}
+    ) {
+    }
 }

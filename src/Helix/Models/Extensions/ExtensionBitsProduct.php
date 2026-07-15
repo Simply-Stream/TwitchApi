@@ -5,12 +5,9 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Models\Extensions;
 
 use DateTimeInterface;
-use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class ExtensionBitsProduct
 {
-    use SerializesModels;
-
     /**
      * @param string              $sku           The product’s SKU. The SKU is unique across an extension’s products.
      * @param ExtensionBitsAmount $cost          An object that contains the product’s cost information.
@@ -24,42 +21,12 @@ final readonly class ExtensionBitsProduct
      *                                           true if the event is broadcast to all instances.
      */
     public function __construct(
-        private string $sku,
-        private ExtensionBitsAmount $cost,
-        private bool $inDevelopment,
-        private string $displayName,
-        private DateTimeInterface $expiration,
-        private bool $isBroadcast
+        public string $sku,
+        public ExtensionBitsAmount $cost,
+        public bool $inDevelopment,
+        public string $displayName,
+        public DateTimeInterface $expiration,
+        public bool $isBroadcast
     ) {
-    }
-
-    public function getSku(): string
-    {
-        return $this->sku;
-    }
-
-    public function getCost(): ExtensionBitsAmount
-    {
-        return $this->cost;
-    }
-
-    public function isInDevelopment(): bool
-    {
-        return $this->inDevelopment;
-    }
-
-    public function getDisplayName(): string
-    {
-        return $this->displayName;
-    }
-
-    public function getExpiration(): DateTimeInterface
-    {
-        return $this->expiration;
-    }
-
-    public function isBroadcast(): bool
-    {
-        return $this->isBroadcast;
     }
 }

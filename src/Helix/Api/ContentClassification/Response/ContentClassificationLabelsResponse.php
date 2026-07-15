@@ -11,5 +11,6 @@ final readonly class ContentClassificationLabelsResponse
     /** @param list<ContentClassificationLabel> $data */
     public function __construct(
         public array $data,
-    ) {}
+    ) {
+    }
 }

@@ -22,5 +22,6 @@ final readonly class UpdateGuestStarSlotRequest
         public string $sessionId,
         public string $sourceSlotId,
         public ?string $destinationSlotId = null,
-    ) {}
+    ) {
+    }
 }

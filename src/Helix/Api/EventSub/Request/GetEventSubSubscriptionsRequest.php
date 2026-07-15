@@ -23,5 +23,6 @@ final readonly class GetEventSubSubscriptionsRequest
         public ?string $type = null,
         public ?string $userId = null,
         public ?string $after = null,
-    ) {}
+    ) {
+    }
 }

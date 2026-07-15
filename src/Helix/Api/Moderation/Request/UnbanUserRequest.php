@@ -16,5 +16,6 @@ final readonly class UnbanUserRequest
         public string $broadcasterId,
         public string $moderatorId,
         public string $userId,
-    ) {}
+    ) {
+    }
 }

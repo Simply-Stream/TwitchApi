@@ -17,5 +17,6 @@ final readonly class CheckAutoModStatusRequest
     public function __construct(
         public string $broadcasterId,
         public CheckAutoModStatus $status,
-    ) {}
+    ) {
+    }
 }

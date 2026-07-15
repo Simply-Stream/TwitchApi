@@ -11,5 +11,6 @@ final readonly class CreateStreamMarkerResponse
     /** @param list<Marker> $data */
     public function __construct(
         public array $data,
-    ) {}
+    ) {
+    }
 }

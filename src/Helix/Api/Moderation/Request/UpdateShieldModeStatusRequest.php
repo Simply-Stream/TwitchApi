@@ -19,5 +19,6 @@ final readonly class UpdateShieldModeStatusRequest
         public string $broadcasterId,
         public string $moderatorId,
         public UpdateShieldModeStatus $status,
-    ) {}
+    ) {
+    }
 }

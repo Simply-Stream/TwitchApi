@@ -13,5 +13,6 @@ final readonly class CreatePollRequest
      */
     public function __construct(
         public CreatePoll $poll,
-    ) {}
+    ) {
+    }
 }

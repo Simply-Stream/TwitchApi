@@ -13,5 +13,6 @@ final readonly class RemoveChannelVipRequest
     public function __construct(
         public string $broadcasterId,
         public string $userId,
-    ) {}
+    ) {
+    }
 }

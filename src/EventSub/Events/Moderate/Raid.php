@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 namespace SimplyStream\TwitchApi\EventSub\Events\Moderate;
 
 final readonly class Raid
@@ -15,5 +17,6 @@ final readonly class Raid
         public string $userLogin,
         public string $userName,
         public int $viewerCount,
-    ) {}
+    ) {
+    }
 }

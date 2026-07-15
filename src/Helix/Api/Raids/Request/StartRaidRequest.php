@@ -14,5 +14,6 @@ final readonly class StartRaidRequest
     public function __construct(
         public string $fromBroadcasterId,
         public string $toBroadcasterId,
-    ) {}
+    ) {
+    }
 }

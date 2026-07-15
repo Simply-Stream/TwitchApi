@@ -12,5 +12,6 @@ final readonly class CancelRaidRequest
      */
     public function __construct(
         public string $broadcasterId,
-    ) {}
+    ) {
+    }
 }

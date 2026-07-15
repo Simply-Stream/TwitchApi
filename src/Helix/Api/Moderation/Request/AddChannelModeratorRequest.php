@@ -14,5 +14,6 @@ final readonly class AddChannelModeratorRequest
     public function __construct(
         public string $broadcasterId,
         public string $userId,
-    ) {}
+    ) {
+    }
 }

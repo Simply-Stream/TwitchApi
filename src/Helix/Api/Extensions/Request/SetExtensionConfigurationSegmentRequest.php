@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApi\Helix\Models\Extensions;
+namespace SimplyStream\TwitchApi\Helix\Api\Extensions\Request;
 
-use SimplyStream\TwitchApi\Helix\Models\AbstractModel;
 use Webmozart\Assert\Assert;
 
-final readonly class SetExtensionConfigurationSegmentRequest extends AbstractModel
+final readonly class SetExtensionConfigurationSegmentRequest
 {
     /**
      * @param string      $extensionId   The ID of the extension to update.
@@ -23,11 +22,11 @@ final readonly class SetExtensionConfigurationSegmentRequest extends AbstractMod
      *                                   not specified, the latest definition is updated.
      */
     public function __construct(
-        private string $extensionId,
-        private string $segment,
-        private ?string $broadcasterId = null,
-        private ?string $content = null,
-        private ?string $version = null
+        public string $extensionId,
+        public string $segment,
+        public ?string $broadcasterId = null,
+        public ?string $content = null,
+        public ?string $version = null
     ) {
         Assert::stringNotEmpty($this->extensionId, 'Extension id can\'t be empty');
         Assert::inArray(
@@ -35,30 +34,5 @@ final readonly class SetExtensionConfigurationSegmentRequest extends AbstractMod
             ['broadcaster', 'developer', 'global'],
             'Segment got an invalid value. Allowed values: %2$s, got %s'
         );
-    }
-
-    public function getExtensionId(): string
-    {
-        return $this->extensionId;
-    }
-
-    public function getSegment(): string
-    {
-        return $this->segment;
-    }
-
-    public function getBroadcasterId(): ?string
-    {
-        return $this->broadcasterId;
-    }
-
-    public function getContent(): ?string
-    {
-        return $this->content;
-    }
-
-    public function getVersion(): ?string
-    {
-        return $this->version;
     }
 }

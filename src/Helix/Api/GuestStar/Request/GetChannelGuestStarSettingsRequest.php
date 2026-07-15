@@ -14,5 +14,6 @@ final readonly class GetChannelGuestStarSettingsRequest
     public function __construct(
         public string $broadcasterId,
         public string $moderatorId,
-    ) {}
+    ) {
+    }
 }

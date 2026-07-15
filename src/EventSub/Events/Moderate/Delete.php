@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 namespace SimplyStream\TwitchApi\EventSub\Events\Moderate;
 
 final readonly class Delete
@@ -17,5 +19,6 @@ final readonly class Delete
         public string $userName,
         public string $messageId,
         public string $messageBody,
-    ) {}
+    ) {
+    }
 }

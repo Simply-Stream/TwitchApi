@@ -11,5 +11,6 @@ final readonly class ShieldModeStatusResponse
     /** @param list<ShieldModeStatus> $data */
     public function __construct(
         public array $data,
-    ) {}
+    ) {
+    }
 }

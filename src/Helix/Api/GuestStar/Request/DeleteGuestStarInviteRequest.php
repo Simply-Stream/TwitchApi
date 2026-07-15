@@ -18,5 +18,6 @@ final readonly class DeleteGuestStarInviteRequest
         public string $moderatorId,
         public string $sessionId,
         public string $guestId,
-    ) {}
+    ) {
+    }
 }

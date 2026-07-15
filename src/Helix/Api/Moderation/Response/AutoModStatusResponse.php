@@ -11,5 +11,6 @@ final readonly class AutoModStatusResponse
     /** @param list<AutoModStatus> $data */
     public function __construct(
         public array $data,
-    ) {}
+    ) {
+    }
 }

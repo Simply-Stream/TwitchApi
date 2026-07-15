@@ -4,12 +4,8 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Extensions;
 
-use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
-
 final readonly class ExtensionConfigurationSegment
 {
-    use SerializesModels;
-
     /**
      * @param string $segment       The type of segment. Possible values are:
      *                              - broadcaster
@@ -22,30 +18,10 @@ final readonly class ExtensionConfigurationSegment
      * @param string $version       The version number that identifies this definition of the segment’s data.
      */
     public function __construct(
-        private string $segment,
-        private string $broadcasterId,
-        private string $content,
-        private string $version
+        public string $segment,
+        public string $broadcasterId,
+        public string $content,
+        public string $version
     ) {
-    }
-
-    public function getSegment(): string
-    {
-        return $this->segment;
-    }
-
-    public function getBroadcasterId(): string
-    {
-        return $this->broadcasterId;
-    }
-
-    public function getContent(): string
-    {
-        return $this->content;
-    }
-
-    public function getVersion(): string
-    {
-        return $this->version;
     }
 }

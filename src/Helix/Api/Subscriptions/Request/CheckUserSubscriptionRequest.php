@@ -14,5 +14,6 @@ final readonly class CheckUserSubscriptionRequest
     public function __construct(
         public string $broadcasterId,
         public string $userId,
-    ) {}
+    ) {
+    }
 }

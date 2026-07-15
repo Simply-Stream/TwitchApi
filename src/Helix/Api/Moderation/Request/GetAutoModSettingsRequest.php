@@ -14,5 +14,6 @@ final readonly class GetAutoModSettingsRequest
     public function __construct(
         public string $broadcasterId,
         public string $moderatorId,
-    ) {}
+    ) {
+    }
 }

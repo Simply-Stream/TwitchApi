@@ -16,5 +16,6 @@ final readonly class GetGuestStarInvitesRequest
         public string $broadcasterId,
         public string $moderatorId,
         public string $sessionId,
-    ) {}
+    ) {
+    }
 }

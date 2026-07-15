@@ -11,5 +11,6 @@ final readonly class CheckUserSubscriptionResponse
     /** @param list<Subscription> $data */
     public function __construct(
         public array $data,
-    ) {}
+    ) {
+    }
 }

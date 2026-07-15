@@ -14,5 +14,6 @@ final readonly class RemoveChannelModeratorRequest
     public function __construct(
         public string $broadcasterId,
         public string $userId,
-    ) {}
+    ) {
+    }
 }

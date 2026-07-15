@@ -13,5 +13,6 @@ final readonly class CreateStreamMarkerRequest
      */
     public function __construct(
         public CreateStreamMarker $marker,
-    ) {}
+    ) {
+    }
 }

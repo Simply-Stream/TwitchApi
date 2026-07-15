@@ -12,5 +12,6 @@ final readonly class CreateGuestStarSessionRequest
      */
     public function __construct(
         public string $broadcasterId,
-    ) {}
+    ) {
+    }
 }

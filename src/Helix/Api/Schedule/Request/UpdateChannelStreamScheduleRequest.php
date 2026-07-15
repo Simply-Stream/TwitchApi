@@ -31,5 +31,6 @@ final readonly class UpdateChannelStreamScheduleRequest
         public ?DateTimeInterface $vacationStartTime = null,
         public ?DateTimeInterface $vacationEndTime = null,
         public ?string $timezone = null,
-    ) {}
+    ) {
+    }
 }

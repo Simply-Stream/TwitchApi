@@ -23,5 +23,6 @@ final readonly class AssignGuestStarSlotRequest
         public string $sessionId,
         public string $guestId,
         public string $slotId,
-    ) {}
+    ) {
+    }
 }

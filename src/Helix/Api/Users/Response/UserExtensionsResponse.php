@@ -11,5 +11,6 @@ final readonly class UserExtensionsResponse
     /** @param list<UserExtension> $data */
     public function __construct(
         public array $data,
-    ) {}
+    ) {
+    }
 }

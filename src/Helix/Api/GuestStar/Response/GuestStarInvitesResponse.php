@@ -11,5 +11,6 @@ final readonly class GuestStarInvitesResponse
     /** @param list<GuestStarInvite> $data */
     public function __construct(
         public array $data,
-    ) {}
+    ) {
+    }
 }

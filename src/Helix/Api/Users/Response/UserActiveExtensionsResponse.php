@@ -10,5 +10,6 @@ final readonly class UserActiveExtensionsResponse
 {
     public function __construct(
         public UserActiveExtension $data,
-    ) {}
+    ) {
+    }
 }

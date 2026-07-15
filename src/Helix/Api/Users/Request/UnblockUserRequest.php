@@ -12,5 +12,6 @@ final readonly class UnblockUserRequest
      */
     public function __construct(
         public string $targetUserId,
-    ) {}
+    ) {
+    }
 }

@@ -14,5 +14,6 @@ final readonly class EndGuestStarSessionRequest
     public function __construct(
         public string $broadcasterId,
         public string $sessionId,
-    ) {}
+    ) {
+    }
 }

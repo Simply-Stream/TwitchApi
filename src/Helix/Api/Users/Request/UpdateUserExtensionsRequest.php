@@ -13,5 +13,6 @@ final readonly class UpdateUserExtensionsRequest
      */
     public function __construct(
         public UpdateUserExtension $extensions,
-    ) {}
+    ) {
+    }
 }

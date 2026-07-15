@@ -23,5 +23,6 @@ final readonly class DeleteChatMessagesRequest
         public string $broadcasterId,
         public string $moderatorId,
         public ?string $messageId = null,
-    ) {}
+    ) {
+    }
 }

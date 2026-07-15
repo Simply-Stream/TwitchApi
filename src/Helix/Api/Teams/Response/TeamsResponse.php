@@ -11,5 +11,6 @@ final readonly class TeamsResponse
     /** @param list<Team> $data */
     public function __construct(
         public array $data,
-    ) {}
+    ) {
+    }
 }

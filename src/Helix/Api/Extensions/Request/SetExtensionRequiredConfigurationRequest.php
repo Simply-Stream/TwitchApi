@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApi\Helix\Models\Extensions;
+namespace SimplyStream\TwitchApi\Helix\Api\Extensions\Request;
 
-use SimplyStream\TwitchApi\Helix\Models\AbstractModel;
 use Webmozart\Assert\Assert;
 
-final readonly class SetExtensionRequiredConfigurationRequest extends AbstractModel
+final readonly class SetExtensionRequiredConfigurationRequest
 {
     /**
      * @param string $extensionId           The ID of the extension to update.
@@ -15,27 +14,12 @@ final readonly class SetExtensionRequiredConfigurationRequest extends AbstractMo
      * @param string $requiredConfiguration The required_configuration string to use with the extension.
      */
     public function __construct(
-        private string $extensionId,
-        private string $extensionVersion,
-        private string $requiredConfiguration
+        public string $extensionId,
+        public string $extensionVersion,
+        public string $requiredConfiguration
     ) {
         Assert::stringNotEmpty($this->extensionId, 'Extension ID can\'t be empty');
         Assert::stringNotEmpty($this->extensionVersion, 'Extension version can\'t be empty');
         Assert::stringNotEmpty($this->requiredConfiguration, 'Required configuration can\'t be empty');
-    }
-
-    public function getExtensionId(): string
-    {
-        return $this->extensionId;
-    }
-
-    public function getExtensionVersion(): string
-    {
-        return $this->extensionVersion;
-    }
-
-    public function getRequiredConfiguration(): string
-    {
-        return $this->requiredConfiguration;
     }
 }

@@ -245,6 +245,9 @@ final readonly class MyAccessToken implements AccessTokenInterface
 Which scopes a call requires is documented on each API method. Most read endpoints accept an app access token; anything
 that acts on a broadcaster's behalf needs a user access token with the matching scope.
 
+Extension endpoints expect a JWT signed with your extension secret instead of an OAuth token. The library treats both
+the same way — wrap whichever token you hold in an `AccessTokenInterface` implementation. Creating the JWT is up to you.
+
 ### Custom base URL
 
 The `$baseUrl` constructor argument defaults to `https://api.twitch.tv/helix` and can be pointed elsewhere — at the

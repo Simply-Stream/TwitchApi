@@ -16,5 +16,6 @@ final readonly class UpdateChannelGuestStarSettingsRequest
     public function __construct(
         public string $broadcasterId,
         public UpdateChannelGuestStarSetting $settings,
-    ) {}
+    ) {
+    }
 }

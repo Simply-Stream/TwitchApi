@@ -13,5 +13,6 @@ final readonly class ManageHeldAutoModMessageRequest
      */
     public function __construct(
         public ManageHeldAutoModMessage $message,
-    ) {}
+    ) {
+    }
 }

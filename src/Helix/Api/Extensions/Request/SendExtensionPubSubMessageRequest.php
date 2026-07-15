@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApi\Helix\Models\Extensions;
+namespace SimplyStream\TwitchApi\Helix\Api\Extensions\Request;
 
-use SimplyStream\TwitchApi\Helix\Models\AbstractModel;
 use Webmozart\Assert\Assert;
 
-final readonly class SendExtensionPubSubMessageRequest extends AbstractModel
+final readonly class SendExtensionPubSubMessageRequest
 {
     /**
      * @param array       $target            The target of the message. Possible values are:
@@ -26,10 +25,10 @@ final readonly class SendExtensionPubSubMessageRequest extends AbstractModel
      *                                       if is_global_broadcast is set to true.
      */
     public function __construct(
-        private array $target,
-        private string $message,
-        private bool $isGlobalBroadcast = false,
-        private ?string $broadcasterId = null,
+        public array $target,
+        public string $message,
+        public bool $isGlobalBroadcast = false,
+        public ?string $broadcasterId = null,
     ) {
         Assert::allString($this->target, 'Target can only be an array of strings');
 
@@ -50,25 +49,5 @@ final readonly class SendExtensionPubSubMessageRequest extends AbstractModel
                 'Target got an invalid value. Possible values are: broadcast, global, whisper-USER_ID. Got %s.'
             );
         }
-    }
-
-    public function getTarget(): array
-    {
-        return $this->target;
-    }
-
-    public function getMessage(): string
-    {
-        return $this->message;
-    }
-
-    public function isGlobalBroadcast(): bool
-    {
-        return $this->isGlobalBroadcast;
-    }
-
-    public function getBroadcasterId(): ?string
-    {
-        return $this->broadcasterId;
     }
 }

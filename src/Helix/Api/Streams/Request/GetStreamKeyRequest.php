@@ -12,5 +12,6 @@ final readonly class GetStreamKeyRequest
      */
     public function __construct(
         public string $broadcasterId,
-    ) {}
+    ) {
+    }
 }

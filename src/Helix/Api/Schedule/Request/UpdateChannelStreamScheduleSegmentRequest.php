@@ -19,5 +19,6 @@ final readonly class UpdateChannelStreamScheduleSegmentRequest
         public string $broadcasterId,
         public string $id,
         public UpdateChannelStreamScheduleSegment $segment,
-    ) {}
+    ) {
+    }
 }
