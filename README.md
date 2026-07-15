@@ -4,55 +4,53 @@
 
 -------------------------------
 
-Welcome to the PHP Twitch Helix API Library, a powerful and developer-friendly implementation of the new Twitch API "
-Helix," complete with robust EventSub functionality. This library seamlessly integrates the latest features from Twitch,
-providing a straightforward and efficient way to interact with the Twitch platform in your PHP projects.
-
 ## Key Features
 
-**Helix API Support**: Harness the full potential of the Twitch Helix API with ease. Retrieve user information, access
-streams, and more, all through a clean and intuitive PHP interface.
+**Framework-agnostic**: The library depends on PSR-18 (HTTP client) and PSR-17 (request/stream factories) only. It
+contains no framework bindings and instantiates no HTTP client of its own.
 
-**EventSub Functionality**: Embrace the future of Twitch event handling with our comprehensive EventSub implementation.
-Keep your application in sync with real-time events, ensuring timely and accurate updates.
+**Serializer-independent**: JSON mapping is delegated through two interfaces, `DenormalizerInterface` and
+`NormalizerInterface`. A Symfony Serializer bridge is available as a separate package; any other implementation works
+as long as it satisfies the two interfaces. The models carry no serializer-specific attributes.
 
-**Webhook Integration**: Our library fully supports webhook communication for EventSub, enabling seamless communication
-between Twitch and your application. Stay informed about user activities and channel events effortlessly.
+**Helix coverage**: One client class per API namespace (`UsersApi`, `StreamsApi`, `ChannelsApi`, …), each extending
+`AbstractApi` and taking the same three constructor arguments. Requests and responses are typed objects; no associative
+arrays are returned.
 
-**Data Transfer Objects (DTOs)**: Differentiating itself from traditional approaches, our library employs Data Transfer
-Objects (DTOs) to map incoming JSON responses to PHP objects. This abstraction simplifies the handling of Twitch data,
-enhancing code readability and maintainability.
+**Typed models**: Responses map to `final readonly` classes with promoted, typed properties. Timestamps are typed as
+`DateTimeInterface`. Nullability follows observed API behavior, including fields where Twitch sends an empty string
+rather than `null`.
 
-To see a full list of implemented APIs, have a look at the [Implemented APIs](#implemented-apis) section.
+**EventSub webhook pipeline**: `EventSubMessageProcessor` handles signature verification (HMAC-SHA256), message
+freshness, deduplication, and type resolution. Subscription type and version are read from the
+`Twitch-Eventsub-Subscription-Type` and `-Version` headers, which allows multiple versions of the same type — such as
+`channel.moderate` v1 and v2 — to be registered simultaneously.
 
-## Installation
-
-```bash
-composer req simplystream/twitch-api
-```
+To see a full list of implemented APIs and EventSub events, have a look at the [Implemented APIs](#implemented-apis)
+section.
 
 ## Implemented APIs
 
 | API                      | Implemented | Tested |
 |--------------------------|-------------|--------|
-| AdsApi                   | ✅           | ℹ️     |
-| AnalyticsApi             | ✅           | ❗      |
-| BitsApi                  | ✅           | ℹ️     |
+| AdsApi                   | ✅           | ✅      |
+| AnalyticsApi             | ✅           | ✅      |
+| BitsApi                  | ✅           | ✅      |
 | ChannelPointsApi         | ✅           | ✅      |
 | ChannelsApi              | ✅           | ✅      |
 | CharityApi               | ✅           | ✅      |
 | ChatApi                  | ✅           | ✅      |
-| ClipsApi                 | ✅           | ✅      |
+| ClipsApi                 | ✅           | ✅     |
 | ContentClassificationApi | ✅           | ✅      |
-| EntitlementsApi          | ✅           | ✅      |
-| EventSubApi              | ✅           | ❗      |
-| EventSub system          | ✅           | ✅      |
-| ExtensionsApi            | ✅           | ❗      |
+| EntitlementsApi          | ✅           | ℹ️     |
+| EventSubApi              | ✅           | ✅      |
+| EventSub system          | ✅           | ℹ️     |
+| ExtensionsApi            | ❗           | ❗      |
 | GamesApi                 | ✅           | ✅      |
 | GoalsApi                 | ✅           | ✅      |
-| GuestStarApi (Beta)      | ✅           | ❗      |
+| GuestStarApi (Beta)      | ✅           | ✅      |
 | HypeTrainApi             | ✅           | ✅      |
-| ModerationApi            | ✅           | ℹ️     |
+| ModerationApi            | ✅           | ✅      |
 | PollsApi                 | ✅           | ✅      |
 | PredictionsApi           | ✅           | ✅      |
 | RaidsApi                 | ✅           | ✅      |
@@ -61,82 +59,210 @@ composer req simplystream/twitch-api
 | StreamsApi               | ✅           | ✅      |
 | SubscriptionsApi         | ✅           | ✅      |
 | TeamsApi                 | ✅           | ✅      |
-| UsersApi                 | ✅           | ℹ️     |
+| UsersApi                 | ✅           | ✅      |
 | VideosApi                | ✅           | ✅      |
 | WhispersApi              | ✅           | ✅      |
 
-❗ = Tests can't be implemented due to lack of mock-api-data. Mapping should work on Twitch prod systems
-️️ℹ️ = Some tests are available, some are missing due to lack of mock-api data. Mapping should work on Twitch prod
-systems
+✅ = Implemented, covered by unit and integration tests  
+❗ = Not migrated to v2 / not covered
+ℹ️ = Implemented and covered, with known open questions:
 
-**Tested in this case means, that functional or unit tests exist.**
+- **EntitlementsApi** — `ProductData` may use camelCase keys (`inDevelopment`, `displayName`). Never verified against
+  real payloads.
+- **EventSub system** — the message pipeline (signature verification, freshness, type registry, denormalization,
+  dispatch) is covered by functional roundtrip tests, but only for the event types the Twitch CLI can trigger. See the
+  table below.
 
-There's also a container api service that can hold all the APIs implemented.
-See [TwitchApi](src/Helix/Api/TwitchApi.php).
+## EventSub Events
 
-### EventSub
+| Event                                                            | Modelled | Roundtrip test |
+|------------------------------------------------------------------|----------|----------------|
+| automod.message.hold (v1, v2)                                     | ✅        | ❗              |
+| automod.message.update (v1, v2)                                   | ✅        | ❗              |
+| automod.settings.update                                           | ✅        | ❗              |
+| automod.terms.update                                              | ✅        | ❗              |
+| channel.ad_break.begin                                            | ✅        | ✅              |
+| channel.ban                                                       | ✅        | ✅              |
+| channel.bits.use                                                  | ✅        | ❗              |
+| channel.channel_points_automatic_reward_redemption.add (v1, v2)   | ✅        | ❗              |
+| channel.channel_points_custom_reward.add / remove / update        | ✅        | ✅              |
+| channel.channel_points_custom_reward_redemption.add / update      | ✅        | ✅              |
+| channel.charity_campaign.donate / progress / start / stop         | ✅        | ✅              |
+| channel.chat.clear                                                | ✅        | ❗              |
+| channel.chat.clear_user_messages                                  | ✅        | ❗              |
+| channel.chat.message                                              | ✅        | ❗              |
+| channel.chat.message_delete                                       | ✅        | ❗              |
+| channel.chat.notification                                         | ✅        | ❗              |
+| channel.chat.user_message_hold / update                           | ✅        | ❗              |
+| channel.chat_settings.update                                      | ✅        | ❗              |
+| channel.cheer                                                     | ✅        | ✅              |
+| channel.custom_power_up_redemption.add                            | ✅        | ❗              |
+| channel.follow (v2)                                               | ✅        | ✅              |
+| channel.goal.begin / end / progress                               | ✅        | ✅              |
+| channel.guest_star_guest.update (Beta)                            | ✅        | ❗              |
+| channel.guest_star_session.begin / end (Beta)                     | ✅        | ❗              |
+| channel.guest_star_settings.update (Beta)                         | ✅        | ❗              |
+| channel.hype_train.begin / end / progress (v2)                    | ✅        | ℹ️             |
+| channel.moderate (v1, v2)                                         | ✅        | ❗              |
+| channel.moderator.add / remove                                    | ✅        | ✅              |
+| channel.poll.begin / end / progress                               | ✅        | ✅              |
+| channel.prediction.begin / end / lock / progress                  | ✅        | ✅              |
+| channel.raid                                                      | ✅        | ✅              |
+| channel.shared_chat.begin / end / update                          | ✅        | ❗              |
+| channel.shield_mode.begin / end                                   | ✅        | ✅              |
+| channel.shoutout.create / receive                                 | ✅        | ✅              |
+| channel.subscribe                                                 | ✅        | ✅              |
+| channel.subscription.end / gift / message                         | ✅        | ✅              |
+| channel.suspicious_user.message / update                          | ✅        | ❗              |
+| channel.unban                                                     | ✅        | ✅              |
+| channel.unban_request.create                                      | ✅        | ℹ️             |
+| channel.unban_request.resolve                                     | ✅        | ✅              |
+| channel.update (v2)                                               | ✅        | ✅              |
+| channel.vip.add / remove                                          | ✅        | ❗              |
+| channel.warning.acknowledge / send                                | ✅        | ❗              |
+| conduit.shard.disabled                                            | ✅        | ❗              |
+| drop.entitlement.grant                                            | ✅        | ✅              |
+| extension.bits_transaction.create                                 | ✅        | ✅              |
+| stream.offline / online                                           | ✅        | ✅              |
+| user.authorization.grant / revoke                                 | ✅        | ✅              |
+| user.update                                                       | ✅        | ✅              |
+| user.whisper.message                                              | ✅        | ❗              |
 
-Besides the APIs, there's also a service available for the EventSub handling. This service will handle the registration
-to an event and also the webhook callbacks by validating the challenge send by Twitch.
+✅ = Modeled from the Twitch docs and exercised by a functional roundtrip test against a captured, signed webhook
+fixture  
+❗ = Modeled, but untested: `twitch event trigger` cannot produce this type, so no signed fixture exists  
+ℹ️ = Tested against a hand-patched fixture:
 
-**Please note, that this package only supports the webhook implementation!**
-This is due to the fact, that PHP might not be the ideal programming language to use for long running processes like a
-websocket.
+- **channel.hype_train.\*** — the CLI only emits v1 payloads. The v2 fixtures were derived from the v1 capture plus the
+  documented v2 fields; `all_time_high_level` and `all_time_high_total` carry invented values.
+- **channel.unban_request.create** — the CLI omits `event.id`, which the docs list as required. Added by hand.
 
-#### Websocket
-
-To use the websocket implementation, you should check out the following projects:
-
-- [TwitchLib (C#)](https://github.com/TwitchLib/TwitchLib)
-- [Twurple (TypeScript)](https://github.com/twurple/twurple)
-  and [docs](https://twurple.js.org/docs/getting-data/eventsub/listener-setup.html)
-- More will follow
+> **Note:** "Modeled ✅" means the class matches the field-level documentation, not that it has been verified against
+> production payloads. Twitch's example payloads proved unreliable throughout; the field tables are the authoritative
+> source.
 
 ## Usage
 
-To get everything up and running, you need to set some things up.
+### Getting started
+
+#### Installation
+
+```bash
+composer req simplystream/twitch-api
+```
+
+#### Creating an API client
+
+The library is framework-agnostic and ships no HTTP client of its own. Bring your own PSR-18 client and PSR-17
+factories, plus a serializer that implements the library's `DenormalizerInterface` and `NormalizerInterface`.
 
 ```php
-$client = new Client();
-// Same for the request factory, it just needs to implement the RequestFactoryInterface&StreamFactoryInterface.
-// Optionally the UriFactoryInterface, too, if you want to use the same object for the UriFactory.
-$requestFactory = new RequestFactory();
+use Nyholm\Psr7\Factory\Psr17Factory;
+use SimplyStream\TwitchApi\Helix\Api\ApiClient;
+use SimplyStream\TwitchApi\Helix\Api\UsersApi;
+use SimplyStream\TwitchApi\Helix\Api\Users\Request\GetUsersRequest;
+
+$psr17 = new Psr17Factory();
+$httpClient = new Symfony\Component\HttpClient\Psr18Client();
 
 $apiClient = new ApiClient(
-    $client,
-    $requestFactory,
-    new \CuyZ\Valinor\MapperBuilder(),
-    $requestFactory,
-    ['clientId' => 'YOUR_CLIENT_ID', 'webhook' => ['secret' => 'YOUR_SECRET']]
+    httpClient: $httpClient,
+    requestFactory: $psr17,
+    streamFactory: $psr17,
+    clientId: 'your-client-id',
 );
 
-$usersApi = new UsersApi($apiClient)
-$response = $usersApi->getUsers(logins: ['some_login_name'], accessToken: $accessToken);
+// Any object implementing both DenormalizerInterface and NormalizerInterface.
+// A ready-made Symfony Serializer setup will be provided by the serializer bridge
+// package; see "Serialization".
+$serializer = /* ... */;
 
-foreach($response->getData() as $user) {
-    echo $user->getDisplayName();
+$usersApi = new UsersApi($apiClient, $serializer, $serializer);
+
+$response = $usersApi->getUsers(
+    new GetUsersRequest(logins: ['twitchdev']),
+    $accessToken,
+);
+
+foreach ($response->data as $user) {
+    echo $user->displayName, ' — ', $user->broadcasterType, PHP_EOL;
 }
 ```
 
-### Bring your own client
+We recommend either using the all-in-one package [Guzzlehttp](https://packagist.org/packages/guzzlehttp/guzzle]) or [PHP-HTTP](https://packagist.org/packages/php-http/curl-client) with the PSR7 implementation 
+[Nyholm/PSR7](https://github.com/Nyholm/psr7) or [Guzzle/PSR7](https://packagist.org/packages/guzzlehttp/psr7).
 
-Instead of forcing you to implement yet another HTTP client, this library gives you the opportunity to use your own.
-The only restriction you got: It has to be PSR-18 compliant and implement the
-interface `\Psr\Http\Client\ClientInterface`.
+Every namespace of the Helix API has its own slim client class — `UsersApi`, `StreamsApi`, `ChannelsApi`, and so on.
+They all take the same three constructor arguments, so wiring them up in a DI container is a one-liner per class.
 
-We recommend either using the all in one package [Guzzlehttp](https://packagist.org/packages/guzzlehttp/guzzle])
-or [PHP-HTTP](https://packagist.org/packages/php-http/curl-client) with the PSR7
-implementation [Nyholm/PSR7](https://github.com/Nyholm/psr7)
-or [Guzzle/PSR7](https://packagist.org/packages/guzzlehttp/psr7).
+Each method takes a request object and an access token:
 
-### AccessToken
+```php
+use SimplyStream\TwitchApi\Helix\Api\StreamsApi;
+use SimplyStream\TwitchApi\Helix\Api\Streams\Request\GetStreamsRequest;
+use SimplyStream\TwitchApi\Helix\Api\Streams\StreamType;
 
-In older versions, the AccessToken have been autogenerated by the sendRequest method by a TwitchProvider that has been
-build into this library. This provider is now removed and you need to give the `$api->sendRequest(...)` method an
-AccessToken yourself!
+$streamsApi = new StreamsApi($apiClient, $serializer, $serializer);
 
-Due to the fact that this library still requires the PHP league implementation of an AccessTokenInterface, we recommend
-using https://github.com/vertisan/oauth2-twitch-helix to generate an AccessToken.
+$streams = $streamsApi->getStreams(
+    new GetStreamsRequest(
+        userLogins: ['twitchdev', 'twitch'],
+        type: StreamType::Live,
+        first: 50,
+    ),
+    $accessToken,
+);
+
+echo $streams->data[0]->title;
+echo $streams->pagination?->cursor;
+```
+
+### Access tokens
+
+This library does not implement the OAuth flow. Getting and refreshing tokens is up to you — use any OAuth client you
+like, or Twitch's own endpoints directly.
+
+What the library needs is an implementation of `AccessTokenInterface`, which it uses to build the `Authorization`
+header. Wrapping a token string you already hold is enough:
+
+```php
+use SimplyStream\TwitchApi\Helix\Authentication\AccessTokenInterface;
+
+final readonly class MyAccessToken implements AccessTokenInterface
+{
+    public function __construct(
+        private string $token,
+    ) {
+    }
+
+    public function getAccessToken(): string
+    {
+        return $this->token;
+    }
+}
+```
+
+Which scopes a call requires is documented on each API method. Most read endpoints accept an app access token; anything
+that acts on a broadcaster's behalf needs a user access token with the matching scope.
+
+### Custom base URL
+
+The `$baseUrl` constructor argument defaults to `https://api.twitch.tv/helix` and can be pointed elsewhere — at the
+Twitch CLI's mock API, for instance:
+
+```php
+$apiClient = new ApiClient(
+    httpClient: $httpClient,
+    requestFactory: $psr17,
+    streamFactory: $psr17,
+    clientId: 'your-client-id',
+    baseUrl: 'http://localhost:8080/mock',
+);
+```
+
+### Serialization
+
+*To be documented once the serializer bridge package is available.*
 
 ## Supported Frameworks
 
@@ -145,15 +271,6 @@ Currently, there is only an integration for [Symfony](https://symfony.com).
 - [simplystream/twitch-api-bundle](https://github.com/Simply-Stream/TwitchApiBundle) (Still WIP, most of the code there
   has been moved to this repository)
 
-## TODO List
-
-Even though most of this library is ready to use, there's still a lot to do. Here is a brief overview of what will come
-next ordered more or less by priority:
-
-- Factories/Builder to easily instantiate the APIs and maybe some DTOs, especially the TwitchApi class
-- Middleware features, to easily extend requests (e.g.: RateLimitMiddleware)
-- A guideline for contributions
-
 ## Contribution
 
 We welcome contributions! Feel free to open issues, submit pull requests, or join our community discussions.
@@ -161,7 +278,7 @@ A short guide for contribution will follow.
 
 ## Support
 
-You really like this project and want to support us in a different way than contribution?
+You really like this project and want to support us differently than contribution?
 Feel free to support me on Ko-fi ♥️
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/R6R0HV2IO)
