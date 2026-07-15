@@ -2,6 +2,7 @@
     "name": "simply-stream/twitch-api",
     "description": "",
     "license": "MIT",
+    "version": "2.0.0",
     "authors": [
         {
             "name": "TobiDev",
@@ -9,9 +10,10 @@
         }
     ],
     "require": {
-        "php": "^8.2",
+        "php": "^8.4",
         "ext-json": "*",
         "psr/http-client": "^1.0",
+        "psr/http-factory": "^1.0",
         "psr/log": "^3.0",
         "webmozart/assert": "^2.0.0"
     },
