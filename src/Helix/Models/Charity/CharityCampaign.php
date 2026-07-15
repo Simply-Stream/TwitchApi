@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Charity;
 
-use SimplyStream\TwitchApi\EventSub\Shared\Amount;
-
 final readonly class CharityCampaign
 {
     /**
