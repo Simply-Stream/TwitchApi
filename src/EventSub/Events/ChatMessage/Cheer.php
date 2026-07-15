@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApi\EventSub\Events;
+namespace SimplyStream\TwitchApi\EventSub\Events\ChatMessage;
 
 final readonly class Cheer
 {

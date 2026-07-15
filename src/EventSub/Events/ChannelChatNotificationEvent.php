@@ -27,19 +27,19 @@ use SimplyStream\TwitchApi\EventSub\Shared\Message;
 final readonly class ChannelChatNotificationEvent implements EventInterface
 {
     /**
-     * @param string                         $broadcasterUserId
-     * @param string                         $broadcasterUserName
-     * @param string                         $broadcasterUserLogin
-     * @param string                         $chatterUserId
-     * @param string                         $chatterUserName
-     * @param string                         $chatterUserLogin
-     * @param bool                           $chatterIsAnonymous
-     * @param string                         $color
-     * @param Badge[]                        $badges
-     * @param string                         $systemMessage
-     * @param string                         $messageId
-     * @param Message                        $message
-     * @param string                         $noticeType                 One of: sub, resub, sub_gift,
+     * @param string                                                              $broadcasterUserId
+     * @param string                                                              $broadcasterUserName
+     * @param string                                                              $broadcasterUserLogin
+     * @param string                                                              $chatterUserId
+     * @param string                                                              $chatterUserName
+     * @param string                                                              $chatterUserLogin
+     * @param bool                                                                $chatterIsAnonymous
+     * @param string                                                              $color
+     * @param Badge[]                                                             $badges
+     * @param string                                                              $systemMessage
+     * @param string                                                              $messageId
+     * @param \SimplyStream\TwitchApi\EventSub\Events\SubscriptionMessage\Message $message
+     * @param string                                                              $noticeType                 One of: sub, resub, sub_gift,
      *                                                                   community_sub_gift, gift_paid_upgrade,
      *                                                                   prime_paid_upgrade, raid, unraid,
      *                                                                   pay_it_forward, announcement, bits_badge_tier,

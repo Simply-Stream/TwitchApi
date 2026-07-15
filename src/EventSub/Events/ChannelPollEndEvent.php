@@ -9,6 +9,7 @@ use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\ChannelPollEndCondition;
 use SimplyStream\TwitchApi\EventSub\EventInterface;
 use SimplyStream\TwitchApi\EventSub\Events\Poll\BitsVoting;
+use SimplyStream\TwitchApi\EventSub\Events\Poll\ChannelPointsVoting;
 
 #[EventSubSubscription(type: 'channel.poll.end', version: '1', condition: ChannelPollEndCondition::class)]
 final readonly class ChannelPollEndEvent implements EventInterface

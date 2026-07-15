@@ -9,6 +9,7 @@ use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\ChannelPollBeginCondition;
 use SimplyStream\TwitchApi\EventSub\EventInterface;
 use SimplyStream\TwitchApi\EventSub\Events\Poll\BitsVoting;
+use SimplyStream\TwitchApi\EventSub\Events\Poll\ChannelPointsVoting;
 use SimplyStream\TwitchApi\Helix\Models\Polls\Choice;
 
 #[EventSubSubscription(type: 'channel.poll.begin', version: '1', condition: ChannelPollBeginCondition::class)]

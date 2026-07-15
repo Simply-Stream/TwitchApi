@@ -8,6 +8,9 @@ use DateTimeInterface;
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\ChannelPointsCustomRewardRemoveCondition;
 use SimplyStream\TwitchApi\EventSub\EventInterface;
+use SimplyStream\TwitchApi\EventSub\Events\ChannelPointCustomReward\GlobalCooldown;
+use SimplyStream\TwitchApi\EventSub\Events\ChannelPointCustomReward\MaxPerStream;
+use SimplyStream\TwitchApi\EventSub\Events\ChannelPointCustomReward\MaxPerUserPerStream;
 use SimplyStream\TwitchApi\Helix\Models\Chat\Image;
 
 #[EventSubSubscription(type: 'channel.channel_points_custom_reward.remove', version: '1', condition: ChannelPointsCustomRewardRemoveCondition::class)]

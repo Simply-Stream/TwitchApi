@@ -8,7 +8,7 @@ use DateTimeInterface;
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\ChannelCustomPowerUpRedemptionAddCondition;
 use SimplyStream\TwitchApi\EventSub\EventInterface;
-use SimplyStream\TwitchApi\EventSub\Events\ChannelCustomPowerUpRedemption\CustomPowerUp;
+use SimplyStream\TwitchApi\EventSub\Events\CustomPowerUpRedemption\CustomPowerUp;
 
 #[EventSubSubscription(type: 'channel.custom_power_up_redemption.add', version: '1', condition: ChannelCustomPowerUpRedemptionAddCondition::class)]
 final readonly class ChannelCustomPowerUpRedemptionAddEvent implements EventInterface

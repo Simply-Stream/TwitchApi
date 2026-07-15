@@ -7,6 +7,7 @@ namespace SimplyStream\TwitchApi\EventSub\Events;
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\ChannelSubscriptionMessageCondition;
 use SimplyStream\TwitchApi\EventSub\EventInterface;
+use SimplyStream\TwitchApi\EventSub\Events\SubscriptionMessage\Message;
 
 #[EventSubSubscription(type: 'channel.subscription.message', version: '1', condition: ChannelSubscriptionMessageCondition::class)]
 final readonly class ChannelSubscriptionMessageEvent implements EventInterface

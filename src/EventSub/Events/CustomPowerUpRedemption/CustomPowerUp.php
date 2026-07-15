@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApi\EventSub\Events\ChannelCustomPowerUpRedemption;
+namespace SimplyStream\TwitchApi\EventSub\Events\CustomPowerUpRedemption;
 
 final readonly class CustomPowerUp
 {

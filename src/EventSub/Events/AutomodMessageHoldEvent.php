@@ -15,20 +15,20 @@ use SimplyStream\TwitchApi\EventSub\Shared\Message;
 final readonly class AutomodMessageHoldEvent implements EventInterface
 {
     /**
-     * @param string                    $broadcasterUserId    The ID of the broadcaster specified in the request.
-     * @param string                    $broadcasterUserLogin The login of the broadcaster specified in the request.
-     * @param string             $broadcasterUserName         The user name of the broadcaster specified in the request.
-     * @param string             $userId                      The message sender’s user ID.
-     * @param string             $userLogin                   The message sender’s login name.
-     * @param string             $userName                    The message sender’s display name.
-     * @param string             $messageId                   The ID of the message that was flagged by automod.
-     * @param Message            $message                     The body of the message.
-     * @param \DateTimeImmutable $heldAt                      The timestamp of when automod saved the message.
-     * @param string             $reason                      Possible values are:
+     * @param string                                                              $broadcasterUserId    The ID of the broadcaster specified in the request.
+     * @param string                                                              $broadcasterUserLogin The login of the broadcaster specified in the request.
+     * @param string                                                              $broadcasterUserName  The user name of the broadcaster specified in the request.
+     * @param string                                                              $userId               The message sender’s user ID.
+     * @param string                                                              $userLogin            The message sender’s login name.
+     * @param string                                                              $userName             The message sender’s display name.
+     * @param string                                                              $messageId            The ID of the message that was flagged by automod.
+     * @param \SimplyStream\TwitchApi\EventSub\Events\SubscriptionMessage\Message $message              The body of the message.
+     * @param \DateTimeImmutable                                                  $heldAt               The timestamp of when automod saved the message.
+     * @param string                                                              $reason               Possible values are:
      *                                                        - automod
      *                                                        - blocked_term
-     * @param CaughtMessage|null $automod                     Optional. If the message was caught by automod, this will be populated.
-     * @param BlockedTerm|null   $blockedTerm                 Optional. If the message was caught due to a blocked term, this will be populated.
+     * @param CaughtMessage|null                                                  $automod              Optional. If the message was caught by automod, this will be populated.
+     * @param BlockedTerm|null                                                    $blockedTerm          Optional. If the message was caught due to a blocked term, this will be populated.
      */
     public function __construct(
         public string $broadcasterUserId,

@@ -7,6 +7,7 @@ namespace SimplyStream\TwitchApi\EventSub\Events;
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\ExtensionBitsTransactionCreateCondition;
 use SimplyStream\TwitchApi\EventSub\EventInterface;
+use SimplyStream\TwitchApi\EventSub\Events\ExtensionBitsTransaction\Product;
 
 #[EventSubSubscription(type: 'extension.bits_transaction.create', version: '1', condition: ExtensionBitsTransactionCreateCondition::class)]
 final readonly class ExtensionBitsTransactionCreateEvent implements EventInterface

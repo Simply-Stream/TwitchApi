@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApi\EventSub\Events\ChannelSharedChat;
+namespace SimplyStream\TwitchApi\EventSub\Events\SharedChat;
 
 final readonly class Participant
 {

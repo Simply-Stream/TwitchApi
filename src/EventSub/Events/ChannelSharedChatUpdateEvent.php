@@ -7,7 +7,7 @@ namespace SimplyStream\TwitchApi\EventSub\Events;
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\ChannelSharedChatUpdateCondition;
 use SimplyStream\TwitchApi\EventSub\EventInterface;
-use SimplyStream\TwitchApi\EventSub\Events\ChannelSharedChat\Participant;
+use SimplyStream\TwitchApi\EventSub\Events\SharedChat\Participant;
 
 #[EventSubSubscription(type: 'channel.shared_chat.update', version: '1', condition: ChannelSharedChatUpdateCondition::class)]
 final readonly class ChannelSharedChatUpdateEvent implements EventInterface

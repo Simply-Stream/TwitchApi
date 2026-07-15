@@ -7,7 +7,7 @@ namespace SimplyStream\TwitchApi\EventSub\Events;
 use SimplyStream\TwitchApi\EventSub\Attributes\EventSubSubscription;
 use SimplyStream\TwitchApi\EventSub\Conditions\ChannelSuspiciousUserMessageCondition;
 use SimplyStream\TwitchApi\EventSub\EventInterface;
-use SimplyStream\TwitchApi\EventSub\Events\ChannelSuspiciousUser\SuspiciousUserMessage;
+use SimplyStream\TwitchApi\EventSub\Events\SuspiciousUser\SuspiciousUserMessage;
 
 #[EventSubSubscription(type: 'channel.suspicious_user.message', version: '1', condition: ChannelSuspiciousUserMessageCondition::class)]
 final readonly class ChannelSuspiciousUserMessageEvent implements EventInterface
