@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\EventSub;
 
-use SimplyStream\TwitchApi\EventSub\Dedup\ProcessedMessageStore;
+use SimplyStream\TwitchApi\EventSub\Dedup\ProcessedMessageStoreInterface;
 use SimplyStream\TwitchApi\EventSub\Http\EventSubHeaders;
 use SimplyStream\TwitchApi\EventSub\Http\RawEventSubMessage;
 use SimplyStream\TwitchApi\EventSub\Messages\BatchedEvent;
@@ -24,7 +24,7 @@ final readonly class EventSubMessageProcessor
     public function __construct(
         private MessageSignatureVerifier $verifier,
         private MessageFreshnessValidator $freshness,
-        private ProcessedMessageStore $processedMessages,
+        private ProcessedMessageStoreInterface $processedMessages,
         private EventSubTypeRegistry $registry,
         private DenormalizerInterface $denormalizer,
     ) {

@@ -16,7 +16,6 @@ use SimplyStream\TwitchApi\EventSub\Events\ChannelAdBreakBeginEvent;
 use SimplyStream\TwitchApi\EventSub\Events\ChannelBanEvent;
 use SimplyStream\TwitchApi\EventSub\Events\ChannelCheerEvent;
 use SimplyStream\TwitchApi\EventSub\Events\ChannelFollowEvent;
-use SimplyStream\TwitchApi\EventSub\Events\ChannelGoalBeginEvent;
 use SimplyStream\TwitchApi\EventSub\Events\ChannelModeratorAddEvent;
 use SimplyStream\TwitchApi\EventSub\Events\ChannelModeratorRemoveEvent;
 use SimplyStream\TwitchApi\EventSub\Events\ChannelPointsCustomRewardAddEvent;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\EventSub\Dedup;
 
-final class InMemoryProcessedMessageStore implements ProcessedMessageStore
+final class InMemoryProcessedMessageStore implements ProcessedMessageStoreInterface
 {
     /** @var array<string, true> */
     private array $ids = [];

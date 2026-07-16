@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\EventSub\Dedup;
 
-interface ProcessedMessageStore
+interface ProcessedMessageStoreInterface
 {
     public function contains(string $messageId): bool;
 
