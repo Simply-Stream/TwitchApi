@@ -1,0 +1,12 @@
+{
+    "headers": {
+        "Twitch-Eventsub-MESSAGE-ID": "f3e82826-815d-5338-8a61-0f5bc49520f0",
+        "Twitch-Eventsub-MESSAGE-RETRY": "0",
+        "Twitch-Eventsub-MESSAGE-SIGNATURE": "sha256=b828054a3172a9f261bb8d14602882e9358a2949bf374afaf39043f086ff7c63",
+        "Twitch-Eventsub-MESSAGE-TIMESTAMP": "2026-07-11T08:21:42.243489Z",
+        "Twitch-Eventsub-MESSAGE-TYPE": "notification",
+        "Twitch-Eventsub-SUBSCRIPTION-TYPE": "user.authorization.grant",
+        "Twitch-Eventsub-SUBSCRIPTION-VERSION": "1"
+    },
+    "body": "{\"subscription\":{\"id\":\"a79092b5-c732-c70d-eb3a-fa28a48786c4\",\"status\":\"enabled\",\"type\":\"user.authorization.grant\",\"version\":\"1\",\"condition\":{\"client_id\":\"368d45be525073056b2e097bb13e41\"},\"transport\":{\"method\":\"webhook\",\"callback\":\"null\"},\"created_at\":\"2026-07-11T08:21:42.243489Z\",\"cost\":1},\"event\":{\"user_id\":\"20653992\",\"user_login\":\"testFromUser\",\"user_name\":\"testFromUser\",\"client_id\":\"368d45be525073056b2e097bb13e41\"}}"
+}

@@ -4,18 +4,19 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
-use DateTimeInterface;
-use League\OAuth2\Client\Token\AccessTokenInterface;
-use SimplyStream\TwitchApi\Helix\Models\Schedule\ChannelStreamSchedule;
-use SimplyStream\TwitchApi\Helix\Models\Schedule\CreateChannelStreamScheduleSegmentRequest;
-use SimplyStream\TwitchApi\Helix\Models\Schedule\UpdateChannelStreamScheduleSegmentRequest;
-use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
-use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
-use SimplyStream\TwitchApi\Helix\Models\TwitchResponseInterface;
+use SimplyStream\TwitchApi\Helix\Api\Schedule\Request\CreateChannelStreamScheduleSegmentRequest;
+use SimplyStream\TwitchApi\Helix\Api\Schedule\Request\DeleteStreamScheduleSegmentRequest;
+use SimplyStream\TwitchApi\Helix\Api\Schedule\Request\GetChannelICalendarRequest;
+use SimplyStream\TwitchApi\Helix\Api\Schedule\Request\GetChannelStreamScheduleRequest;
+use SimplyStream\TwitchApi\Helix\Api\Schedule\Request\UpdateChannelStreamScheduleRequest;
+use SimplyStream\TwitchApi\Helix\Api\Schedule\Request\UpdateChannelStreamScheduleSegmentRequest;
+use SimplyStream\TwitchApi\Helix\Api\Schedule\Response\ChannelStreamScheduleResponse;
+use SimplyStream\TwitchApi\Helix\Api\Schedule\Response\StreamScheduleSegmentResponse;
+use SimplyStream\TwitchApi\Helix\Authentication\AccessTokenInterface;
 
-class ScheduleApi extends AbstractApi
+final class ScheduleApi extends AbstractApi
 {
-    protected const BASE_PATH = 'schedule';
+    private const string BASE_PATH = 'schedule';
 
     /**
      * Gets the broadcaster’s streaming schedule. You can get the entire schedule or specific segments of the schedule.
@@ -28,48 +29,25 @@ class ScheduleApi extends AbstractApi
      *
      * @see https://help.twitch.tv/s/article/channel-page-setup#Schedule Schedule
      *
-     * @param string               $broadcasterId      The ID of the broadcaster that owns the streaming schedule you
-     *                                                 want to get.
-     * @param AccessTokenInterface $accessToken        Requires an app access token or user access token.
-     * @param string|null          $id                 The ID of the scheduled segment to return. To specify more than
-     *                                                 one segment, include the ID of each segment you want to get. For
-     *                                                 example, id=1234&id=5678. You may specify a maximum of 100 IDs.
-     * @param DateTimeInterface|null        $starTime           The UTC date and time that identifies when in the broadcaster’s
-     *                                                 schedule to start returning segments. If not specified, the
-     *                                                 request returns segments starting after the current UTC date and
-     *                                                 time. Specify the date and time in RFC3339 format (for example,
-     *                                                 2022-09-01T00:00:00Z).
-     * @param string|null          $utcOffset          Not supported.
-     * @param int                  $first              The maximum number of items to return per page in the response.
-     *                                                 The minimum page size is 1 item per page and the maximum is 25
-     *                                                 items per page. The default is 20.
-     * @param string|null          $after              The cursor used to get the next page of results. The Pagination
-     *                                                 object in the response contains the cursor’s value.
-     *
-     * @return TwitchPaginatedDataResponse<ChannelStreamSchedule>
+     * @param AccessTokenInterface            $accessToken Requires an app access token or user access token.
      */
     public function getChannelStreamSchedule(
-        string $broadcasterId,
+        GetChannelStreamScheduleRequest $request,
         AccessTokenInterface $accessToken,
-        string $id = null,
-        DateTimeInterface $starTime = null,
-        string $utcOffset = null,
-        int $first = 20,
-        string $after = null,
-    ): TwitchPaginatedDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH,
-            query: [
-                'broadcaster_id' => $broadcasterId,
-                'id' => $id,
-                'start_time' => $starTime?->format(DATE_RFC3339),
-                // 'utc_offset' => $utcOffset // Not supported, don't ask why they even noted it in their documentation ...
-                'first' => $first,
-                'after' => $after,
+    ): ChannelStreamScheduleResponse {
+        // utc_offset is listed in Twitch's docs but not actually supported, so it is intentionally omitted.
+        $query = array_filter(
+            [
+                'broadcaster_id' => $request->broadcasterId,
+                'id'             => $request->ids,
+                'start_time'     => $request->startTime?->format(DATE_RFC3339),
+                'first'          => $request->first,
+                'after'          => $request->after,
             ],
-            type: sprintf('%s<%s>', TwitchPaginatedDataResponse::class, ChannelStreamSchedule::class),
-            accessToken: $accessToken
+            static fn (mixed $v): bool => $v !== null && $v !== [],
         );
+
+        return $this->get(self::BASE_PATH, ChannelStreamScheduleResponse::class, $accessToken, $query);
     }
 
     /**
@@ -83,19 +61,14 @@ class ScheduleApi extends AbstractApi
      *
      * @see https://datatracker.ietf.org/doc/html/rfc5545
      *
-     * @param string $broadcasterId The ID of the broadcaster that owns the streaming schedule you want to get.
-     *
-     * @return TwitchResponseInterface
+     * @return string The schedule in iCalendar (RFC5545) format.
      */
     public function getChannelICalendar(
-        string $broadcasterId
-    ): TwitchResponseInterface {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/icalendar',
-            query: [
-                'broadcaster_id' => $broadcasterId,
-            ],
-            type: sprintf('%s<string>', TwitchDataResponse::class),
+        GetChannelICalendarRequest $request,
+    ): string {
+        return $this->apiClient->requestICalendar(
+            self::BASE_PATH . '/icalendar',
+            ['broadcaster_id' => $request->broadcasterId],
         );
     }
 
@@ -108,46 +81,25 @@ class ScheduleApi extends AbstractApi
      * URL
      * PATCH https://api.twitch.tv/helix/schedule/settings
      *
-     * @param string               $broadcasterId     The ID of the broadcaster whose schedule settings you want to
-     *                                                update. The ID must match the user ID in the user access token.
-     * @param AccessTokenInterface $accessToken       Requires a user access token that includes the
-     *                                                channel:manage:schedule scope.
-     * @param bool                 $isVacationEnabled A Boolean value that indicates whether the broadcaster has
-     *                                                scheduled a vacation. Set to true to enable Vacation Mode and add
-     *                                                vacation dates, or false to cancel a previously scheduled
-     *                                                vacation.
-     * @param DateTimeInterface|null        $vacationStartTime The UTC date and time of when the broadcaster’s vacation starts.
-     *                                                Specify the date and time in RFC3339 format (for example,
-     *                                                2021-05-16T00:00:00Z). Required if is_vacation_enabled is true.
-     * @param DateTimeInterface|null        $vacationEndTime   The UTC date and time of when the broadcaster’s vacation ends.
-     *                                                Specify the date and time in RFC3339 format (for example,
-     *                                                2021-05-30T23:59:59Z). Required if is_vacation_enabled is true.
-     * @param string|null          $timezone          The time zone that the broadcaster broadcasts from. Specify the
-     *                                                time zone using IANA time zone database format (for example,
-     *                                                America/New_York). Required if is_vacation_enabled is true.
-     *
-     * @return void
+     * @param AccessTokenInterface               $accessToken Requires a user access token that includes the
+     *                                                        channel:manage:schedule scope.
      */
     public function updateChannelStreamSchedule(
-        string $broadcasterId,
+        UpdateChannelStreamScheduleRequest $request,
         AccessTokenInterface $accessToken,
-        bool $isVacationEnabled = false,
-        DateTimeInterface $vacationStartTime = null,
-        DateTimeInterface $vacationEndTime = null,
-        string $timezone = null,
     ): void {
-        $this->sendRequest(
-            path: self::BASE_PATH . '/settings',
-            query: [
-                'broadcaster_id' => $broadcasterId,
-                'is_vacation_enabled' => $isVacationEnabled,
-                'vacation_start_time' => $vacationStartTime?->format(DATE_RFC3339),
-                'vacation_end_time' => $vacationEndTime?->format(DATE_RFC3339),
-                'timezone' => $timezone,
+        $query = array_filter(
+            [
+                'broadcaster_id'      => $request->broadcasterId,
+                'is_vacation_enabled' => $request->isVacationEnabled,
+                'vacation_start_time' => $request->vacationStartTime?->format(DATE_RFC3339),
+                'vacation_end_time'   => $request->vacationEndTime?->format(DATE_RFC3339),
+                'timezone'            => $request->timezone,
             ],
-            method: 'PATCH',
-            accessToken: $accessToken
+            static fn (mixed $v): bool => $v !== null,
         );
+
+        $this->patchWithoutResponse(self::BASE_PATH . '/settings', $accessToken, query: $query);
     }
 
     /**
@@ -160,29 +112,19 @@ class ScheduleApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/schedule/segment
      *
-     * @param string                                    $broadcasterId The ID of the broadcaster that owns the schedule
-     *                                                                 to add the broadcast segment to. This ID must
-     *                                                                 match the user ID in the user access token.
-     * @param CreateChannelStreamScheduleSegmentRequest $body
-     * @param AccessTokenInterface                      $accessToken   Requires a user access token that includes the
-     *                                                                 channel:manage:schedule scope.
-     *
-     * @return TwitchDataResponse<ChannelStreamSchedule>
+     * @param AccessTokenInterface                      $accessToken Requires a user access token that includes the
+     *                                                               channel:manage:schedule scope.
      */
     public function createChannelStreamScheduleSegment(
-        string $broadcasterId,
-        CreateChannelStreamScheduleSegmentRequest $body,
-        AccessTokenInterface $accessToken
-    ): TwitchDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/segment',
-            query: [
-                'broadcaster_id' => $broadcasterId,
-            ],
-            type: sprintf('%s<%s>', TwitchDataResponse::class, ChannelStreamSchedule::class),
-            method: 'POST',
-            body: $body,
-            accessToken: $accessToken
+        CreateChannelStreamScheduleSegmentRequest $request,
+        AccessTokenInterface $accessToken,
+    ): StreamScheduleSegmentResponse {
+        return $this->post(
+            self::BASE_PATH . '/segment',
+            StreamScheduleSegmentResponse::class,
+            $accessToken,
+            $this->normalizer->normalize($request->segment),
+            ['broadcaster_id' => $request->broadcasterId],
         );
     }
 
@@ -198,32 +140,22 @@ class ScheduleApi extends AbstractApi
      * URL
      * PATCH https://api.twitch.tv/helix/schedule/segment
      *
-     * @param string                                    $broadcasterId The ID of the broadcaster who owns the broadcast
-     *                                                                 segment to update. This ID must match the user
-     *                                                                 ID in the user access token.
-     * @param string                                    $id            The ID of the broadcast segment to update.
-     * @param UpdateChannelStreamScheduleSegmentRequest $body
-     * @param AccessTokenInterface                      $accessToken   Requires a user access token that includes the
-     *                                                                 channel:manage:schedule scope.
-     *
-     * @return TwitchDataResponse<ChannelStreamSchedule>
+     * @param AccessTokenInterface                      $accessToken Requires a user access token that includes the
+     *                                                               channel:manage:schedule scope.
      */
     public function updateChannelStreamScheduleSegment(
-        string $broadcasterId,
-        string $id,
-        UpdateChannelStreamScheduleSegmentRequest $body,
-        AccessTokenInterface $accessToken
-    ): TwitchDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/segment',
-            query: [
-                'broadcaster_id' => $broadcasterId,
-                'id' => $id,
+        UpdateChannelStreamScheduleSegmentRequest $request,
+        AccessTokenInterface $accessToken,
+    ): StreamScheduleSegmentResponse {
+        return $this->patch(
+            self::BASE_PATH . '/segment',
+            StreamScheduleSegmentResponse::class,
+            $accessToken,
+            $this->normalizer->normalize($request->segment),
+            [
+                'broadcaster_id' => $request->broadcasterId,
+                'id'             => $request->id,
             ],
-            type: sprintf('%s<%s>', TwitchDataResponse::class, ChannelStreamSchedule::class),
-            method: 'PATCH',
-            body: $body,
-            accessToken: $accessToken
         );
     }
 
@@ -238,27 +170,20 @@ class ScheduleApi extends AbstractApi
      * URL
      * DELETE https://api.twitch.tv/helix/schedule/segment
      *
-     * @param string               $broadcasterId The ID of the broadcaster that owns the streaming schedule. This ID
-     *                                            must match the user ID in the user access token.
-     * @param string               $id            The ID of the broadcast segment to remove.
-     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the
-     *                                            channel:manage:schedule scope.
-     *
-     * @return void
+     * @param AccessTokenInterface               $accessToken Requires a user access token that includes the
+     *                                                        channel:manage:schedule scope.
      */
     public function deleteStreamScheduleSegment(
-        string $broadcasterId,
-        string $id,
-        AccessTokenInterface $accessToken
+        DeleteStreamScheduleSegmentRequest $request,
+        AccessTokenInterface $accessToken,
     ): void {
-        $this->sendRequest(
-            path: self::BASE_PATH . '/segment',
-            query: [
-                'broadcaster_id' => $broadcasterId,
-                'id' => $id,
+        $this->delete(
+            self::BASE_PATH . '/segment',
+            $accessToken,
+            [
+                'broadcaster_id' => $request->broadcasterId,
+                'id'             => $request->id,
             ],
-            method: 'DELETE',
-            accessToken: $accessToken
         );
     }
 }

@@ -1,0 +1,12 @@
+{
+    "headers": {
+        "Twitch-Eventsub-MESSAGE-ID": "24065158-5c21-f5d8-9da0-0c40ec2c9e32",
+        "Twitch-Eventsub-MESSAGE-RETRY": "0",
+        "Twitch-Eventsub-MESSAGE-SIGNATURE": "sha256=51e3c65e94ea8721eacfbbcca33c579aab60a175b95bfe9a987db2ef35594ceb",
+        "Twitch-Eventsub-MESSAGE-TIMESTAMP": "2026-07-11T08:21:37.221548Z",
+        "Twitch-Eventsub-MESSAGE-TYPE": "notification",
+        "Twitch-Eventsub-SUBSCRIPTION-TYPE": "channel.shoutout.create",
+        "Twitch-Eventsub-SUBSCRIPTION-VERSION": "1"
+    },
+    "body": "{\"subscription\":{\"id\":\"8b440969-1c02-1242-f9c9-542db23a25a6\",\"status\":\"enabled\",\"type\":\"channel.shoutout.create\",\"version\":\"1\",\"condition\":{\"broadcaster_user_id\":\"30217838\",\"moderator_user_id\":\"3502151007\"},\"transport\":{\"method\":\"webhook\",\"callback\":\"null\"},\"created_at\":\"2026-07-11T08:21:37.221548Z\",\"cost\":0},\"event\":{\"broadcaster_user_id\":\"30217838\",\"broadcaster_user_name\":\"testFromUser\",\"broadcaster_user_login\":\"testFromUser\",\"to_broadcaster_user_id\":\"66278954\",\"to_broadcaster_user_name\":\"testBroadcaster\",\"to_broadcaster_user_login\":\"testBroadcaster\",\"moderator_user_id\":\"3502151007\",\"moderator_user_name\":\"TrustedUser123\",\"moderator_user_login\":\"trusteduser123\",\"viewer_count\":315,\"started_at\":\"2026-07-11T08:21:37.221568Z\",\"cooldown_ends_at\":\"2026-07-11T08:23:37.221568Z\",\"target_cooldown_ends_at\":\"2026-07-11T09:21:37.221568Z\"}}"
+}

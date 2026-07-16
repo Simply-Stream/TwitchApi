@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
-use League\OAuth2\Client\Token\AccessTokenInterface;
-use SimplyStream\TwitchApi\Helix\Models\Entitlements\DropEntitlement;
-use SimplyStream\TwitchApi\Helix\Models\Entitlements\DropEntitlementUpdate;
-use SimplyStream\TwitchApi\Helix\Models\Entitlements\UpdateDropEntitlementRequest;
-use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
-use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
+use SimplyStream\TwitchApi\Helix\Api\Entitlements\Request\GetDropsEntitlementsRequest;
+use SimplyStream\TwitchApi\Helix\Api\Entitlements\Request\UpdateDropsEntitlementsRequest;
+use SimplyStream\TwitchApi\Helix\Api\Entitlements\Response\DropsEntitlementsResponse;
+use SimplyStream\TwitchApi\Helix\Api\Entitlements\Response\UpdateDropsEntitlementsResponse;
+use SimplyStream\TwitchApi\Helix\Authentication\AccessTokenInterface;
 
-class EntitlementsApi extends AbstractApi
+final class EntitlementsApi extends AbstractApi
 {
-    protected const BASE_PATH = 'entitlements';
+    private const string BASE_PATH = 'entitlements';
 
     /**
      * Gets an organization’s list of entitlements that have been granted to a game, a user, or both.
@@ -53,48 +52,30 @@ class EntitlementsApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/entitlements/drops
      *
-     * @param AccessTokenInterface $accessToken            Requires an app access token or user access token. The
-     *                                                     client ID in the access token must own the game.
-     * @param string|null          $id                     An ID that identifies the entitlement to get. Include this
-     *                                                     parameter for each entitlement you want to get. For example,
-     *                                                     id=1234&id=5678. You may specify a maximum of 100 IDs.
-     * @param string|null          $userId                 An ID that identifies a user that was granted entitlements.
-     * @param string|null          $gameId                 An ID that identifies a game that offered entitlements.
-     * @param string|null          $fulfillmentStatus      The entitlement’s fulfillment status. Used to filter the
-     *                                                     list to only those with the specified status. Possible
-     *                                                     values are:
-     *                                                     - CLAIMED
-     *                                                     - FULFILLED
-     * @param string|null          $after                  The cursor used to get the next page of results. The
-     *                                                     Pagination object in the response contains the cursor’s
-     *                                                     value.
-     * @param int                  $first                  The maximum number of entitlements to return per page in the
-     *                                                     response. The minimum page size is 1 entitlement per page
-     *                                                     and the maximum is 1000. The default is 20.
-     *
-     * @return TwitchPaginatedDataResponse<DropEntitlement[]>
+     * @param AccessTokenInterface        $accessToken Requires an app access token or user access token. The client ID
+     *                                                 in the access token must own the game.
      */
     public function getDropsEntitlements(
+        GetDropsEntitlementsRequest $request,
         AccessTokenInterface $accessToken,
-        string $id = null,
-        string $userId = null,
-        string $gameId = null,
-        string $fulfillmentStatus = null,
-        string $after = null,
-        int $first = 20,
-    ): TwitchPaginatedDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/drops',
-            query: [
-                'id' => $id,
-                'user_id' => $userId,
-                'game_id' => $gameId,
-                'fulfillment_status' => $fulfillmentStatus,
-                'after' => $after,
-                'first' => $first,
+    ): DropsEntitlementsResponse {
+        $query = array_filter(
+            [
+                'id'                 => $request->ids,
+                'user_id'            => $request->userId,
+                'game_id'            => $request->gameId,
+                'fulfillment_status' => $request->fulfillmentStatus?->value,
+                'after'              => $request->after,
+                'first'              => $request->first,
             ],
-            type: sprintf('%s<%s[]>', TwitchPaginatedDataResponse::class, DropEntitlement::class),
-            accessToken: $accessToken
+            static fn (mixed $v): bool => $v !== null && $v !== [],
+        );
+
+        return $this->get(
+            self::BASE_PATH . '/drops',
+            DropsEntitlementsResponse::class,
+            $accessToken,
+            $query,
         );
     }
 
@@ -104,13 +85,12 @@ class EntitlementsApi extends AbstractApi
      * The following table identifies which entitlements are updated based on the type of access token used.
      *
      * Access token type | Data that’s updated
-     * ------------------|-----------------------------------------------------------------------------------------------------------------
+     * ------------------|-----------------------------------------------------------------------------------------------
      * App               | Updates all entitlements with benefits owned by the organization in the access token.
-     * ------------------|-----------------------------------------------------------------------------------------------------------------
+     * ------------------|-----------------------------------------------------------------------------------------------
      * User              | Updates all entitlements owned by the user in the access token and where the benefits are
-     * owned by the
-     *                   | organization in the access token.
-     * ------------------------------------------------------------------------------------------------------------------------------------
+     *                   | owned by the organization in the access token.
+     * ------------------------------------------------------------------------------------------------------------------
      *
      * Authorization
      * Requires an app access token or user access token. The client ID in the access token must own the game.
@@ -118,22 +98,18 @@ class EntitlementsApi extends AbstractApi
      * URL
      * PATCH https://api.twitch.tv/helix/entitlements/drops
      *
-     * @param UpdateDropEntitlementRequest $body
-     * @param AccessTokenInterface         $accessToken Requires an app access token or user access token. The client
-     *                                                  ID in the access token must own the game.
-     *
-     * @return TwitchDataResponse<DropEntitlementUpdate[]>
+     * @param AccessTokenInterface           $accessToken Requires an app access token or user access token. The client
+     *                                                    ID in the access token must own the game.
      */
     public function updateDropsEntitlements(
-        UpdateDropEntitlementRequest $body,
-        AccessTokenInterface $accessToken
-    ): TwitchDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/drops',
-            type: sprintf('%s<%s[]>', TwitchDataResponse::class, DropEntitlementUpdate::class),
-            method: 'PATCH',
-            body: $body,
-            accessToken: $accessToken
+        UpdateDropsEntitlementsRequest $request,
+        AccessTokenInterface $accessToken,
+    ): UpdateDropsEntitlementsResponse {
+        return $this->patch(
+            self::BASE_PATH . '/drops',
+            UpdateDropsEntitlementsResponse::class,
+            $accessToken,
+            $this->normalizer->normalize($request->entitlement),
         );
     }
 }

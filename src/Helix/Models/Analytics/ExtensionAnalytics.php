@@ -4,43 +4,21 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Analytics;
 
-use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
+use SimplyStream\TwitchApi\Helix\Api\DateRange;
 
 final readonly class ExtensionAnalytics
 {
-    use SerializesModels;
-
     /**
      * @param string    $extensionId An ID that identifies the extension that the report was generated for.
-     * @param string    $URL         The URL that you use to download the report. The URL is valid for 5 minutes.
+     * @param string    $url         The URL that you use to download the report. The URL is valid for 5 minutes.
      * @param string    $type        The type of report.
      * @param DateRange $dateRange   The reporting window’s start and end dates, in RFC3339 format.
      */
     public function __construct(
-        private string $extensionId,
-        private string $URL,
-        private string $type,
-        private DateRange $dateRange
+        public string $extensionId,
+        public string $url,
+        public string $type,
+        public DateRange $dateRange,
     ) {
-    }
-
-    public function getExtensionId(): string
-    {
-        return $this->extensionId;
-    }
-
-    public function getURL(): string
-    {
-        return $this->URL;
-    }
-
-    public function getType(): string
-    {
-        return $this->type;
-    }
-
-    public function getDateRange(): DateRange
-    {
-        return $this->dateRange;
     }
 }

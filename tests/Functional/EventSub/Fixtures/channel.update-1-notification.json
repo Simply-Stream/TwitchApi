@@ -1,0 +1,12 @@
+{
+    "headers": {
+        "Twitch-Eventsub-MESSAGE-ID": "897d785e-1397-ae1e-368e-4d260d72de0d",
+        "Twitch-Eventsub-MESSAGE-RETRY": "0",
+        "Twitch-Eventsub-MESSAGE-SIGNATURE": "sha256=d624786e4bdeb69942c2eed40a2eaf4559120af64d69192bd595a4802c3281af",
+        "Twitch-Eventsub-MESSAGE-TIMESTAMP": "2026-07-11T08:21:43.408907Z",
+        "Twitch-Eventsub-MESSAGE-TYPE": "notification",
+        "Twitch-Eventsub-SUBSCRIPTION-TYPE": "channel.update",
+        "Twitch-Eventsub-SUBSCRIPTION-VERSION": "1"
+    },
+    "body": "{\"subscription\":{\"id\":\"95ff9f10-d21e-9769-fd2e-4785aab6044a\",\"status\":\"enabled\",\"type\":\"channel.update\",\"version\":\"1\",\"condition\":{\"broadcaster_user_id\":\"64184568\"},\"transport\":{\"method\":\"webhook\",\"callback\":\"null\"},\"created_at\":\"2026-07-11T08:21:43.408907Z\",\"cost\":0},\"event\":{\"broadcaster_user_id\":\"64184568\",\"broadcaster_user_login\":\"testBroadcaster\",\"broadcaster_user_name\":\"testBroadcaster\",\"title\":\"Example title from the CLI!\",\"language\":\"en\",\"category_id\":\"7566\",\"category_name\":\"Just Chatting\",\"is_mature\":false}}"
+}

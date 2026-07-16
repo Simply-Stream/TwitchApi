@@ -1,0 +1,12 @@
+{
+    "headers": {
+        "Twitch-Eventsub-MESSAGE-ID": "b33943f9-e643-f30f-0500-d06bfb9cab2d",
+        "Twitch-Eventsub-MESSAGE-RETRY": "0",
+        "Twitch-Eventsub-MESSAGE-SIGNATURE": "sha256=473e05a5e41f06a1c3d6cec47e777fda6ffa41d450b0c547c6da3d53d08ab9c4",
+        "Twitch-Eventsub-MESSAGE-TIMESTAMP": "2026-07-11T08:21:33.754981Z",
+        "Twitch-Eventsub-MESSAGE-TYPE": "notification",
+        "Twitch-Eventsub-SUBSCRIPTION-TYPE": "channel.poll.end",
+        "Twitch-Eventsub-SUBSCRIPTION-VERSION": "1"
+    },
+    "body": "{\"subscription\":{\"id\":\"16ca65fe-96ff-b5cc-cf3e-91a803122cf9\",\"status\":\"enabled\",\"type\":\"channel.poll.end\",\"version\":\"1\",\"condition\":{\"broadcaster_user_id\":\"3951448\"},\"transport\":{\"method\":\"webhook\",\"callback\":\"null\"},\"created_at\":\"2026-07-11T08:21:33.754981Z\",\"cost\":0},\"event\":{\"id\":\"e8f4ee8f-fa1e-c755-0221-9bd9d57e8acf\",\"broadcaster_user_id\":\"3951448\",\"broadcaster_user_login\":\"testBroadcaster\",\"broadcaster_user_name\":\"testBroadcaster\",\"title\":\"Pineapple on pizza?\",\"choices\":[{\"id\":\"ec042cdd-0d5d-bd28-2dfb-9cfc264f52f3\",\"title\":\"Yes but choice 1\",\"bits_votes\":0,\"channel_points_votes\":8,\"votes\":15},{\"id\":\"abc20b2e-e93e-6316-56d3-6bb1b7bcdcce\",\"title\":\"Yes but choice 2\",\"bits_votes\":3,\"channel_points_votes\":4,\"votes\":13},{\"id\":\"27228b69-54d3-9a0e-c28e-8b88bdaff813\",\"title\":\"Yes but choice 3\",\"bits_votes\":2,\"channel_points_votes\":7,\"votes\":15},{\"id\":\"0006d833-902c-79b2-1d30-3a1aa727726f\",\"title\":\"Yes but choice 4\",\"bits_votes\":1,\"channel_points_votes\":5,\"votes\":13}],\"bits_voting\":{\"is_enabled\":true,\"amount_per_vote\":10},\"channel_points_voting\":{\"is_enabled\":true,\"amount_per_vote\":500},\"status\":\"completed\",\"started_at\":\"2026-07-11T08:21:33.754981Z\",\"ended_at\":\"2026-07-11T08:36:33.754981Z\"}}"
+}

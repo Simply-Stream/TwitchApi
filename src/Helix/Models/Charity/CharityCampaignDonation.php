@@ -4,12 +4,8 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Charity;
 
-use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
-
 final readonly class CharityCampaignDonation
 {
-    use SerializesModels;
-
     /**
      * @param string        $id         An ID that identifies the donation. The ID is unique across campaigns.
      * @param string        $campaignId An ID that identifies the charity campaign that the donation applies to.
@@ -19,42 +15,12 @@ final readonly class CharityCampaignDonation
      * @param CharityAmount $amount     An object that contains the amount of money that the user donated.
      */
     public function __construct(
-        private string $id,
-        private string $campaignId,
-        private string $userId,
-        private string $userLogin,
-        private string $userName,
-        private CharityAmount $amount
+        public string $id,
+        public string $campaignId,
+        public string $userId,
+        public string $userLogin,
+        public string $userName,
+        public CharityAmount $amount,
     ) {
-    }
-
-    public function getId(): string
-    {
-        return $this->id;
-    }
-
-    public function getCampaignId(): string
-    {
-        return $this->campaignId;
-    }
-
-    public function getUserId(): string
-    {
-        return $this->userId;
-    }
-
-    public function getUserLogin(): string
-    {
-        return $this->userLogin;
-    }
-
-    public function getUserName(): string
-    {
-        return $this->userName;
-    }
-
-    public function getAmount(): CharityAmount
-    {
-        return $this->amount;
     }
 }

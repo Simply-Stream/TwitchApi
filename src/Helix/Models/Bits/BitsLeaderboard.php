@@ -4,12 +4,8 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Bits;
 
-use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
-
 final readonly class BitsLeaderboard
 {
-    use SerializesModels;
-
     /**
      * @param string $userId    An ID that identifies a user on the leaderboard.
      * @param string $userLogin The user’s login name.
@@ -18,36 +14,11 @@ final readonly class BitsLeaderboard
      * @param int    $score     The number of Bits the user has cheered.
      */
     public function __construct(
-        private string $userId,
-        private string $userLogin,
-        private string $userName,
-        private int $rank,
-        private int $score
+        public string $userId,
+        public string $userLogin,
+        public string $userName,
+        public int $rank,
+        public int $score,
     ) {
-    }
-
-    public function getUserId(): string
-    {
-        return $this->userId;
-    }
-
-    public function getUserLogin(): string
-    {
-        return $this->userLogin;
-    }
-
-    public function getUserName(): string
-    {
-        return $this->userName;
-    }
-
-    public function getRank(): int
-    {
-        return $this->rank;
-    }
-
-    public function getScore(): int
-    {
-        return $this->score;
     }
 }

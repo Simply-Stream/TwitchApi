@@ -4,18 +4,15 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
-use CuyZ\Valinor\Mapper\MappingError;
-use JsonException;
-use League\OAuth2\Client\Token\AccessTokenInterface;
-use SimplyStream\TwitchApi\Helix\Models\Charity\CharityCampaign;
-use SimplyStream\TwitchApi\Helix\Models\Charity\CharityCampaignDonation;
-use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
-use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
-use SimplyStream\TwitchApi\Helix\Models\TwitchResponseInterface;
+use SimplyStream\TwitchApi\Helix\Api\Charity\Request\GetCharityCampaignDonationsRequest;
+use SimplyStream\TwitchApi\Helix\Api\Charity\Request\GetCharityCampaignRequest;
+use SimplyStream\TwitchApi\Helix\Api\Charity\Response\CharityCampaignDonationsResponse;
+use SimplyStream\TwitchApi\Helix\Api\Charity\Response\CharityCampaignResponse;
+use SimplyStream\TwitchApi\Helix\Authentication\AccessTokenInterface;
 
-class CharityApi extends AbstractApi
+final class CharityApi extends AbstractApi
 {
-    protected const BASE_PATH = 'charity';
+    private const string BASE_PATH = 'charity';
 
     /**
      * Gets information about the charity campaign that a broadcaster is running. For example, the campaign’s
@@ -30,24 +27,20 @@ class CharityApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/charity/campaigns
      *
-     * @param string               $broadcasterId The ID of the broadcaster that’s currently running a charity
-     *                                            campaign. This ID must match the user ID in the access token.
-     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the channel:read:charity
-     *                                            scope.
-     *
-     * @return TwitchDataResponse<CharityCampaign[]>
+     * @param AccessTokenInterface      $accessToken Requires a user access token that includes the channel:read:charity
+     *                                               scope.
      */
     public function getCharityCampaign(
-        string $broadcasterId,
-        AccessTokenInterface $accessToken
-    ): TwitchDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/campaigns',
-            query: [
-                'broadcaster_id' => $broadcasterId,
+        GetCharityCampaignRequest $request,
+        AccessTokenInterface $accessToken,
+    ): CharityCampaignResponse {
+        return $this->get(
+            self::BASE_PATH . '/campaigns',
+            CharityCampaignResponse::class,
+            $accessToken,
+            [
+                'broadcaster_id' => $request->broadcasterId,
             ],
-            type: sprintf('%s<%s[]>', TwitchDataResponse::class, CharityCampaign::class),
-            accessToken: $accessToken
         );
     }
 
@@ -62,33 +55,27 @@ class CharityApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/charity/donations
      *
-     * @param string               $broadcasterId The ID of the broadcaster that’s currently running a charity
-     *                                            campaign. This ID must match the user ID in the access token.
-     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the channel:read:charity
-     *                                            scope.
-     * @param int                  $first         The maximum number of items to return per page in the response. The
-     *                                            minimum page size is
-     *                                            1 item per page and the maximum is 100. The default is 20.
-     * @param string|null          $after         The cursor used to get the next page of results. The Pagination
-     *                                            object in the response contains the cursor’s value.
-     *
-     * @return TwitchPaginatedDataResponse<CharityCampaignDonation[]>
+     * @param AccessTokenInterface               $accessToken Requires a user access token that includes the
+     *                                                        channel:read:charity scope.
      */
     public function getCharityCampaignDonations(
-        string $broadcasterId,
+        GetCharityCampaignDonationsRequest $request,
         AccessTokenInterface $accessToken,
-        int $first = 20,
-        string $after = null
-    ): TwitchResponseInterface {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/donations',
-            query: [
-                'broadcaster_id' => $broadcasterId,
-                'first' => $first,
-                'after' => $after,
+    ): CharityCampaignDonationsResponse {
+        $query = array_filter(
+            [
+                'broadcaster_id' => $request->broadcasterId,
+                'first'          => $request->first,
+                'after'          => $request->after,
             ],
-            type: sprintf('%s<%s[]>', TwitchPaginatedDataResponse::class, CharityCampaignDonation::class),
-            accessToken: $accessToken
+            static fn (mixed $v): bool => $v !== null,
+        );
+
+        return $this->get(
+            self::BASE_PATH . '/donations',
+            CharityCampaignDonationsResponse::class,
+            $accessToken,
+            $query,
         );
     }
 }

@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
-use League\OAuth2\Client\Token\AccessTokenInterface;
-use SimplyStream\TwitchApi\Helix\Models\HypeTrain\HypeTrainEvent;
-use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
+use SimplyStream\TwitchApi\Helix\Api\HypeTrain\Request\GetHypeTrainEventsRequest;
+use SimplyStream\TwitchApi\Helix\Api\HypeTrain\Response\HypeTrainEventsResponse;
+use SimplyStream\TwitchApi\Helix\Authentication\AccessTokenInterface;
 
-class HypeTrainApi extends AbstractApi
+final class HypeTrainApi extends AbstractApi
 {
-    protected const BASE_PATH = 'hypetrain';
+    private const string BASE_PATH = 'hypetrain';
 
     /**
      * Gets information about the broadcaster’s current or most recent Hype Train event.
@@ -23,33 +23,27 @@ class HypeTrainApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/hypetrain/events
      *
-     * @param AccessTokenInterface $accessToken        Requires a user access token that includes the
-     *                                                 channel:read:hype_train scope.
-     * @param string               $broadcasterId      The ID of the broadcaster that’s running the Hype Train. This ID
-     *                                                 must match the User ID in the user access token.
-     * @param int                  $first              The maximum number of items to return per page in the response.
-     *                                                 The minimum page size is 1 item per page and the maximum is 100
-     *                                                 items per page. The default is 1.
-     * @param string|null          $after              The cursor used to get the next page of results. The Pagination
-     *                                                 object in the response contains the cursor’s value.
-     *
-     * @return TwitchPaginatedDataResponse<HypeTrainEvent[]>
+     * @param AccessTokenInterface      $accessToken Requires a user access token that includes the
+     *                                               channel:read:hype_train scope.
      */
     public function getHypeTrainEvents(
-        string $broadcasterId,
+        GetHypeTrainEventsRequest $request,
         AccessTokenInterface $accessToken,
-        int $first = 1,
-        string $after = null,
-    ): TwitchPaginatedDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/events',
-            query: [
-                'broadcaster_id' => $broadcasterId,
-                'first' => $first,
-                'after' => $after,
+    ): HypeTrainEventsResponse {
+        $query = array_filter(
+            [
+                'broadcaster_id' => $request->broadcasterId,
+                'first'          => $request->first,
+                'after'          => $request->after,
             ],
-            type: sprintf('%s<%s[]>', TwitchPaginatedDataResponse::class, HypeTrainEvent::class),
-            accessToken: $accessToken
+            static fn (mixed $v): bool => $v !== null,
+        );
+
+        return $this->get(
+            self::BASE_PATH . '/events',
+            HypeTrainEventsResponse::class,
+            $accessToken,
+            $query,
         );
     }
 }

@@ -1,0 +1,12 @@
+{
+    "headers": {
+        "Twitch-Eventsub-MESSAGE-ID": "2fcd3cd8-2503-2820-d438-ddbb65263688",
+        "Twitch-Eventsub-MESSAGE-RETRY": "0",
+        "Twitch-Eventsub-MESSAGE-SIGNATURE": "sha256=975123d9b1393160eed46df274efc49084d675b5d9aae8286e7a56787d2ab6c9",
+        "Twitch-Eventsub-MESSAGE-TIMESTAMP": "2026-07-11T08:21:39.512395Z",
+        "Twitch-Eventsub-MESSAGE-TYPE": "notification",
+        "Twitch-Eventsub-SUBSCRIPTION-TYPE": "channel.unban",
+        "Twitch-Eventsub-SUBSCRIPTION-VERSION": "1"
+    },
+    "body": "{\"subscription\":{\"id\":\"09e29232-54a6-58d2-b01e-ade4dc3c2b5f\",\"status\":\"enabled\",\"type\":\"channel.unban\",\"version\":\"1\",\"condition\":{\"broadcaster_user_id\":\"70015645\"},\"transport\":{\"method\":\"webhook\",\"callback\":\"null\"},\"created_at\":\"2026-07-11T08:21:39.512395Z\",\"cost\":0},\"event\":{\"user_id\":\"16561713\",\"user_login\":\"testFromUser\",\"user_name\":\"testFromUser\",\"broadcaster_user_id\":\"70015645\",\"broadcaster_user_login\":\"testBroadcaster\",\"broadcaster_user_name\":\"testBroadcaster\",\"moderator_user_id\":\"33900716\",\"moderator_user_login\":\"CLIModerator\",\"moderator_user_name\":\"CLIModerator\"}}"
+}

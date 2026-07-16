@@ -1,0 +1,12 @@
+{
+    "headers": {
+        "Twitch-Eventsub-MESSAGE-ID": "6658ba6a-2707-d674-2acf-88f4fe59587b",
+        "Twitch-Eventsub-MESSAGE-RETRY": "0",
+        "Twitch-Eventsub-MESSAGE-SIGNATURE": "sha256=60399e7af254ebe3d42230381f8899731676e82d89c542073c30f565621e74be",
+        "Twitch-Eventsub-MESSAGE-TIMESTAMP": "2026-07-11T08:21:27.475642Z",
+        "Twitch-Eventsub-MESSAGE-TYPE": "notification",
+        "Twitch-Eventsub-SUBSCRIPTION-TYPE": "channel.channel_points_custom_reward_redemption.add",
+        "Twitch-Eventsub-SUBSCRIPTION-VERSION": "1"
+    },
+    "body": "{\"subscription\":{\"id\":\"9f83f073-51fb-e8d7-b3f5-de5a9e5db5a8\",\"status\":\"enabled\",\"type\":\"channel.channel_points_custom_reward_redemption.add\",\"version\":\"1\",\"condition\":{\"broadcaster_user_id\":\"55350610\"},\"transport\":{\"method\":\"webhook\",\"callback\":\"null\"},\"created_at\":\"2026-07-11T08:21:27.475642Z\",\"cost\":0},\"event\":{\"id\":\"d96f91db-c839-39eb-ba5a-1ed35a850ecd\",\"broadcaster_user_id\":\"55350610\",\"broadcaster_user_login\":\"testBroadcaster\",\"broadcaster_user_name\":\"testBroadcaster\",\"user_id\":\"90851513\",\"user_login\":\"testFromUser\",\"user_name\":\"testFromUser\",\"user_input\":\"Test Input From CLI\",\"status\":\"unfulfilled\",\"reward\":{\"id\":\"dd322e2b-458d-94e5-bb21-3794cd342bff\",\"title\":\"Test Reward from CLI\",\"cost\":150,\"prompt\":\"Redeem Your Test Reward from CLI\"},\"redeemed_at\":\"2026-07-11T08:21:27.475642Z\"}}"
+}

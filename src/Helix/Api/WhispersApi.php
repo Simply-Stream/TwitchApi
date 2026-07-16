@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
-use League\OAuth2\Client\Token\AccessTokenInterface;
-use SimplyStream\TwitchApi\Helix\Models\Whispers\SendWhisperRequest;
+use SimplyStream\TwitchApi\Helix\Api\Whispers\Request\SendWhisperRequest;
+use SimplyStream\TwitchApi\Helix\Authentication\AccessTokenInterface;
 
-class WhispersApi extends AbstractApi
+final class WhispersApi extends AbstractApi
 {
-    protected const BASE_PATH = 'whispers';
+    private const string BASE_PATH = 'whispers';
 
     /**
      * Sends a whisper message to the specified user.
@@ -29,30 +29,21 @@ class WhispersApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/whispers
      *
-     * @param string               $fromUserId  The ID of the user sending the whisper. This user must have a verified
-     *                                          phone number. This ID must match the user ID in the user access token.
-     * @param string               $toUserId    The ID of the user to receive the whisper.
-     * @param SendWhisperRequest   $body
      * @param AccessTokenInterface $accessToken Requires a user access token that includes the user:manage:whispers
      *                                          scope.
-     *
-     * @return void
      */
     public function sendWhisper(
-        string $fromUserId,
-        string $toUserId,
-        SendWhisperRequest $body,
-        AccessTokenInterface $accessToken
+        SendWhisperRequest $request,
+        AccessTokenInterface $accessToken,
     ): void {
-        $this->sendRequest(
-            path: self::BASE_PATH,
-            query: [
-                'from_user_id' => $fromUserId,
-                'to_user_id' => $toUserId,
+        $this->postWithoutResponse(
+            self::BASE_PATH,
+            $accessToken,
+            $this->normalizer->normalize($request->whisper),
+            [
+                'from_user_id' => $request->fromUserId,
+                'to_user_id'   => $request->toUserId,
             ],
-            method: 'POST',
-            body: $body,
-            accessToken: $accessToken
         );
     }
 }

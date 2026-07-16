@@ -4,12 +4,8 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Subscriptions;
 
-use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
-
 final readonly class Subscription
 {
-    use SerializesModels;
-
     /**
      * @param string      $broadcasterId    An ID that identifies the broadcaster.
      * @param string      $broadcasterLogin The broadcaster’s login name.
@@ -30,78 +26,18 @@ final readonly class Subscription
      * @param string|null $userLogin        The user’s login name.
      */
     public function __construct(
-        private string $broadcasterId,
-        private string $broadcasterLogin,
-        private string $broadcasterName,
-        private bool $isGift,
-        private string $tier,
-        private ?string $gifterId = null,
-        private ?string $gifterLogin = null,
-        private ?string $gifterName = null,
-        private ?string $planName = null,
-        private ?string $userId = null,
-        private ?string $userName = null,
-        private ?string $userLogin = null,
+        public string $broadcasterId,
+        public string $broadcasterLogin,
+        public string $broadcasterName,
+        public bool $isGift,
+        public string $tier,
+        public ?string $gifterId = null,
+        public ?string $gifterLogin = null,
+        public ?string $gifterName = null,
+        public ?string $planName = null,
+        public ?string $userId = null,
+        public ?string $userName = null,
+        public ?string $userLogin = null,
     ) {
-    }
-
-    public function getBroadcasterId(): string
-    {
-        return $this->broadcasterId;
-    }
-
-    public function getBroadcasterLogin(): string
-    {
-        return $this->broadcasterLogin;
-    }
-
-    public function getBroadcasterName(): string
-    {
-        return $this->broadcasterName;
-    }
-
-    public function isGift(): bool
-    {
-        return $this->isGift;
-    }
-
-    public function getTier(): string
-    {
-        return $this->tier;
-    }
-
-    public function getGifterId(): ?string
-    {
-        return $this->gifterId;
-    }
-
-    public function getGifterLogin(): ?string
-    {
-        return $this->gifterLogin;
-    }
-
-    public function getGifterName(): ?string
-    {
-        return $this->gifterName;
-    }
-
-    public function getPlanName(): ?string
-    {
-        return $this->planName;
-    }
-
-    public function getUserId(): ?string
-    {
-        return $this->userId;
-    }
-
-    public function getUserName(): ?string
-    {
-        return $this->userName;
-    }
-
-    public function getUserLogin(): ?string
-    {
-        return $this->userLogin;
     }
 }

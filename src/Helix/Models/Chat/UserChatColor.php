@@ -4,12 +4,8 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Chat;
 
-use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
-
 final readonly class UserChatColor
 {
-    use SerializesModels;
-
     /**
      * @param string $userId    An ID that uniquely identifies the user.
      * @param string $userLogin The user’s login name.
@@ -18,30 +14,10 @@ final readonly class UserChatColor
      *                          specified a color in their settings, the string is empty.
      */
     public function __construct(
-        private string $userId,
-        private string $userLogin,
-        private string $userName,
-        private string $color
+        public string $userId,
+        public string $userLogin,
+        public string $userName,
+        public string $color,
     ) {
-    }
-
-    public function getUserId(): string
-    {
-        return $this->userId;
-    }
-
-    public function getUserLogin(): string
-    {
-        return $this->userLogin;
-    }
-
-    public function getUserName(): string
-    {
-        return $this->userName;
-    }
-
-    public function getColor(): string
-    {
-        return $this->color;
     }
 }

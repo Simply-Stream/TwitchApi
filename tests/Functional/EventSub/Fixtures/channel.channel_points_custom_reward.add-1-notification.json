@@ -1,0 +1,12 @@
+{
+    "headers": {
+        "Twitch-Eventsub-MESSAGE-ID": "a72ff04b-c50e-44fd-7afc-fb110330f4d2",
+        "Twitch-Eventsub-MESSAGE-RETRY": "0",
+        "Twitch-Eventsub-MESSAGE-SIGNATURE": "sha256=0beb73acafb874a34656409f4f30b04f1ef6ce7f9c67088de6c204d1e0099a04",
+        "Twitch-Eventsub-MESSAGE-TIMESTAMP": "2026-07-11T08:21:26.298155Z",
+        "Twitch-Eventsub-MESSAGE-TYPE": "notification",
+        "Twitch-Eventsub-SUBSCRIPTION-TYPE": "channel.channel_points_custom_reward.add",
+        "Twitch-Eventsub-SUBSCRIPTION-VERSION": "1"
+    },
+    "body": "{\"subscription\":{\"id\":\"7536d5f5-4491-1d2b-2803-1d191e27807c\",\"status\":\"enabled\",\"type\":\"channel.channel_points_custom_reward.add\",\"version\":\"1\",\"condition\":{\"broadcaster_user_id\":\"1552929\"},\"transport\":{\"method\":\"webhook\",\"callback\":\"null\"},\"created_at\":\"2026-07-11T08:21:26.298155Z\",\"cost\":0},\"event\":{\"id\":\"032b39d9-7763-9cfa-fbe1-56d766229cea\",\"broadcaster_user_id\":\"1552929\",\"broadcaster_user_login\":\"testBroadcaster\",\"broadcaster_user_name\":\"testBroadcaster\",\"is_enabled\":true,\"is_paused\":false,\"is_in_stock\":true,\"title\":\"Test Reward from CLI\",\"cost\":150,\"prompt\":\"Redeem Your Test Reward from CLI\",\"is_user_input_required\":true,\"should_redemptions_skip_request_queue\":false,\"cooldown_expires_at\":\"2026-07-11T08:21:26.298155Z\",\"redemptions_redeemed_current_stream\":0,\"max_per_stream\":{\"is_enabled\":true,\"value\":100},\"max_per_user_per_stream\":{\"is_enabled\":true,\"value\":100},\"global_cooldown\":{\"is_enabled\":true,\"seconds\":300},\"background_color\":\"#c0ffee\",\"image\":{\"url_1x\":\"https://static-cdn.jtvnw.net/image-1.png\",\"url_2x\":\"https://static-cdn.jtvnw.net/image-2.png\",\"url_4x\":\"https://static-cdn.jtvnw.net/image-4.png\"},\"default_image\":{\"url_1x\":\"https://static-cdn.jtvnw.net/default-1.png\",\"url_2x\":\"https://static-cdn.jtvnw.net/default-2.png\",\"url_4x\":\"https://static-cdn.jtvnw.net/default-4.png\"}}}"
+}

@@ -4,31 +4,28 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
-use League\OAuth2\Client\Token\AccessTokenInterface;
-use SimplyStream\TwitchApi\Helix\Models\AbstractModel;
-use SimplyStream\TwitchApi\Helix\Models\TwitchResponseInterface;
+use SimplyStream\TwitchApi\Helix\Authentication\AccessTokenInterface;
 
-/**
- * @template T of TwitchResponseInterface
- */
 interface ApiClientInterface
 {
     /**
-     * @param string                    $path
-     * @param array                     $query
-     * @param string|null               $type
-     * @param string                    $method
-     * @param AbstractModel|null        $body
-     * @param AccessTokenInterface|null $accessToken
-     *
-     * @return T|null
+     * @param array<string, scalar|array<scalar>> $query
+     * @param array<string, mixed>|null $body
+     * @return array<string, mixed>
      */
-    public function sendRequest(
+    public function request(
+        string $method,
         string $path,
-        array $query,
-        string $type = null,
-        string $method = 'GET',
-        ?AbstractModel $body = null,
-        ?AccessTokenInterface $accessToken = null
-    ): ?TwitchResponseInterface;
+        AccessTokenInterface $accessToken,
+        array $query = [],
+        ?array $body = null,
+    ): array;
+
+    /**
+     * @param array<string, scalar|array<scalar>> $query
+     */
+    public function requestICalendar(
+        string $path,
+        array $query = [],
+    ): string;
 }

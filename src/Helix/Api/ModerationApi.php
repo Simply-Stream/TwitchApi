@@ -4,28 +4,40 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
-use JsonException;
-use League\OAuth2\Client\Token\AccessTokenInterface;
-use SimplyStream\TwitchApi\Helix\Models\Moderation\AddBlockedTermRequest;
-use SimplyStream\TwitchApi\Helix\Models\Moderation\AutoModSettings;
-use SimplyStream\TwitchApi\Helix\Models\Moderation\AutoModStatus;
-use SimplyStream\TwitchApi\Helix\Models\Moderation\BannedUser;
-use SimplyStream\TwitchApi\Helix\Models\Moderation\BanUserRequest;
-use SimplyStream\TwitchApi\Helix\Models\Moderation\BlockedTerm;
-use SimplyStream\TwitchApi\Helix\Models\Moderation\CheckAutoModStatusRequest;
-use SimplyStream\TwitchApi\Helix\Models\Moderation\ManageHeldAutoModMessageRequest;
-use SimplyStream\TwitchApi\Helix\Models\Moderation\Moderator;
-use SimplyStream\TwitchApi\Helix\Models\Moderation\ShieldModeStatus;
-use SimplyStream\TwitchApi\Helix\Models\Moderation\UpdateAutoModSettingsRequest;
-use SimplyStream\TwitchApi\Helix\Models\Moderation\UpdateShieldModeStatusRequest;
-use SimplyStream\TwitchApi\Helix\Models\Moderation\UserBan;
-use SimplyStream\TwitchApi\Helix\Models\Moderation\VIP;
-use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
-use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
+use SimplyStream\TwitchApi\Helix\Api\Moderation\Request\{AddBlockedTermRequest,
+    AddChannelModeratorRequest,
+    AddChannelVipRequest,
+    BanUserRequest,
+    CheckAutoModStatusRequest,
+    DeleteChatMessagesRequest,
+    GetAutoModSettingsRequest,
+    GetBannedUsersRequest,
+    GetBlockedTermsRequest,
+    GetModeratedChannelsRequest,
+    GetModeratorsRequest,
+    GetShieldModeStatusRequest,
+    GetVipsRequest,
+    ManageHeldAutoModMessageRequest,
+    RemoveBlockedTermRequest,
+    RemoveChannelModeratorRequest,
+    RemoveChannelVipRequest,
+    UnbanUserRequest,
+    UpdateAutoModSettingsRequest,
+    UpdateShieldModeStatusRequest};
+use SimplyStream\TwitchApi\Helix\Api\Moderation\Response\{AutoModSettingsResponse,
+    AutoModStatusResponse,
+    BannedUsersResponse,
+    BanUserResponse,
+    BlockedTermsResponse,
+    ModeratedChannelsResponse,
+    ModeratorsResponse,
+    ShieldModeStatusResponse,
+    VipsResponse};
+use SimplyStream\TwitchApi\Helix\Authentication\AccessTokenInterface;
 
-class ModerationApi extends AbstractApi
+final class ModerationApi extends AbstractApi
 {
-    protected const BASE_PATH = 'moderation';
+    private const string BASE_PATH = 'moderation';
 
     /**
      * Checks whether AutoMod would flag the specified message for review.
@@ -53,35 +65,24 @@ class ModerationApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/moderation/enforcements/status
      *
-     * @param string                    $broadcasterId The ID of the broadcaster whose AutoMod settings and list of
-     *                                                 blocked terms are used to check the message. This ID must match
-     *                                                 the user ID in the access token.
-     * @param CheckAutoModStatusRequest $body
-     * @param AccessTokenInterface      $accessToken   Requires a user access token that includes the moderation:read
-     *                                                 scope.
-     *
-     * @return TwitchDataResponse<AutoModStatus[]>
+     * @param AccessTokenInterface      $accessToken Requires a user access token that includes the moderation:read
+     *                                               scope.
      */
     public function checkAutoModStatus(
-        string $broadcasterId,
-        CheckAutoModStatusRequest $body,
-        AccessTokenInterface $accessToken
-    ): TwitchDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/enforcements/status',
-            query: [
-                'broadcaster_id' => $broadcasterId,
-            ],
-            type: sprintf('%s<%s[]>', TwitchDataResponse::class, AutoModStatus::class),
-            method: 'POST',
-            body: $body,
-            accessToken: $accessToken
+        CheckAutoModStatusRequest $request,
+        AccessTokenInterface $accessToken,
+    ): AutoModStatusResponse {
+        return $this->post(
+            self::BASE_PATH . '/enforcements/status',
+            AutoModStatusResponse::class,
+            $accessToken,
+            $this->normalizer->normalize($request->status),
+            ['broadcaster_id' => $request->broadcasterId],
         );
     }
 
     /**
-     * Allow or deny the message that AutoMod flagged for review. For information about AutoMod, see How to Use
-     * AutoMod.
+     * Allow or deny the message that AutoMod flagged for review. For information about AutoMod, see How to Use AutoMod.
      *
      * To get messages that AutoMod is holding for review, subscribe to the automod-queue.<moderator_id>.<channel_id>
      * topic using PubSub. PubSub sends a notification to your app when AutoMod holds a message for review.
@@ -92,21 +93,17 @@ class ModerationApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/moderation/automod/message
      *
-     * @param ManageHeldAutoModMessageRequest $body
      * @param AccessTokenInterface            $accessToken Requires a user access token that includes the
      *                                                     moderator:manage:automod scope.
-     *
-     * @return void
      */
     public function manageHeldAutoModMessages(
-        ManageHeldAutoModMessageRequest $body,
-        AccessTokenInterface $accessToken
+        ManageHeldAutoModMessageRequest $request,
+        AccessTokenInterface $accessToken,
     ): void {
-        $this->sendRequest(
-            path: self::BASE_PATH . '/automod/message',
-            method: 'POST',
-            body: $body,
-            accessToken: $accessToken
+        $this->postWithoutResponse(
+            self::BASE_PATH . '/automod/message',
+            $accessToken,
+            $this->normalizer->normalize($request->message),
         );
     }
 
@@ -120,26 +117,21 @@ class ModerationApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/moderation/automod/settings
      *
-     * @param string               $broadcasterId
-     * @param string               $moderatorId
-     * @param AccessTokenInterface $accessToken Requires a user access token that includes the
-     *                                          moderator:read:automod_settings scope.
-     *
-     * @return TwitchDataResponse<AutoModSettings[]>
+     * @param AccessTokenInterface      $accessToken Requires a user access token that includes the
+     *                                               moderator:read:automod_settings scope.
      */
     public function getAutoModSettings(
-        string $broadcasterId,
-        string $moderatorId,
-        AccessTokenInterface $accessToken
-    ): TwitchDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/automod/settings',
-            query: [
-                'broadcaster_id' => $broadcasterId,
-                'moderator_id' => $moderatorId,
+        GetAutoModSettingsRequest $request,
+        AccessTokenInterface $accessToken,
+    ): AutoModSettingsResponse {
+        return $this->get(
+            self::BASE_PATH . '/automod/settings',
+            AutoModSettingsResponse::class,
+            $accessToken,
+            [
+                'broadcaster_id' => $request->broadcasterId,
+                'moderator_id'   => $request->moderatorId,
             ],
-            type: sprintf('%s<%s[]>', TwitchDataResponse::class, AutoModSettings::class),
-            accessToken: $accessToken
         );
     }
 
@@ -153,33 +145,22 @@ class ModerationApi extends AbstractApi
      * URL
      * PUT https://api.twitch.tv/helix/moderation/automod/settings
      *
-     * @param string                       $broadcasterId The ID of the broadcaster whose AutoMod settings you want to
-     *                                                    update.
-     * @param string                       $moderatorId   The ID of the broadcaster or a user that has permission to
-     *                                                    moderate the broadcaster’s chat room. This ID must match the
-     *                                                    user ID in the user access token.
-     * @param UpdateAutoModSettingsRequest $body
-     * @param AccessTokenInterface         $accessToken   Requires a user access token that includes the
-     *                                                    moderator:manage:automod_settings scope.
-     *
-     * @return TwitchDataResponse<AutoModSettings[]>
+     * @param AccessTokenInterface         $accessToken Requires a user access token that includes the
+     *                                                  moderator:manage:automod_settings scope.
      */
     public function updateAutoModSettings(
-        string $broadcasterId,
-        string $moderatorId,
-        UpdateAutoModSettingsRequest $body,
-        AccessTokenInterface $accessToken
-    ): TwitchDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/automod/settings',
-            query: [
-                'broadcaster_id' => $broadcasterId,
-                'moderator_id' => $moderatorId,
+        UpdateAutoModSettingsRequest $request,
+        AccessTokenInterface $accessToken,
+    ): AutoModSettingsResponse {
+        return $this->put(
+            self::BASE_PATH . '/automod/settings',
+            AutoModSettingsResponse::class,
+            $accessToken,
+            $this->normalizer->normalize($request->settings),
+            [
+                'broadcaster_id' => $request->broadcasterId,
+                'moderator_id'   => $request->moderatorId,
             ],
-            type: sprintf('%s<%s[]>', TwitchDataResponse::class, AutoModSettings::class),
-            method: 'PUT',
-            body: $body,
-            accessToken: $accessToken
         );
     }
 
@@ -192,49 +173,25 @@ class ModerationApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/moderation/banned
      *
-     * @param string               $broadcasterId The ID of the broadcaster whose list of banned users you want to get.
-     *                                            This ID must match the user ID in the access token.
-     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the moderation:read or
-     *                                            moderator:manage:banned_users scope.
-     * @param string|null          $userId        A list of user IDs used to filter the results. To specify more than
-     *                                            one ID, include this parameter for each user you want to get. For
-     *                                            example, user_id=1234&user_id=5678. You may specify a maximum of 100
-     *                                            IDs.
-     *
-     *                                            The returned list includes only those users that were banned or put
-     *                                            in a timeout. The list is returned in the same order that you
-     *                                            specified the IDs.
-     * @param int                  $first         The maximum number of items to return per page in the response. The
-     *                                            minimum page size is
-     *                                            1 item per page and the maximum is 100 items per page. The default is
-     *                                            20.
-     * @param string|null          $after         The cursor used to get the next page of results. The Pagination
-     *                                            object in the response contains the cursor’s value.
-     * @param string|null          $before        The cursor used to get the previous page of results. The Pagination
-     *                                            object in the response contains the cursor’s value.
-     *
-     * @return TwitchPaginatedDataResponse<BannedUser[]>
+     * @param AccessTokenInterface  $accessToken Requires a user access token that includes the moderation:read or
+     *                                           moderator:manage:banned_users scope.
      */
     public function getBannedUsers(
-        string $broadcasterId,
+        GetBannedUsersRequest $request,
         AccessTokenInterface $accessToken,
-        string $userId = null,
-        int $first = 20,
-        string $after = null,
-        string $before = null
-    ): TwitchPaginatedDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/banned',
-            query: [
-                'broadcaster_id' => $broadcasterId,
-                'user_id' => $userId,
-                'first' => $first,
-                'after' => $after,
-                'before' => $before,
+    ): BannedUsersResponse {
+        $query = array_filter(
+            [
+                'broadcaster_id' => $request->broadcasterId,
+                'user_id'        => $request->userIds,
+                'first'          => $request->first,
+                'after'          => $request->after,
+                'before'         => $request->before,
             ],
-            type: sprintf('%s<%s[]>', TwitchPaginatedDataResponse::class, BannedUser::class),
-            accessToken: $accessToken
+            static fn (mixed $v): bool => $v !== null && $v !== [],
         );
+
+        return $this->get(self::BASE_PATH . '/banned', BannedUsersResponse::class, $accessToken, $query);
     }
 
     /**
@@ -253,33 +210,22 @@ class ModerationApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/moderation/bans
      *
-     * @param string               $broadcasterId The ID of the broadcaster whose chat room the user is being banned
-     *                                            from.
-     * @param string               $moderatorId   The ID of the broadcaster or a user that has permission to moderate
-     *                                            the broadcaster’s chat room. This ID must match the user ID in the
-     *                                            user access token.
-     * @param BanUserRequest       $body
-     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the
-     *                                            moderator:manage:banned_users scope.
-     *
-     * @return TwitchDataResponse<UserBan[]>
+     * @param AccessTokenInterface $accessToken Requires a user access token that includes the
+     *                                          moderator:manage:banned_users scope.
      */
     public function banUser(
-        string $broadcasterId,
-        string $moderatorId,
-        BanUserRequest $body,
-        AccessTokenInterface $accessToken
-    ): TwitchDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/bans',
-            query: [
-                'broadcaster_id' => $broadcasterId,
-                'moderator_id' => $moderatorId,
+        BanUserRequest $request,
+        AccessTokenInterface $accessToken,
+    ): BanUserResponse {
+        return $this->post(
+            self::BASE_PATH . '/bans',
+            BanUserResponse::class,
+            $accessToken,
+            $this->normalizer->normalize($request->ban),
+            [
+                'broadcaster_id' => $request->broadcasterId,
+                'moderator_id'   => $request->moderatorId,
             ],
-            type: sprintf('%s<%s[]>', TwitchDataResponse::class, UserBan::class),
-            method: 'POST',
-            body: $body,
-            accessToken: $accessToken
         );
     }
 
@@ -294,32 +240,21 @@ class ModerationApi extends AbstractApi
      * URL
      * DELETE https://api.twitch.tv/helix/moderation/bans
      *
-     * @param string               $broadcasterId The ID of the broadcaster whose chat room the user is banned from
-     *                                            chatting in.
-     * @param string               $moderatorId   The ID of the broadcaster or a user that has permission to moderate
-     *                                            the broadcaster’s chat room. This ID must match the user ID in the
-     *                                            user access token.
-     * @param string               $userId        The ID of the user to remove the ban or timeout from.
-     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the
-     *                                            moderator:manage:banned_users scope.
-     *
-     * @return void
+     * @param AccessTokenInterface $accessToken Requires a user access token that includes the
+     *                                          moderator:manage:banned_users scope.
      */
     public function unbanUser(
-        string $broadcasterId,
-        string $moderatorId,
-        string $userId,
-        AccessTokenInterface $accessToken
+        UnbanUserRequest $request,
+        AccessTokenInterface $accessToken,
     ): void {
-        $this->sendRequest(
-            path: self::BASE_PATH . '/bans',
-            query: [
-                'broadcaster_id' => $broadcasterId,
-                'moderator_id' => $moderatorId,
-                'user_id' => $userId,
+        $this->delete(
+            self::BASE_PATH . '/bans',
+            $accessToken,
+            [
+                'broadcaster_id' => $request->broadcasterId,
+                'moderator_id'   => $request->moderatorId,
+                'user_id'        => $request->userId,
             ],
-            method: 'DELETE',
-            accessToken: $accessToken
         );
     }
 
@@ -334,40 +269,24 @@ class ModerationApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/moderation/blocked_terms
      *
-     * @param string               $broadcasterId The ID of the broadcaster whose blocked terms you’re getting.
-     * @param string               $moderatorId   The ID of the broadcaster or a user that has permission to moderate
-     *                                            the broadcaster’s chat room. This ID must match the user ID in the
-     *                                            user access token.
-     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the
+     * @param AccessTokenInterface   $accessToken Requires a user access token that includes the
      *                                            moderator:read:blocked_terms or moderator:manage:blocked_terms scope.
-     * @param int                  $first         The maximum number of items to return per page in the response. The
-     *                                            minimum page size is
-     *                                            1 item per page and the maximum is 100 items per page. The default is
-     *                                            20.
-     * @param string|null          $after         The cursor used to get the next page of results. The Pagination
-     *                                            object in the response contains the cursor’s value.
-     *
-     * @return TwitchPaginatedDataResponse<BlockedTerm[]>
-     * @throws JsonException
      */
     public function getBlockedTerms(
-        string $broadcasterId,
-        string $moderatorId,
+        GetBlockedTermsRequest $request,
         AccessTokenInterface $accessToken,
-        int $first = 20,
-        string $after = null
-    ): TwitchPaginatedDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/blocked_terms',
-            query: [
-                'broadcaster_id' => $broadcasterId,
-                'moderator_id' => $moderatorId,
-                'first' => $first,
-                'after' => $after,
+    ): BlockedTermsResponse {
+        $query = array_filter(
+            [
+                'broadcaster_id' => $request->broadcasterId,
+                'moderator_id'   => $request->moderatorId,
+                'first'          => $request->first,
+                'after'          => $request->after,
             ],
-            type: sprintf('%s<%s[]>', TwitchPaginatedDataResponse::class, BlockedTerm::class),
-            accessToken: $accessToken
+            static fn (mixed $v): bool => $v !== null,
         );
+
+        return $this->get(self::BASE_PATH . '/blocked_terms', BlockedTermsResponse::class, $accessToken, $query);
     }
 
     /**
@@ -380,32 +299,22 @@ class ModerationApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/moderation/blocked_terms
      *
-     * @param string                $broadcasterId The ID of the broadcaster that owns the list of blocked terms.
-     * @param string                $moderatorId   The ID of the broadcaster or a user that has permission to moderate
-     *                                             the broadcaster’s chat room. This ID must match the user ID in the
-     *                                             user access token.
-     * @param AddBlockedTermRequest $body
-     * @param AccessTokenInterface  $accessToken   Requires a user access token that includes the
-     *                                             moderator:manage:blocked_terms scope.
-     *
-     * @return TwitchPaginatedDataResponse<BlockedTerm[]>
+     * @param AccessTokenInterface  $accessToken Requires a user access token that includes the
+     *                                           moderator:manage:blocked_terms scope.
      */
     public function addBlockedTerm(
-        string $broadcasterId,
-        string $moderatorId,
-        AddBlockedTermRequest $body,
-        AccessTokenInterface $accessToken
-    ): TwitchPaginatedDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/blocked_terms',
-            query: [
-                'broadcaster_id' => $broadcasterId,
-                'moderator_id' => $moderatorId,
+        AddBlockedTermRequest $request,
+        AccessTokenInterface $accessToken,
+    ): BlockedTermsResponse {
+        return $this->post(
+            self::BASE_PATH . '/blocked_terms',
+            BlockedTermsResponse::class,
+            $accessToken,
+            $this->normalizer->normalize($request->term),
+            [
+                'broadcaster_id' => $request->broadcasterId,
+                'moderator_id'   => $request->moderatorId,
             ],
-            type: sprintf('%s<%s[]>', TwitchPaginatedDataResponse::class, BlockedTerm::class),
-            method: 'POST',
-            body: $body,
-            accessToken: $accessToken
         );
     }
 
@@ -418,32 +327,21 @@ class ModerationApi extends AbstractApi
      * URL
      * DELETE https://api.twitch.tv/helix/moderation/blocked_terms
      *
-     * @param string               $broadcasterId The ID of the broadcaster that owns the list of blocked terms.
-     * @param string               $moderatorId   The ID of the broadcaster or a user that has permission to moderate
-     *                                            the broadcaster’s chat room. This ID must match the user ID in the
-     *                                            user access token.
-     * @param string               $id            The ID of the blocked term to remove from the broadcaster’s list of
-     *                                            blocked terms.
-     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the
-     *                                            moderator:manage:blocked_terms scope.
-     *
-     * @return void
+     * @param AccessTokenInterface     $accessToken Requires a user access token that includes the
+     *                                              moderator:manage:blocked_terms scope.
      */
     public function removeBlockedTerm(
-        string $broadcasterId,
-        string $moderatorId,
-        string $id,
-        AccessTokenInterface $accessToken
+        RemoveBlockedTermRequest $request,
+        AccessTokenInterface $accessToken,
     ): void {
-        $this->sendRequest(
-            path: self::BASE_PATH . '/blocked_terms',
-            query: [
-                'broadcaster_id' => $broadcasterId,
-                'moderator_id' => $moderatorId,
-                'id' => $id,
+        $this->delete(
+            self::BASE_PATH . '/blocked_terms',
+            $accessToken,
+            [
+                'broadcaster_id' => $request->broadcasterId,
+                'moderator_id'   => $request->moderatorId,
+                'id'             => $request->id,
             ],
-            method: 'DELETE',
-            accessToken: $accessToken
         );
     }
 
@@ -456,39 +354,23 @@ class ModerationApi extends AbstractApi
      * URL
      * DELETE https://api.twitch.tv/helix/moderation/chat
      *
-     * @param string               $broadcasterId The ID of the broadcaster that owns the chat room to remove messages
-     *                                            from.
-     * @param string               $moderatorId   The ID of the broadcaster or a user that has permission to moderate
-     *                                            the broadcaster’s chat room. This ID must match the user ID in the
-     *                                            user access token.
-     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the
-     *                                            moderator:manage:chat_messages scope.
-     * @param string|null          $messageId     The ID of the message to remove. The id tag in the PRIVMSG tag
-     *                                            contains the message’s ID. Restrictions:
-     *                                            - The message must have been created within the last 6 hours.
-     *                                            - The message must not belong to the broadcaster.
-     *                                            - The message must not belong to another moderator.
-     *                                            If not specified, the request removes all messages in the
-     *                                            broadcaster’s chat room.
-     *
-     * @return void
+     * @param AccessTokenInterface      $accessToken Requires a user access token that includes the
+     *                                               moderator:manage:chat_messages scope.
      */
     public function deleteChatMessages(
-        string $broadcasterId,
-        string $moderatorId,
+        DeleteChatMessagesRequest $request,
         AccessTokenInterface $accessToken,
-        string $messageId = null
     ): void {
-        $this->sendRequest(
-            path: self::BASE_PATH . '/chat',
-            query: [
-                'broadcaster_id' => $broadcasterId,
-                'moderator_id' => $moderatorId,
-                'message_id' => $messageId,
+        $query = array_filter(
+            [
+                'broadcaster_id' => $request->broadcasterId,
+                'moderator_id'   => $request->moderatorId,
+                'message_id'     => $request->messageId,
             ],
-            method: 'DELETE',
-            accessToken: $accessToken
+            static fn (mixed $v): bool => $v !== null,
         );
+
+        $this->delete(self::BASE_PATH . '/chat', $accessToken, $query);
     }
 
     /**
@@ -501,47 +383,25 @@ class ModerationApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/moderation/moderators
      *
-     * @param string               $broadcasterId      The ID of the broadcaster whose list of moderators you want to
-     *                                                 get. This ID must match the user ID in the access token.
-     * @param AccessTokenInterface $accessToken        Requires a user access token that includes the moderation:read
-     *                                                 scope. If your app also adds and removes moderators, you can use
-     *                                                 the channel:manage:moderators scope instead.
-     * @param string|null          $userId             A list of user IDs used to filter the results. To specify more
-     *                                                 than one ID, include this parameter for each moderator you want
-     *                                                 to get. For example, user_id=1234&user_id=5678. You may specify
-     *                                                 a maximum of 100 IDs.
-     *
-     *                                                 The returned list includes only the users from the list who are
-     *                                                 moderators in the broadcaster’s channel. The list is returned in
-     *                                                 the same order as you specified the IDs.
-     * @param int                  $first              The maximum number of items to return per page in the response.
-     *                                                 The minimum page size is
-     *                                                 1 item per page and the maximum is 100 items per page. The
-     *                                                 default is 20.
-     * @param string|null          $after              The cursor used to get the next page of results. The Pagination
-     *                                                 object in the response contains the cursor’s value.
-     *
-     * @return TwitchPaginatedDataResponse<Moderator[]>
-     * @throws JsonException
+     * @param AccessTokenInterface $accessToken Requires a user access token that includes the moderation:read scope. If
+     *                                          your app also adds and removes moderators, you can use the
+     *                                          channel:manage:moderators scope instead.
      */
     public function getModerators(
-        string $broadcasterId,
+        GetModeratorsRequest $request,
         AccessTokenInterface $accessToken,
-        string $userId = null,
-        int $first = 20,
-        string $after = null,
-    ): TwitchPaginatedDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/moderators',
-            query: [
-                'broadcaster_id' => $broadcasterId,
-                'user_id' => $userId,
-                'first' => $first,
-                'after' => $after,
+    ): ModeratorsResponse {
+        $query = array_filter(
+            [
+                'broadcaster_id' => $request->broadcasterId,
+                'user_id'        => $request->userIds,
+                'first'          => $request->first,
+                'after'          => $request->after,
             ],
-            type: sprintf('%s<%s[]>', TwitchPaginatedDataResponse::class, Moderator::class),
-            accessToken: $accessToken
+            static fn (mixed $v): bool => $v !== null && $v !== [],
         );
+
+        return $this->get(self::BASE_PATH . '/moderators', ModeratorsResponse::class, $accessToken, $query);
     }
 
     /**
@@ -555,28 +415,20 @@ class ModerationApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/moderation/moderators
      *
-     * @param string               $broadcasterId The ID of the broadcaster that owns the chat room. This ID must match
-     *                                            the user ID in the access token.
-     * @param string               $userId        The ID of the user to add as a moderator in the broadcaster’s chat
-     *                                            room.
-     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the
-     *                                            channel:manage:moderators scope.
-     *
-     * @return void
+     * @param AccessTokenInterface       $accessToken Requires a user access token that includes the
+     *                                                channel:manage:moderators scope.
      */
     public function addChannelModerator(
-        string $broadcasterId,
-        string $userId,
-        AccessTokenInterface $accessToken
+        AddChannelModeratorRequest $request,
+        AccessTokenInterface $accessToken,
     ): void {
-        $this->sendRequest(
-            path: self::BASE_PATH . '/moderators',
+        $this->postWithoutResponse(
+            self::BASE_PATH . '/moderators',
+            $accessToken,
             query: [
-                'broadcaster_id' => $broadcasterId,
-                'user_id' => $userId,
+                'broadcaster_id' => $request->broadcasterId,
+                'user_id'        => $request->userId,
             ],
-            method: 'POST',
-            accessToken: $accessToken
         );
     }
 
@@ -591,28 +443,20 @@ class ModerationApi extends AbstractApi
      * URL
      * DELETE https://api.twitch.tv/helix/moderation/moderators
      *
-     * @param string               $broadcasterId The ID of the broadcaster that owns the chat room. This ID must match
-     *                                            the user ID in the access token.
-     * @param string               $userId        The ID of the user to remove as a moderator from the broadcaster’s
-     *                                            chat room.
-     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the
-     *                                            channel:manage:moderators scope.
-     *
-     * @return void
+     * @param AccessTokenInterface          $accessToken Requires a user access token that includes the
+     *                                                   channel:manage:moderators scope.
      */
     public function removeChannelModerator(
-        string $broadcasterId,
-        string $userId,
-        AccessTokenInterface $accessToken
+        RemoveChannelModeratorRequest $request,
+        AccessTokenInterface $accessToken,
     ): void {
-        $this->sendRequest(
-            path: self::BASE_PATH . '/moderators',
-            query: [
-                'broadcaster_id' => $broadcasterId,
-                'user_id' => $userId,
+        $this->delete(
+            self::BASE_PATH . '/moderators',
+            $accessToken,
+            [
+                'broadcaster_id' => $request->broadcasterId,
+                'user_id'        => $request->userId,
             ],
-            method: 'DELETE',
-            accessToken: $accessToken
         );
     }
 
@@ -626,42 +470,25 @@ class ModerationApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/channels/vips
      *
-     * @param string               $broadcasterId The ID of the broadcaster whose list of VIPs you want to get. This ID
-     *                                            must match the user ID in the access token.
-     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the channel:read:vips
-     *                                            scope. If your app also adds and removes VIP status, you can use the
-     *                                            channel:manage:vips scope instead.
-     * @param string|null          $userId        Filters the list for specific VIPs. To specify more than one user,
-     *                                            include the user_id parameter for each user to get. For example,
-     *                                            &user_id=1234&user_id=5678. The maximum number of IDs that you may
-     *                                            specify is 100. Ignores the ID of those users in the list that aren’t
-     *                                            VIPs.
-     * @param int                  $first         The maximum number of items to return per page in the response. The
-     *                                            minimum page size is
-     *                                            1 item per page and the maximum is 100. The default is 20.
-     * @param string|null          $after         The cursor used to get the next page of results. The Pagination
-     *                                            object in the response contains the cursor’s value.
-     *
-     * @return TwitchPaginatedDataResponse<VIP[]>
+     * @param AccessTokenInterface $accessToken Requires a user access token that includes the channel:read:vips scope.
+     *                                          If your app also adds and removes VIP status, you can use the
+     *                                          channel:manage:vips scope instead.
      */
     public function getVips(
-        string $broadcasterId,
+        GetVipsRequest $request,
         AccessTokenInterface $accessToken,
-        string $userId = null,
-        int $first = 20,
-        string $after = null
-    ): TwitchPaginatedDataResponse {
-        return $this->sendRequest(
-            path: 'channels/vips',
-            query: [
-                'broadcaster_id' => $broadcasterId,
-                'user_id' => $userId,
-                'first' => $first,
-                'after' => $after,
+    ): VipsResponse {
+        $query = array_filter(
+            [
+                'broadcaster_id' => $request->broadcasterId,
+                'user_id'        => $request->userIds,
+                'first'          => $request->first,
+                'after'          => $request->after,
             ],
-            type: sprintf('%s<%s[]>', TwitchPaginatedDataResponse::class, VIP::class),
-            accessToken: $accessToken
+            static fn (mixed $v): bool => $v !== null && $v !== [],
         );
+
+        return $this->get('channels/vips', VipsResponse::class, $accessToken, $query);
     }
 
     /**
@@ -675,27 +502,20 @@ class ModerationApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/channels/vips
      *
-     * @param string               $broadcasterId The ID of the broadcaster that’s adding the user as a VIP. This ID
-     *                                            must match the user ID in the access token.
-     * @param string               $userId        The ID of the user to give VIP status to.
-     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the channel:manage:vips
-     *                                            scope.
-     *
-     * @return void
+     * @param AccessTokenInterface $accessToken Requires a user access token that includes the channel:manage:vips
+     *                                          scope.
      */
     public function addChannelVip(
-        string $broadcasterId,
-        string $userId,
-        AccessTokenInterface $accessToken
+        AddChannelVipRequest $request,
+        AccessTokenInterface $accessToken,
     ): void {
-        $this->sendRequest(
-            path: 'channels/vips',
+        $this->postWithoutResponse(
+            'channels/vips',
+            $accessToken,
             query: [
-                'broadcaster_id' => $broadcasterId,
-                'user_id' => $userId,
+                'broadcaster_id' => $request->broadcasterId,
+                'user_id'        => $request->userId,
             ],
-            method: 'POST',
-            accessToken: $accessToken
         );
     }
 
@@ -714,27 +534,20 @@ class ModerationApi extends AbstractApi
      * URL
      * DELETE https://api.twitch.tv/helix/channels/vips
      *
-     * @param string               $broadcasterId The ID of the broadcaster who owns the channel where the user has VIP
-     *                                            status.
-     * @param string               $userId        The ID of the user to remove VIP status from.
-     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the channel:manage:vips
-     *                                            scope.
-     *
-     * @return void
+     * @param AccessTokenInterface    $accessToken Requires a user access token that includes the channel:manage:vips
+     *                                             scope.
      */
     public function removeChannelVip(
-        string $broadcasterId,
-        string $userId,
-        AccessTokenInterface $accessToken
+        RemoveChannelVipRequest $request,
+        AccessTokenInterface $accessToken,
     ): void {
-        $this->sendRequest(
-            path: 'channels/vips',
-            query: [
-                'broadcaster_id' => $broadcasterId,
-                'user_id' => $userId,
+        $this->delete(
+            'channels/vips',
+            $accessToken,
+            [
+                'broadcaster_id' => $request->broadcasterId,
+                'user_id'        => $request->userId,
             ],
-            method: 'DELETE',
-            accessToken: $accessToken
         );
     }
 
@@ -751,34 +564,22 @@ class ModerationApi extends AbstractApi
      * URL
      * PUT https://api.twitch.tv/helix/moderation/shield_mode
      *
-     * @param string                        $broadcasterId The ID of the broadcaster whose Shield Mode you want to
-     *                                                     activate or deactivate.
-     * @param string                        $moderatorId   The ID of the broadcaster or a user that is one of the
-     *                                                     broadcaster’s moderators. This ID must match the user ID in
-     *                                                     the access token.
-     * @param UpdateShieldModeStatusRequest $body
-     * @param AccessTokenInterface          $accessToken   Requires a user access token that includes the
-     *                                                     moderator:manage:shield_mode scope.
-     *
-     * @return TwitchDataResponse<ShieldModeStatus[]>
-     * @throws JsonException
+     * @param AccessTokenInterface          $accessToken Requires a user access token that includes the
+     *                                                   moderator:manage:shield_mode scope.
      */
     public function updateShieldModeStatus(
-        string $broadcasterId,
-        string $moderatorId,
-        UpdateShieldModeStatusRequest $body,
-        AccessTokenInterface $accessToken
-    ): TwitchDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/shield_mode',
-            query: [
-                'broadcaster_id' => $broadcasterId,
-                'moderator_id' => $moderatorId,
+        UpdateShieldModeStatusRequest $request,
+        AccessTokenInterface $accessToken,
+    ): ShieldModeStatusResponse {
+        return $this->put(
+            self::BASE_PATH . '/shield_mode',
+            ShieldModeStatusResponse::class,
+            $accessToken,
+            $this->normalizer->normalize($request->status),
+            [
+                'broadcaster_id' => $request->broadcasterId,
+                'moderator_id'   => $request->moderatorId,
             ],
-            type: sprintf('%s<%s[]>', TwitchDataResponse::class, ShieldModeStatus::class),
-            method: 'PUT',
-            body: $body,
-            accessToken: $accessToken
         );
     }
 
@@ -794,28 +595,21 @@ class ModerationApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/moderation/shield_mode
      *
-     * @param string               $broadcasterId The ID of the broadcaster whose Shield Mode activation status you
-     *                                            want to get.
-     * @param string               $moderatorId   The ID of the broadcaster or a user that is one of the broadcaster’s
-     *                                            moderators. This ID must match the user ID in the access token.
-     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the
-     *                                            moderator:read:shield_mode or moderator:manage:shield_mode scope.
-     *
-     * @return TwitchDataResponse<ShieldModeStatus[]>
+     * @param AccessTokenInterface       $accessToken Requires a user access token that includes the
+     *                                               moderator:read:shield_mode or moderator:manage:shield_mode scope.
      */
     public function getShieldModeStatus(
-        string $broadcasterId,
-        string $moderatorId,
-        AccessTokenInterface $accessToken
-    ): TwitchDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/shield_mode',
-            query: [
-                'broadcaster_id' => $broadcasterId,
-                'moderator_id' => $moderatorId,
+        GetShieldModeStatusRequest $request,
+        AccessTokenInterface $accessToken,
+    ): ShieldModeStatusResponse {
+        return $this->get(
+            self::BASE_PATH . '/shield_mode',
+            ShieldModeStatusResponse::class,
+            $accessToken,
+            [
+                'broadcaster_id' => $request->broadcasterId,
+                'moderator_id'   => $request->moderatorId,
             ],
-            type: sprintf('%s<%s[]>', TwitchDataResponse::class, ShieldModeStatus::class),
-            accessToken: $accessToken
         );
     }
 
@@ -829,33 +623,21 @@ class ModerationApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/moderation/channels
      *
-     * @param string               $userId      A user’s ID. Returns the list of channels that this user has moderator
-     *                                          privileges in. This ID must match the user ID in the user OAuth token
-     * @param AccessTokenInterface $accessToken Requires OAuth Scope: user:read:moderated_channels
-     * @param string|null          $after       The cursor used to get the next page of results. The Pagination object
-     *                                          in the response contains the cursor’s value.
-     * @param int                  $first       The maximum number of items to return per page in the response.
-     *
-     *                                          Minimum page size is 1 item per page and the maximum is 100. The
-     *                                          default is 20.
-     *
-     * @return TwitchPaginatedDataResponse<ModeratedChannel[]>
+     * @param AccessTokenInterface        $accessToken Requires OAuth Scope: user:read:moderated_channels
      */
     public function getModeratedChannels(
-        string $userId,
+        GetModeratedChannelsRequest $request,
         AccessTokenInterface $accessToken,
-        string $after = null,
-        int $first = 20
-    ): TwitchPaginatedDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/channels',
-            query: [
-                'user_id' => $userId,
-                'after' => $after,
-                'first' => $first,
+    ): ModeratedChannelsResponse {
+        $query = array_filter(
+            [
+                'user_id' => $request->userId,
+                'after'   => $request->after,
+                'first'   => $request->first,
             ],
-            type: sprintf('%s<%s[]>', TwitchPaginatedDataResponse::class, ModeratedChannel::class),
-            accessToken: $accessToken
+            static fn (mixed $v): bool => $v !== null,
         );
+
+        return $this->get(self::BASE_PATH . '/channels', ModeratedChannelsResponse::class, $accessToken, $query);
     }
 }

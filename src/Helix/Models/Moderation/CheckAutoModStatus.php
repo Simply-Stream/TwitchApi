@@ -4,27 +4,18 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Moderation;
 
-use SimplyStream\TwitchApi\Helix\Models\AbstractModel;
+use Webmozart\Assert\Assert;
 
-final readonly class CheckAutoModStatus extends AbstractModel
+final readonly class CheckAutoModStatus
 {
     /**
-     * @param string $msgId   A caller-defined ID used to correlate this message with the same message in the response.
-     * @param string $msgText The message to check.
+     * @param list<AutoModMessage> $data The messages to check. You may check a maximum of 100 messages per request.
      */
     public function __construct(
-        private string $msgId,
-        private string $msgText
+        public array $data,
     ) {
-    }
-
-    public function getMsgId(): string
-    {
-        return $this->msgId;
-    }
-
-    public function getMsgText(): string
-    {
-        return $this->msgText;
+        Assert::minCount($data, 1);
+        Assert::maxCount($data, 100);
+        Assert::allIsInstanceOf($data, AutoModMessage::class);
     }
 }

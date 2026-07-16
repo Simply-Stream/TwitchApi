@@ -4,12 +4,8 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Models\Channels;
 
-use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
-
 final readonly class ChannelInformation
 {
-    use SerializesModels;
-
     /**
      * @param string   $broadcasterId               An ID that uniquely identifies the broadcaster.
      * @param string   $broadcasterLogin            The broadcaster’s login name.
@@ -38,72 +34,17 @@ final readonly class ChannelInformation
      * @param bool     $isBrandedContent            Boolean flag indicating if the channel has branded content.
      */
     public function __construct(
-        private string $broadcasterId,
-        private string $broadcasterLogin,
-        private string $broadcasterName,
-        private string $broadcasterLanguage,
-        private string $gameName,
-        private string $gameId,
-        private string $title,
-        private int $delay,
-        private array $tags,
-        private array $contentClassificationLabels,
-        private bool $isBrandedContent
+        public string $broadcasterId,
+        public string $broadcasterLogin,
+        public string $broadcasterName,
+        public string $broadcasterLanguage,
+        public string $gameName,
+        public string $gameId,
+        public string $title,
+        public int $delay,
+        public array $tags,
+        public array $contentClassificationLabels,
+        public bool $isBrandedContent
     ) {
-    }
-
-    public function getBroadcasterId(): string
-    {
-        return $this->broadcasterId;
-    }
-
-    public function getBroadcasterLogin(): string
-    {
-        return $this->broadcasterLogin;
-    }
-
-    public function getBroadcasterName(): string
-    {
-        return $this->broadcasterName;
-    }
-
-    public function getBroadcasterLanguage(): string
-    {
-        return $this->broadcasterLanguage;
-    }
-
-    public function getGameName(): string
-    {
-        return $this->gameName;
-    }
-
-    public function getGameId(): string
-    {
-        return $this->gameId;
-    }
-
-    public function getTitle(): string
-    {
-        return $this->title;
-    }
-
-    public function getDelay(): int
-    {
-        return $this->delay;
-    }
-
-    public function getTags(): array
-    {
-        return $this->tags;
-    }
-
-    public function getContentClassificationLabels(): array
-    {
-        return $this->contentClassificationLabels;
-    }
-
-    public function isBrandedContent(): bool
-    {
-        return $this->isBrandedContent;
     }
 }

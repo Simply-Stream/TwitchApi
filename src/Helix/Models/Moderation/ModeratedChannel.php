@@ -2,36 +2,19 @@
 
 declare(strict_types=1);
 
-namespace SimplyStream\TwitchApi\Helix\Api;
+namespace SimplyStream\TwitchApi\Helix\Models\Moderation;
 
-use SimplyStream\TwitchApi\Helix\Models\AbstractModel;
-
-final readonly class ModeratedChannel extends AbstractModel
+final readonly class ModeratedChannel
 {
     /**
      * @param string $broadcasterId    An ID that uniquely identifies the channel this user can moderate.
      * @param string $broadcasterLogin The channel’s login name.
-     * @param string $broadcasterName  The channels’ display name.
+     * @param string $broadcasterName  The channel’s display name.
      */
     public function __construct(
-        private string $broadcasterId,
-        private string $broadcasterLogin,
-        private string $broadcasterName,
+        public string $broadcasterId,
+        public string $broadcasterLogin,
+        public string $broadcasterName,
     ) {
-    }
-
-    public function getBroadcasterId(): string
-    {
-        return $this->broadcasterId;
-    }
-
-    public function getBroadcasterName(): string
-    {
-        return $this->broadcasterName;
-    }
-
-    public function getBroadcasterLogin(): string
-    {
-        return $this->broadcasterLogin;
     }
 }

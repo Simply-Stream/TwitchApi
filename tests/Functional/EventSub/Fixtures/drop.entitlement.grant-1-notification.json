@@ -1,0 +1,12 @@
+{
+    "headers": {
+        "Twitch-Eventsub-MESSAGE-ID": "258de515-bfb5-1d20-8e38-1fb7ccc768cd",
+        "Twitch-Eventsub-MESSAGE-RETRY": "0",
+        "Twitch-Eventsub-MESSAGE-SIGNATURE": "sha256=dc51abc91f738e34e4669542c06171e06e95ad91420d71d6aa9d20cf443a37bd",
+        "Twitch-Eventsub-MESSAGE-TIMESTAMP": "2026-07-11T08:21:40.667715Z",
+        "Twitch-Eventsub-MESSAGE-TYPE": "notification",
+        "Twitch-Eventsub-SUBSCRIPTION-TYPE": "drop.entitlement.grant",
+        "Twitch-Eventsub-SUBSCRIPTION-VERSION": "1"
+    },
+    "body": "{\"subscription\":{\"id\":\"00c62947-2670-4864-b133-f79fcc4c758c\",\"status\":\"enabled\",\"type\":\"drop.entitlement.grant\",\"version\":\"1\",\"condition\":{\"organization_id\":\"21676289\",\"category_id\":\"3300\",\"campaign_id\":\"46dee2fb-86ab-52b0-ab32-c6dbc9f6413e\"},\"transport\":{\"method\":\"webhook\",\"callback\":\"null\"},\"created_at\":\"2026-07-11T08:21:40.667715Z\",\"cost\":0},\"events\":[{\"id\":\"f2c6f44c-2c11-2291-5109-4ef806577212\",\"data\":{\"entitlement_id\":\"0f6d8cba-78e3-b942-0a48-548bc5d279b2\",\"benefit_id\":\"0242db69-694a-a2f2-1da2-5791b04b8e52\",\"campaign_id\":\"46dee2fb-86ab-52b0-ab32-c6dbc9f6413e\",\"organization_id\":\"21676289\",\"created_at\":\"2026-07-11T08:21:40.667715Z\",\"user_id\":\"68418891\",\"user_name\":\"testBroadcaster\",\"user_login\":\"testBroadcaster\",\"category_id\":\"3300\",\"category_name\":\"Special Events\"}}]}"
+}

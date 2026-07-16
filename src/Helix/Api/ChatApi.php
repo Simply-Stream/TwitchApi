@@ -4,28 +4,32 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
-use JsonException;
-use League\OAuth2\Client\Token\AccessTokenInterface;
-use SimplyStream\TwitchApi\Helix\Models\Chat\ChannelEmote;
-use SimplyStream\TwitchApi\Helix\Models\Chat\ChatBadge;
+use SimplyStream\TwitchApi\Helix\Api\Chat\Request\GetChannelChatBadgesRequest;
+use SimplyStream\TwitchApi\Helix\Api\Chat\Request\GetChannelEmotesRequest;
+use SimplyStream\TwitchApi\Helix\Api\Chat\Request\GetChatSettingsRequest;
+use SimplyStream\TwitchApi\Helix\Api\Chat\Request\GetChattersRequest;
+use SimplyStream\TwitchApi\Helix\Api\Chat\Request\GetEmoteSetsRequest;
+use SimplyStream\TwitchApi\Helix\Api\Chat\Request\GetUserChatColorRequest;
+use SimplyStream\TwitchApi\Helix\Api\Chat\Request\SendChatAnnouncementRequest;
+use SimplyStream\TwitchApi\Helix\Api\Chat\Request\SendChatMessageRequest;
+use SimplyStream\TwitchApi\Helix\Api\Chat\Request\SendShoutoutRequest;
+use SimplyStream\TwitchApi\Helix\Api\Chat\Request\UpdateChatSettingsRequest;
+use SimplyStream\TwitchApi\Helix\Api\Chat\Request\UpdateUserChatColorRequest;
+use SimplyStream\TwitchApi\Helix\Api\Chat\Response\ChannelChatBadgesResponse;
+use SimplyStream\TwitchApi\Helix\Api\Chat\Response\ChannelEmotesResponse;
+use SimplyStream\TwitchApi\Helix\Api\Chat\Response\ChatSettingsResponse;
+use SimplyStream\TwitchApi\Helix\Api\Chat\Response\ChattersResponse;
+use SimplyStream\TwitchApi\Helix\Api\Chat\Response\EmoteSetsResponse;
+use SimplyStream\TwitchApi\Helix\Api\Chat\Response\GlobalChatBadgesResponse;
+use SimplyStream\TwitchApi\Helix\Api\Chat\Response\GlobalEmotesResponse;
+use SimplyStream\TwitchApi\Helix\Api\Chat\Response\SendChatMessageResponse;
+use SimplyStream\TwitchApi\Helix\Api\Chat\Response\UserChatColorResponse;
+use SimplyStream\TwitchApi\Helix\Authentication\AccessTokenInterface;
 use SimplyStream\TwitchApi\Helix\Models\Chat\ChatColorEnum;
-use SimplyStream\TwitchApi\Helix\Models\Chat\ChatSettings;
-use SimplyStream\TwitchApi\Helix\Models\Chat\Chatter;
-use SimplyStream\TwitchApi\Helix\Models\Chat\EmoteSet;
-use SimplyStream\TwitchApi\Helix\Models\Chat\GlobalEmote;
-use SimplyStream\TwitchApi\Helix\Models\Chat\Message;
-use SimplyStream\TwitchApi\Helix\Models\Chat\SendChatAnnouncementRequest;
-use SimplyStream\TwitchApi\Helix\Models\Chat\SendChatMessageRequest;
-use SimplyStream\TwitchApi\Helix\Models\Chat\UpdateChatSettingsRequest;
-use SimplyStream\TwitchApi\Helix\Models\Chat\UserChatColor;
-use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
-use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
-use SimplyStream\TwitchApi\Helix\Models\TwitchResponseInterface;
-use SimplyStream\TwitchApi\Helix\Models\TwitchTemplatedDataResponse;
 
-class ChatApi extends AbstractApi
+final class ChatApi extends AbstractApi
 {
-    protected const BASE_PATH = 'chat';
+    private const string BASE_PATH = 'chat';
 
     /**
      * Gets the list of users that are connected to the broadcaster’s chat session.
@@ -41,38 +45,24 @@ class ChatApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/chat/chatters
      *
-     * @param string               $broadcasterId The ID of the broadcaster whose list of chatters you want to get.
-     * @param string               $moderatorId   The ID of the broadcaster or one of the broadcaster’s moderators.
-     *                                            This ID must match the user ID in the user access token.
-     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the
-     *                                            moderator:read:chatters scope.
-     * @param int                  $first         The maximum number of items to return per page in the response. The
-     *                                            minimum page size is
-     *                                            1 item per page and the maximum is 1,000. The default is 100.
-     * @param string|null          $after         The cursor used to get the next page of results. The Pagination
-     *                                            object in the response contains the cursor’s value.
-     *
-     * @return TwitchPaginatedDataResponse<Chatter[]>
-     * @throws JsonException
+     * @param AccessTokenInterface $accessToken Requires a user access token that includes the moderator:read:chatters
+     *                                          scope.
      */
     public function getChatters(
-        string $broadcasterId,
-        string $moderatorId,
+        GetChattersRequest $request,
         AccessTokenInterface $accessToken,
-        int $first = 100,
-        string $after = null
-    ): TwitchPaginatedDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/chatters',
-            query: [
-                'broadcaster_id' => $broadcasterId,
-                'moderator_id' => $moderatorId,
-                'first' => $first,
-                'after' => $after,
+    ): ChattersResponse {
+        $query = array_filter(
+            [
+                'broadcaster_id' => $request->broadcasterId,
+                'moderator_id'   => $request->moderatorId,
+                'first'          => $request->first,
+                'after'          => $request->after,
             ],
-            type: sprintf('%s<%s[]>', TwitchPaginatedDataResponse::class, Chatter::class),
-            accessToken: $accessToken
+            static fn (mixed $v): bool => $v !== null,
         );
+
+        return $this->get(self::BASE_PATH . '/chatters', ChattersResponse::class, $accessToken, $query);
     }
 
     /**
@@ -89,23 +79,19 @@ class ChatApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/chat/emotes
      *
-     * @param string               $broadcasterId      An ID that identifies the broadcaster whose emotes you want to
-     *                                                 get.
-     * @param AccessTokenInterface $accessToken        Requires an app access token or user access token.
-     *
-     * @return TwitchTemplatedDataResponse<ChannelEmote[]>
+     * @param AccessTokenInterface    $accessToken Requires an app access token or user access token.
      */
     public function getChannelEmotes(
-        string $broadcasterId,
-        AccessTokenInterface $accessToken
-    ): TwitchResponseInterface {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/emotes',
-            query: [
-                'broadcaster_id' => $broadcasterId,
+        GetChannelEmotesRequest $request,
+        AccessTokenInterface $accessToken,
+    ): ChannelEmotesResponse {
+        return $this->get(
+            self::BASE_PATH . '/emotes',
+            ChannelEmotesResponse::class,
+            $accessToken,
+            [
+                'broadcaster_id' => $request->broadcasterId,
             ],
-            type: sprintf('%s<%s[]>', TwitchTemplatedDataResponse::class, ChannelEmote::class),
-            accessToken: $accessToken
         );
     }
 
@@ -121,17 +107,11 @@ class ChatApi extends AbstractApi
      * @see https://dev.twitch.tv/docs/irc/emotes Emotes
      *
      * @param AccessTokenInterface $accessToken Requires an app access token or user access token.
-     *
-     * @return TwitchTemplatedDataResponse<GlobalEmote[]>
      */
     public function getGlobalEmotes(
-        AccessTokenInterface $accessToken
-    ): TwitchTemplatedDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/emotes/global',
-            type: sprintf('%s<%s[]>', TwitchTemplatedDataResponse::class, GlobalEmote::class),
-            accessToken: $accessToken
-        );
+        AccessTokenInterface $accessToken,
+    ): GlobalEmotesResponse {
+        return $this->get(self::BASE_PATH . '/emotes/global', GlobalEmotesResponse::class, $accessToken);
     }
 
     /**
@@ -148,28 +128,19 @@ class ChatApi extends AbstractApi
      *
      * @see https://dev.twitch.tv/docs/irc/emotes Emotes
      *
-     * @param string               $emoteSetId      An ID that identifies the emote set to get. Include this parameter
-     *                                              for each emote set you want to get. For example,
-     *                                              emote_set_id=1234&emote_set_id=5678. You may specify a maximum of
-     *                                              25 IDs. The response contains only the IDs that were found and
-     *                                              ignores duplicate IDs.
-     *
-     *                                              To get emote set IDs, use the Get Channel Emotes API.
-     * @param AccessTokenInterface $accessToken     Requires an app access token or user access token.
-     *
-     * @return TwitchTemplatedDataResponse<EmoteSet[]>
+     * @param AccessTokenInterface $accessToken Requires an app access token or user access token.
      */
     public function getEmoteSets(
-        string $emoteSetId,
-        AccessTokenInterface $accessToken
-    ): TwitchTemplatedDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/emotes/set',
-            query: [
-                'emote_set_id' => $emoteSetId,
+        GetEmoteSetsRequest $request,
+        AccessTokenInterface $accessToken,
+    ): EmoteSetsResponse {
+        return $this->get(
+            self::BASE_PATH . '/emotes/set',
+            EmoteSetsResponse::class,
+            $accessToken,
+            [
+                'emote_set_id' => $request->emoteSetIds,
             ],
-            type: sprintf('%s<%s[]>', TwitchTemplatedDataResponse::class, EmoteSet::class),
-            accessToken: $accessToken
         );
     }
 
@@ -183,22 +154,19 @@ class ChatApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/chat/badges
      *
-     * @param string               $broadcasterId The ID of the broadcaster whose chat badges you want to get.
-     * @param AccessTokenInterface $accessToken   Requires an app access token or user access token.
-     *
-     * @return TwitchDataResponse<ChatBadge[]>
+     * @param AccessTokenInterface        $accessToken Requires an app access token or user access token.
      */
     public function getChannelChatBadges(
-        string $broadcasterId,
-        AccessTokenInterface $accessToken
-    ): TwitchResponseInterface {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/badges',
-            query: [
-                'broadcaster_id' => $broadcasterId,
+        GetChannelChatBadgesRequest $request,
+        AccessTokenInterface $accessToken,
+    ): ChannelChatBadgesResponse {
+        return $this->get(
+            self::BASE_PATH . '/badges',
+            ChannelChatBadgesResponse::class,
+            $accessToken,
+            [
+                'broadcaster_id' => $request->broadcasterId,
             ],
-            type: sprintf('%s<%s[]>', TwitchDataResponse::class, ChatBadge::class),
-            accessToken: $accessToken
         );
     }
 
@@ -213,17 +181,11 @@ class ChatApi extends AbstractApi
      * GET https://api.twitch.tv/helix/chat/badges/global
      *
      * @param AccessTokenInterface $accessToken Requires an app access token or user access token.
-     *
-     * @return TwitchDataResponse<ChatBadge[]>
      */
     public function getGlobalChatBadges(
-        AccessTokenInterface $accessToken
-    ): TwitchDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/badges/global',
-            type: sprintf('%s<%s[]>', TwitchDataResponse::class, ChatBadge::class),
-            accessToken: $accessToken
-        );
+        AccessTokenInterface $accessToken,
+    ): GlobalChatBadgesResponse {
+        return $this->get(self::BASE_PATH . '/badges/global', GlobalChatBadgesResponse::class, $accessToken);
     }
 
     /**
@@ -237,35 +199,21 @@ class ChatApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/chat/settings
      *
-     * @param string               $broadcasterId      The ID of the broadcaster whose chat settings you want to get.
-     * @param AccessTokenInterface $accessToken        Requires an app access token or user access token.
-     * @param string|null          $moderatorId        The ID of a user that has permission to moderate the
-     *                                                 broadcaster’s chat room, or the broadcaster’s ID if they’re
-     *                                                 getting the settings.
-     *
-     *                                                 This field is required only if you want to include the
-     *                                                 non_moderator_chat_delay and non_moderator_chat_delay_duration
-     *                                                 settings in the response.
-     *
-     *                                                 If you specify this field, this ID must match the user ID in the
-     *                                                 user access token.
-     *
-     * @return TwitchDataResponse<ChatSettings[]>
+     * @param AccessTokenInterface   $accessToken Requires an app access token or user access token.
      */
     public function getChatSettings(
-        string $broadcasterId,
+        GetChatSettingsRequest $request,
         AccessTokenInterface $accessToken,
-        string $moderatorId = null,
-    ): TwitchDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/settings',
-            query: [
-                'broadcaster_id' => $broadcasterId,
-                'moderator_id' => $moderatorId,
+    ): ChatSettingsResponse {
+        $query = array_filter(
+            [
+                'broadcaster_id' => $request->broadcasterId,
+                'moderator_id'   => $request->moderatorId,
             ],
-            type: sprintf('%s<%s[]>', TwitchDataResponse::class, ChatSettings::class),
-            accessToken: $accessToken
+            static fn (mixed $v): bool => $v !== null,
         );
+
+        return $this->get(self::BASE_PATH . '/settings', ChatSettingsResponse::class, $accessToken, $query);
     }
 
     /**
@@ -277,34 +225,22 @@ class ChatApi extends AbstractApi
      * URL
      * PATCH https://api.twitch.tv/helix/chat/settings
      *
-     * @param string                    $broadcasterId The ID of the broadcaster whose chat settings you want to
-     *                                                 update.
-     * @param string                    $moderatorId   The ID of a user that has permission to moderate the
-     *                                                 broadcaster’s chat room, or the broadcaster’s ID if they’re
-     *                                                 making the update. This ID must match the user ID in the user
-     *                                                 access token.
-     * @param UpdateChatSettingsRequest $body
-     * @param AccessTokenInterface      $accessToken   Requires a user access token that includes the
-     *                                                 moderator:manage:chat_settings scope.
-     *
-     * @return TwitchDataResponse<ChatSettings[]>
+     * @param AccessTokenInterface      $accessToken Requires a user access token that includes the
+     *                                               moderator:manage:chat_settings scope.
      */
     public function updateChatSettings(
-        string $broadcasterId,
-        string $moderatorId,
-        UpdateChatSettingsRequest $body,
-        AccessTokenInterface $accessToken
-    ): TwitchDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/settings',
-            query: [
-                'broadcaster_id' => $broadcasterId,
-                'moderator_id' => $moderatorId,
+        UpdateChatSettingsRequest $request,
+        AccessTokenInterface $accessToken,
+    ): ChatSettingsResponse {
+        return $this->patch(
+            self::BASE_PATH . '/settings',
+            ChatSettingsResponse::class,
+            $accessToken,
+            $this->normalizer->normalize($request->settings),
+            [
+                'broadcaster_id' => $request->broadcasterId,
+                'moderator_id'   => $request->moderatorId,
             ],
-            type: sprintf('%s<%s[]>', TwitchDataResponse::class, ChatSettings::class),
-            method: 'PATCH',
-            body: $body,
-            accessToken: $accessToken
         );
     }
 
@@ -317,33 +253,21 @@ class ChatApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/chat/announcements
      *
-     * @param string                      $broadcasterId The ID of the broadcaster that owns the chat room to send the
-     *                                                   announcement to.
-     * @param string                      $moderatorId   The ID of a user who has permission to moderate the
-     *                                                   broadcaster’s chat room, or the broadcaster’s ID if they’re
-     *                                                   sending the announcement. This ID must match the user ID in
-     *                                                   the user access token.
-     * @param SendChatAnnouncementRequest $body
-     * @param AccessTokenInterface        $accessToken   Requires a user access token that includes the
-     *                                                   moderator:manage:announcements scope.
-     *
-     * @return void
+     * @param AccessTokenInterface        $accessToken Requires a user access token that includes the
+     *                                                 moderator:manage:announcements scope.
      */
     public function sendChatAnnouncement(
-        string $broadcasterId,
-        string $moderatorId,
-        SendChatAnnouncementRequest $body,
-        AccessTokenInterface $accessToken
+        SendChatAnnouncementRequest $request,
+        AccessTokenInterface $accessToken,
     ): void {
-        $this->sendRequest(
-            path: self::BASE_PATH . '/announcements',
-            query: [
-                'broadcaster_id' => $broadcasterId,
-                'moderator_id' => $moderatorId,
+        $this->postWithoutResponse(
+            self::BASE_PATH . '/announcements',
+            $accessToken,
+            $this->normalizer->normalize($request->announcement),
+            [
+                'broadcaster_id' => $request->broadcasterId,
+                'moderator_id'   => $request->moderatorId,
             ],
-            method: 'POST',
-            body: $body,
-            accessToken: $accessToken
         );
     }
 
@@ -369,31 +293,21 @@ class ChatApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/chat/shoutouts
      *
-     * @param string               $fromBroadcasterId The ID of the broadcaster that’s sending the Shoutout.
-     * @param string               $toBroadcasterId   The ID of the broadcaster that’s receiving the Shoutout.
-     * @param string               $moderatorId       The ID of the broadcaster or a user that is one of the
-     *                                                broadcaster’s moderators. This ID must match the user ID in the
-     *                                                access token.
-     * @param AccessTokenInterface $accessToken       Requires a user access token that includes the
-     *                                                moderator:manage:shoutouts scope.
-     *
-     * @return void
+     * @param AccessTokenInterface $accessToken Requires a user access token that includes the
+     *                                          moderator:manage:shoutouts scope.
      */
     public function sendShoutout(
-        string $fromBroadcasterId,
-        string $toBroadcasterId,
-        string $moderatorId,
-        AccessTokenInterface $accessToken
+        SendShoutoutRequest $request,
+        AccessTokenInterface $accessToken,
     ): void {
-        $this->sendRequest(
-            path: self::BASE_PATH . '/shoutouts',
+        $this->postWithoutResponse(
+            self::BASE_PATH . '/shoutouts',
+            $accessToken,
             query: [
-                'from_broadcaster_id' => $fromBroadcasterId,
-                'to_broadcaster_id' => $toBroadcasterId,
-                'moderator_id' => $moderatorId,
+                'from_broadcaster_id' => $request->fromBroadcasterId,
+                'to_broadcaster_id'   => $request->toBroadcasterId,
+                'moderator_id'        => $request->moderatorId,
             ],
-            method: 'POST',
-            accessToken: $accessToken
         );
     }
 
@@ -406,28 +320,19 @@ class ChatApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/chat/color
      *
-     * @param string               $userId              The ID of the user whose username color you want to get. To
-     *                                                  specify more than one user, include the user_id parameter for
-     *                                                  each user to get. For example,
-     *                                                  &user_id=1234&user_id=5678. The maximum number of IDs that you
-     *                                                  may specify is 100.
-     *
-     *                                                  The API ignores duplicate IDs and IDs that weren’t found.
-     * @param AccessTokenInterface $accessToken         Requires an app access token or user access token.
-     *
-     * @return TwitchDataResponse<UserChatColor[]>
+     * @param AccessTokenInterface    $accessToken Requires an app access token or user access token.
      */
     public function getUserChatColor(
-        string $userId,
-        AccessTokenInterface $accessToken
-    ): TwitchDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/color',
-            query: [
-                'user_id' => $userId,
+        GetUserChatColorRequest $request,
+        AccessTokenInterface $accessToken,
+    ): UserChatColorResponse {
+        return $this->get(
+            self::BASE_PATH . '/color',
+            UserChatColorResponse::class,
+            $accessToken,
+            [
+                'user_id' => $request->userIds,
             ],
-            type: sprintf('%s<%s[]>', TwitchDataResponse::class, UserChatColor::class),
-            accessToken: $accessToken
         );
     }
 
@@ -440,46 +345,22 @@ class ChatApi extends AbstractApi
      * URL
      * PUT https://api.twitch.tv/helix/chat/color
      *
-     * @param string               $userId      The ID of the user whose chat color you want to update. This ID must
-     *                                          match the user ID in the access token.
-     * @param ChatColorEnum|string $color       The color to use for the user’s name in chat. All users may specify one
-     *                                          of the following named color values.
-     *                                          - blue
-     *                                          - blue_violet
-     *                                          - cadet_blue
-     *                                          - chocolate
-     *                                          - coral
-     *                                          - dodger_blue
-     *                                          - firebrick
-     *                                          - golden_rod
-     *                                          - green
-     *                                          - hot_pink
-     *                                          - orange_red
-     *                                          - red
-     *                                          - sea_green
-     *                                          - spring_green
-     *                                          - yellow_green
-     *
-     *                                          Turbo and Prime users may specify a named color or a Hex color code like
-     *                                          #9146FF. If you use a Hex color code, remember to URL encode it.
-     * @param AccessTokenInterface $accessToken Requires a user access token that includes the user:manage:chat_color
-     *                                          scope.
-     *
-     * @return void
+     * @param AccessTokenInterface       $accessToken Requires a user access token that includes the
+     *                                                user:manage:chat_color scope.
      */
     public function updateUserChatColor(
-        string $userId,
-        ChatColorEnum|string $color,
-        AccessTokenInterface $accessToken
+        UpdateUserChatColorRequest $request,
+        AccessTokenInterface $accessToken,
     ): void {
-        $this->sendRequest(
-            path: self::BASE_PATH . '/color',
+        $color = $request->color instanceof ChatColorEnum ? $request->color->value : $request->color;
+
+        $this->putWithoutResponse(
+            self::BASE_PATH . '/color',
+            $accessToken,
             query: [
-                'user_id' => $userId,
-                'color' => $color instanceof ChatColorEnum ? $color->value : $color,
+                'user_id' => $request->userId,
+                'color'   => $color,
             ],
-            method: 'PUT',
-            accessToken: $accessToken
         );
     }
 
@@ -494,40 +375,23 @@ class ChatApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/chat/messages
      *
-     * @param string               $broadcasterId           The ID of the broadcaster whose chat room the message will
-     *                                                      be sent to.
-     * @param string               $senderId                The ID of the user sending the message. This ID must match
-     *                                                      the user ID in the user access token.
-     * @param string               $message                 The message to send. The message is limited to a maximum of
-     *                                                      500 characters. Chat messages can also include emoticons.
-     *                                                      To include emoticons, use the name of the emote. The names
-     *                                                      are case sensitive. Don’t include colons around the name
-     *                                                      (e.g., :bleedPurple:). If Twitch recognizes the name,
-     *                                                      Twitch converts the name to the emote before writing the
-     *                                                      chat message to the chat room
-     * @param AccessTokenInterface $accessToken
-     * @param string|null          $replyParentMessageId    The ID of the chat message being replied to.
-     *
-     * @return TwitchDataResponse<Message[]>
+     * @param AccessTokenInterface   $accessToken Requires an app access token or user access token that includes the
+     *                                            user:write:chat scope.
      */
     public function sendChatMessage(
-        string $broadcasterId,
-        string $senderId,
-        string $message,
+        SendChatMessageRequest $request,
         AccessTokenInterface $accessToken,
-        ?string $replyParentMessageId = null
-    ): TwitchDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/messages',
-            type: sprintf('%s<%s[]>', TwitchDataResponse::class, Message::class),
-            method: 'POST',
-            body: new SendChatMessageRequest(
-                $broadcasterId,
-                $senderId,
-                $message,
-                $replyParentMessageId
-            ),
-            accessToken: $accessToken,
+    ): SendChatMessageResponse {
+        $body = array_filter(
+            [
+                'broadcaster_id'          => $request->broadcasterId,
+                'sender_id'               => $request->senderId,
+                'message'                 => $request->message,
+                'reply_parent_message_id' => $request->replyParentMessageId,
+            ],
+            static fn (mixed $v): bool => $v !== null,
         );
+
+        return $this->post(self::BASE_PATH . '/messages', SendChatMessageResponse::class, $accessToken, $body);
     }
 }

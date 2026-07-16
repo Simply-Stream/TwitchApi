@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
-use JsonException;
-use League\OAuth2\Client\Token\AccessTokenInterface;
-use SimplyStream\TwitchApi\Helix\Models\Teams\ChannelTeam;
-use SimplyStream\TwitchApi\Helix\Models\Teams\Team;
-use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
+use SimplyStream\TwitchApi\Helix\Api\Teams\Request\GetChannelTeamsRequest;
+use SimplyStream\TwitchApi\Helix\Api\Teams\Request\GetTeamsRequest;
+use SimplyStream\TwitchApi\Helix\Api\Teams\Response\ChannelTeamsResponse;
+use SimplyStream\TwitchApi\Helix\Api\Teams\Response\TeamsResponse;
+use SimplyStream\TwitchApi\Helix\Authentication\AccessTokenInterface;
 
-class TeamsApi extends AbstractApi
+final class TeamsApi extends AbstractApi
 {
-    protected const BASE_PATH = 'teams';
+    private const string BASE_PATH = 'teams';
 
     /**
      * Gets the list of Twitch teams that the broadcaster is a member of.
@@ -23,23 +23,19 @@ class TeamsApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/teams/channel
      *
-     * @param string               $broadcasterId The ID of the broadcaster whose teams you want to get.
-     * @param AccessTokenInterface $accessToken   Requires an app access token or user access token.
-     *
-     * @return TwitchDataResponse<ChannelTeam[]>
-     * @throws JsonException
+     * @param AccessTokenInterface   $accessToken Requires an app access token or user access token.
      */
     public function getChannelTeams(
-        string $broadcasterId,
-        AccessTokenInterface $accessToken
-    ): TwitchDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH . '/channel',
-            query: [
-                'broadcaster_id' => $broadcasterId,
+        GetChannelTeamsRequest $request,
+        AccessTokenInterface $accessToken,
+    ): ChannelTeamsResponse {
+        return $this->get(
+            self::BASE_PATH . '/channel',
+            ChannelTeamsResponse::class,
+            $accessToken,
+            [
+                'broadcaster_id' => $request->broadcasterId,
             ],
-            type: sprintf('%s<%s[]>', TwitchDataResponse::class, ChannelTeam::class),
-            accessToken: $accessToken
         );
     }
 
@@ -52,29 +48,20 @@ class TeamsApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/teams
      *
-     * @param AccessTokenInterface $accessToken      Requires an app access token or user access token.
-     * @param string|null          $name             The name of the team to get. This parameter and the id parameter
-     *                                               are mutually exclusive; you must specify the team’s name or ID but
-     *                                               not both.
-     * @param string|null          $id               The ID of the team to get. This parameter and the name parameter
-     *                                               are mutually exclusive; you must specify the team’s name or ID but
-     *                                               not both.
-     *
-     * @return TwitchDataResponse<Team[]>
+     * @param AccessTokenInterface $accessToken Requires an app access token or user access token.
      */
     public function getTeams(
+        GetTeamsRequest $request,
         AccessTokenInterface $accessToken,
-        ?string $name = null,
-        ?string $id = null,
-    ): TwitchDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH,
-            query: [
-                'name' => $name,
-                'id' => $id,
+    ): TeamsResponse {
+        $query = array_filter(
+            [
+                'name' => $request->name,
+                'id'   => $request->id,
             ],
-            type: sprintf('%s<%s[]>', TwitchDataResponse::class, Team::class),
-            accessToken: $accessToken
+            static fn (mixed $v): bool => $v !== null,
         );
+
+        return $this->get(self::BASE_PATH, TeamsResponse::class, $accessToken, $query);
     }
 }

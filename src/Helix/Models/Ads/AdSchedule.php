@@ -5,12 +5,9 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Models\Ads;
 
 use DateTimeInterface;
-use SimplyStream\TwitchApi\Helix\Models\SerializesModels;
 
 final readonly class AdSchedule
 {
-    use SerializesModels;
-
     /**
      * @param int               $snoozeCount             The number of snoozes available for the broadcaster.
      * @param DateTimeInterface $snoozeRefreshAt         The UTC timestamp when the broadcaster will gain an additional
@@ -26,42 +23,12 @@ final readonly class AdSchedule
      *                                                   seconds. Returns 0 if they are currently not pre-roll free.
      */
     public function __construct(
-        private int $snoozeCount,
-        private DateTimeInterface $snoozeRefreshAt,
-        private DateTimeInterface $nextAdAt,
-        private int $duration,
-        private DateTimeInterface $lastAdAt,
-        private int $prerollFreeTime
+        public int $snoozeCount,
+        public DateTimeInterface $snoozeRefreshAt,
+        public DateTimeInterface $nextAdAt,
+        public int $duration,
+        public DateTimeInterface $lastAdAt,
+        public int $prerollFreeTime
     ) {
-    }
-
-    public function getSnoozeCount(): int
-    {
-        return $this->snoozeCount;
-    }
-
-    public function getSnoozeRefreshAt(): DateTimeInterface
-    {
-        return $this->snoozeRefreshAt;
-    }
-
-    public function getNextAdAt(): DateTimeInterface
-    {
-        return $this->nextAdAt;
-    }
-
-    public function getDuration(): int
-    {
-        return $this->duration;
-    }
-
-    public function getLastAdAt(): DateTimeInterface
-    {
-        return $this->lastAdAt;
-    }
-
-    public function getPrerollFreeTime(): int
-    {
-        return $this->prerollFreeTime;
     }
 }

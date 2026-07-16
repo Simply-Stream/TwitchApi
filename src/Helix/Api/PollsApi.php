@@ -4,17 +4,16 @@ declare(strict_types=1);
 
 namespace SimplyStream\TwitchApi\Helix\Api;
 
-use JsonException;
-use League\OAuth2\Client\Token\AccessTokenInterface;
-use SimplyStream\TwitchApi\Helix\Models\Polls\CreatePollRequest;
-use SimplyStream\TwitchApi\Helix\Models\Polls\EndPollRequest;
-use SimplyStream\TwitchApi\Helix\Models\Polls\Poll;
-use SimplyStream\TwitchApi\Helix\Models\TwitchDataResponse;
-use SimplyStream\TwitchApi\Helix\Models\TwitchPaginatedDataResponse;
+use SimplyStream\TwitchApi\Helix\Api\Polls\Request\CreatePollRequest;
+use SimplyStream\TwitchApi\Helix\Api\Polls\Request\EndPollRequest;
+use SimplyStream\TwitchApi\Helix\Api\Polls\Request\GetPollsRequest;
+use SimplyStream\TwitchApi\Helix\Api\Polls\Response\PollResponse;
+use SimplyStream\TwitchApi\Helix\Api\Polls\Response\PollsResponse;
+use SimplyStream\TwitchApi\Helix\Authentication\AccessTokenInterface;
 
-class PollsApi extends AbstractApi
+final class PollsApi extends AbstractApi
 {
-    protected const BASE_PATH = 'polls';
+    private const string BASE_PATH = 'polls';
 
     /**
      * Gets a list of polls that the broadcaster created.
@@ -27,45 +26,24 @@ class PollsApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/polls
      *
-     * @param string               $broadcasterId The ID of the broadcaster that created the polls. This ID must match
-     *                                            the user ID in the user access token.
-     * @param AccessTokenInterface $accessToken   Requires a user access token that includes the channel:read:polls or
-     *                                            channel:manage:polls scope.
-     * @param string|null          $id            A list of IDs that identify the polls to return. To specify more than
-     *                                            one ID, include this parameter for each poll you want to get. For
-     *                                            example, id=1234&id=5678. You may specify a maximum of 20 IDs.
-     *
-     *                                            Specify this parameter only if you want to filter the list that the
-     *                                            request returns. The endpoint ignores duplicate IDs and thosenot
-     *                                            owned by this broadcaster.
-     * @param int                  $first         The maximum number of items to return per page in the response. The
-     *                                            minimum page size is
-     *                                            1 item per page and the maximum is 20 items per page. The default is
-     *                                            20.
-     * @param string|null          $after         The cursor used to get the next page of results. The Pagination
-     *                                            object in the response contains the cursor’s value.
-     *
-     * @return TwitchPaginatedDataResponse<Poll[]>
-     * @throws JsonException
+     * @param AccessTokenInterface $accessToken Requires a user access token that includes the channel:read:polls or
+     *                                          channel:manage:polls scope.
      */
     public function getPolls(
-        string $broadcasterId,
+        GetPollsRequest $request,
         AccessTokenInterface $accessToken,
-        string $id = null,
-        int $first = 20,
-        string $after = null
-    ): TwitchPaginatedDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH,
-            query: [
-                'broadcaster_id' => $broadcasterId,
-                'id' => $id,
-                'first' => $first,
-                'after' => $after,
+    ): PollsResponse {
+        $query = array_filter(
+            [
+                'broadcaster_id' => $request->broadcasterId,
+                'id'             => $request->ids,
+                'first'          => $request->first,
+                'after'          => $request->after,
             ],
-            type: sprintf('%s<%s[]>', TwitchPaginatedDataResponse::class, Poll::class),
-            accessToken: $accessToken
+            static fn (mixed $v): bool => $v !== null && $v !== [],
         );
+
+        return $this->get(self::BASE_PATH, PollsResponse::class, $accessToken, $query);
     }
 
     /**
@@ -79,22 +57,18 @@ class PollsApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/polls
      *
-     * @param CreatePollRequest    $body
      * @param AccessTokenInterface $accessToken Requires a user access token that includes the channel:manage:polls
      *                                          scope.
-     *
-     * @return TwitchDataResponse<Poll[]>
      */
     public function createPoll(
-        CreatePollRequest $body,
-        AccessTokenInterface $accessToken
-    ): TwitchDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH,
-            type: sprintf('%s<%s[]>', TwitchDataResponse::class, Poll::class),
-            method: 'POST',
-            body: $body,
-            accessToken: $accessToken
+        CreatePollRequest $request,
+        AccessTokenInterface $accessToken,
+    ): PollResponse {
+        return $this->post(
+            self::BASE_PATH,
+            PollResponse::class,
+            $accessToken,
+            $this->normalizer->normalize($request->poll),
         );
     }
 
@@ -107,22 +81,18 @@ class PollsApi extends AbstractApi
      * URL
      * PATCH https://api.twitch.tv/helix/polls
      *
-     * @param EndPollRequest       $body
      * @param AccessTokenInterface $accessToken Requires a user access token that includes the channel:manage:polls
      *                                          scope.
-     *
-     * @return TwitchDataResponse<Poll[]>
      */
     public function endPoll(
-        EndPollRequest $body,
-        AccessTokenInterface $accessToken
-    ): TwitchDataResponse {
-        return $this->sendRequest(
-            path: self::BASE_PATH,
-            type: sprintf('%s<%s[]>', TwitchDataResponse::class, Poll::class),
-            method: 'PATCH',
-            body: $body,
-            accessToken: $accessToken
+        EndPollRequest $request,
+        AccessTokenInterface $accessToken,
+    ): PollResponse {
+        return $this->patch(
+            self::BASE_PATH,
+            PollResponse::class,
+            $accessToken,
+            $this->normalizer->normalize($request->poll),
         );
     }
 }

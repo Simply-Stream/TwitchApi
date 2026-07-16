@@ -1,0 +1,12 @@
+{
+    "headers": {
+        "Twitch-Eventsub-MESSAGE-ID": "e296bad7-09bb-4548-f8a9-324cb2c64dbc",
+        "Twitch-Eventsub-MESSAGE-RETRY": "0",
+        "Twitch-Eventsub-MESSAGE-SIGNATURE": "sha256=01d861b1801786380c4a64eb43c444966d6bcfa5e94190b5587a7fd79aa4b3cf",
+        "Twitch-Eventsub-MESSAGE-TIMESTAMP": "2026-07-11T08:21:31.033611Z",
+        "Twitch-Eventsub-MESSAGE-TYPE": "notification",
+        "Twitch-Eventsub-SUBSCRIPTION-TYPE": "channel.goal.progress",
+        "Twitch-Eventsub-SUBSCRIPTION-VERSION": "1"
+    },
+    "body": "{\"subscription\":{\"id\":\"4c73ec12-f652-18c4-27b1-a0c9536eaed8\",\"status\":\"enabled\",\"type\":\"channel.goal.progress\",\"version\":\"1\",\"condition\":{\"broadcaster_user_id\":\"92518202\"},\"transport\":{\"method\":\"webhook\",\"callback\":\"null\"},\"created_at\":\"2026-07-11T08:21:31.033611Z\",\"cost\":0},\"event\":{\"id\":\"96ccbfb7-2eef-b8f0-5cce-f03e6a937e48\",\"broadcaster_user_id\":\"92518202\",\"broadcaster_user_name\":\"testBroadcaster\",\"broadcaster_user_login\":\"testBroadcaster\",\"type\":\"follower\",\"description\":\"\",\"current_amount\":32,\"target_amount\":26,\"started_at\":\"2026-07-11T08:21:31.033611Z\"}}"
+}

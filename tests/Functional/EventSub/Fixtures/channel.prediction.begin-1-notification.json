@@ -1,0 +1,12 @@
+{
+    "headers": {
+        "Twitch-Eventsub-MESSAGE-ID": "a70848fb-28ad-dc1e-9a19-130e1c304ba1",
+        "Twitch-Eventsub-MESSAGE-RETRY": "0",
+        "Twitch-Eventsub-MESSAGE-SIGNATURE": "sha256=7eac3d8ba991152ae46d3af55a351ff41ecff33d72de97bbf73221f7768009df",
+        "Twitch-Eventsub-MESSAGE-TIMESTAMP": "2026-07-11T08:21:34.552256Z",
+        "Twitch-Eventsub-MESSAGE-TYPE": "notification",
+        "Twitch-Eventsub-SUBSCRIPTION-TYPE": "channel.prediction.begin",
+        "Twitch-Eventsub-SUBSCRIPTION-VERSION": "1"
+    },
+    "body": "{\"subscription\":{\"id\":\"1b4f022c-b713-c2d9-c73f-637be6328766\",\"status\":\"enabled\",\"type\":\"channel.prediction.begin\",\"version\":\"1\",\"condition\":{\"broadcaster_user_id\":\"20921178\"},\"transport\":{\"method\":\"webhook\",\"callback\":\"null\"},\"created_at\":\"2026-07-11T08:21:34.552256Z\",\"cost\":0},\"event\":{\"id\":\"9d95ac85-fc22-992a-8b52-34c5bbeca994\",\"broadcaster_user_id\":\"20921178\",\"broadcaster_user_login\":\"testBroadcaster\",\"broadcaster_user_name\":\"testBroadcaster\",\"title\":\"Will the developer finish this program?\",\"outcomes\":[{\"id\":\"ea7b11b6-6adc-178d-99b6-6e1f2d6500d0\",\"title\":\"yes\",\"color\":\"blue\"},{\"id\":\"04c07bf2-100c-702c-f461-3111e0e1fd8f\",\"title\":\"no\",\"color\":\"pink\"}],\"started_at\":\"2026-07-11T08:21:34.552256Z\",\"locks_at\":\"2026-07-11T08:31:34.552256Z\"}}"
+}
