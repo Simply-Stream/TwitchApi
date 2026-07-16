@@ -47,6 +47,7 @@ class EventSubApi extends AbstractApi
         $transport = array_filter(
             [
                 'method'     => $request->transport->method,
+                'secret'     => $request->transport->secret,
                 'callback'   => $request->transport->callback,
                 'session_id' => $request->transport->sessionId,
                 'conduit_id' => $request->transport->conduitId,
