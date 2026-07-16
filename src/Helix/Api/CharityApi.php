@@ -27,11 +27,8 @@ final class CharityApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/charity/campaigns
      *
-     * @param GetCharityCampaignRequest $request
      * @param AccessTokenInterface      $accessToken Requires a user access token that includes the channel:read:charity
      *                                               scope.
-     *
-     * @return CharityCampaignResponse
      */
     public function getCharityCampaign(
         GetCharityCampaignRequest $request,
@@ -58,11 +55,8 @@ final class CharityApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/charity/donations
      *
-     * @param GetCharityCampaignDonationsRequest $request
      * @param AccessTokenInterface               $accessToken Requires a user access token that includes the
      *                                                        channel:read:charity scope.
-     *
-     * @return CharityCampaignDonationsResponse
      */
     public function getCharityCampaignDonations(
         GetCharityCampaignDonationsRequest $request,

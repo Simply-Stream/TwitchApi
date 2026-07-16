@@ -31,9 +31,6 @@ final readonly class EventSubMessageProcessor
     }
 
     /**
-     * @param RawEventSubMessage $message
-     *
-     * @return EventSubMessageInterface
      * @throws \DateMalformedStringException
      * @throws \JsonException
      */
@@ -102,10 +99,8 @@ final readonly class EventSubMessageProcessor
     }
 
     /**
-     * @param EventSubMetadata     $metadata
      * @param array<string, mixed> $body
      *
-     * @return EventSubNotification
      * @throws \DateMalformedStringException
      */
     private function buildNotification(EventSubMetadata $metadata, array $body): EventSubMessageInterface

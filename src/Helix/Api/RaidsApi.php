@@ -33,11 +33,8 @@ final class RaidsApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/raids
      *
-     * @param StartRaidRequest     $request
      * @param AccessTokenInterface $accessToken Requires a user access token that includes the channel:manage:raids
      *                                          scope.
-     *
-     * @return RaidResponse
      */
     public function startRaid(
         StartRaidRequest $request,
@@ -68,11 +65,8 @@ final class RaidsApi extends AbstractApi
      * URL
      * DELETE https://api.twitch.tv/helix/raids
      *
-     * @param CancelRaidRequest    $request
      * @param AccessTokenInterface $accessToken Requires a user access token that includes the channel:manage:raids
      *                                          scope.
-     *
-     * @return void
      */
     public function cancelRaid(
         CancelRaidRequest $request,

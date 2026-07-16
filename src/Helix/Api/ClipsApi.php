@@ -39,10 +39,7 @@ final class ClipsApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/clips
      *
-     * @param CreateClipRequest    $request
      * @param AccessTokenInterface $accessToken Requires a user access token that includes the clips:edit scope.
-     *
-     * @return CreateClipResponse
      */
     public function createClip(
         CreateClipRequest $request,
@@ -68,10 +65,7 @@ final class ClipsApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/clips
      *
-     * @param GetClipsRequest      $request
      * @param AccessTokenInterface $accessToken Requires an app access token or user access token.
-     *
-     * @return ClipsResponse
      */
     public function getClips(
         GetClipsRequest $request,

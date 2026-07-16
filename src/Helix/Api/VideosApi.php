@@ -28,10 +28,7 @@ final class VideosApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/videos
      *
-     * @param GetVideosRequest     $request
      * @param AccessTokenInterface $accessToken Requires an app access token or user access token.
-     *
-     * @return VideosResponse
      */
     public function getVideos(
         GetVideosRequest $request,
@@ -65,11 +62,8 @@ final class VideosApi extends AbstractApi
      * URL
      * DELETE https://api.twitch.tv/helix/videos
      *
-     * @param DeleteVideosRequest  $request
      * @param AccessTokenInterface $accessToken Requires a user access token that includes the channel:manage:videos
      *                                          scope.
-     *
-     * @return DeleteVideosResponse
      */
     public function deleteVideos(
         DeleteVideosRequest $request,

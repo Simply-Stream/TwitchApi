@@ -52,11 +52,8 @@ final class EntitlementsApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/entitlements/drops
      *
-     * @param GetDropsEntitlementsRequest $request
      * @param AccessTokenInterface        $accessToken Requires an app access token or user access token. The client ID
      *                                                 in the access token must own the game.
-     *
-     * @return DropsEntitlementsResponse
      */
     public function getDropsEntitlements(
         GetDropsEntitlementsRequest $request,
@@ -101,11 +98,8 @@ final class EntitlementsApi extends AbstractApi
      * URL
      * PATCH https://api.twitch.tv/helix/entitlements/drops
      *
-     * @param UpdateDropsEntitlementsRequest $request
      * @param AccessTokenInterface           $accessToken Requires an app access token or user access token. The client
      *                                                    ID in the access token must own the game.
-     *
-     * @return UpdateDropsEntitlementsResponse
      */
     public function updateDropsEntitlements(
         UpdateDropsEntitlementsRequest $request,

@@ -9,7 +9,6 @@ use Webmozart\Assert\Assert;
 final readonly class SendExtensionChatMessageRequest
 {
     /**
-     * @param string $broadcasterId
      * @param string $text             The message. The message may contain a maximum of 280 characters.
      * @param string $extensionId      The ID of the extension that’s sending the chat message.
      * @param string $extensionVersion The extension’s version number.

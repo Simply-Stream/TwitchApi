@@ -23,11 +23,8 @@ final class HypeTrainApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/hypetrain/events
      *
-     * @param GetHypeTrainEventsRequest $request
      * @param AccessTokenInterface      $accessToken Requires a user access token that includes the
      *                                               channel:read:hype_train scope.
-     *
-     * @return HypeTrainEventsResponse
      */
     public function getHypeTrainEvents(
         GetHypeTrainEventsRequest $request,

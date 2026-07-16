@@ -45,11 +45,8 @@ final class ChatApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/chat/chatters
      *
-     * @param GetChattersRequest   $request
      * @param AccessTokenInterface $accessToken Requires a user access token that includes the moderator:read:chatters
      *                                          scope.
-     *
-     * @return ChattersResponse
      */
     public function getChatters(
         GetChattersRequest $request,
@@ -82,10 +79,7 @@ final class ChatApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/chat/emotes
      *
-     * @param GetChannelEmotesRequest $request
      * @param AccessTokenInterface    $accessToken Requires an app access token or user access token.
-     *
-     * @return ChannelEmotesResponse
      */
     public function getChannelEmotes(
         GetChannelEmotesRequest $request,
@@ -113,8 +107,6 @@ final class ChatApi extends AbstractApi
      * @see https://dev.twitch.tv/docs/irc/emotes Emotes
      *
      * @param AccessTokenInterface $accessToken Requires an app access token or user access token.
-     *
-     * @return GlobalEmotesResponse
      */
     public function getGlobalEmotes(
         AccessTokenInterface $accessToken,
@@ -136,10 +128,7 @@ final class ChatApi extends AbstractApi
      *
      * @see https://dev.twitch.tv/docs/irc/emotes Emotes
      *
-     * @param GetEmoteSetsRequest  $request
      * @param AccessTokenInterface $accessToken Requires an app access token or user access token.
-     *
-     * @return EmoteSetsResponse
      */
     public function getEmoteSets(
         GetEmoteSetsRequest $request,
@@ -165,10 +154,7 @@ final class ChatApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/chat/badges
      *
-     * @param GetChannelChatBadgesRequest $request
      * @param AccessTokenInterface        $accessToken Requires an app access token or user access token.
-     *
-     * @return ChannelChatBadgesResponse
      */
     public function getChannelChatBadges(
         GetChannelChatBadgesRequest $request,
@@ -195,8 +181,6 @@ final class ChatApi extends AbstractApi
      * GET https://api.twitch.tv/helix/chat/badges/global
      *
      * @param AccessTokenInterface $accessToken Requires an app access token or user access token.
-     *
-     * @return GlobalChatBadgesResponse
      */
     public function getGlobalChatBadges(
         AccessTokenInterface $accessToken,
@@ -215,10 +199,7 @@ final class ChatApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/chat/settings
      *
-     * @param GetChatSettingsRequest $request
      * @param AccessTokenInterface   $accessToken Requires an app access token or user access token.
-     *
-     * @return ChatSettingsResponse
      */
     public function getChatSettings(
         GetChatSettingsRequest $request,
@@ -244,11 +225,8 @@ final class ChatApi extends AbstractApi
      * URL
      * PATCH https://api.twitch.tv/helix/chat/settings
      *
-     * @param UpdateChatSettingsRequest $request
      * @param AccessTokenInterface      $accessToken Requires a user access token that includes the
      *                                               moderator:manage:chat_settings scope.
-     *
-     * @return ChatSettingsResponse
      */
     public function updateChatSettings(
         UpdateChatSettingsRequest $request,
@@ -275,11 +253,8 @@ final class ChatApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/chat/announcements
      *
-     * @param SendChatAnnouncementRequest $request
      * @param AccessTokenInterface        $accessToken Requires a user access token that includes the
      *                                                 moderator:manage:announcements scope.
-     *
-     * @return void
      */
     public function sendChatAnnouncement(
         SendChatAnnouncementRequest $request,
@@ -318,11 +293,8 @@ final class ChatApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/chat/shoutouts
      *
-     * @param SendShoutoutRequest  $request
      * @param AccessTokenInterface $accessToken Requires a user access token that includes the
      *                                          moderator:manage:shoutouts scope.
-     *
-     * @return void
      */
     public function sendShoutout(
         SendShoutoutRequest $request,
@@ -348,10 +320,7 @@ final class ChatApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/chat/color
      *
-     * @param GetUserChatColorRequest $request
      * @param AccessTokenInterface    $accessToken Requires an app access token or user access token.
-     *
-     * @return UserChatColorResponse
      */
     public function getUserChatColor(
         GetUserChatColorRequest $request,
@@ -376,11 +345,8 @@ final class ChatApi extends AbstractApi
      * URL
      * PUT https://api.twitch.tv/helix/chat/color
      *
-     * @param UpdateUserChatColorRequest $request
      * @param AccessTokenInterface       $accessToken Requires a user access token that includes the
      *                                                user:manage:chat_color scope.
-     *
-     * @return void
      */
     public function updateUserChatColor(
         UpdateUserChatColorRequest $request,
@@ -409,11 +375,8 @@ final class ChatApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/chat/messages
      *
-     * @param SendChatMessageRequest $request
      * @param AccessTokenInterface   $accessToken Requires an app access token or user access token that includes the
      *                                            user:write:chat scope.
-     *
-     * @return SendChatMessageResponse
      */
     public function sendChatMessage(
         SendChatMessageRequest $request,

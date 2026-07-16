@@ -21,10 +21,7 @@ final class ContentClassificationApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/content_classification_labels
      *
-     * @param GetContentClassificationLabelsRequest $request
      * @param AccessTokenInterface                  $accessToken Requires an app access token or user access token.
-     *
-     * @return ContentClassificationLabelsResponse
      */
     public function getContentClassificationLabels(
         GetContentClassificationLabelsRequest $request,

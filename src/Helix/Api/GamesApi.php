@@ -21,10 +21,7 @@ final class GamesApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/games/top
      *
-     * @param GetTopGamesRequest   $request
      * @param AccessTokenInterface $accessToken Requires an app access token or user access token.
-     *
-     * @return TopGamesResponse
      */
     public function getTopGames(
         GetTopGamesRequest $request,
@@ -55,10 +52,7 @@ final class GamesApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/games
      *
-     * @param GetGamesRequest      $request
      * @param AccessTokenInterface $accessToken Requires an app access token or user access token.
-     *
-     * @return GamesResponse
      */
     public function getGames(
         GetGamesRequest $request,

@@ -25,10 +25,7 @@ final class BitsApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/bits/leaderboard
      *
-     * @param GetBitsLeaderboardRequest $request
      * @param AccessTokenInterface      $accessToken Requires a user access token that includes the bits:read scope.
-     *
-     * @return BitsLeaderboardResponse
      */
     public function getBitsLeaderboard(
         GetBitsLeaderboardRequest $request,
@@ -62,10 +59,7 @@ final class BitsApi extends AbstractApi
      * Authorization
      * Requires an app access token or user access token.
      *
-     * @param GetCheermotesRequest $request
      * @param AccessTokenInterface $accessToken Requires an app access token or user access token.
-     *
-     * @return CheermotesResponse
      */
     public function getCheermotes(
         GetCheermotesRequest $request,
@@ -96,10 +90,7 @@ final class BitsApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/extensions/transactions
      *
-     * @param GetExtensionTransactionsRequest $request
      * @param AccessTokenInterface            $accessToken Requires an app access token.
-     *
-     * @return ExtensionTransactionsResponse
      */
     public function getExtensionTransactions(
         GetExtensionTransactionsRequest $request,

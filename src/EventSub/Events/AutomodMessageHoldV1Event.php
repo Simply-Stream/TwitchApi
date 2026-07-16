@@ -13,17 +13,17 @@ use SimplyStream\TwitchApi\EventSub\Shared\Message;
 class AutomodMessageHoldV1Event implements EventInterface
 {
     /**
-     * @param string                                                              $broadcasterUserId    The ID of the broadcaster specified in the request.
-     * @param string                                                              $broadcasterUserLogin The login of the broadcaster specified in the request.
-     * @param string                                                              $broadcasterUserName  The user name of the broadcaster specified in the request.
-     * @param string                                                              $userId               The message sender’s user ID.
-     * @param string                                                              $userLogin            The message sender’s login name.
-     * @param string                                                              $userName             The message sender’s display name.
-     * @param string                                                              $messageId            The ID of the message that was flagged by automod.
-     * @param \SimplyStream\TwitchApi\EventSub\Events\SubscriptionMessage\Message $message              The body of the message.
-     * @param string                                                              $category             The category of the message.
-     * @param int                                                                 $level                The level of severity. Measured between 1 to 4.
-     * @param \DateTimeImmutable                                                  $heldAt               The timestamp of when automod saved the message.
+     * @param string             $broadcasterUserId    The ID of the broadcaster specified in the request.
+     * @param string             $broadcasterUserLogin The login of the broadcaster specified in the request.
+     * @param string             $broadcasterUserName  The user name of the broadcaster specified in the request.
+     * @param string             $userId               The message sender’s user ID.
+     * @param string             $userLogin            The message sender’s login name.
+     * @param string             $userName             The message sender’s display name.
+     * @param string             $messageId            The ID of the message that was flagged by automod.
+     * @param Message            $message              The body of the message.
+     * @param string             $category             The category of the message.
+     * @param int                $level                The level of severity. Measured between 1 to 4.
+     * @param \DateTimeImmutable $heldAt               The timestamp of when automod saved the message.
      */
     public function __construct(
         public string $broadcasterUserId,

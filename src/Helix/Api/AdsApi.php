@@ -30,11 +30,8 @@ final class AdsApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/channels/commercial
      *
-     * @param StartCommercialRequest $request
      * @param AccessTokenInterface   $accessToken Requires a user access token that includes the
      *                                            channel:edit:commercial scope.
-     *
-     * @return StartCommercialResponse
      */
     public function startCommercial(
         StartCommercialRequest $request,
@@ -63,12 +60,9 @@ final class AdsApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/channels/ads
      *
-     * @param GetAdScheduleRequest $request
      * @param AccessTokenInterface $accessToken Requires a user access token that includes the channel:read:ads
      *                                          scope. The user_id in the user access token must match the
      *                                          broadcaster_id.
-     *
-     * @return AdScheduleResponse
      */
     public function getAdSchedule(
         GetAdScheduleRequest $request,
@@ -95,12 +89,9 @@ final class AdsApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/channels/ads/schedule/snooze
      *
-     * @param SnoozeNextAdRequest  $request
      * @param AccessTokenInterface $accessToken Requires a user access token that includes the channel:manage:ads
      *                                          scope. The user_id in the user access token must match the
      *                                          broadcaster_id.
-     *
-     * @return SnoozeNextAdResponse
      */
     public function snoozeNextAd(
         SnoozeNextAdRequest $request,

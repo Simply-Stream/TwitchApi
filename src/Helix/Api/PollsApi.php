@@ -26,11 +26,8 @@ final class PollsApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/polls
      *
-     * @param GetPollsRequest      $request
      * @param AccessTokenInterface $accessToken Requires a user access token that includes the channel:read:polls or
      *                                          channel:manage:polls scope.
-     *
-     * @return PollsResponse
      */
     public function getPolls(
         GetPollsRequest $request,
@@ -60,11 +57,8 @@ final class PollsApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/polls
      *
-     * @param CreatePollRequest    $request
      * @param AccessTokenInterface $accessToken Requires a user access token that includes the channel:manage:polls
      *                                          scope.
-     *
-     * @return PollResponse
      */
     public function createPoll(
         CreatePollRequest $request,
@@ -87,11 +81,8 @@ final class PollsApi extends AbstractApi
      * URL
      * PATCH https://api.twitch.tv/helix/polls
      *
-     * @param EndPollRequest       $request
      * @param AccessTokenInterface $accessToken Requires a user access token that includes the channel:manage:polls
      *                                          scope.
-     *
-     * @return PollResponse
      */
     public function endPoll(
         EndPollRequest $request,

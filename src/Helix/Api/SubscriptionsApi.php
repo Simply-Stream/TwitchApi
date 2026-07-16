@@ -26,11 +26,8 @@ final class SubscriptionsApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/subscriptions
      *
-     * @param GetBroadcasterSubscriptionsRequest $request
      * @param AccessTokenInterface               $accessToken Requires a user access token that includes the
      *                                                        channel:read:subscriptions scope.
-     *
-     * @return BroadcasterSubscriptionsResponse
      */
     public function getBroadcasterSubscriptions(
         GetBroadcasterSubscriptionsRequest $request,
@@ -62,11 +59,8 @@ final class SubscriptionsApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/subscriptions/user
      *
-     * @param CheckUserSubscriptionRequest $request
      * @param AccessTokenInterface         $accessToken Requires a user access token that includes the
      *                                                  user:read:subscriptions scope.
-     *
-     * @return CheckUserSubscriptionResponse
      */
     public function checkUserSubscription(
         CheckUserSubscriptionRequest $request,

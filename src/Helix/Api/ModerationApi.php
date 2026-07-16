@@ -65,11 +65,8 @@ final class ModerationApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/moderation/enforcements/status
      *
-     * @param CheckAutoModStatusRequest $request
      * @param AccessTokenInterface      $accessToken Requires a user access token that includes the moderation:read
      *                                               scope.
-     *
-     * @return AutoModStatusResponse
      */
     public function checkAutoModStatus(
         CheckAutoModStatusRequest $request,
@@ -96,11 +93,8 @@ final class ModerationApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/moderation/automod/message
      *
-     * @param ManageHeldAutoModMessageRequest $request
      * @param AccessTokenInterface            $accessToken Requires a user access token that includes the
      *                                                     moderator:manage:automod scope.
-     *
-     * @return void
      */
     public function manageHeldAutoModMessages(
         ManageHeldAutoModMessageRequest $request,
@@ -123,11 +117,8 @@ final class ModerationApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/moderation/automod/settings
      *
-     * @param GetAutoModSettingsRequest $request
      * @param AccessTokenInterface      $accessToken Requires a user access token that includes the
      *                                               moderator:read:automod_settings scope.
-     *
-     * @return AutoModSettingsResponse
      */
     public function getAutoModSettings(
         GetAutoModSettingsRequest $request,
@@ -154,11 +145,8 @@ final class ModerationApi extends AbstractApi
      * URL
      * PUT https://api.twitch.tv/helix/moderation/automod/settings
      *
-     * @param UpdateAutoModSettingsRequest $request
      * @param AccessTokenInterface         $accessToken Requires a user access token that includes the
      *                                                  moderator:manage:automod_settings scope.
-     *
-     * @return AutoModSettingsResponse
      */
     public function updateAutoModSettings(
         UpdateAutoModSettingsRequest $request,
@@ -185,11 +173,8 @@ final class ModerationApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/moderation/banned
      *
-     * @param GetBannedUsersRequest $request
      * @param AccessTokenInterface  $accessToken Requires a user access token that includes the moderation:read or
      *                                           moderator:manage:banned_users scope.
-     *
-     * @return BannedUsersResponse
      */
     public function getBannedUsers(
         GetBannedUsersRequest $request,
@@ -225,11 +210,8 @@ final class ModerationApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/moderation/bans
      *
-     * @param BanUserRequest       $request
      * @param AccessTokenInterface $accessToken Requires a user access token that includes the
      *                                          moderator:manage:banned_users scope.
-     *
-     * @return BanUserResponse
      */
     public function banUser(
         BanUserRequest $request,
@@ -258,11 +240,8 @@ final class ModerationApi extends AbstractApi
      * URL
      * DELETE https://api.twitch.tv/helix/moderation/bans
      *
-     * @param UnbanUserRequest     $request
      * @param AccessTokenInterface $accessToken Requires a user access token that includes the
      *                                          moderator:manage:banned_users scope.
-     *
-     * @return void
      */
     public function unbanUser(
         UnbanUserRequest $request,
@@ -290,11 +269,8 @@ final class ModerationApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/moderation/blocked_terms
      *
-     * @param GetBlockedTermsRequest $request
      * @param AccessTokenInterface   $accessToken Requires a user access token that includes the
      *                                            moderator:read:blocked_terms or moderator:manage:blocked_terms scope.
-     *
-     * @return BlockedTermsResponse
      */
     public function getBlockedTerms(
         GetBlockedTermsRequest $request,
@@ -323,11 +299,8 @@ final class ModerationApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/moderation/blocked_terms
      *
-     * @param AddBlockedTermRequest $request
      * @param AccessTokenInterface  $accessToken Requires a user access token that includes the
      *                                           moderator:manage:blocked_terms scope.
-     *
-     * @return BlockedTermsResponse
      */
     public function addBlockedTerm(
         AddBlockedTermRequest $request,
@@ -354,11 +327,8 @@ final class ModerationApi extends AbstractApi
      * URL
      * DELETE https://api.twitch.tv/helix/moderation/blocked_terms
      *
-     * @param RemoveBlockedTermRequest $request
      * @param AccessTokenInterface     $accessToken Requires a user access token that includes the
      *                                              moderator:manage:blocked_terms scope.
-     *
-     * @return void
      */
     public function removeBlockedTerm(
         RemoveBlockedTermRequest $request,
@@ -384,11 +354,8 @@ final class ModerationApi extends AbstractApi
      * URL
      * DELETE https://api.twitch.tv/helix/moderation/chat
      *
-     * @param DeleteChatMessagesRequest $request
      * @param AccessTokenInterface      $accessToken Requires a user access token that includes the
      *                                               moderator:manage:chat_messages scope.
-     *
-     * @return void
      */
     public function deleteChatMessages(
         DeleteChatMessagesRequest $request,
@@ -416,12 +383,9 @@ final class ModerationApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/moderation/moderators
      *
-     * @param GetModeratorsRequest $request
      * @param AccessTokenInterface $accessToken Requires a user access token that includes the moderation:read scope. If
      *                                          your app also adds and removes moderators, you can use the
      *                                          channel:manage:moderators scope instead.
-     *
-     * @return ModeratorsResponse
      */
     public function getModerators(
         GetModeratorsRequest $request,
@@ -451,11 +415,8 @@ final class ModerationApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/moderation/moderators
      *
-     * @param AddChannelModeratorRequest $request
      * @param AccessTokenInterface       $accessToken Requires a user access token that includes the
      *                                                channel:manage:moderators scope.
-     *
-     * @return void
      */
     public function addChannelModerator(
         AddChannelModeratorRequest $request,
@@ -482,11 +443,8 @@ final class ModerationApi extends AbstractApi
      * URL
      * DELETE https://api.twitch.tv/helix/moderation/moderators
      *
-     * @param RemoveChannelModeratorRequest $request
      * @param AccessTokenInterface          $accessToken Requires a user access token that includes the
      *                                                   channel:manage:moderators scope.
-     *
-     * @return void
      */
     public function removeChannelModerator(
         RemoveChannelModeratorRequest $request,
@@ -512,12 +470,9 @@ final class ModerationApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/channels/vips
      *
-     * @param GetVipsRequest       $request
      * @param AccessTokenInterface $accessToken Requires a user access token that includes the channel:read:vips scope.
      *                                          If your app also adds and removes VIP status, you can use the
      *                                          channel:manage:vips scope instead.
-     *
-     * @return VipsResponse
      */
     public function getVips(
         GetVipsRequest $request,
@@ -547,11 +502,8 @@ final class ModerationApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/channels/vips
      *
-     * @param AddChannelVipRequest $request
      * @param AccessTokenInterface $accessToken Requires a user access token that includes the channel:manage:vips
      *                                          scope.
-     *
-     * @return void
      */
     public function addChannelVip(
         AddChannelVipRequest $request,
@@ -582,11 +534,8 @@ final class ModerationApi extends AbstractApi
      * URL
      * DELETE https://api.twitch.tv/helix/channels/vips
      *
-     * @param RemoveChannelVipRequest $request
      * @param AccessTokenInterface    $accessToken Requires a user access token that includes the channel:manage:vips
      *                                             scope.
-     *
-     * @return void
      */
     public function removeChannelVip(
         RemoveChannelVipRequest $request,
@@ -615,11 +564,8 @@ final class ModerationApi extends AbstractApi
      * URL
      * PUT https://api.twitch.tv/helix/moderation/shield_mode
      *
-     * @param UpdateShieldModeStatusRequest $request
      * @param AccessTokenInterface          $accessToken Requires a user access token that includes the
      *                                                   moderator:manage:shield_mode scope.
-     *
-     * @return ShieldModeStatusResponse
      */
     public function updateShieldModeStatus(
         UpdateShieldModeStatusRequest $request,
@@ -649,11 +595,8 @@ final class ModerationApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/moderation/shield_mode
      *
-     * @param GetShieldModeStatusRequest $request
      * @param AccessTokenInterface       $accessToken Requires a user access token that includes the
      *                                               moderator:read:shield_mode or moderator:manage:shield_mode scope.
-     *
-     * @return ShieldModeStatusResponse
      */
     public function getShieldModeStatus(
         GetShieldModeStatusRequest $request,
@@ -680,10 +623,7 @@ final class ModerationApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/moderation/channels
      *
-     * @param GetModeratedChannelsRequest $request
      * @param AccessTokenInterface        $accessToken Requires OAuth Scope: user:read:moderated_channels
-     *
-     * @return ModeratedChannelsResponse
      */
     public function getModeratedChannels(
         GetModeratedChannelsRequest $request,

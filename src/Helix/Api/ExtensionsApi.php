@@ -40,11 +40,8 @@ final class ExtensionsApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/extensions/configurations
      *
-     * @param GetExtensionConfigurationSegmentRequest $request
      * @param AccessTokenInterface                    $accessToken A signed JWT created by an EBS, with role set to
      *                                                             external.
-     *
-     * @return ExtensionConfigurationSegmentsResponse
      */
     public function getExtensionConfigurationSegment(
         GetExtensionConfigurationSegmentRequest $request,
@@ -79,11 +76,8 @@ final class ExtensionsApi extends AbstractApi
      * URL
      * PUT https://api.twitch.tv/helix/extensions/configurations
      *
-     * @param SetExtensionConfigurationSegmentRequest $request
      * @param AccessTokenInterface                    $accessToken A signed JWT created by an EBS, with role set to
      *                                                             external.
-     *
-     * @return void
      */
     public function setExtensionConfigurationSegment(
         SetExtensionConfigurationSegmentRequest $request,
@@ -107,11 +101,8 @@ final class ExtensionsApi extends AbstractApi
      * URL
      * PUT https://api.twitch.tv/helix/extensions/required_configuration
      *
-     * @param SetExtensionRequiredConfigurationRequest $request
      * @param AccessTokenInterface                     $accessToken A signed JWT created by an EBS, with role set to
      *                                                              external and user_id set to the extension owner.
-     *
-     * @return void
      */
     public function setExtensionRequiredConfiguration(
         SetExtensionRequiredConfigurationRequest $request,
@@ -143,11 +134,8 @@ final class ExtensionsApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/extensions/pubsub
      *
-     * @param SendExtensionPubSubMessageRequest $request
      * @param AccessTokenInterface              $accessToken A signed JWT created by an EBS, with role set to external
      *                                                       and channel_id/pubsub_perms populated.
-     *
-     * @return void
      */
     public function sendExtensionPubSubMessage(
         SendExtensionPubSubMessageRequest $request,
@@ -172,10 +160,7 @@ final class ExtensionsApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/extensions/live
      *
-     * @param GetExtensionLiveChannelsRequest $request
      * @param AccessTokenInterface            $accessToken Requires an app access token or user access token.
-     *
-     * @return ExtensionLiveChannelsResponse
      */
     public function getExtensionLiveChannels(
         GetExtensionLiveChannelsRequest $request,
@@ -202,10 +187,7 @@ final class ExtensionsApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/extensions/jwt/secrets
      *
-     * @param GetExtensionSecretsRequest $request
      * @param AccessTokenInterface       $accessToken A signed JWT created by an EBS, with role set to external.
-     *
-     * @return ExtensionSecretsResponse
      */
     public function getExtensionSecrets(
         GetExtensionSecretsRequest $request,
@@ -229,10 +211,7 @@ final class ExtensionsApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/extensions/jwt/secrets
      *
-     * @param CreateExtensionSecretRequest $request
      * @param AccessTokenInterface         $accessToken A signed JWT created by an EBS, with role set to external.
-     *
-     * @return ExtensionSecretsResponse
      */
     public function createExtensionSecret(
         CreateExtensionSecretRequest $request,
@@ -262,10 +241,7 @@ final class ExtensionsApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/extensions/chat
      *
-     * @param SendExtensionChatMessageRequest $request
      * @param AccessTokenInterface            $accessToken A signed JWT created by an EBS, with role set to external.
-     *
-     * @return void
      */
     public function sendExtensionChatMessage(
         SendExtensionChatMessageRequest $request,
@@ -287,10 +263,7 @@ final class ExtensionsApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/extensions
      *
-     * @param GetExtensionsRequest $request
      * @param AccessTokenInterface $accessToken A signed JWT created by an EBS, with role set to external.
-     *
-     * @return ExtensionsResponse
      */
     public function getExtensions(
         GetExtensionsRequest $request,
@@ -316,10 +289,7 @@ final class ExtensionsApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/extensions/released
      *
-     * @param GetReleasedExtensionsRequest $request
      * @param AccessTokenInterface         $accessToken Requires an app access token or user access token.
-     *
-     * @return ExtensionsResponse
      */
     public function getReleasedExtensions(
         GetReleasedExtensionsRequest $request,
@@ -346,11 +316,8 @@ final class ExtensionsApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/bits/extensions
      *
-     * @param GetExtensionBitsProductsRequest $request
      * @param AccessTokenInterface            $accessToken Requires an app access token whose client ID is the
      *                                                     extension's client ID.
-     *
-     * @return ExtensionBitsProductsResponse
      */
     public function getExtensionBitsProducts(
         GetExtensionBitsProductsRequest $request,
@@ -374,11 +341,8 @@ final class ExtensionsApi extends AbstractApi
      * URL
      * PUT https://api.twitch.tv/helix/bits/extensions
      *
-     * @param UpdateExtensionBitsProductRequest $request
      * @param AccessTokenInterface              $accessToken Requires an app access token whose client ID matches the
      *                                                        extension's client ID.
-     *
-     * @return ExtensionBitsProductsResponse
      */
     public function updateExtensionBitsProduct(
         UpdateExtensionBitsProductRequest $request,

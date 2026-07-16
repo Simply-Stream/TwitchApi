@@ -28,11 +28,8 @@ final class StreamsApi extends AbstractApi
      * URL
      * https://api.twitch.tv/helix/streams/key
      *
-     * @param GetStreamKeyRequest  $request
      * @param AccessTokenInterface $accessToken Requires a user access token that includes the channel:read:stream_key
      *                                          scope.
-     *
-     * @return StreamKeyResponse
      */
     public function getStreamKey(
         GetStreamKeyRequest $request,
@@ -59,10 +56,7 @@ final class StreamsApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/streams
      *
-     * @param GetStreamsRequest    $request
      * @param AccessTokenInterface $accessToken Requires an app access token or user access token.
-     *
-     * @return StreamsResponse
      */
     public function getStreams(
         GetStreamsRequest $request,
@@ -94,11 +88,8 @@ final class StreamsApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/streams/followed
      *
-     * @param GetFollowedStreamsRequest $request
      * @param AccessTokenInterface      $accessToken Requires a user access token that includes the user:read:follows
      *                                               scope.
-     *
-     * @return StreamsResponse
      */
     public function getFollowedStreams(
         GetFollowedStreamsRequest $request,
@@ -134,11 +125,8 @@ final class StreamsApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/streams/markers
      *
-     * @param CreateStreamMarkerRequest $request
      * @param AccessTokenInterface      $accessToken Requires a user access token that includes the
      *                                               channel:manage:broadcast scope.
-     *
-     * @return CreateStreamMarkerResponse
      */
     public function createStreamMarker(
         CreateStreamMarkerRequest $request,
@@ -163,11 +151,8 @@ final class StreamsApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/streams/markers
      *
-     * @param GetStreamMarkersRequest $request
      * @param AccessTokenInterface    $accessToken Requires a user access token that includes the user:read:broadcast or
      *                                             channel:manage:broadcast scope.
-     *
-     * @return StreamMarkersResponse
      */
     public function getStreamMarkers(
         GetStreamMarkersRequest $request,

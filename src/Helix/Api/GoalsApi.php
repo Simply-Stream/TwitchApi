@@ -24,11 +24,8 @@ final class GoalsApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/goals
      *
-     * @param GetCreatorGoalsRequest $request
      * @param AccessTokenInterface   $accessToken Requires a user access token that includes the channel:read:goals
      *                                            scope.
-     *
-     * @return CreatorGoalsResponse
      */
     public function getCreatorGoals(
         GetCreatorGoalsRequest $request,

@@ -9,7 +9,6 @@ use Webmozart\Assert\Assert;
 final readonly class SetExtensionRequiredConfigurationRequest
 {
     /**
-     * @param string $broadcasterId
      * @param string $extensionId           The ID of the extension to update.
      * @param string $extensionVersion      The version of the extension to update.
      * @param string $requiredConfiguration The required_configuration string to use with the extension.

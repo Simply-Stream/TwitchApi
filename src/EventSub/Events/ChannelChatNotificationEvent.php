@@ -27,19 +27,8 @@ use SimplyStream\TwitchApi\EventSub\Shared\Message;
 final readonly class ChannelChatNotificationEvent implements EventInterface
 {
     /**
-     * @param string                                                              $broadcasterUserId
-     * @param string                                                              $broadcasterUserName
-     * @param string                                                              $broadcasterUserLogin
-     * @param string                                                              $chatterUserId
-     * @param string                                                              $chatterUserName
-     * @param string                                                              $chatterUserLogin
-     * @param bool                                                                $chatterIsAnonymous
-     * @param string                                                              $color
-     * @param Badge[]                                                             $badges
-     * @param string                                                              $systemMessage
-     * @param string                                                              $messageId
-     * @param \SimplyStream\TwitchApi\EventSub\Events\SubscriptionMessage\Message $message
-     * @param string                                                              $noticeType                 One of: sub, resub, sub_gift,
+     * @param Badge[]                        $badges
+     * @param string                         $noticeType                 One of: sub, resub, sub_gift,
      *                                                                   community_sub_gift, gift_paid_upgrade,
      *                                                                   prime_paid_upgrade, raid, unraid,
      *                                                                   pay_it_forward, announcement, bits_badge_tier,
@@ -52,38 +41,12 @@ final readonly class ChannelChatNotificationEvent implements EventInterface
      *                                                                   shared_chat_raid, shared_chat_pay_it_forward,
      *                                                                   shared_chat_announcement,
      *                                                                   shared_chat_modiversary, unknown.
-     * @param Subscription|null              $sub
-     * @param Resubscription|null            $resub
-     * @param GiftSubscription|null          $subGift
-     * @param CommunityGiftSubscription|null $communitySubGift
-     * @param GiftPaidUpgrade|null           $giftPaidUpgrade
-     * @param PrimePaidUpgrade|null          $primePaidUpgrade
-     * @param Raid|null                      $raid
      * @param array|null                     $unraid                     Empty payload if notice_type is unraid, else
      *                                                                   null.
-     * @param PayItForward|null              $payItForward
-     * @param Announcement|null              $announcement
-     * @param CharityDonation|null           $charityDonation
-     * @param BitsBadgeTier|null             $bitsBadgeTier
-     * @param WatchStreak|null               $watchStreak
-     * @param Modiversary|null               $modiversary
      * @param string|null                    $sourceBroadcasterUserId    Shared-chat source channel; null in the
      *                                                                   broadcaster’s own channel.
-     * @param string|null                    $sourceBroadcasterUserName
-     * @param string|null                    $sourceBroadcasterUserLogin
-     * @param string|null                    $sourceMessageId
      * @param Badge[]|null                   $sourceBadges
-     * @param bool|null                      $isSourceOnly
      * @param Subscription|null              $sharedChatSub              Same shape as $sub, for a shared-chat notice.
-     * @param Resubscription|null            $sharedChatResub
-     * @param GiftSubscription|null          $sharedChatSubGift
-     * @param CommunityGiftSubscription|null $sharedChatCommunitySubGift
-     * @param GiftPaidUpgrade|null           $sharedChatGiftPaidUpgrade
-     * @param PrimePaidUpgrade|null          $sharedChatPrimePaidUpgrade
-     * @param Raid|null                      $sharedChatRaid
-     * @param PayItForward|null              $sharedChatPayItForward
-     * @param Announcement|null              $sharedChatAnnouncement
-     * @param Modiversary|null               $sharedChatModiversary
      */
     public function __construct(
         public string $broadcasterUserId,

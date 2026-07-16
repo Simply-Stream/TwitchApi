@@ -36,12 +36,9 @@ final class GuestStarApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/guest_star/channel_settings
      *
-     * @param GetChannelGuestStarSettingsRequest $request
      * @param AccessTokenInterface               $accessToken Requires OAuth Scope: channel:read:guest_star,
      *                                                        channel:manage:guest_star, moderator:read:guest_star or
      *                                                        moderator:manage:guest_star
-     *
-     * @return ChannelGuestStarSettingsResponse
      */
     public function getChannelGuestStarSettings(
         GetChannelGuestStarSettingsRequest $request,
@@ -68,10 +65,7 @@ final class GuestStarApi extends AbstractApi
      * URL
      * PUT https://api.twitch.tv/helix/guest_star/channel_settings
      *
-     * @param UpdateChannelGuestStarSettingsRequest $request
      * @param AccessTokenInterface                  $accessToken Requires OAuth Scope: channel:manage:guest_star
-     *
-     * @return void
      */
     public function updateChannelGuestStarSettings(
         UpdateChannelGuestStarSettingsRequest $request,
@@ -98,10 +92,7 @@ final class GuestStarApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/guest_star/session
      *
-     * @param GetGuestStarSessionRequest $request
      * @param AccessTokenInterface       $accessToken Requires OAuth Scope: channel:manage:guest_star
-     *
-     * @return GuestStarSessionResponse
      */
     public function getGuestStarSession(
         GetGuestStarSessionRequest $request,
@@ -129,10 +120,7 @@ final class GuestStarApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/guest_star/session
      *
-     * @param CreateGuestStarSessionRequest $request
      * @param AccessTokenInterface          $accessToken Requires OAuth Scope: channel:manage:guest_star
-     *
-     * @return GuestStarSessionResponse
      */
     public function createGuestStarSession(
         CreateGuestStarSessionRequest $request,
@@ -159,10 +147,7 @@ final class GuestStarApi extends AbstractApi
      * URL
      * DELETE https://api.twitch.tv/helix/guest_star/session
      *
-     * @param EndGuestStarSessionRequest $request
      * @param AccessTokenInterface       $accessToken Requires OAuth Scope: channel:manage:guest_star
-     *
-     * @return GuestStarSessionResponse
      */
     public function endGuestStarSession(
         EndGuestStarSessionRequest $request,
@@ -191,12 +176,9 @@ final class GuestStarApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/guest_star/invites
      *
-     * @param GetGuestStarInvitesRequest $request
      * @param AccessTokenInterface       $accessToken Requires OAuth Scope: channel:read:guest_star,
      *                                               channel:manage:guest_star, moderator:read:guest_star or
      *                                               moderator:manage:guest_star
-     *
-     * @return GuestStarInvitesResponse
      */
     public function getGuestStarInvites(
         GetGuestStarInvitesRequest $request,
@@ -224,11 +206,8 @@ final class GuestStarApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/guest_star/invites
      *
-     * @param SendGuestStarInviteRequest $request
      * @param AccessTokenInterface       $accessToken Requires OAuth Scope: channel:manage:guest_star or
      *                                               moderator:manage:guest_star
-     *
-     * @return void
      */
     public function sendGuestStarInvite(
         SendGuestStarInviteRequest $request,
@@ -256,11 +235,8 @@ final class GuestStarApi extends AbstractApi
      * URL
      * DELETE https://api.twitch.tv/helix/guest_star/invites
      *
-     * @param DeleteGuestStarInviteRequest $request
      * @param AccessTokenInterface         $accessToken Requires OAuth Scope: channel:manage:guest_star or
      *                                                 moderator:manage:guest_star
-     *
-     * @return void
      */
     public function deleteGuestStarInvite(
         DeleteGuestStarInviteRequest $request,
@@ -289,11 +265,8 @@ final class GuestStarApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/guest_star/slot
      *
-     * @param AssignGuestStarSlotRequest $request
      * @param AccessTokenInterface       $accessToken Requires OAuth Scope: channel:manage:guest_star or
      *                                               moderator:manage:guest_star
-     *
-     * @return void
      */
     public function assignGuestStarSlot(
         AssignGuestStarSlotRequest $request,
@@ -322,11 +295,8 @@ final class GuestStarApi extends AbstractApi
      * URL
      * PATCH https://api.twitch.tv/helix/guest_star/slot
      *
-     * @param UpdateGuestStarSlotRequest $request
      * @param AccessTokenInterface       $accessToken Requires OAuth Scope: channel:manage:guest_star or
      *                                               moderator:manage:guest_star
-     *
-     * @return void
      */
     public function updateGuestStarSlot(
         UpdateGuestStarSlotRequest $request,
@@ -358,11 +328,8 @@ final class GuestStarApi extends AbstractApi
      * URL
      * DELETE https://api.twitch.tv/helix/guest_star/slot
      *
-     * @param DeleteGuestStarSlotRequest $request
      * @param AccessTokenInterface       $accessToken Requires OAuth Scope: channel:manage:guest_star or
      *                                               moderator:manage:guest_star
-     *
-     * @return void
      */
     public function deleteGuestStarSlot(
         DeleteGuestStarSlotRequest $request,
@@ -396,11 +363,8 @@ final class GuestStarApi extends AbstractApi
      * URL
      * PATCH https://api.twitch.tv/helix/guest_star/slot_settings
      *
-     * @param UpdateGuestStarSlotSettingsRequest $request
      * @param AccessTokenInterface               $accessToken Requires OAuth Scope: channel:manage:guest_star or
      *                                                        moderator:manage:guest_star
-     *
-     * @return void
      */
     public function updateGuestStarSlotSettings(
         UpdateGuestStarSlotSettingsRequest $request,

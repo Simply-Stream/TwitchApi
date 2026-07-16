@@ -29,11 +29,8 @@ final class WhispersApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/whispers
      *
-     * @param SendWhisperRequest   $request
      * @param AccessTokenInterface $accessToken Requires a user access token that includes the user:manage:whispers
      *                                          scope.
-     *
-     * @return void
      */
     public function sendWhisper(
         SendWhisperRequest $request,

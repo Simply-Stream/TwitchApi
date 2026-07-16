@@ -24,11 +24,8 @@ final class PredictionsApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/predictions
      *
-     * @param GetPredictionsRequest $request
      * @param AccessTokenInterface  $accessToken Requires a user access token that includes the channel:read:predictions
      *                                           or channel:manage:predictions scope.
-     *
-     * @return PredictionsResponse
      */
     public function getPredictions(
         GetPredictionsRequest $request,
@@ -59,11 +56,8 @@ final class PredictionsApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/predictions
      *
-     * @param CreatePredictionRequest $request
      * @param AccessTokenInterface    $accessToken Requires a user access token that includes the
      *                                             channel:manage:predictions scope.
-     *
-     * @return PredictionResponse
      */
     public function createPrediction(
         CreatePredictionRequest $request,
@@ -86,11 +80,8 @@ final class PredictionsApi extends AbstractApi
      * URL
      * PATCH https://api.twitch.tv/helix/predictions
      *
-     * @param EndPredictionRequest $request
      * @param AccessTokenInterface $accessToken Requires a user access token that includes the channel:manage:predictions
      *                                          scope.
-     *
-     * @return PredictionResponse
      */
     public function endPrediction(
         EndPredictionRequest $request,

@@ -23,10 +23,7 @@ final class TeamsApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/teams/channel
      *
-     * @param GetChannelTeamsRequest $request
      * @param AccessTokenInterface   $accessToken Requires an app access token or user access token.
-     *
-     * @return ChannelTeamsResponse
      */
     public function getChannelTeams(
         GetChannelTeamsRequest $request,
@@ -51,10 +48,7 @@ final class TeamsApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/teams
      *
-     * @param GetTeamsRequest      $request
      * @param AccessTokenInterface $accessToken Requires an app access token or user access token.
-     *
-     * @return TeamsResponse
      */
     public function getTeams(
         GetTeamsRequest $request,

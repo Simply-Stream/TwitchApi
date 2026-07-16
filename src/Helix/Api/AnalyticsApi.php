@@ -26,11 +26,8 @@ final class AnalyticsApi extends AbstractApi
      *
      * @see https://dev.twitch.tv/docs/insights Insights & Analytics
      *
-     * @param GetExtensionAnalyticsRequest $request
      * @param AccessTokenInterface         $accessToken Requires a user access token that includes the
      *                                                  analytics:read:extensions scope.
-     *
-     * @return ExtensionAnalyticsResponse
      */
     public function getExtensionAnalytics(
         GetExtensionAnalyticsRequest $request,
@@ -68,11 +65,8 @@ final class AnalyticsApi extends AbstractApi
      *
      * @see https://dev.twitch.tv/docs/insights Insights & Analytics
      *
-     * @param GetGameAnalyticsRequest $request
      * @param AccessTokenInterface    $accessToken Requires a user access token that includes the analytics:read:games
      *                                             scope.
-     *
-     * @return GameAnalyticsResponse
      */
     public function getGameAnalytics(
         GetGameAnalyticsRequest $request,

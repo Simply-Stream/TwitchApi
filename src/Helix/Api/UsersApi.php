@@ -40,10 +40,7 @@ final class UsersApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/users
      *
-     * @param GetUsersRequest      $request
      * @param AccessTokenInterface $accessToken Requires an app access token or user access token.
-     *
-     * @return UsersResponse
      */
     public function getUsers(
         GetUsersRequest $request,
@@ -73,10 +70,7 @@ final class UsersApi extends AbstractApi
      * URL
      * PUT https://api.twitch.tv/helix/users
      *
-     * @param UpdateUserRequest    $request
      * @param AccessTokenInterface $accessToken Requires a user access token that includes the user:edit scope.
-     *
-     * @return UsersResponse
      */
     public function updateUser(
         UpdateUserRequest $request,
@@ -97,11 +91,8 @@ final class UsersApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/users/blocks
      *
-     * @param GetUserBlockListRequest $request
      * @param AccessTokenInterface    $accessToken Requires a user access token that includes the user:read:blocked_users
      *                                             scope.
-     *
-     * @return UserBlockListResponse
      */
     public function getUserBlockList(
         GetUserBlockListRequest $request,
@@ -131,11 +122,8 @@ final class UsersApi extends AbstractApi
      * URL
      * PUT https://api.twitch.tv/helix/users/blocks
      *
-     * @param BlockUserRequest     $request
      * @param AccessTokenInterface $accessToken Requires a user access token that includes the user:manage:blocked_users
      *                                          scope.
-     *
-     * @return void
      */
     public function blockUser(
         BlockUserRequest $request,
@@ -163,11 +151,8 @@ final class UsersApi extends AbstractApi
      * URL
      * DELETE https://api.twitch.tv/helix/users/blocks
      *
-     * @param UnblockUserRequest   $request
      * @param AccessTokenInterface $accessToken Requires a user access token that includes the user:manage:blocked_users
      *                                          scope.
-     *
-     * @return void
      */
     public function unblockUser(
         UnblockUserRequest $request,
@@ -196,8 +181,6 @@ final class UsersApi extends AbstractApi
      * @param AccessTokenInterface $accessToken Requires a user access token that includes the user:read:broadcast or
      *                                          user:edit:broadcast scope. To include inactive extensions, you must
      *                                          include the user:edit:broadcast scope.
-     *
-     * @return UserExtensionsResponse
      */
     public function getUserExtensions(
         AccessTokenInterface $accessToken,
@@ -217,10 +200,7 @@ final class UsersApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/users/extensions
      *
-     * @param GetUserActiveExtensionsRequest $request
      * @param AccessTokenInterface           $accessToken Requires an app access token or user access token.
-     *
-     * @return UserActiveExtensionsResponse
      */
     public function getUserActiveExtensions(
         GetUserActiveExtensionsRequest $request,
@@ -249,11 +229,8 @@ final class UsersApi extends AbstractApi
      * URL
      * PUT https://api.twitch.tv/helix/users/extensions
      *
-     * @param UpdateUserExtensionsRequest $request
      * @param AccessTokenInterface        $accessToken Requires a user access token that includes the
      *                                                 user:edit:broadcast scope.
-     *
-     * @return UserActiveExtensionsResponse
      */
     public function updateUserExtensions(
         UpdateUserExtensionsRequest $request,

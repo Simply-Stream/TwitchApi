@@ -28,11 +28,8 @@ final class ChannelPointsApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/channel_points/custom_rewards
      *
-     * @param CreateCustomRewardRequest $request
      * @param AccessTokenInterface      $accessToken Requires a user access token that includes the
      *                                               channel:manage:redemptions scope.
-     *
-     * @return CustomRewardResponse
      */
     public function createCustomReward(
         CreateCustomRewardRequest $request,
@@ -59,7 +56,6 @@ final class ChannelPointsApi extends AbstractApi
      * URL
      * DELETE https://api.twitch.tv/helix/channel_points/custom_rewards
      *
-     * @param DeleteCustomRewardRequest $request
      * @param AccessTokenInterface      $accessToken Requires a user access token that includes the
      *                                               channel:manage:redemptions scope.
      */
@@ -88,11 +84,8 @@ final class ChannelPointsApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/channel_points/custom_rewards
      *
-     * @param GetCustomRewardRequest $request
      * @param AccessTokenInterface   $accessToken Requires a user access token that includes the channel:read:redemptions
      *                                            or channel:manage:redemptions scope.
-     *
-     * @return CustomRewardResponse
      */
     public function getCustomReward(
         GetCustomRewardRequest $request,
@@ -125,11 +118,8 @@ final class ChannelPointsApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/channel_points/custom_rewards/redemptions
      *
-     * @param GetCustomRewardRedemptionRequest $request
      * @param AccessTokenInterface             $accessToken Requires a user access token that includes the
      *                                                      channel:read:redemptions or channel:manage:redemptions scope.
-     *
-     * @return CustomRewardRedemptionResponse
      */
     public function getCustomRewardRedemption(
         GetCustomRewardRedemptionRequest $request,
@@ -165,11 +155,8 @@ final class ChannelPointsApi extends AbstractApi
      * URL
      * PATCH https://api.twitch.tv/helix/channel_points/custom_rewards
      *
-     * @param UpdateCustomRewardRequest $request
      * @param AccessTokenInterface      $accessToken Requires a user access token that includes the
      *                                               channel:manage:redemptions scope.
-     *
-     * @return CustomRewardResponse
      */
     public function updateCustomReward(
         UpdateCustomRewardRequest $request,
@@ -197,11 +184,8 @@ final class ChannelPointsApi extends AbstractApi
      * URL
      * PATCH https://api.twitch.tv/helix/channel_points/custom_rewards/redemptions
      *
-     * @param UpdateRedemptionStatusRequest $request
      * @param AccessTokenInterface          $accessToken Requires a user access token that includes the
      *                                                   channel:manage:redemptions scope.
-     *
-     * @return CustomRewardRedemptionResponse
      */
     public function updateRedemptionStatus(
         UpdateRedemptionStatusRequest $request,

@@ -31,7 +31,6 @@ class EventSubApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/eventsub/subscriptions
      *
-     * @param CreateEventSubSubscriptionRequest $request
      * @param AccessTokenInterface              $token   If you use webhooks to receive events, the request must specify an app
      *                                                   access token. The request will fail if you use a user access token. If
      *                                                   the subscription type requires user authorization, the user must have
@@ -40,8 +39,6 @@ class EventSubApi extends AbstractApi
      *                                                   events, your app must get a user access token that includes the
      *                                                   channel:read:subscriptions scope, which adds the required permission to
      *                                                   your app access token’s client ID.
-     *
-     * @return EventSubSubscriptionsResponse
      */
     public function createEventSubSubscription(
         CreateEventSubSubscriptionRequest $request,
@@ -83,11 +80,8 @@ class EventSubApi extends AbstractApi
      * URL
      * DELETE https://api.twitch.tv/helix/eventsub/subscriptions
      *
-     * @param string               $id
      * @param AccessTokenInterface $token If you use webhooks to receive events, the request must specify an
      *                                    app access token. The request will fail if you use a user access token.
-     *
-     * @return void
      */
     public function deleteEventSubSubscription(
         string $id,
@@ -109,12 +103,9 @@ class EventSubApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/eventsub/subscriptions
      *
-     * @param GetEventSubSubscriptionsRequest $request
      * @param AccessTokenInterface            $token   If you use webhooks to receive events, the request must specify an
      *                                                 app access token. The request will fail if you use a user access
      *                                                 token.
-     *
-     * @return EventSubSubscriptionsResponse
      */
     public function getEventSubSubscriptions(
         GetEventSubSubscriptionsRequest $request,

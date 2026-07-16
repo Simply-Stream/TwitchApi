@@ -28,10 +28,7 @@ final class SearchApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/search/categories
      *
-     * @param SearchCategoriesRequest $request
      * @param AccessTokenInterface    $accessToken Requires an app access token or user access token.
-     *
-     * @return SearchCategoriesResponse
      */
     public function searchCategories(
         SearchCategoriesRequest $request,
@@ -70,10 +67,7 @@ final class SearchApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/search/channels
      *
-     * @param SearchChannelsRequest $request
      * @param AccessTokenInterface  $accessToken Requires an app access token or user access token.
-     *
-     * @return SearchChannelsResponse
      */
     public function searchChannels(
         SearchChannelsRequest $request,

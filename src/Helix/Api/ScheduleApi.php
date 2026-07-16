@@ -29,10 +29,7 @@ final class ScheduleApi extends AbstractApi
      *
      * @see https://help.twitch.tv/s/article/channel-page-setup#Schedule Schedule
      *
-     * @param GetChannelStreamScheduleRequest $request
      * @param AccessTokenInterface            $accessToken Requires an app access token or user access token.
-     *
-     * @return ChannelStreamScheduleResponse
      */
     public function getChannelStreamSchedule(
         GetChannelStreamScheduleRequest $request,
@@ -64,8 +61,6 @@ final class ScheduleApi extends AbstractApi
      *
      * @see https://datatracker.ietf.org/doc/html/rfc5545
      *
-     * @param GetChannelICalendarRequest $request
-     *
      * @return string The schedule in iCalendar (RFC5545) format.
      */
     public function getChannelICalendar(
@@ -86,11 +81,8 @@ final class ScheduleApi extends AbstractApi
      * URL
      * PATCH https://api.twitch.tv/helix/schedule/settings
      *
-     * @param UpdateChannelStreamScheduleRequest $request
      * @param AccessTokenInterface               $accessToken Requires a user access token that includes the
      *                                                        channel:manage:schedule scope.
-     *
-     * @return void
      */
     public function updateChannelStreamSchedule(
         UpdateChannelStreamScheduleRequest $request,
@@ -120,11 +112,8 @@ final class ScheduleApi extends AbstractApi
      * URL
      * POST https://api.twitch.tv/helix/schedule/segment
      *
-     * @param CreateChannelStreamScheduleSegmentRequest $request
      * @param AccessTokenInterface                      $accessToken Requires a user access token that includes the
      *                                                               channel:manage:schedule scope.
-     *
-     * @return StreamScheduleSegmentResponse
      */
     public function createChannelStreamScheduleSegment(
         CreateChannelStreamScheduleSegmentRequest $request,
@@ -151,11 +140,8 @@ final class ScheduleApi extends AbstractApi
      * URL
      * PATCH https://api.twitch.tv/helix/schedule/segment
      *
-     * @param UpdateChannelStreamScheduleSegmentRequest $request
      * @param AccessTokenInterface                      $accessToken Requires a user access token that includes the
      *                                                               channel:manage:schedule scope.
-     *
-     * @return StreamScheduleSegmentResponse
      */
     public function updateChannelStreamScheduleSegment(
         UpdateChannelStreamScheduleSegmentRequest $request,
@@ -184,11 +170,8 @@ final class ScheduleApi extends AbstractApi
      * URL
      * DELETE https://api.twitch.tv/helix/schedule/segment
      *
-     * @param DeleteStreamScheduleSegmentRequest $request
      * @param AccessTokenInterface               $accessToken Requires a user access token that includes the
      *                                                        channel:manage:schedule scope.
-     *
-     * @return void
      */
     public function deleteStreamScheduleSegment(
         DeleteStreamScheduleSegmentRequest $request,

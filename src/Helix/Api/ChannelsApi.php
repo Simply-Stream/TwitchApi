@@ -28,10 +28,7 @@ final class ChannelsApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/channels
      *
-     * @param GetChannelInformationRequest $request
      * @param AccessTokenInterface         $accessToken Requires an app access token or user access token.
-     *
-     * @return ChannelInformationResponse
      */
     public function getChannelInformation(
         GetChannelInformationRequest $request,
@@ -56,11 +53,8 @@ final class ChannelsApi extends AbstractApi
      * URL
      * PATCH https://api.twitch.tv/helix/channels
      *
-     * @param ModifyChannelInformationRequest $request
      * @param AccessTokenInterface            $accessToken Requires a user access token that includes the
      *                                                     channel:manage:broadcast scope.
-     *
-     * @return void
      */
     public function modifyChannelInformation(
         ModifyChannelInformationRequest $request,
@@ -85,11 +79,8 @@ final class ChannelsApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/channels/editors
      *
-     * @param GetChannelEditorsRequest $request
      * @param AccessTokenInterface     $accessToken Requires a user access token that includes the channel:read:editors
      *                                              scope.
-     *
-     * @return ChannelEditorsResponse
      */
     public function getChannelEditors(
         GetChannelEditorsRequest $request,
@@ -115,11 +106,8 @@ final class ChannelsApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/channels/followed
      *
-     * @param GetFollowedChannelsRequest $request
      * @param AccessTokenInterface       $accessToken Requires a user access token that includes the user:read:follows
      *                                                scope.
-     *
-     * @return FollowedChannelsResponse
      */
     public function getFollowedChannels(
         GetFollowedChannelsRequest $request,
@@ -159,11 +147,8 @@ final class ChannelsApi extends AbstractApi
      * URL
      * GET https://api.twitch.tv/helix/channels/followers
      *
-     * @param GetChannelFollowersRequest $request
      * @param AccessTokenInterface       $accessToken Requires a user access token that includes the
      *                                                moderator:read:followers scope.
-     *
-     * @return ChannelFollowersResponse
      *
      * @see https://dev.twitch.tv/docs/api/guide#pagination Pagination
      */
