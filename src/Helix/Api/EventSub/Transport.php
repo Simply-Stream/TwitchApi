@@ -13,6 +13,7 @@ final readonly class Transport
      *                                               - webhook
      *                                               - websocket
      *                                               - conduit
+     * @param string|null            $secret         The webhook secret, used to verify incoming events
      * @param string|null            $callback       The callback URL where the notifications are sent. Specify only
      *                                               for webhook transports.
      * @param string|null            $sessionId      An ID that identifies the WebSocket to send notifications to.
@@ -27,6 +28,7 @@ final readonly class Transport
      */
     public function __construct(
         public string $method,
+        public ?string $secret = null,
         public ?string $callback = null,
         public ?string $sessionId = null,
         public ?string $conduitId = null,
