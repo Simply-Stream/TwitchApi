@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Api;
 
 use SimplyStream\TwitchApi\Helix\Api\Users\Request\BlockUserRequest;
+use SimplyStream\TwitchApi\Helix\Api\Users\Request\GetAuthorizationByUserRequest;
 use SimplyStream\TwitchApi\Helix\Api\Users\Request\GetUserActiveExtensionsRequest;
 use SimplyStream\TwitchApi\Helix\Api\Users\Request\GetUserBlockListRequest;
 use SimplyStream\TwitchApi\Helix\Api\Users\Request\GetUsersRequest;
 use SimplyStream\TwitchApi\Helix\Api\Users\Request\UnblockUserRequest;
 use SimplyStream\TwitchApi\Helix\Api\Users\Request\UpdateUserExtensionsRequest;
 use SimplyStream\TwitchApi\Helix\Api\Users\Request\UpdateUserRequest;
+use SimplyStream\TwitchApi\Helix\Api\Users\Response\AuthorizationByUserResponse;
 use SimplyStream\TwitchApi\Helix\Api\Users\Response\UserActiveExtensionsResponse;
 use SimplyStream\TwitchApi\Helix\Api\Users\Response\UserBlockListResponse;
 use SimplyStream\TwitchApi\Helix\Api\Users\Response\UserExtensionsResponse;
@@ -241,6 +243,35 @@ final class UsersApi extends AbstractApi
             UserActiveExtensionsResponse::class,
             $accessToken,
             $this->normalizer->normalize($request->extensions),
+        );
+    }
+
+    /**
+     * Gets the authorization scopes that the specified user(s) have granted the application.
+     *
+     * Authorization
+     * Requires an app access token.
+     *
+     * URL
+     * GET https://api.twitch.tv/helix/authorization/users
+     *
+     * @param GetAuthorizationByUserRequest $request
+     * @param AccessTokenInterface          $accessToken
+     *
+     * @return AuthorizationByUserResponse
+     */
+    public function getAuthorizationByUser(
+        GetAuthorizationByUserRequest $request,
+        AccessTokenInterface $accessToken,
+    ): AuthorizationByUserResponse
+    {
+        return $this->get(
+            'authorization/' . self::BASE_PATH,
+            AuthorizationByUserResponse::class,
+            $accessToken,
+            [
+                'user_id' => $request->userId
+            ]
         );
     }
 }
