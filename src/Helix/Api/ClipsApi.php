@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace SimplyStream\TwitchApi\Helix\Api;
 
 use SimplyStream\TwitchApi\Helix\Api\Clips\Request\CreateClipRequest;
+use SimplyStream\TwitchApi\Helix\Api\Clips\Request\GetClipsDownloadRequest;
 use SimplyStream\TwitchApi\Helix\Api\Clips\Request\GetClipsRequest;
+use SimplyStream\TwitchApi\Helix\Api\Clips\Response\ClipsDownloadResponse;
 use SimplyStream\TwitchApi\Helix\Api\Clips\Response\ClipsResponse;
 use SimplyStream\TwitchApi\Helix\Api\Clips\Response\CreateClipResponse;
 use SimplyStream\TwitchApi\Helix\Authentication\AccessTokenInterface;
@@ -87,5 +89,32 @@ final class ClipsApi extends AbstractApi
         );
 
         return $this->get(self::BASE_PATH, ClipsResponse::class, $accessToken, $query);
+    }
+
+    /**
+     * NEW Provides URLs to download the video file(s) for the specified clips. For information about clips, see How to use clips. These links are temporary and should have a long-term expectation to expire.
+     *
+     * Rate Limits: Limited to 100 requests per minute.
+     *
+     * Authorization
+     * Requires an app access token or user access token that includes the editor:manage:clips or channel:manage:clips scope.
+     *
+     * URL
+     * GET https://api.twitch.tv/helix/clips/downloads
+     */
+    public function getClipsDownload(
+        GetClipsDownloadRequest $request,
+        AccessTokenInterface $accessToken
+    ):ClipsDownloadResponse
+    {
+        $query = array_filter([
+            'editor_id' => $request->editorId,
+            'broadcaster_id' => $request->broadcasterId,
+            'clip_id' => $request->clipIds,
+        ],
+            static fn (mixed $v): bool => $v !== null && $v !== [],
+        );
+
+        return $this->get(self::BASE_PATH . '/downloads', ClipsDownloadResponse::class, $accessToken, $query);
     }
 }
