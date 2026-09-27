@@ -20,8 +20,6 @@ final readonly class Poll
      * @param list<Choice>           $choices                    A list of choices that viewers can choose from. The
      *                                                           list will contain a minimum of two choices and up to a
      *                                                           maximum of five choices.
-     * @param bool                   $bitsVotingEnabled          Not used; will be set to false.
-     * @param int                    $bitsPerVote                Not used; will be set to 0.
      * @param bool                   $channelPointsVotingEnabled A Boolean value that indicates whether viewers may cast
      *                                                           additional votes using Channel Points.
      * @param int                    $channelPointsPerVote       The number of points the viewer must spend to cast one
@@ -37,6 +35,8 @@ final readonly class Poll
      *                                                           for.
      * @param DateTimeInterface      $startedAt                  The UTC date and time (in RFC3339 format) of when the
      *                                                           poll began.
+     * @param bool                   $bitsVotingEnabled          Deprecated by Twitch and no longer part of the response.
+     * @param int                    $bitsPerVote                Deprecated by Twitch and no longer part of the response.
      * @param DateTimeInterface|null $endedAt                    The UTC date and time (in RFC3339 format) of when the
      *                                                           poll ended. If status is ACTIVE, this field is set to
      *                                                           null.
@@ -48,13 +48,13 @@ final readonly class Poll
         public string $broadcasterLogin,
         public string $title,
         public array $choices,
-        public bool $bitsVotingEnabled,
-        public int $bitsPerVote,
         public bool $channelPointsVotingEnabled,
         public int $channelPointsPerVote,
         public string $status,
         public int $duration,
         public DateTimeInterface $startedAt,
+        public bool $bitsVotingEnabled = false,
+        public int $bitsPerVote = 0,
         public ?DateTimeInterface $endedAt = null,
     ) {
     }
